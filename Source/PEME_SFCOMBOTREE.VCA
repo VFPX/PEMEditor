@@ -1,0 +1,526 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _1HW0NUJPK
+[CLASS] basecontainer
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] container
+[OBJNAME] peme_sfcombotree
+[START PROPERTIES]
+Height = 24
+Name = "peme_sfcombotree"
+Width = 170
+lchanged = .F.
+lcloseonclick = .F.
+lcloseondblclick = .F.
+lcombotreeopen = .F.
+ldisplaytagvalue = .F.
+lhidecombo = .F.
+lloadoninit = .F.
+lmovetoback = .T.
+lmustsetfocus = .T.
+lnoclose = .F.
+lsaveanchor = .F.
+nanchor = 10
+ncombowidthdifference = 0
+nfired = 0
+ninitialformheight = 0
+nmousebutton = 0
+nmouseshift = .F.
+noriginalheight = 227
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+With This
+	If PEME_IsVersion9()
+		.cboCombo.Anchor	= 0
+		.cboCombo.Width   	= .Width - .nComboWidthDifference
+		.cboCombo.Anchor 	= .Anchor
+		.nSavedAnchor 		= .Anchor
+	Else
+		.cboCombo.Width   	= .Width - .nComboWidthDifference
+	EndIf
+	
+	.SaveHeightInfo()
+	.cboCombo.ToolTipText = .ToolTipText
+
+	If .oImageList.ListImages.Count > 0
+		.oTree.Object.ImageList = .oImageList
+	Endif .oImageList.ListImages.Count > 0
+	.oTree.Font.Name = .cboCombo.FontName
+	.oTree.Font.Size = .cboCombo.FontSize
+	* .CloseControl()
+	If .lLoadOnInit
+		.LoadTree()
+	Endif .lLoadOnInit
+Endwith
+
+ENDPROC
+PROCEDURE LostFocus
+* Close the control when we lose focus, although we'll do nothing if we were
+* called from CloseControl (since that may be a recursive call) or if lNoClose
+* is .T., since that means we temporarily lost focus because of kludge code in
+* cboCombo.DropDown.
+
+local laStack[1], 	;
+	lnI, 			;
+	llClose,		;
+	lnStack
+if not This.lNoClose
+	lnStack = astackinfo(laStack)
+	for lnI = lnStack to 1 step -1
+		if 'closecontrol' $ laStack[lnI, 3]
+			llClose = .T.
+			exit
+		endif 'closecontrol' $ laStack[lnI, 3]
+	next lnI
+	if This.lComboTreeOpen and not llClose
+		This.CloseControl(.F., .F.)
+	endif This.lComboTreeOpen ...
+endif not This.lNoClose
+
+ENDPROC
+PROCEDURE closecontrol
+Lparameters tlKeepFocus, ;
+	tlSelected
+Local lnCurrAnchor, ;
+	loParent, ;
+	lnParent, ;
+	lnParents, ;
+	lnAnchor
+
+If Not This.lCombotreeOpen
+	Return
+Endif
+
+With This
+
+	* Turn off anchoring since we're changing our Height.
+
+	If PEME_IsVersion9()
+		Store .Anchor - 5 To .Anchor, .oTree.Anchor, .shpTreeView.Anchor
+		.lSaveAnchor = .T.
+		.SetAll('lSaveAnchor', .T.)
+		.oTree.Anchor = 0
+	Endif
+
+	* Adjust the properties of the control.
+
+	.OnCloseControl()
+
+	.Height              = .cboCombo.Height
+	.oTree.Visible       = .F.
+*** JRN 2010-07-31 : Hmmm, making height zero as well
+	.oTree.Height      	 = 0
+	.shpTreeView.Visible = .F.
+	.lcombotreeopen      = .F.
+
+	*!*		* Restore the height and anchor of any parent containers we adjusted in
+	*!*		* OpenControl or resized while we were open and the form was resized. Note that
+	*!*		* if the parent doesn't support vertical resizing, we'll restore Height to its
+	*!*		* original value. Otherwise, we'll account for any difference in the form
+	*!*		* height made while we were open.
+
+	*!*		loParent  = .Parent
+	*!*		lnParent  = 1
+	*!*		lnParents = Alen(.aParentHeights, 1)
+	*!*		Do While Vartype(loParent) = 'O' And ;
+	*!*				lower(loParent.BaseClass) = 'container' And lnParents > lnParent
+	*!*			lnParent = lnParent + 1
+	*!*			If Vartype(.aParentHeights[lnParent, 1]) = 'N'
+	*!*				loParent.Anchor = 0
+	*!*				lnAnchor        = .aParentHeights[lnParent, 3]
+	*!*				If Not Bittest(lnAnchor, 0) And Not Bittest(lnAnchor, 2)
+	*!*					loParent.Height = .aParentHeights[lnParent, 1]
+	*!*				Else
+	*!*					loParent.Height = .aParentHeights[lnParent, 1] + ;
+	*!*						loParent.Height - .aParentHeights[lnParent, 2]
+	*!*				Endif Not Bittest(lnAnchor, 0) ...
+	*!*				loParent.Anchor = lnAnchor
+	*!*			Endif Vartype(.aParentHeights[lnParent, 1]) = 'N'
+	*!*			loParent = loParent.Parent
+	*!*		Enddo While Vartype(loParent) = 'O' ...
+
+	* Restore anchoring and ensure we're at the back of ZOrder.
+
+	If PEME_IsVersion9()
+		.lSaveAnchor = .F.
+		.SetAll('lSaveAnchor', .F.)
+		.shpTreeView.Anchor = 0
+	Endif
+	If .lMoveToBack
+		.shpTreeView.ZOrder(1)
+		.oTree.ZOrder(1)
+		.ZOrder(1)
+	Endif .lMoveToBack
+
+	* Set focus to the combobox if we're supposed to.
+
+	If tlKeepFocus
+		.cboCombo.SetFocus()
+	Endif tlKeepFocus
+
+	* Ensure the combobox matches the selected item.
+
+	If tlSelected And Vartype(.oTree.SelectedItem) = 'O'
+		*** JRN 02/14/2009 : property lShowTag allows the value of the tag to be displayed
+		If This.lShowTag
+			If Not .oTree.SelectedItem.Tag == .cboCombo.Value
+				.lChanged = .T.
+			Endif Not .oTree.SelectedItem.Tag == .cboCombo.Value
+			Store .oTree.SelectedItem.Tag To .cboCombo.Value, ;
+				.cboCombo.DisplayValue
+		Else
+			If Not .oTree.SelectedItem.Text == .cboCombo.Value
+				.lChanged = .T.
+			Endif Not .oTree.SelectedItem.Text == .cboCombo.Value
+			Store .oTree.SelectedItem.Text To .cboCombo.Value, ;
+				.cboCombo.DisplayValue
+		Endif This.showtag
+	Endif tlSelected ...
+	
+	.AfterCloseControl()
+
+Endwith
+
+
+ENDPROC
+PROCEDURE loadexpandednode
+* Abstract method
+
+lparameters toNode
+
+ENDPROC
+PROCEDURE loadnode
+* Abstract method
+
+ENDPROC
+PROCEDURE loadtree
+* Abstract method
+
+ENDPROC
+PROCEDURE nodeselected
+Lparameters loNode
+ENDPROC
+PROCEDURE opencontrol
+Local loNode As Object
+Local lcWindow, lnI
+
+With This
+
+	* Turn off anchoring since we'll be resizing and moving controls.
+	If PEME_IsVersion9()
+		.lSaveAnchor = .T.
+		.SetAll('lSaveAnchor', .T.)
+		.oTree.Anchor = 0
+	Endif
+	.OnOpenControl()
+	.Height = .Parent.Height - .Top
+
+	If .lhidecombo && overlapping combo (so its not visible)
+		.oTree.Width        = .Width - 2
+		.oTree.Height       = .Height - 4
+		.oTree.Left         = .cboCombo.Left + 1
+		.oTree.Top          = .cboCombo.Top + 1
+		.shpTreeView.Top  	= .cboCombo.Top
+		.shpTreeView.Width  = .Width
+		.shpTreeView.Height = .Height - 2
+	Else && normal case
+		.oTree.Width        = .Width - 2
+		.oTree.Height       = .Height - .cboCombo.Height - 4
+		.oTree.Left         = .shpTreeView.Left + 1
+		.oTree.Top          = .shpTreeView.Top + 1
+		.shpTreeView.Width  = .Width
+		.shpTreeView.Height = .Height - .cboCombo.Height - 2
+	Endif
+
+	* If the current value doesn't match the selected item in the TreeView, find
+	* and select the appropriate item.
+
+	If Vartype(.oTree.SelectedItem) <> 'O' Or ;
+			(Not Empty(.cboCombo.DisplayValue) And ;
+			not .cboCombo.DisplayValue == .oTree.SelectedItem.Text)
+		For lnI = 1 To .oTree.Nodes.Count
+			loNode = .oTree.Nodes.Item(lnI)
+			If .cboCombo.DisplayValue == loNode.Text
+				loNode.Selected = .T.
+				Exit
+			Endif .cboCombo.DisplayValue == loNode.Text
+		Next lnI
+	Endif Vartype(.oTree.SelectedItem) <> 'O' ...
+
+	* Enabled the controls appropriately, then set focus to the TreeView.
+
+	.oTree.Visible  = .T.
+	.shpTreeView.Visible = .T.
+	.ZOrder(0)
+	.shpTreeView.ZOrder(0)
+	.oTree.ZOrder(0)
+	.lComboTreeOpen = .T.
+
+	*** JRN 2010-03-08 : Just for PEM Editor, not DocTreeView
+	If Thisform.lPEMEditor
+		.oTree.SetFocus()
+	Endif
+
+	lcWindow = Wontop()
+
+	If .lMustSetFocus And (Thisform.lPEMEditor Or Thisform.DockPosition < 4 or lcWindow = Thisform.Name)
+
+		.oTree.SetFocus()
+		.lMustSetFocus = .F.
+
+		Try
+			Activate Window (lcWindow)
+		Catch
+
+		Endtry
+	Endif
+
+	Thisform.lRebuildTree = .T.
+
+	* Restore anchoring and add 5 to it so we resize vertically.
+
+	If PEME_IsVersion9()
+		.lSaveAnchor = .F.
+		.SetAll('lSaveAnchor', .F.)
+		Store .Anchor + 5 To .Anchor, .oTree.Anchor, .shpTreeView.Anchor
+	Endif
+
+	.AfterOpenControl()
+
+Endwith
+
+ENDPROC
+PROCEDURE saveheightinfo
+With this
+	dimension .aParentHeights[1, 2]
+	.aParentHeights[1, 1] = .Height
+	.aParentHeights[1, 2] = .Height
+	.nInitialFormHeight   = Thisform.Height
+EndWith 
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+5[END RESERVED2]
+[START RESERVED3]
+*afterclosecontrol 
+*afteropencontrol 
+*closecontrol Closes the control
+*drawtreeview 
+*loadexpandednode Loads the specified node as it's expanded
+*loadnode 
+*loadtree Loads the TreeView
+*nodeselected 
+*onclosecontrol 
+*onopencontrol 
+*opencontrol Opens the control
+*saveheightinfo 
+^aparentheights[1,0] An array containing heights of parent containers before opening the control
+lchanged .T. if the user selected a different value
+lcloseonclick .T. to close the control when an item in the TreeView is clicked
+lcloseondblclick .T. to close the control when an item in the TreeView is double-clicked
+lcombotreeopen .T. if the TreeView is displayed
+ldisplaytagvalue If .T., displays value of tag rather than the name of the node
+lhidecombo if .T., the Treeview displays over the combo
+lloadoninit .T. to load the TreeView from Init
+lmovetoback .T. to set the ZOrder of the control to the back when it's closed
+lmustsetfocus
+lnoclose .T. to not have LostFocus close the control
+lshowtag If .T., causes the value of the tag to be displayed rather than the text for the node.
+ncombowidthdifference
+nfired When cboCombo.DropDown last fired so we can handle multiple firing
+ninitialformheight
+nmousebutton
+nmouseshift
+noriginalheight The original height of the control
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _1HW0OHB8T
+[CLASS] basecombobox
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] combobox
+[OBJNAME] cboCombo
+[PARENT] peme_sfcombotree
+[START PROPERTIES]
+Height = 24
+Left = 0
+Name = "cboCombo"
+RowSourceType = 1
+Top = 0
+Width = 168
+nanchor = 10
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE DropDown
+local lnCol, ;
+	lnRow
+
+* Prevent the usual behavior.
+
+nodefault
+with This.Parent
+	do case
+
+* If the control isn't open, open it.
+
+		case not .lComboTreeOpen
+			.OpenControl()
+
+* If the control is open and we weren't just fired, close the control.
+* Otherwise, click to the right of the control then move the mouse back. This
+* avoids a weird behavior: if you open and close the control, then open it
+* again using the mouse, DropDown fires continously as long as the mouse is
+* over the control. So, we move the move off the control, click, and move it
+* back to the original spot to stop this.
+
+		case seconds() > .nFired + 0.25
+			.CloseControl(.T., .F.)
+		otherwise
+			.lNoClose = .T.
+			lnCol     = mcol(Thisform.Name, 3)
+			lnRow     = mrow(Thisform.Name, 3)
+			mouse click at lnRow, objtoclient(This.Parent, 2) + .Width + 5 pixels ;
+				window (Thisform.Name)
+			doevents force
+			mouse at lnRow, lnCol pixels window (Thisform.Name)
+			doevents force
+			.lNoClose = .F.
+			.oTree.SetFocus()
+	endcase
+	.nFired = seconds()
+endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2JL154XI4
+[CLASS] olecontrol
+[BASECLASS] olecontrol
+[OBJNAME] oImageList
+[PARENT] peme_sfcombotree
+[START PROPERTIES]
+Height = 100
+Left = 120
+Name = "oImageList"
+Top = 40
+Width = 100
+[END PROPERTIES]
+[BINSTART OLE]
+CHECKSUM=35926
+[BINEND OLE]
+[BINSTART OLE2]
+CHECKSUM=26800
+[BINEND OLE2]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _1HW0OHB93
+[CLASS] olecontrol
+[BASECLASS] olecontrol
+[OBJNAME] oTree
+[PARENT] peme_sfcombotree
+[START PROPERTIES]
+Height = 174
+Left = 5
+Name = "oTree"
+Top = 29
+Width = 166
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE DblClick
+* Close the control if we're supposed to.
+
+if This.Parent.lCloseOnDblClick
+	This.Parent.CloseControl(.F., .T.)
+endif This.Parent.lCloseOnDblClick
+
+ENDPROC
+PROCEDURE Expand
+lparameters toNode
+if toNode.Children > 0 and toNode.Child.Text = 'Loading...'
+	This.Parent.LoadExpandedNode(toNode)
+endif toNode.Children > 0 ...
+
+ENDPROC
+PROCEDURE KeyDown
+lparameters tnKeyCode, ;
+	tnShift
+do case
+	case tnKeyCode = 27
+		This.Parent.CloseControl(.F., .F.)
+endcase
+
+ENDPROC
+PROCEDURE MouseDown
+*** ActiveX Control Event ***
+Lparameters tnButton, ;
+	tnShift, ;
+	tnX, ;
+	tnY
+
+With This.Parent
+	.nMouseButton = tnButton
+	.nMouseShift = tnShift
+EndWith 
+ENDPROC
+PROCEDURE NodeClick
+Lparameters loNode
+This.Parent.NodeSelected(loNode)
+ENDPROC
+PROCEDURE Refresh
+*** ActiveX Control Method ***
+
+ENDPROC
+[END METHODS]
+[BINSTART OLE]
+CHECKSUM=38759
+[BINEND OLE]
+[BINSTART OLE2]
+CHECKSUM=26800
+[BINEND OLE2]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _1PC0PK2R2
+[CLASS] baseshape
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] shape
+[OBJNAME] shpTreeView
+[PARENT] peme_sfcombotree
+[START PROPERTIES]
+Height = 176
+Left = 0
+Name = "shpTreeView"
+SpecialEffect = 1
+Top = 25
+Width = 168
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] peme_sfcombotree
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+[EOF]

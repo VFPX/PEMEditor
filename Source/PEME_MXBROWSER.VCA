@@ -1,0 +1,208 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _32C0XXQO1
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] peme_frmbrowser
+[START PROPERTIES]
+Caption = "Form"
+Desktop = .T.
+DoCreate = .T.
+Name = "peme_frmbrowser"
+Visible = .T.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If Version(5) >= 900
+	This.mxbrowser1.Anchor = 15
+EndIf 
+
+ENDPROC
+PROCEDURE writehtml
+Lparameters lcHTML
+
+This.mxbrowser1.write (lcHTML)
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+2[END RESERVED2]
+[START RESERVED3]
+*writehtml 
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _32C0XZ5VM
+[CLASS] peme_mxbrowser
+[CLASSLOC] peme_mxbrowser.vcx
+[BASECLASS] olecontrol
+[OBJNAME] Mxbrowser1
+[PARENT] peme_frmbrowser
+[START PROPERTIES]
+Height = 250
+Left = 0
+Name = "Mxbrowser1"
+Top = 0
+Width = 376
+[END PROPERTIES]
+[BINSTART OLE]
+CHECKSUM=50153
+[BINEND OLE]
+[BINSTART OLE2]
+CHECKSUM=16181
+[BINEND OLE2]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] peme_frmbrowser
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 32, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3040RWQCH
+[CLASS] olecontrol
+[BASECLASS] olecontrol
+[OBJNAME] peme_mxbrowser
+[START PROPERTIES]
+Height = 100
+Name = "peme_mxbrowser"
+Width = 100
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE BeforeNavigate2
+*** ActiveX Control Event ***
+LPARAMETERS pdisp, url, flags, targetframename, postdata, headers, cancel
+
+IF url = "vfps://"
+   Cancel = .T.
+   LOCAL lcMode
+   url = SUBSTR(url,8)
+   lcMode = LOWER(LEFT(url,AT("\",url)-1))
+   MESSAGEBOX("Command: "+lcMode)
+*!*      DO CASE
+*!*         CASE lcMode = "key"
+*!*            THISFORM.GoToKey(Subs(url,5),.T.)
+*!*         CASE lcMode = "name"
+*!*            THISFORM.GoToName(Subs(url,6),.T.)
+*!*         CASE lcMode = "register"
+*!*            THISFORM.RegisterControl(Subs(url,10))
+*!*         OTHERWISE
+*!*            ?? Chr(7)
+*!*      ENDCASE
+ENDIF
+
+IF url="file:" OR SUBSTR(url,2,2)=":\"
+   Cancel = .T.
+   DECLARE INTEGER ShellExecute ;
+      IN SHELL32.DLL ;
+      INTEGER nWinHandle,;
+      STRING cOperation,;   
+      STRING cFileName,;
+      STRING cParameters,;
+      STRING cDirectory,;
+      INTEGER nShowWindow
+   ShellExecute(0,"Open",URL,"","",1)
+ENDIF
+ENDPROC
+PROCEDURE Init
+This.Navigate2("about:blank")
+ENDPROC
+PROCEDURE Refresh
+*** ActiveX Control Method ***
+NODEFAULT
+ENDPROC
+PROCEDURE write
+LPARAMETERS lcHTML
+
+lcHTML = Strt(lcHTML,CHR(0),"")
+IF NOT "<body " $ LOWER(lcHTML)
+   LOCAL lcBGColor
+   lcBGColor = Right(Transform(THISFORM.BackColor,"@0"),6)
+   lcBGColor = [#] + SUBSTR(lcBGColor,5,2) + SUBSTR(lcBGColor,3,2) + SUBSTR(lcBGColor,1,2)
+   LOCAL lcScript
+   
+   TEXT TO lcScript NOSHOW TEXTMERGE
+   <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
+   function document_oncontextmenu() {}
+   </SCRIPT>
+   <SCRIPT LANGUAGE=javascript FOR=document EVENT=oncontextmenu>
+   document_oncontextmenu()
+   </SCRIPT>
+   ENDTEXT
+
+** <body xscroll="auto"  oncontextmenu="return false;">
+
+
+   TEXT TO lcHTML NOSHOW TEXTMERGE
+<html>
+<head>
+<<lcScript>>
+<style>
+body {
+   font-size:<<TRANSFORM(Int(THISFORM.FontSize*1.25))>>px;
+   font-family:<<THISFORM.FontName>>;
+   font-style:normal;
+   xbackground-color:<<lcBGColor>>;
+}
+</style>
+</head>
+<body xscroll="auto" oncontextmenu="return false;">
+<<lcHTML>>
+</body>
+</html>
+   ENDTEXT
+ENDIF
+
+DO WHILE NOT VARTYPE(THIS.Document) = "O"
+ENDDO
+
+THIS.Document.Open()
+THIS.Document.Write(lcHTML)
+THIS.Document.Close()
+
+*!*THIS.Document.body.bgcolor = "silver"
+THIS.Document.body.topmargin = 1
+THIS.Document.body.leftmargin = 3
+
+RETURN .T.
+
+ENDPROC
+[END METHODS]
+[BINSTART OLE]
+CHECKSUM=4838
+[BINEND OLE]
+[BINSTART OLE2]
+CHECKSUM=16181
+[BINEND OLE2]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*write 
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] peme_mxbrowser
+[EOF]

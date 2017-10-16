@@ -1,0 +1,133 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Screen    
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2ZQ12WOMC
+[CLASS] dataenvironment
+[BASECLASS] dataenvironment
+[OBJNAME] Dataenvironment
+[START PROPERTIES]
+DataSource = .NULL.
+Height = 0
+Left = 0
+Name = "Dataenvironment"
+Top = 0
+Width = 0
+[END PROPERTIES]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+2[END RESERVED4]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2ZQ12WOMD
+[CLASS] frmopenclass
+[CLASSLOC] editproperty.vcx
+[BASECLASS] form
+[OBJNAME] Frmopenclass1
+[START PROPERTIES]
+DoCreate = .T.
+Name = "Frmopenclass1"
+changefontsize.Name = "changefontsize"
+cmdCancel.Name = "cmdCancel"
+cmdClassIcon.Name = "cmdClassIcon"
+cmdSearch.Name = "cmdSearch"
+cntClass.Name = "cntClass"
+cntClass.cbobaseclass.Name = "cbobaseclass"
+cntClass.chkExactMatch1.Alignment = 0
+cntClass.chkExactMatch1.Name = "chkExactMatch1"
+cntClass.lblBaseClass.Name = "lblBaseClass"
+cntClass.lblClass.Name = "lblClass"
+cntClass.txtclasslookfor.Name = "txtclasslookfor"
+cntSearch.Name = "cntSearch"
+cntSearch.cbofolder.Name = "cbofolder"
+cntSearch.cbolookfor.Name = "cbolookfor"
+cntSearch.cboscope.Name = "cboscope"
+cntSearch.chkExactMatch2.Alignment = 0
+cntSearch.chkExactMatch2.Name = "chkExactMatch2"
+cntSearch.chkprojecthomedir.Alignment = 0
+cntSearch.chkprojecthomedir.Name = "chkprojecthomedir"
+cntSearch.chksubfolders.Alignment = 0
+cntSearch.chksubfolders.Name = "chksubfolders"
+cntSearch.cmdCurrent.Name = "cmdCurrent"
+cntSearch.cmdGetFolder.Name = "cmdGetFolder"
+cntSearch.lblLookFor.Name = "lblLookFor"
+cntSearch.lblLookIn.Name = "lblLookIn"
+cntSearch.lblScope.Name = "lblScope"
+cntTypes.Chkfiletype1.Alignment = 0
+cntTypes.Chkfiletype1.Name = "Chkfiletype1"
+cntTypes.Chkfiletype10.Alignment = 0
+cntTypes.Chkfiletype10.Name = "Chkfiletype10"
+cntTypes.Chkfiletype11.Alignment = 0
+cntTypes.Chkfiletype11.Name = "Chkfiletype11"
+cntTypes.Chkfiletype12.Alignment = 0
+cntTypes.Chkfiletype12.Name = "Chkfiletype12"
+cntTypes.Chkfiletype13.Alignment = 0
+cntTypes.Chkfiletype13.Name = "Chkfiletype13"
+cntTypes.Chkfiletype14.Alignment = 0
+cntTypes.Chkfiletype14.Name = "Chkfiletype14"
+cntTypes.Chkfiletype2.Alignment = 0
+cntTypes.Chkfiletype2.Name = "Chkfiletype2"
+cntTypes.Chkfiletype3.Alignment = 0
+cntTypes.Chkfiletype3.Name = "Chkfiletype3"
+cntTypes.Chkfiletype4.Alignment = 0
+cntTypes.Chkfiletype4.Name = "Chkfiletype4"
+cntTypes.Chkfiletype5.Alignment = 0
+cntTypes.Chkfiletype5.Name = "Chkfiletype5"
+cntTypes.Chkfiletype6.Alignment = 0
+cntTypes.Chkfiletype6.Name = "Chkfiletype6"
+cntTypes.Chkfiletype7.Alignment = 0
+cntTypes.Chkfiletype7.Name = "Chkfiletype7"
+cntTypes.Chkfiletype8.Alignment = 0
+cntTypes.Chkfiletype8.Name = "Chkfiletype8"
+cntTypes.Chkfiletype9.Alignment = 0
+cntTypes.Chkfiletype9.Name = "Chkfiletype9"
+cntTypes.Name = "cntTypes"
+cntTypes.cmdClearAll.Name = "cmdClearAll"
+cntTypes.cmdMarkAll.Name = "cmdMarkAll"
+cntTypes.lblFileTypes.Name = "lblFileTypes"
+grdResults.Name = "grdResults"
+grdResults.colBaseClass.Header1.Name = "Header1"
+grdResults.colBaseClass.Name = "colBaseClass"
+grdResults.colBaseClass.Text1.Name = "Text1"
+grdResults.colClass.Header1.Name = "Header1"
+grdResults.colClass.Name = "colClass"
+grdResults.colClass.Text1.Name = "Text1"
+grdResults.colClassLoc.Header1.Name = "Header1"
+grdResults.colClassLoc.Name = "colClassLoc"
+grdResults.colClassLoc.Text1.Name = "Text1"
+grdResults.colFileName.Header1.Name = "Header1"
+grdResults.colFileName.Name = "colFileName"
+grdResults.colFileName.Text1.Name = "Text1"
+grdResults.colFolder.Header1.Name = "Header1"
+grdResults.colFolder.Name = "colFolder"
+grdResults.colFolder.Text1.Name = "Text1"
+grdResults.colParentClass.Header1.Name = "Header1"
+grdResults.colParentClass.Name = "colParentClass"
+grdResults.colParentClass.Text1.Name = "Text1"
+grdResults.colTimeStamp.Header1.Name = "Header1"
+grdResults.colTimeStamp.Name = "colTimeStamp"
+grdResults.colTimeStamp.Text1.Name = "Text1"
+imgClassIcon.Name = "imgClassIcon"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+Arial, 0, 9, 5, 15, 12, 32, 3, 0
+MS Sans Serif, 0, 8, 5, 13, 11, 11, 2, 0
+[END PROPERTIES]
+[EOF]

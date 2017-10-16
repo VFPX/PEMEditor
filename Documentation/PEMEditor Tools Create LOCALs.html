@@ -1,0 +1,40 @@
+<div class="wikidoc">
+<h3>IDE Tools: Create LOCALs</h3>
+<p><strong>Create Locals</strong> provides for the creation of LOCALs statements for variables which are assigned values in a method or procedure.
+</p>
+<p>Once the list of variables assigned in the method or procedure is harvested, the LOCALs statements are created.&#160; They appear at the top of the method or procedure, before any existing code, with the variables in alphabetical order.</p>
+<p>There are a number of user preferences available (see the preferences form, below):</p>
+<ul>
+<li>Controlling which variables are added to the LOCALs statements, one of:
+<ul>
+<li>Lowercase 'L' variables only </li><li>Lowercase 'L' variables only, with a commented list of others not beginning with lowercase 'L'
+</li><li>All variables, with lowercase 'L' variables listed separately </li><li>All variables, merged </li></ul>
+</li><li>For PRGs, controlling whether the tool applies to the entire PRG or just for the one where the cursor is
+</li><li>Controlling the format of the LOCALs statements:
+<ul>
+<li>All other LOCALs statements can be merged into the newly created statements. </li><li>The implicit datatype for each variable ('lnCounter as Numeric&quot;) can be displayed.
+</li><li>You can control how many variables are displayed per line:
+<ul>
+<li>If you do not check 'Multiple variables per line', you will get one LOCAL statement with many continuation lines, one variable per line.&#160;
+</li></ul>
+</li></ul>
+</li></ul>
+<pre>                  Local lnDay, ;
+                        lnI, ;
+                        lnPeriod</pre>
+<ul>
+<ul>
+<ul>
+<li>If you do check 'Multiple variables per line', you will get multiple LOCAL statements, each with as many variables as will fit within the line width that you supply. Note that if you supply a very small line width, you will actually get one LOCAL statement
+ for each variable. </li></ul>
+</ul>
+</ul>
+<pre>                  Local lnDay, lnI, lnPeriod</pre>
+<p><strong>Customization: </strong>There is a plug-In PRG that allows you to modify the behavior of this tool to fit your own needs.&#160; (See
+<a href="http://vfpx.codeplex.com/wikipage?title=PEMEditor Tools Plug-In PRGs">Plug-Ins</a>.)</p>
+<p>The plug-in is called with an array of all the harvested variable names, and returns a character string result which will pasted into the method code.&#160; Thus, the plug-in can determine which variables will be placed in the LOCALs list and how they are
+ displayed. There is also enough information to identify ‘orphan’ locals – that is, variables that appear in the LOCALs list but are not assigned a value anywhere.</p>
+<blockquote>
+<p><a href="http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=259197"><img title="SNAGHTML2c9d0f0" border="0" alt="SNAGHTML2c9d0f0" src="http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=259198" width="404" height="482" style="border-right-width:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px"></a></p>
+</blockquote>
+</div><div class="ClearBoth"></div>

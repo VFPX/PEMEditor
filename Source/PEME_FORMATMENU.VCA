@@ -1,0 +1,1927 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0RBZT5
+[CLASS] basecontainer
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] container
+[OBJNAME] cntformat
+[START PROPERTIES]
+
+Name = "cntformat"
+_memberdata =      197<VFPData><memberdata name="ncol1r" display="nCol1R"/><memberdata name="nrow2r" display="nRow2R"/><memberdata name="nrow3r" display="nRow3R"/><memberdata name="nrow6r" display="nRow6R"/></VFPData>
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+_memberdata XML Metadata for customizable properties
+ncol1r
+nrow2r
+nrow3r
+nrow6r
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] cntformat
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _34A0CGST2
+[CLASS] frmpeme_base
+[CLASSLOC] editproperty.vcx
+[BASECLASS] form
+[OBJNAME] frmformatmenu
+[START PROPERTIES]
+BorderStyle = 3
+CHANGEFONTSIZE.Left = 18
+CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
+CHANGEFONTSIZE.Top = 168
+Caption = "Size / Position"
+DoCreate = .T.
+Dockable = 2
+Height = 154
+Name = "frmformatmenu"
+Visible = .T.
+Width = 510
+_memberdata =      647<VFPData><memberdata name="width" display="Width"/><memberdata name="desktop" display="Desktop"/><memberdata name="nrowcount" display="nRowCount"/><memberdata name="movebelow" display="MoveBelow"/><memberdata name="movetoleftof" display="MoveToLeftOf"/><memberdata name="moveobjects" display="MoveObjects"/><memberdata name="movespecials" display="MoveSpecials"/><memberdata name="oformat" display="oFormat"/><memberdata name="dockposition" display="DockPosition"/><memberdata name="dockposition_assign" display="DockPosition_Assign"/><memberdata name="docked" display="Docked"/><memberdata name="docked_assign" display="Docked_Assign"/></VFPData>
+cfoxuserid = FORMATMENU
+nrowcount = 0
+oformat = .NULL.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+Local laObjects[1]
+DoDefault()
+
+With This
+	.nSelectedObjects = Aselobj (laObjects)
+	.oFormat.EmptyUndoBuffer()
+	.Refresh()
+Endwith
+
+
+ENDPROC
+PROCEDURE Init
+Lparameters loUtils
+
+This.oFormat = loUtils
+DoDefault()
+
+This.MoveObjects(This.Width)
+
+ENDPROC
+PROCEDURE Resize
+This.MoveObjects(This.Width)
+
+ENDPROC
+PROCEDURE loadsettings
+DoDefault()
+
+With .oDefaults
+	.HorizontalIncrement = 8
+	.VerticalIncrement	 = 8
+	.LeftIncrement		 = 8
+	.TopIncrement		 = 8
+	.WidthIncrement		 = 8
+	.HeightIncrement	 = 8
+Endwith
+
+ENDPROC
+PROCEDURE movebelow
+Lparameters loObj1, loObj2
+
+With loObj1
+	.Left = loObj2.Left + (loObj2.Width - .Width) / 2
+	.Top = loObj2.Top + loObj2.Height + VertBetween
+Endwith
+
+ENDPROC
+PROCEDURE moveobjects
+Lparameters lnWidth
+
+Local lnNewRowCount
+
+#Define	OuterMargin 		6
+#Define HorzBetween 		10
+#Define VertBetween 		4
+#Define TopMargin 			6
+
+#Define LeftSpecialsOnLeft  40
+#Define TopSpecialsOnTop    30
+
+With This
+	lnWidth = .Width
+
+	Do Case
+
+		Case .Width < (OuterMargin						;
+				+ .cntTop.Width  + HorzBetween		;
+				+ .cntLeft.Width + OuterMargin)
+			lnNewRowCount = 6
+
+			.MoveSpecials(lnNewRowCount)
+			If .nRowCount # lnNewRowCount
+				.cntTop.Top	 = TopSpecialsOnTop
+				.cntTop.Left = OuterMargin
+				.MoveBelow (.cntHeight, .cntTop)
+				.MoveBelow (.cntVerticalSpacing, .cntHeight)
+				.MoveBelow (.cntLeft, .cntVerticalSpacing)
+				.MoveBelow (.cntWidth, .cntLeft)
+				.MoveBelow (.cntHorizontalSpacing, .cntWidth)
+			Endif
+
+		Case .Width < (LeftSpecialsOnLeft  				;
+				+ .cntTop.Width    + HorzBetween		;
+				+ .cntHeight.Width + HorzBetween		;
+				+ .cntVerticalSpacing.Width + OuterMargin)
+			lnNewRowCount = 3
+
+			.MoveSpecials(lnNewRowCount)
+			If .nRowCount # lnNewRowCount
+				.cntTop.Top	 = TopSpecialsOnTop
+				.cntTop.Left = OuterMargin
+				.MoveBelow (.cntHeight, .cntTop)
+				.MoveBelow (.cntVerticalSpacing, .cntHeight)
+				.MoveToLeftOf (.cntLeft, .cntTop)
+				.MoveBelow (.cntWidth, .cntLeft)
+				.MoveBelow (.cntHorizontalSpacing, .cntWidth)
+			Endif
+
+		Case .Width < (LeftSpecialsOnLeft  							;
+				+ .cntTop.Width               + HorzBetween		;
+				+ .cntHeight.Width            + HorzBetween		;
+				+ .cntVerticalSpacing.Width   + HorzBetween		;
+				+ .cntLeft.Width              + HorzBetween		;
+				+ .cntWidth.Width             + HorzBetween		;
+				+ .cntHorizontalSpacing.Width + OuterMargin)
+			lnNewRowCount = 2
+
+			.MoveSpecials(lnNewRowCount)
+			If .nRowCount # lnNewRowCount
+				.cntTop.Top	 = TopMargin
+				.cntTop.Left = LeftSpecialsOnLeft
+				.MoveBelow (.cntLeft, .cntTop)
+				.MoveToLeftOf (.cntHeight, .cntTop)
+				.MoveBelow (.cntWidth, .cntHeight)
+				.MoveToLeftOf (.cntVerticalSpacing, .cntHeight)
+				.MoveBelow (.cntHorizontalSpacing, .cntVerticalSpacing)
+			Endif
+
+		Otherwise
+			lnNewRowCount = 1
+
+			.MoveSpecials(lnNewRowCount)
+			If .nRowCount # lnNewRowCount
+				.cntTop.Top	 = TopMargin
+				.cntTop.Left = LeftSpecialsOnLeft
+				.MoveToLeftOf (.cntHeight, .cntTop)
+				.MoveToLeftOf (.cntVerticalSpacing, .cntHeight)
+				.MoveToLeftOf (.cntLeft, .cntVerticalSpacing)
+				.MoveToLeftOf (.cntWidth, .cntLeft)
+				.MoveToLeftOf (.cntHorizontalSpacing, .cntWidth)
+			Endif
+
+	Endcase
+
+	.nRowCount = lnNewRowCount
+
+Endwith
+
+ENDPROC
+PROCEDURE movespecials
+Lparameters lnRowCount
+
+With This
+	If lnRowCount <= 2
+		.cmdBringToFront.Left = 9
+		.cmdSendToBack.Left = 9
+		.cmdUndo.Left = 9
+		If lnRowCount = 1
+			.cmdBringToFront.Top = 4
+			.cmdSendToBack.Top = 28
+			.cmdUndo.Top = 52
+		Else
+			.cmdBringToFront.Top = 20
+			.cmdSendToBack.Top = 46
+			.cmdUndo.Top = 102
+		Endif
+	Else
+		.cmdBringToFront.Left = 12
+		.cmdSendToBack.Left = 40
+		.cmdUndo.Left = 143
+		
+		.cmdBringToFront.Top = 6
+		.cmdSendToBack.Top = 6
+		.cmdUndo.Top = 6
+	Endif
+
+Endwith
+
+ENDPROC
+PROCEDURE movetoleftof
+Lparameters loObj1, loObj2
+
+With loObj1
+	.Left = loObj2.Left + loObj2.Width + HorzBetween 
+	.Top = loObj2.Top 
+Endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+72[END RESERVED2]
+[START RESERVED3]
+*movebelow 
+*moveobjects 
+*movespecials 
+*movetoleftof 
+nrowcount
+oformat
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+peme_formatform.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMC
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdBringToFront
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 9
+Name = "cmdBringToFront"
+Picture = ..\images\bringtofront.gif
+ToolTipText = "Bring to front"
+Top = 21
+Visible = .T.
+Width = 22
+ZOrderSet = 63
+cmethodname = Format_BringToFront
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMD
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdSendToBack
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 9
+Name = "cmdSendToBack"
+Picture = ..\images\sendtoback.gif
+ToolTipText = "Send to back"
+Top = 45
+Visible = .T.
+Width = 22
+ZOrderSet = 62
+cmethodname = Format_SendToBack
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35B0IO4S2
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdUndo
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Caption = ""
+FontBold = .F.
+FontItalic = .F.
+FontName = "Wingdings"
+FontSize = 8
+Height = 22
+Left = 9
+Name = "cmdUndo"
+Picture = ..\images\goback.gif
+ToolTipText = "Undo"
+Top = 103
+Visible = .T.
+Width = 22
+ZOrderSet = 66
+cmethodname = Format_Undo
+cparameters = 
+nminobjects = 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _34A0CGST2
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntHeight
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 216
+Name = "cntHeight"
+Top = 6
+Width = 136
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMC
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel3
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 64
+Name = "Baselabel3"
+Top = 19
+Visible = .T.
+ZOrderSet = 9
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMD
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner3
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 58
+Name = "Basespinner3"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 1
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.HeightIncrement = This.Value
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.HeightIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2IX0BY6JV
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu10
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 106
+Name = "Cmdformatmenu10"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase height by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 2
+cmethodname = Format_Increase
+cparameters = 'Height', Thisform.oMySettings.HeightIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIS
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu11
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 106
+Name = "Cmdformatmenu11"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease height by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 8
+cmethodname = Format_Increase
+cparameters = 'Height', -Thisform.oMySettings.HeightIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2IX0BY6JV
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu14
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 30
+Name = "Cmdformatmenu14"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease height by one pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 7
+cmethodname = Format_Increase
+cparameters = 'Height', -1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIQ
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu9
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 30
+Name = "Cmdformatmenu9"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase height by one pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 6
+cmethodname = Format_Increase
+cparameters = 'Height', 1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIO
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdShortest
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "cmdShortest"
+Picture = ..\images\shortest.gif
+ToolTipText = "Resize all to shortest"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 4
+cmethodname = Format_To_Shortest
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIP
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdTallest
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "cmdTallest"
+Picture = ..\images\tallest.gif
+ToolTipText = "Resize all to tallest"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 5
+cmethodname = Format_To_Tallest
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOEK
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label2
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Height "
+FontBold = .T.
+Height = 17
+Left = 45
+Name = "Label2"
+Top = 0
+Width = 44
+ZOrderSet = 3
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _34A0CGST2
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape2
+[PARENT] frmformatmenu.cntHeight
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape2"
+Top = 6
+Width = 135
+ZOrderSet = 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB52
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntHorizontalSpacing
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 361
+Name = "cntHorizontalSpacing"
+Top = 76
+Width = 140
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB57
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel4
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 68
+Name = "Baselabel4"
+Top = 19
+Visible = .T.
+ZOrderSet = 27
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB58
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner4
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 62
+Name = "Basespinner4"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 28
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.HorizontalIncrement = This.Value
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.HorizontalIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB59
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu19
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "Cmdformatmenu19"
+Picture = ..\images\equal_black.gif
+ToolTipText = "Make horizontal spacing equal."
+Top = 27
+Visible = .T.
+Width = 22
+ZOrderSet = 29
+cmethodname = Format_Horizontal_Make_Equal
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB55
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu21
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "Cmdformatmenu21"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase horizontal spacing by 1 pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 25
+cmethodname = Format_Horizontal_Increase
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB56
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu22
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "Cmdformatmenu22"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease horizontal spacing by 1 pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 26
+cmethodname = Format_Horizontal_Decrease
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB5A
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu26
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 110
+Name = "Cmdformatmenu26"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase horizontal spacing by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 39
+cmethodname = Format_Horizontal_Increase
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+This.cParameters = Thisform.oMySettings.HorizontalIncrement
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB5B
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu27
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 110
+Name = "Cmdformatmenu27"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease horizontal spacing by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 40
+cmethodname = Format_Horizontal_Decrease
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+This.cParameters = Thisform.oMySettings.HorizontalIncrement
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB54
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label5
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Horizontal Spacing "
+FontBold = .T.
+Height = 17
+Left = 12
+Name = "Label5"
+Top = 0
+Width = 114
+ZOrderSet = 24
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB53
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape6
+[PARENT] frmformatmenu.cntHorizontalSpacing
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape6"
+Top = 6
+Width = 139
+ZOrderSet = 23
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB3X
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntLeft
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 40
+Name = "cntLeft"
+Top = 76
+Width = 166
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB42
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel6
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 95
+Name = "Baselabel6"
+Top = 19
+Visible = .T.
+ZOrderSet = 53
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB43
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner6
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 89
+Name = "Basespinner6"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 54
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.LeftIncrement = This.Value
+
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.LeftIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB47
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu2
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "Cmdformatmenu2"
+Picture = ..\images\centerhorizontally.gif
+ToolTipText = "Center horizontally within the container"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 60
+cmethodname = Format_Center_Horizontally
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB46
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu3
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+FontBold = .F.
+FontItalic = .F.
+FontName = "Wingdings"
+FontSize = 8
+Height = 22
+Left = 34
+Name = "Cmdformatmenu3"
+Picture = ..\images\alignrightside.gif
+ToolTipText = "Align right sides to the rightmost control; use Ctrl+click or Alt+click to align right sides to the leftmost control"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 59
+cmethodname = Format_Align_Right_Sides
+cparameters = This.nShift
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB40
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu31
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 61
+Name = "Cmdformatmenu31"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase left by one pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 51
+cmethodname = Format_Increase
+cparameters = 'Left', 1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB41
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu32
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 61
+Name = "Cmdformatmenu32"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease left by one pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 52
+cmethodname = Format_Increase
+cparameters = 'Left', -1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB44
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu33
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 137
+Name = "Cmdformatmenu33"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase left by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 55
+cmethodname = Format_Increase
+cparameters = 'Left', Thisform.oMySettings.LeftIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB45
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu34
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 137
+Name = "Cmdformatmenu34"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease left by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 56
+cmethodname = Format_Increase
+cparameters = 'Left', -Thisform.oMySettings.LeftIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB49
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdLeftSides
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+FontBold = .F.
+FontItalic = .F.
+FontName = "Wingdings"
+FontSize = 8
+Height = 22
+Left = 7
+Name = "cmdLeftSides"
+Picture = ..\images\alignleftside.gif
+ToolTipText = "Align left sides to the leftmost control; use Ctrl+click or Alt+click to align left sides to the rightmost control"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 66
+cmethodname = Format_Align_Left_Sides
+cparameters = This.nShift
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB48
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdVerticalCenters
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "cmdVerticalCenters"
+Picture = ..\images\alignhorizontalcenters.gif
+ToolTipText = "Align vertical centers"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 65
+cmethodname = Format_Align_Vertical_Centers
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB3Z
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label4
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Left "
+FontBold = .T.
+Height = 17
+Left = 68
+Name = "Label4"
+Top = 0
+Width = 30
+ZOrderSet = 50
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB3Y
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape4
+[PARENT] frmformatmenu.cntLeft
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape4"
+Top = 6
+Width = 166
+ZOrderSet = 49
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _34A0CGST2
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntTop
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 40
+Name = "cntTop"
+Top = 6
+Width = 166
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIQ
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel1
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 95
+Name = "Baselabel1"
+Top = 19
+Visible = .T.
+ZOrderSet = 45
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0RBZT5
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner1
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+InputMask = "999"
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 89
+Name = "Basespinner1"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 46
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.TopIncrement = This.Value
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.TopIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIT
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu1
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "Cmdformatmenu1"
+Picture = ..\images\centervertically.gif
+ToolTipText = "Center vertically within the container"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 61
+cmethodname = Format_Center_Vertically
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIO
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu23
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 61
+Name = "Cmdformatmenu23"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase top by one pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 43
+cmethodname = Format_Increase
+cparameters = 'Top', 1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIP
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu24
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 61
+Name = "Cmdformatmenu24"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease top by one pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 44
+cmethodname = Format_Increase
+cparameters = 'Top', -1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMC
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu25
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 137
+Name = "Cmdformatmenu25"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase top by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 47
+cmethodname = Format_Increase
+cparameters = 'Top', Thisform.oMySettings.TopIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0M9SMD
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu28
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 137
+Name = "Cmdformatmenu28"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease top by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 48
+cmethodname = Format_Increase
+cparameters = 'Top', -Thisform.oMySettings.TopIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2IX0BY6JV
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu4
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+FontBold = .F.
+FontItalic = .F.
+FontName = "Wingdings"
+FontSize = 8
+Height = 22
+Left = 7
+Name = "Cmdformatmenu4"
+Picture = ..\images\aligntopedges.gif
+ToolTipText = "Align top edges to the highest control; use Ctrl+click or Alt+click to align top edges to the lowest control"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 57
+cmethodname = Format_Align_Top_Edges
+cparameters = This.nShift
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIS
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu5
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+FontBold = .F.
+FontItalic = .F.
+FontName = "Wingdings"
+FontSize = 8
+Height = 22
+Left = 7
+Name = "Cmdformatmenu5"
+Picture = ..\images\alignbottomedges.gif
+ToolTipText = "Align bottom edges to the lowest control; use Ctrl+click or Alt+click to align bottom edges to the highest control"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 58
+cmethodname = Format_Align_Bottom_Edges
+cparameters = This.nShift
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIU
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdHorizontalCenters
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "cmdHorizontalCenters"
+Picture = ..\images\alignverticalcenters.gif
+ToolTipText = "Align horizontal centers"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 64
+cmethodname = Format_Align_Horizontal_Centers
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOEK
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label3
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Top "
+FontBold = .T.
+Height = 17
+Left = 69
+Name = "Label3"
+Top = 0
+Width = 29
+ZOrderSet = 42
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _34A0CGST2
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape3
+[PARENT] frmformatmenu.cntTop
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape3"
+Top = 6
+Width = 166
+ZOrderSet = 41
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4S
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntVerticalSpacing
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 361
+Name = "cntVerticalSpacing"
+Top = 6
+Width = 140
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4X
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel5
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 68
+Name = "Baselabel5"
+Top = 19
+Visible = .T.
+ZOrderSet = 34
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4Y
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner5
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 62
+Name = "Basespinner5"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 35
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.VerticalIncrement = This.Value
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.VerticalIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB51
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdDecreaseVertSpacing1
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 110
+Name = "cmdDecreaseVertSpacing1"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease vertical spacing by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 38
+cmethodname = Format_Vertical_Decrease
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+This.cParameters = Thisform.oMySettings.VerticalIncrement
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4W
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdDecreaseVertSpacingMany
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "cmdDecreaseVertSpacingMany"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease vertical spacing by one pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 33
+cmethodname = Format_Vertical_Decrease
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4V
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdIncreaseVertSpacing1
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 34
+Name = "cmdIncreaseVertSpacing1"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase vertical spacing by one pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 32
+cmethodname = Format_Vertical_Increase
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB50
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdIncreaseVertSpacingMany
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 110
+Name = "cmdIncreaseVertSpacingMany"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase vertical spacing by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 37
+cmethodname = Format_Vertical_Increase
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+This.cParameters = Thisform.oMySettings.VerticalIncrement
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4Z
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdVertSpacingEqual
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "cmdVertSpacingEqual"
+Picture = ..\images\equal_black.gif
+ToolTipText = "Make vertical spacing equal"
+Top = 27
+Visible = .T.
+Width = 22
+ZOrderSet = 36
+cmethodname = Format_Vertical_Make_Equal
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4U
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label7
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Vertical Spacing "
+FontBold = .T.
+Height = 17
+Left = 19
+Name = "Label7"
+Top = 0
+Width = 101
+ZOrderSet = 31
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35J0LAB4T
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape7
+[PARENT] frmformatmenu.cntVerticalSpacing
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape7"
+Top = 6
+Width = 139
+ZOrderSet = 30
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIT
+[CLASS] cntformat
+[CLASSLOC] peme_formatmenu.vcx
+[BASECLASS] container
+[OBJNAME] cntWidth
+[PARENT] frmformatmenu
+[START PROPERTIES]
+Height = 66
+Left = 216
+Name = "cntWidth"
+Top = 76
+Width = 136
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOJ0
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel2
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Alignment = 1
+Caption = "Step:"
+Left = 64
+Name = "Baselabel2"
+Top = 19
+Visible = .T.
+ZOrderSet = 19
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+This.Left = This.Left
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOJ1
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] Basespinner2
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+ControlSource = ""
+Height = 22
+KeyboardHighValue = 99
+KeyboardLowValue = 1
+Left = 58
+Name = "Basespinner2"
+SpinnerHighValue =  99.00
+SpinnerLowValue =   1.00
+Top = 34
+Visible = .T.
+Width = 42
+ZOrderSet = 20
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE InteractiveChange
+DoDefault()
+Thisform.oMySettings.WidthIncrement = This.Value
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault() 
+This.Value = Thisform.oMySettings.WidthIncrement
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIW
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu12
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "Cmdformatmenu12"
+Picture = ..\images\thinnest.gif
+ToolTipText = "Resize all to Narrowest"
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 15
+cmethodname = Format_To_Narrowest
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIX
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu13
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 7
+Name = "Cmdformatmenu13"
+Picture = ..\images\widest.gif
+ToolTipText = "Resize all to Widest"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 16
+cmethodname = Format_To_Widest
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIY
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu15
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 30
+Name = "Cmdformatmenu15"
+Picture = ..\images\plus.gif
+ToolTipText = "Increase width by one pixel."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 17
+cmethodname = Format_Increase
+cparameters = 'Width', 1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIZ
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu16
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 30
+Name = "Cmdformatmenu16"
+Picture = ..\images\minus.gif
+ToolTipText = "Decrease width by one pixel"
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 18
+cmethodname = Format_Increase
+cparameters = 'Width', -1
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOJ2
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu17
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 106
+Name = "Cmdformatmenu17"
+Picture = ..\images\plusplus.gif
+ToolTipText = "Increase width by Step-size."
+Top = 15
+Visible = .T.
+Width = 22
+ZOrderSet = 21
+cmethodname = Format_Increase
+cparameters = 'Width', Thisform.oMySettings.WidthIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOJD
+[CLASS] cmdformatmenu
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Cmdformatmenu18
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Caption = ""
+Height = 22
+Left = 106
+Name = "Cmdformatmenu18"
+Picture = ..\images\minusminus.gif
+ToolTipText = "Decrease width by Step-size."
+Top = 39
+Visible = .T.
+Width = 22
+ZOrderSet = 22
+cmethodname = Format_Increase
+cparameters = 'Width', -Thisform.oMySettings.WidthIncrement
+nminobjects = 1
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIV
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label6
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+AutoSize = .T.
+Caption = " Width "
+FontBold = .T.
+Height = 17
+Left = 47
+Name = "Label6"
+Top = 0
+Width = 41
+ZOrderSet = 14
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _35A0HYOIU
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape5
+[PARENT] frmformatmenu.cntWidth
+[START PROPERTIES]
+Height = 60
+Left = 0
+Name = "Shape5"
+Top = 6
+Width = 135
+ZOrderSet = 13
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] frmformatmenu
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+Wingdings, 0, 8, 10, 12, 10, 15, 2, 0
+[END PROPERTIES]
+[EOF]

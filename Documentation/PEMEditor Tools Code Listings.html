@@ -1,0 +1,34 @@
+<div class="wikidoc">
+<h3>IDE Tools: Code Listings</h3>
+<p>Applies to tools:</p>
+<p><em>Code Listings:</em></p>
+<ul>
+<li><em>This control</em>
+<ul>
+<li><em>All Code</em> </li><li><em>All Code and Inherited Code</em> </li></ul>
+</li><li><em>This control and Children</em>
+<ul>
+<li><em>All Code</em> </li><li><em>All Code and Inherited Code</em> </li></ul>
+</li></ul>
+<p>There’s not much to explain about these tools; they all pop up a window with method code.&#160;
+</p>
+<p>Some clarifications:</p>
+<ul>
+<li>‘This control’ means:
+<ul>
+<li>The currently selected control being displayed in PEM Editor (if it is open) </li><li>or the currently selected control (as would be displayed in the Property Window).&#160; These two are almost always the same, but will differ at times
+</li></ul>
+</li><li>‘Children’ means: all the child objects of the control, down through the entire tree of objects.
+</li><li>‘All Code’ means all methods or events with non-default code </li><li>‘Inherited Code’ means more than you would expect.&#160; For any object which is a member of a parent class, this shows the code for the object
+<u>in the parent class</u>. Note that native VFP does not provide any mechanism for seeing this code.&#160; (See the sample below.)
+</li><li>The code is displayed in such a way that VFP Document View helps with navigation.
+</li></ul>
+<p>The example below shows Document View for a code listing of a command button ‘cmdSave’ and its inherited code:</p>
+<ol>
+<li>There is one event that has non-default code. </li><li>This object is a member of the parent class ‘cntupdatetablebo’, and you can see that there is a code for the click event there.
+</li><li>And there are a number of events that have code in the baseclass ‘stdcommandbutton’
+</li></ol>
+<blockquote>
+<p><a href="http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=258089"><img title="image" border="0" alt="image" src="http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=258090" width="451" height="214" style="border-bottom:0px; border-left:0px; display:inline; border-top:0px; border-right:0px"></a></p>
+</blockquote>
+</div><div class="ClearBoth"></div>

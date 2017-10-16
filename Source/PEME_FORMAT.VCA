@@ -1,0 +1,612 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _32Y0XN5IE
+[CLASS] basecustom
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] custom
+[OBJNAME] pemeditor_format
+[START PROPERTIES]
+Name = "pemeditor_format"
+_memberdata =     2693<VFPData><memberdata name="addmrufile" display="AddMRUFile"/><memberdata name="showhelp" display="ShowHelp"/><memberdata name="getmrulist" display="GetMRUList"/><memberdata name="diskfilename" display="DiskFileName"/><memberdata name="getrelativepath" display="GetRelativePath"/><memberdata name="showerrormsg" display="ShowErrorMsg"/><memberdata name="striptabs" display="StripTabs"/><memberdata name="aproclines" display="aProcLines"/><memberdata name="isnamechar" display="IsNameChar"/><memberdata name="getcontrolcount" display="GetControlCount"/><memberdata name="getpemstatus" display="GetPEMStatus"/><memberdata name="openurl" display="OpenURL"/><memberdata name="ahandlehistory" display="aHandleHistory"/><memberdata name="peme_findtopmostparent" display="PEME_FindTopmostParent"/><memberdata name="format_align_left_sides" display="Format_Align_Left_Sides"/><memberdata name="format_align_right_sides" display="Format_Align_Right_Sides"/><memberdata name="format_align_top_edges" display="Format_Align_Top_Edges"/><memberdata name="format_align_bottom_edges" display="Format_Align_Bottom_Edges"/><memberdata name="format_align_vertical_centers" display="Format_Align_Vertical_Centers"/><memberdata name="format_align_horizontal_centers" display="Format_Align_Horizontal_Centers"/><memberdata name="format_center_vertically" display="Format_Center_Vertically"/><memberdata name="format_center_horizontally" display="Format_Center_Horizontally"/><memberdata name="format_to_tallest" display="Format_To_Tallest"/><memberdata name="format_to_shortest" display="Format_To_Shortest"/><memberdata name="format_to_widest" display="Format_To_Widest"/><memberdata name="format_to_narrowest" display="Format_To_Narrowest"/><memberdata name="format_horizontal_make_equal" display="Format_Horizontal_Make_Equal"/><memberdata name="format_horizontal_increase" display="Format_Horizontal_Increase"/><memberdata name="format_horizontal_decrease" display="Format_Horizontal_Decrease"/><memberdata name="format_vertical_make_equal" display="Format_Vertical_Make_Equal"/><memberdata name="format_vertical_increase" display="Format_Vertical_Increase"/><memberdata name="format_vertical_decrease" display="Format_Vertical_Decrease"/><memberdata name="postformat" display="PostFormat"/><memberdata name="format_undo" display="Format_Undo"/><memberdata name="emptyundobuffer" display="EmptyUndoBuffer"/><memberdata name="oundo" display="oUndo"/><memberdata name="format_increase" display="Format_Increase"/><memberdata name="format_bringtofront" display="Format_BringToFront"/><memberdata name="format_sendtoback" display="Format_SendToBack"/><memberdata name="setupformat" display="SetupFormat"/></VFPData>
+oundo = .NULL.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE emptyundobuffer
+If 'O' # Vartype (This.oUndo)
+	This.oUndo = Createobject ('Collection')
+Else
+	This.oUndo.Remove(-1)
+Endif
+
+ENDPROC
+PROCEDURE format_align_bottom_edges
+Lparameters lnShift
+
+Local lnBottom
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+If lnShift = 0
+	Calculate Max (nBottom) To lnBottom For Not Isnull (nBottom)
+Else
+	Calculate Min (nBottom) To lnBottom For Not Isnull (nBottom)
+Endif
+
+Replace All nNewTop With lnBottom - nHeight For Not Isnull (nBottom)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_align_horizontal_centers
+Local lnLeft, lnRight
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nLeft), Max (nRight)			;
+	To lnLeft, lnRight						;
+	For Not Isnull (nLeft)
+
+Replace All nNewLeft With (lnLeft + lnRight - nWidth) / 2		;
+	For Not Isnull (nLeft)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_align_left_sides
+Lparameters lnShift
+
+Local lnLeft
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+If lnShift = 0
+	Calculate Min (nLeft) To lnLeft For Not Isnull (nLeft)
+Else
+	Calculate Max (nLeft) To lnLeft For Not Isnull (nLeft)
+Endif
+
+Replace All nNewLeft With lnLeft For Not Isnull (nLeft)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_align_right_sides
+Lparameters lnShift
+
+Local lnRight
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+If lnShift = 0
+	Calculate Max (nRight) To lnRight For Not Isnull (nRight)
+Else
+	Calculate Min (nRight) To lnRight For Not Isnull (nRight)
+Endif
+
+Replace All nNewLeft With lnRight - nWidth For Not Isnull (nRight)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_align_top_edges
+Lparameters lnshift
+
+Local lnTop
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+If lnshift = 0
+	Calculate Min (nTop) To lnTop For Not Isnull (nTop)
+Else
+	Calculate Max (nTop) To lnTop For Not Isnull (nTop)
+Endif
+
+Replace All nNewTop With lnTop For Not Isnull (nTop)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_align_vertical_centers
+Local lnTop, lnBottom
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nTop), Max (nBottom)			;
+	To lnTop, lnBottom						;
+	For Not Isnull (nTop)
+
+Replace All nNewTop With (lnTop + lnBottom - nHeight) / 2		;
+	For Not Isnull (nTop)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_bringtofront
+Local laObjects[1], lnObjects, loObject
+If This.SetupFormat() = 0
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+lnObjects = Aselobj (laObjects)
+
+Scan
+	loObject = laObjects (Recno)
+	loObject.ZOrder(0)
+Endscan
+
+ENDPROC
+PROCEDURE format_center_horizontally
+Local laObjects[1], lnObjects, lnParentWidth, lnRight, lnLeft, loParent
+If This.SetupFormat() = 0
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nLeft), Max (nRight)			;
+	To lnLeft, lnRight						;
+	For Not Isnull (nLeft)
+
+lnObjects = Aselobj (laObjects)
+loParent  = laObjects(1).Parent
+If Pemstatus (loParent, 'Width', 5)
+	lnParentWidth = loParent.Width
+Else
+	lnParentWidth = loParent.Parent.PageWidth
+Endif
+
+Replace All nNewLeft With nLeft + (lnParentWidth - (lnLeft + lnRight)) / 2		;
+	For Not Isnull (nLeft)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_center_vertically
+Local laObjects[1], lnBottom, lnObjects, lnParentHeight, lnTop, loParent
+
+If This.SetupFormat() = 0
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nTop), Max (nBottom)			;
+	To lnTop, lnBottom						;
+	For Not Isnull (nTop)
+
+lnObjects = Aselobj (laObjects)
+loParent  = laObjects(1).Parent
+If Pemstatus (loParent, 'Height', 5)
+	lnParentHeight = loParent.Height
+Else
+	lnParentHeight = loParent.Parent.PageHeight
+Endif
+
+Replace All nNewTop With nTop + (lnParentHeight - (lnTop + lnBottom)) / 2		;
+	For Not Isnull (nTop)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_horizontal_decrease
+Lparameters tnDecrease
+Local lnWidth1, lnIncrement, lnNextLeft, lnLeft1, lnLeft2
+
+If 'N' = Vartype(tnDecrease)
+	lnDecrease = tnDecrease
+Else
+	lnDecrease = 1
+EndIf 
+
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nLeft				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+lnIncremented = 0
+
+Scan 
+	Replace nNewLeft With nLeft + lnIncremented
+	lnIncremented = lnIncremented - lnDecrease
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_horizontal_increase
+Lparameters tnIncrease
+Local lnWidth1, lnIncrement, lnNextLeft, lnLeft1, lnLeft2
+
+If 'N' = Vartype(tnIncrease)
+	lnIncrease = tnIncrease
+Else
+	lnIncrease = 1
+EndIf 
+
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nLeft				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+lnIncremented = 0
+
+Scan 
+	Replace nNewLeft With nLeft + lnIncremented
+	lnIncremented = lnIncremented + lnIncrease
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_horizontal_make_equal
+Local lnWidth1, lnIncrement, lnNextLeft, lnLeft1, lnLeft2
+
+If This.SetupFormat() < 3
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nLeft				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+Locate
+lnLeft1	  = nLeft
+lnWidth1 = nWidth
+
+Skip
+lnIncrement	= Max(0, nLeft - (lnLeft1 + lnWidth1))
+
+lnNextLeft = lnLeft1 + lnWidth1 + lnIncrement
+Scan For Recno() > 1
+	Replace nNewLeft With lnNextLeft
+	lnNextLeft = nNewLeft + nWidth + lnIncrement
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_increase
+Lparameters tcPropertyName, tnIncrease
+
+Local lcFromField, lcToField
+
+If This.SetupFormat() = 0
+	Return .T.
+Endif
+
+lcFromField	= 'n' + tcPropertyName
+lcToField	= 'nNew' + tcPropertyName
+
+Select crsr_FormatInfo
+Scan
+	Replace &lcToField With &lcFromField + tnIncrease
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_sendtoback
+Local laObjects[1], lnObjects, loObject
+If This.SetupFormat() = 0
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+lnObjects = Aselobj (laObjects)
+
+Scan
+	loObject = laObjects (Recno)
+	loObject.ZOrder(1)
+Endscan
+
+
+ENDPROC
+PROCEDURE format_to_narrowest
+Local lnWidth
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nWidth) To lnWidth For Not Isnull (nWidth)
+Replace All nNewWidth With lnWidth For Not Isnull (nWidth)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_to_shortest
+Local lnHeight
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Min (nHeight) To lnHeight For Not Isnull (nHeight)
+Replace All nNewHeight With lnHeight For Not Isnull (nHeight)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_to_tallest
+Local lnHeight
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Max (nHeight) To lnHeight For Not Isnull (nHeight)
+Replace All nNewHeight With lnHeight For Not Isnull (nHeight)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_to_widest
+Local lnWidth
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select crsr_FormatInfo
+Calculate Max (nWidth) To lnWidth For Not Isnull (nWidth)
+Replace All nNewWidth With lnWidth For Not Isnull (nWidth)
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_undo
+Local lnIndex
+lnIndex = This.oUndo.Count
+
+If lnIndex # 0
+	Use In crsr_FormatInfo
+	Xmltocursor(This.oUndo.Item (lnIndex), 'crsr_FormatInfo')
+	This.oUndo.Remove (lnIndex)
+	This.PostFormat (.T.)
+Endif
+
+
+
+ENDPROC
+PROCEDURE format_vertical_decrease
+Lparameters tnDecrease
+Local lnWidth1, lnIncrement, lnNextTop, lnTop1, lnTop2
+
+If 'N' = Vartype(tnDecrease)
+	lnDecrease = tnDecrease
+Else
+	lnDecrease = 1
+EndIf 
+
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nTop				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+lnIncremented = 0
+
+Scan 
+	Replace nNewTop With nTop + lnIncremented
+	lnIncremented = lnIncremented - lnDecrease
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_vertical_increase
+Lparameters tnIncrease
+Local lnWidth1, lnIncrement, lnNextTop, lnTop1, lnTop2
+
+If 'N' = Vartype(tnIncrease)
+	lnIncrease = tnIncrease
+Else
+	lnIncrease = 1
+EndIf 
+
+If This.SetupFormat() < 2
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nTop				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+lnIncremented = 0
+
+Scan 
+	Replace nNewTop With nTop + lnIncremented
+	lnIncremented = lnIncremented + lnIncrease
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE format_vertical_make_equal
+Local lnHeight1, lnIncrement, lnNextTop, lnTop1, lnTop2
+
+If This.SetupFormat() < 3
+	Return .T.
+Endif
+
+Select  *						;
+	From crsr_FormatInfo		;
+	Order By nTop				;
+	Into Cursor crsr_FormatInfo Readwrite
+
+Locate
+lnTop1	  = nTop
+lnHeight1 = nHeight
+
+Skip
+lnIncrement	= Max(0, nTop - (lnTop1 + lnHeight1))
+
+lnNextTop = lnTop1 + lnHeight1 + lnIncrement
+Scan For Recno() > 1
+	Replace nNewTop With lnNextTop
+	lnNextTop = nNewTop + nHeight + lnIncrement
+Endscan
+
+This.PostFormat()
+
+ENDPROC
+PROCEDURE postformat
+Lparameters tlUndo
+
+Local loObject As Object
+Local laObjects[1], lcPropName, lcXML, lnObjects, loException
+
+Select crsr_FormatInfo
+lnObjects = Aselobj (laObjects)
+
+Scan
+	loObject = laObjects (Recno)
+
+	Try
+		If (Not Isnull (nTop)) And nTop # nNewTop
+			lcPropName	 = 'Top'
+			loObject.Top = IIf (tlUndo, nTop, nNewTop)
+		Endif
+
+		If (Not Isnull (nLeft)) And nLeft # nNewLeft
+			lcPropName	  = 'Left'
+			loObject.Left = IIf (tlUndo, nLeft, nNewLeft)
+		Endif
+
+		If (Not Isnull (nHeight)) And nHeight # nNewHeight
+			lcPropName		= 'Height'
+			loObject.Height	= IIf (tlUndo, nHeight, nNewHeight)
+		Endif
+
+		If (Not Isnull (nWidth)) And nWidth # nNewWidth
+			lcPropName	   = 'Width'
+			loObject.Width = IIf (tlUndo, nWidth, nNewWidth)
+		Endif
+
+	Catch To loException
+		This.ShowErrorMsg (loException, , , 'Unable to set ' + lcPropName + ' for ' + This.GetObjectPath (loObject))
+	Endtry
+
+Endscan
+
+If Not tlUndo
+	Cursortoxml ('crsr_FormatInfo', 'lcXml', 1, 0, 0, '1')
+	This.oUndo.Add (lcXML)
+Endif
+
+
+ENDPROC
+PROCEDURE setupformat
+Local laObjects[1], lnHeight, lnI, lnLeft, lnObjects, lnTop, lnWidth, loObject
+
+Create Cursor crsr_FormatInfo (			;
+	  Recno			N(6),				;
+	  nTop			N(6),				;
+	  nLeft			N(6),				;
+	  nHeight		N(6),				;
+	  nWidth		N(6),				;
+	  nBottom		N(6),				;
+	  nRight		N(6),				;
+	  nNewTop		N(6),				;
+	  nNewLeft		N(6),				;
+	  nNewHeight	N(6),				;
+	  nNewWidth		N(6),				;
+	  nNewBottom	N(6),				;
+	  nNewRight		N(6)				;
+	  )
+
+lnObjects = Aselobj (laObjects)
+For lnI = 1 To lnObjects
+	loObject = laObjects (lnI)
+	lnTop	 = IIf (Pemstatus (loObject, 'Top', 5), loObject.Top, .Null.)
+	lnLeft	 = IIf (Pemstatus (loObject, 'Left', 5), loObject.Left, .Null.)
+	lnHeight = IIf (Pemstatus (loObject, 'Height', 5), loObject.Height, .Null.)
+	lnWidth	 = IIf (Pemstatus (loObject, 'Width', 5), loObject.Width, .Null.)
+	Insert Into crsr_FormatInfo Values  (0,												;
+		  lnTop, lnLeft, lnHeight, lnWidth, lnTop + lnHeight, lnLeft + lnWidth			;
+		  , lnTop, lnLeft, lnHeight, lnWidth, lnTop + lnHeight, lnLeft + lnWidth		;
+		  )
+	Replace Recno With Recno()
+Endfor
+
+Return lnObjects
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*emptyundobuffer 
+*format_align_bottom_edges 
+*format_align_horizontal_centers 
+*format_align_left_sides 
+*format_align_right_sides 
+*format_align_top_edges 
+*format_align_vertical_centers 
+*format_bringtofront 
+*format_center_horizontally 
+*format_center_vertically 
+*format_horizontal_decrease 
+*format_horizontal_increase 
+*format_horizontal_make_equal 
+*format_increase 
+*format_sendtoback 
+*format_to_narrowest 
+*format_to_shortest 
+*format_to_tallest 
+*format_to_widest 
+*format_undo 
+*format_vertical_decrease 
+*format_vertical_increase 
+*format_vertical_make_equal 
+*postformat 
+*setupformat 
+^ahandlehistory[1,0] 
+^aproclines[1,0] 
+oundo
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] pemeditor_format
+[EOF]

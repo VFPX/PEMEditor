@@ -1,0 +1,93 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Screen    
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+[START RESERVED8]
+editpropertydialogenglish.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2QX0ZHG3F
+[CLASS] dataenvironment
+[BASECLASS] dataenvironment
+[OBJNAME] Dataenvironment
+[START PROPERTIES]
+DataSource = .NULL.
+Height = 0
+Left = 0
+Name = "Dataenvironment"
+Top = 0
+Width = 0
+[END PROPERTIES]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+2[END RESERVED4]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2QX0ZHG3G
+[CLASS] frmpasteproperties
+[CLASSLOC] editproperty.vcx
+[BASECLASS] form
+[OBJNAME] Frmpasteproperties1
+[START PROPERTIES]
+CMDCANCEL.Name = "CMDCANCEL"
+DoCreate = .T.
+Name = "Frmpasteproperties1"
+changefontsize.Name = "changefontsize"
+cmdDeSelect.Name = "cmdDeSelect"
+cmdPaste.Name = "cmdPaste"
+cmdSelect.Name = "cmdSelect"
+gridmembers.COLSELECT.BASECHECKBOX1.Alignment = 2
+gridmembers.COLSELECT.BASECHECKBOX1.Name = "BASECHECKBOX1"
+gridmembers.COLSELECT.Header1.Name = "Header1"
+gridmembers.COLSELECT.Name = "COLSELECT"
+gridmembers.ColAccess.Header1.Name = "Header1"
+gridmembers.ColAccess.Name = "ColAccess"
+gridmembers.ColAccess.Text1.Name = "Text1"
+gridmembers.ColAssign.Header1.Name = "Header1"
+gridmembers.ColAssign.Name = "ColAssign"
+gridmembers.ColAssign.Text1.Name = "Text1"
+gridmembers.ColCode.Header1.Name = "Header1"
+gridmembers.ColCode.Name = "ColCode"
+gridmembers.ColCode.Text1.Name = "Text1"
+gridmembers.ColFavorite.Header1.Name = "Header1"
+gridmembers.ColFavorite.Name = "ColFavorite"
+gridmembers.ColFavorite.Text1.Name = "Text1"
+gridmembers.ColHierarchy.Header1.Name = "Header1"
+gridmembers.ColHierarchy.Name = "ColHierarchy"
+gridmembers.ColHierarchy.Text1.Name = "Text1"
+gridmembers.ColName.Header1.Name = "Header1"
+gridmembers.ColName.Name = "ColName"
+gridmembers.ColName.Text1.Name = "Text1"
+gridmembers.ColNonDefault.Header1.Name = "Header1"
+gridmembers.ColNonDefault.Name = "ColNonDefault"
+gridmembers.ColNonDefault.Text1.Name = "Text1"
+gridmembers.ColType.Header1.Name = "Header1"
+gridmembers.ColType.Name = "ColType"
+gridmembers.ColType.Text1.Name = "Text1"
+gridmembers.ColTypeIcon.Header1.Name = "Header1"
+gridmembers.ColTypeIcon.Name = "ColTypeIcon"
+gridmembers.ColTypeIcon.imgHolder.Name = "imgHolder"
+gridmembers.ColValue.Header1.Name = "Header1"
+gridmembers.ColValue.Name = "ColValue"
+gridmembers.ColValue.Text1.Name = "Text1"
+gridmembers.ColVisibility.Header1.Name = "Header1"
+gridmembers.ColVisibility.Name = "ColVisibility"
+gridmembers.ColVisibility.Text1.Name = "Text1"
+gridmembers.Name = "gridmembers"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+[EOF]

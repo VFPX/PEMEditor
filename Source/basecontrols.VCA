@@ -1,0 +1,4071 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NJ9BO
+[CLASS] checkbox
+[BASECLASS] checkbox
+[OBJNAME] basecheckbox
+[START PROPERTIES]
+Alignment = 0
+AutoSize = .T.
+BackStyle = 0
+Caption = "Check1"
+FontSize = 8
+Name = "basecheckbox"
+Value = .F.
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+with This
+	if .lUpdateControlSourceOnChange
+		.UpdateControlSource()
+	endif .lUpdateControlSourceOnChange
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with .Value in (lcAlias)
+		else
+			store .Value to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*updatecontrolsource Updates the ControlSource with the new value
+lupdatecontrolsourceonchange .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecheckbox
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NO0N8IIY
+[CLASS] collection
+[BASECLASS] collection
+[OBJNAME] basecollection
+[START PROPERTIES]
+Height = 23
+Name = "basecollection"
+Width = 23
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecollection
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NJYFR
+[CLASS] combobox
+[BASECLASS] combobox
+[OBJNAME] basecombobox
+[START PROPERTIES]
+FontSize = 8
+Height = 22
+ItemTips = .T.
+Name = "basecombobox"
+SelectOnEntry = .T.
+Style = 2
+lsaveanchor = .F.
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Initialize aItems.
+
+This.aItems = ''
+
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+with This
+	if .lUpdateControlSourceOnChange
+		.UpdateControlSource()
+	endif .lUpdateControlSourceOnChange
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with .Value in (lcAlias)
+		else
+			store .Value to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*lsaveanchor_assign 
+*updatecontrolsource Updates the ControlSource with the new value
+^aitems[1,0] An array of items for the RowSource if RowSourceType is set to 5-Array
+lsaveanchor
+lupdatecontrolsourceonchange .T. if UpdateControlSource should be called from InteractiveChange
+nanchor
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecombobox
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NFDNC
+[CLASS] commandbutton
+[BASECLASS] commandbutton
+[OBJNAME] basecommandbutton
+[START PROPERTIES]
+Caption = "Command1"
+FontSize = 8
+Height = 23
+Name = "basecommandbutton"
+Width = 75
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecommandbutton
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NI0NJ
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] basecontainer
+[START PROPERTIES]
+BackStyle = 0
+BorderWidth = 0
+Enabled = .T.
+Name = "basecontainer"
+Style = 3
+lsaveanchor = .F.
+nanchor = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+PROCEDURE enabled_assign
+lparameters tlEnabled
+This.Enabled = tlEnabled
+This.SetAll('Enabled', tlEnabled)
+
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*enabled_assign 
+*lsaveanchor_assign 
+lsaveanchor
+nanchor
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecontainer
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2YD0B3KE3
+[CLASS] custom
+[BASECLASS] custom
+[OBJNAME] basecustom
+[START PROPERTIES]
+Name = "basecustom"
+_memberdata =      987<VFPData><memberdata name="release" display="Release"/><memberdata name="addmrufile" display="AddMRUFile"/><memberdata name="diskfilename" display="DiskFileName"/><memberdata name="getcontrolcount" display="GetControlCount"/><memberdata name="getpemstatus" display="GetPEMStatus"/><memberdata name="getrelativepath" display="GetRelativePath"/><memberdata name="isnamechar" display="IsNameChar"/><memberdata name="openurl" display="OpenURL"/><memberdata name="showerrormsg" display="ShowErrorMsg"/><memberdata name="showhelp" display="ShowHelp"/><memberdata name="striptabs" display="StripTabs"/><memberdata name="getmrulist" display="GetMRUList"/><memberdata name="editsourcex" display="EditSourceX"/><memberdata name="getmruid" display="GetMRUID"/><memberdata name="checkoutscc" display="CheckOutSCC"/><memberdata name="atspecial" type="method" display="AtSpecial"/><memberdata name="getpluginpath" display="GetPlugInPath"/><memberdata name="browsefile" display="BrowseFile"/></VFPData>
+lreleaseondestroy = .F.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Destroy
+This.Release()
+
+ENDPROC
+PROCEDURE addmrufile
+Lparameters lcFileName, lcClassName, lcMRU_ID
+
+#Define DELIMITERCHAR  Chr(0)
+#Define MAXITEMS       24
+#Define ResourceAlias  crsr_MRU_Resource_Add
+
+Local lcData, lcLine25, lcNewData, lcSearchString, lcSourceFile, lnPos, lnSelect
+
+If 'ON' # Set ('Resource')
+	Return
+Endif
+
+If lcFileName # '\-'
+	lcFileName = This.DiskFileName(FullPath(lcFileName))
+EndIf
+
+lcSourceFile = Set ('Resource', 1)
+
+If Empty (lcMRU_ID)
+	lcMRU_ID = This.GetMRUID (lcFileName)
+	If '?' $ lcMRU_ID
+		Return
+	Endif
+Endif
+
+If lcMRU_ID = 'MRUI'
+	If Empty (lcClassName) && Class library (artificial)
+		lcMRU_ID	   = 'MRU2'
+		lcSearchString = lcFileName + DELIMITERCHAR
+	Else
+		lcSearchString = lcFileName + '|' + Lower (lcClassName) + DELIMITERCHAR
+		This.AddMRUFile(lcFileName, , 'MRU2')
+	Endif
+Else
+	lcSearchString = lcFileName + DELIMITERCHAR
+Endif
+
+lnSelect = Select()
+Select 0
+Use (lcSourceFile) Again Shared Alias ResourceAlias
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = DELIMITERCHAR + Substr (Data, 3)
+	lnPos  = Atcc (DELIMITERCHAR + lcSearchString, lcData)
+	Do Case
+		Case lnPos = 1
+			* already tops of the list
+			lcNewData = Data
+		Case lnPos = 0
+			* must add to list
+			lcNewData = Stuff (Data, 3, 0, lcSearchString)
+			* note that GetWordNum won't accept CHR(0) as a delimiter
+			lcLine25  = Getwordnum (Chrtran (Substr (lcNewData, 3), DELIMITERCHAR, CR), MAXITEMS + 1, CR)
+			If Not Empty (lcLine25)
+				lcNewData = Strtran (lcNewData, DELIMITERCHAR + lcLine25 + DELIMITERCHAR, DELIMITERCHAR, 1, 1, 1)
+			Endif
+		Otherwise
+			lcNewData = Stuff (Data, lnPos + 1, Len (lcSearchString), '')
+			lcNewData = Stuff (lcNewData, 3, 0, lcSearchString)
+	Endcase
+	Replace																;
+			Data	 With  lcNewData									;
+			ckval	 With  Val (Sys(2007, Substr (lcNewData, 3)))		;
+			Updated	 With  Date()
+Else
+	lcNewData = Chr(4) + DELIMITERCHAR + lcSearchString
+	Insert Into ResourceAlias					;
+		(Type, Id, ckval, Data, Updated)		;
+		Values									;
+		('PREFW', lcMRU_ID, Val (Sys(2007, Substr (lcNewData, 3))), lcNewData, Date())
+
+	****************************************************************
+Endif
+
+Use
+Select (lnSelect)
+
+Return
+
+ENDPROC
+PROCEDURE atspecial
+Lparameters lcSearchExpr, lcSearched
+
+Return Evl ( At (lcSearchExpr, lcSearched), 1 + Len (lcSearched))
+ENDPROC
+PROCEDURE browsefile
+Lparameters lcFileName, lnRecno
+Local lcAlias, llSuccess, lnDataSession 
+
+lnDataSession = Set("Datasession")
+Set DataSession To 1
+
+Try
+	Use (lcFileName) Again Shared In 0
+	lcAlias = Alias()
+
+	If !Empty(lnRecno)
+		Goto lnRecno
+	Endif
+
+	Execscript (_Screen.cThorDispatcher, 'PEME_GoToDefinition', lcAlias)
+	llSuccess = .T.
+Catch To loException
+	This.ShowErrorMsg (loException)
+	llSuccess = .F.
+Endtry
+
+Set DataSession To (lnDataSession)
+Return llSuccess
+
+ENDPROC
+PROCEDURE checkoutscc
+Lparameters lcFileName
+
+Local lnSelect 
+
+*** JRN 11/17/2010 : Bhavbhuti: Source Control
+* Select 0 -- used because it appears that CheckOut may kill current work area
+If 'O' = Type ('This.oPrefs') And This.oPrefs.lCheckOutSCC And 0 # _vfp.Projects.Count
+	lnSelect = Select()
+	Select 0
+	Try
+		If Not Inlist (_vfp.ActiveProject.Files (m.lcFileName).SCCStatus, 0, 2)
+			If Not _vfp.ActiveProject.Files (m.lcFileName).CheckOut()
+
+			Endif
+		Endif
+    Catch to loException
+        Do Case
+            Case loException.ErrorNo = 1943 && if not found in this project
+            Case loException.ErrorNo = 1426 && OLE error code 0x85ff012e: Unknown COM status code
+                _vfp.ActiveProject.Files (m.lcFileName).CheckOut()
+        Otherwise
+            This.ShowErrorMsg(loException)
+        EndCase
+    EndTry
+    Select (lnSelect)
+Endif
+
+
+ENDPROC
+PROCEDURE diskfilename
+Lparameters lcFileName
+
+#Define MAX_PATH 260
+
+Local lnFindFileData, lnHandle, lcXXX
+Declare Integer FindFirstFile In win32api String @, String @
+Declare Integer FindNextFile In win32api Integer, String @
+Declare Integer FindClose In win32api Integer
+
+Do Case
+	Case ( Right (lcFileName, 1) == '\' )
+		Return Addbs (This.DiskFileName (Left (lcFileName, Len (lcFileName) - 1)))
+
+	Case Empty (lcFileName)
+		Return ''
+
+	Case ( Len (lcFileName) == 2 ) And ( Right (lcFileName, 1) == ':' )
+		Return Upper (lcFileName)	&& win2k gives curdir() for C:
+Endcase
+
+lnFindFileData = Space(4 + 8 + 8 + 8 + 4 + 4 + 4 + 4 + MAX_PATH + 14)
+lnHandle		 = FindFirstFile (@lcFileName, @lnFindFileData)
+
+If ( lnHandle < 0 )
+	If ( Not Empty (Justfname (lcFileName)) )
+		lcXXX = Justfname (lcFileName)
+	Else
+		lcXXX = lcFileName
+	Endif
+Else
+	= FindClose (lnHandle)
+	lcXXX	= Substr (lnFindFileData, 45, MAX_PATH)
+	lcXXX	= Left (lcXXX, At (Chr(0), lcXXX) - 1)
+Endif
+
+
+Do Case
+	Case Empty (Justpath (lcFileName))
+		Return lcXXX
+	Case ( Justpath (lcFileName) == '\' ) And (Left (lcFileName, 2) == '\\')	&& unc
+		Return '\\' + lcXXX
+	Otherwise
+		Return Addbs (This.DiskFileName (Justpath (lcFileName))) + lcXXX
+Endcase
+
+Return
+
+ENDPROC
+PROCEDURE editsourcex
+Lparameters tcFileName, tcClass, tcMethod, tnStartRange, tnEndRange, tlCheckOutSCC
+
+Local lcClass, lcCustomPRG, lcExpression, lcExt, lcFileName, lcMethod, lcNewName, lcParams, llSuccess
+Local lnEndRange, lnStartRange 
+
+lcFileName 		= This.DiskFileName(Trim(tcFileName))
+lcClass	   		= Trim(Evl(tcClass, ''))
+lnStartRange	= Evl(tnStartRange, 0)
+lnEndRange		= Evl(tnEndRange, 1)
+lcMethod 		= Evl(tcMethod, '')
+lcExt	   		= Upper (Justext (lcFileName))
+
+This.AddMRUFile (lcFileName, lcClass)
+
+Try
+	If lcExt = 'PJX'
+		Modify Project (lcFileName) Nowait
+	Else
+		If Pcount() < 6 Or tlCheckOutSCC
+			This.CheckOutSCC (lcFileName)
+		Endif
+		Do Case
+			Case lcExt = 'VCX' And Empty(lcClass)
+				lcCustomPRG =  This.GetPlugInPath ("OpenVCXFile")
+				If Not Empty (lcCustomPRG)
+					Try
+						lcNewName = Execscript(Filetostr(lcCustomPRG), lcFileName)
+					Catch To loException
+						This.ShowErrorMsg(loException, 'Open VCX File Failure', lcCustomPRG)
+					Endtry
+				Else
+					Do(_Browser) With (lcFileName)
+				Endif
+			Case lcExt $ ' SCX VCX FRX LBX MNX DBC '
+				lcParams = 'lcFileName, lnStartRange, lcClass, lcMethod'
+				lcExpression = 'lParameters ' + lcParams + ccCR + 'Editsource(' + lcParams + ')'
+				ExecScript(lcExpression, &lcParams)
+			Case lcExt == 'PRG'
+				If lnStartRange # 0
+					Modify Command(lcFileName) Range lnStartRange, lnEndRange Nowait
+				Else
+					Modify Command(lcFileName) Nowait
+				Endif
+			Case (' ' + lcExt + ' ') $ ccTextFileExtensions
+				If lnStartRange # 0
+					Modify File(lcFileName) Range lnStartRange, lnEndRange Nowait
+				Else
+					Modify File(lcFileName) Nowait
+				Endif
+			Case lcExt == 'DBF'
+				llSuccess = This.BrowseFile(lcFileName, tnStartRange)				
+			Case (' ' + lcExt + ' ') $ ' DBC '
+				*** can't open of these files
+				Return .F.
+			Otherwise
+				lcCustomPRG = This.GetPlugInPath ("EditSourceX")
+				If Not Empty (lcCustomPRG)
+					Try
+						lcNewName = Execscript(Filetostr(lcCustomPRG), lcFileName)
+					Catch To loException
+						This.ShowErrorMsg(loException, 'EditSourceX plug-in failure', lcCustomPRG)
+					Endtry
+				Else
+					This.OpenURL (lcFileName)
+				EndIf 
+		Endcase
+	Endif
+	llSuccess = .T.
+Catch To loException
+	This.ShowErrorMsg (loException)
+	llSuccess = .F.
+Endtry
+
+Return llSuccess
+*!*	Try
+*!*		Do Case
+*!*			Case lcExt = 'PJX'
+*!*				Modify Project (lcFileName) Nowait
+*!*			Case lcExt = 'VCX' And Empty (lcClass)
+*!*				This.CheckOutSCC (lcFileName)
+*!*				Do (_Browser) With (lcFileName)
+*!*			Otherwise
+*!*				This.CheckOutSCC (lcFileName)
+*!*				Do Case
+*!*					Case Not Empty (lcClass)
+*!*						Editsource (lcFileName, 0, lcClass)
+*!*					Case 'N' = Vartype (lnStartRange)
+*!*						If 'PRG' == lcExt
+*!*							Modify Command (lcFileName) Range lnStartRange, lnEndRange Nowait
+*!*						Else
+*!*							Modify File (lcFileName) Range lnStartRange, lnEndRange Nowait
+*!*						Endif
+*!*					Case (' ' + lcExt + ' ') $ ' PRG MPR QPR TXT H INI SCX VCX FRX LBX MNX DBC '
+*!*						Editsource (lcFileName)
+*!*					Otherwise
+*!*						This.OpenURL (lcFileName)
+*!*				Endcase
+*!*		Endcase
+*!*	Catch To loException
+*!*		This.ShowErrorMsg (loException)
+*!*	Endtry
+
+
+ENDPROC
+PROCEDURE getcontrolcount
+Lparameters loObject
+Local lnCount
+
+With loObject
+	Do Case
+		Case Not This.GetPEMStatus(loObject, 'Objects', 5)
+			lnCount = 0
+		Case This.GetPEMStatus(loObject, 'ControlCount', 5)
+			lnCount = .ControlCount
+		Case Inlist(Lower(.BaseClass),[pageframe])
+			lnCount = .PageCount
+		Case Inlist(Lower(.BaseClass),[grid])
+			lnCount = .ColumnCount
+		Case Inlist(Lower(.BaseClass),[optiongroup],[commandgroup])
+			lnCount = .ButtonCount
+		Case Inlist(Lower(.BaseClass),[formset])
+			lnCount = .FormCount
+		Case Inlist(Lower(.BaseClass),[dataenvironment])
+			lnCount = 0
+			Do While 'O' = Type(".Objects(lnCount + 1)")
+				lnCount = lnCount + 1
+			Enddo
+		Otherwise
+			lnCount = 0
+	Endcase
+Endwith
+
+Return lnCount
+
+ENDPROC
+PROCEDURE getmousecoordinates
+Local loWas, lcPoint, loResult, lnSMCol, lnSMRow
+
+loWas = Newobject("WinApiSupport", "PEME_WinApiSupport.PRG")
+Declare Long GetCursorPos In WIN32API String @lpPoint
+Declare Long ScreenToClient In WIN32API Long HWnd, String @lpPoint
+
+lcPoint = Replicate(Chr(0), 8)
+&& Get mouse location in Windows desktop coordinates (pixels)
+= GetCursorPos(@lcPoint)
+&& Convert to VFP Desktop (_Screen) coordinates
+= ScreenToClient(_Screen.HWnd, @lcPoint)
+*!*	&& Covert the coordinates to foxels
+
+*!*	lnSMCol = This.Pix2Fox(loWas.Long2Num(Left(lcPoint,4)), .F., _Screen.FontName, _Screen.FontSize)
+*!*	lnSMRow = This.Pix2Fox(loWas.Long2Num(Right(lcPoint,4)), .T., _Screen.FontName, _Screen.FontSize)
+lnSMCol = loWas.Long2Num(Left(lcPoint,4))
+lnSMRow = loWas.Long2Num(Right(lcPoint,4))
+
+loResult = Createobject("Empty")
+AddProperty (loResult, 'Left',   lnSMCol)
+AddProperty (loResult, 'Top',    lnSMRow)
+AddProperty (loResult, 'Source', 'Mouse')
+Return loResult
+
+ENDPROC
+PROCEDURE getmruid
+Lparameters lcFileName
+
+Local lcExt, lcList, lcMRU_ID, lnPos
+lcExt = Upper (Justext ('.' + lcFileName))
+
+lcList = ',VCX=MRUI,PRG=MRUB,MPR=MRUB,QPR=MRUB,SCX=MRUH,MNX=MRUE,FRX=MRUG,DBF=MRUS,DBC=???,LBX=???,PJX=MRUL'
+lnPos  = At (',' + lcExt + '=', lcList)
+If lnPos = 0
+	lcMRU_ID = 'MRUC'
+Else
+	lcMRU_ID = Substr (lcList, lnPos + 5, 4)
+Endif
+
+Return lcMRU_ID 
+ENDPROC
+PROCEDURE getmrulist
+Lparameters lcMRU_ID
+
+#Define DELIMITERCHAR Chr(0)
+
+Local loCollection As 'Collection'
+Local laItems(1), lcData, lcList, lcSourceFile, lnI, lnPos, lnSelect
+
+loCollection = Createobject ('Collection')
+
+If 'ON' # Set ('Resource')
+	Return loCollection
+Endif
+
+lnSelect	 = Select()
+lcSourceFile = Set ('Resource', 1)
+Select 0
+Use (lcSourceFile) Again Shared Alias MRU_Resource
+
+If lcMRU_ID # 'MRU'
+	lcMRU_ID = This.GetMRUID (lcMRU_ID)
+	If '?' $ lcMRU_ID
+		Return
+	Endif
+Endif
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = Data
+	Alines (laItems, Substr (lcData, 3), 0, DELIMITERCHAR)
+	For lnI = 1 To Alen (laItems)
+		If Not Empty (laItems (lnI))
+			loCollection.Add (laItems (lnI))
+		Endif
+	Endfor
+Endif
+
+Use
+Select (lnSelect)
+Return loCollection
+
+
+ENDPROC
+PROCEDURE getpemstatus
+Lparameters loObject, lcPEM, nAttribute
+
+If Upper(loObject.BaseClass) = 'OLE'
+
+	Local laMembers(1), lnRow
+	Amembers(laMembers, loObject, 1, 'PHG#')
+	lnRow = Ascan(laMembers, lcPEM, -1, -1, 1, 15)
+
+	Do Case
+		Case lnRow = 0
+			Return .F.
+		Case nAttribute = 0 && changed
+			Return 'C' $ laMembers(lnRow,3)
+		Case nAttribute = 1 && readonly
+			Return 'R' $ laMembers(lnRow,3)
+		Case nAttribute = 2 && protected
+			Return 'P' $ laMembers(lnRow,3)
+		Case nAttribute = 3 && type
+			Return laMembers(lnRow,2)
+		Case nAttribute = 4 && user-defined
+			Return 'U' $ laMembers(lnRow,3)
+		Case nAttribute = 5 && defined
+			Return .T.
+		Case nAttribute = 6 && inherited
+			Return 'I' $ laMembers(lnRow,3)
+	Endcase
+
+Else
+
+	Return Pemstatus (loObject, lcPEM, nAttribute)
+
+Endif
+
+ENDPROC
+PROCEDURE getpluginpath
+Lparameters tcPRGFileName
+
+Local lcFileName, lcPRGFileName
+
+lcPRGFileName = tcPRGFileName + IIf ('.' $ tcPRGFileName, '', '.PRG')
+
+lcFileName = FullPath('PEME_' + lcPRGFileName)
+If File (lcFileName)
+	Return (lcFileName)
+Endif
+
+lcFileName = This.cPlugInPath + lcPRGFileName
+If File (lcFileName)
+	Return (lcFileName)
+Endif
+
+lcFileName = This.cApplicationPath + lcPRGFileName
+If File (lcFileName)
+	Return (lcFileName)
+Endif
+
+Return ExecScript(_Screen.cThorDispatcher, 'Full Path=PEME_' + lcPRGFileName)
+
+ENDPROC
+PROCEDURE getrelativepath
+Lparameters lcName, lcPath
+Local lcNew, lnPos
+If Empty (lcPath)
+	lcNew = Sys(2014, lcName)
+Else
+	lcNew = Sys(2014, lcName, lcPath)
+Endif
+
+If Len (lcNew) < Len (lcName)
+	lnPos = Rat ('..\', lcNew)
+	If lnPos # 0
+		lnPos = lnPos + 2
+	Endif
+	Return Left (lcNew, lnPos) + Right (lcName, Len (lcNew) - lnPos)
+Else
+	Return lcName
+EndIf 
+
+ENDPROC
+PROCEDURE isnamechar
+Lparameters lcChar
+
+Return Isalpha (lcChar) Or Isdigit (lcChar) Or lcChar = '_'
+
+ENDPROC
+PROCEDURE openurl
+******************
+***    Author: Rick Strahl
+***            (c) West Wind Technologies, 1996
+***   Contact: rstrahl@west-wind.com
+***  Modified: 03/14/96
+***  Function: Starts associated Web Browser
+***            and goes to the specified URL.
+***            If Browser is already open it
+***            reloads the page.
+***    Assume: Works only on Win95 and NT 4.0
+***      Pass: tcUrl  - The URL of the site or
+***                     HTML page to bring up
+***                     in the Browser
+***    Return: 2  - Bad Association (invalid URL)
+***            31 - No application association
+***            29 - Failure to load application
+***            30 - Application is busy 
+***
+***            Values over 32 indicate success
+***            and return an instance handle for
+***            the application started (the browser) 
+****************************************************
+LPARAMETERS tcUrl, tcAction, tcDirectory, tcParms
+
+IF EMPTY(tcUrl)
+   RETURN -1
+ENDIF
+IF EMPTY(tcAction)
+   tcAction = "OPEN"
+ENDIF
+IF EMPTY(tcDirectory)
+   tcDirectory = SYS(2023) 
+ENDIF
+
+DECLARE INTEGER ShellExecute ;
+    IN SHELL32.dll ;
+    INTEGER nWinHandle,;
+    STRING cOperation,;
+    STRING cFileName,;
+    STRING cParameters,;
+    STRING cDirectory,;
+    INTEGER nShowWindow
+IF EMPTY(tcParms)
+   tcParms = ""
+ENDIF
+
+DECLARE INTEGER FindWindow ;
+   IN WIN32API ;
+   STRING cNull,STRING cWinName
+
+RETURN ShellExecute(0,;
+                    tcAction,tcUrl,;
+                    tcParms,tcDirectory,1)
+
+ENDPROC
+PROCEDURE pix2fox
+LPARAMETER tnPixels, tlVertical, tcFontName, tnFontSize
+&& tnPixels - pixels to convert
+&& tlVertical - .F./.T. convert horizontal/vertical coordinates
+&& tcFontName, tnFontSize - use specified font/size 
+&&         or current form (active output window) font/size, if not specified 
+LOCAL lnFoxels
+ 
+IF PCOUNT() > 2
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6), tcFontName, tnFontSize)
+ELSE
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6))
+ENDIF	
+ 
+RETURN lnFoxels
+ENDPROC
+PROCEDURE release
+Local laMembers(1), lcMember
+Amembers (laMembers, This, 0)
+For Each lcMember In laMembers
+	lcMember = Upper (lcMember)
+	If Pemstatus(This, lcMember, 4) And 'O' = Vartype (Getpem (This, lcMember))
+		If This.lReleaseOnDestroy
+			Try
+				This.&lcMember..Release()
+			Catch
+			Endtry
+		Endif
+		This.&lcMember. = .Null.
+	Endif
+Endfor
+
+ENDPROC
+PROCEDURE showerrormsg
+Lparameters loException, lcTitleBar, lcPRGName, lcAddlInfo
+
+Messagebox ('Error: ' + Transform (loException.ErrorNo) 	+ ccCRLF +							;
+	  'Message: ' + loException.Message 					+ ccCRLF +							;
+	  'Procedure: ' + IIf (Empty (lcPRGName), loException.Procedure, Justfname (lcPRGName)) + ccCRLF + ;
+	  'Line: ' + Transform (loException.Lineno) 			+ ccCRLF +							;
+	  'Code: ' + loException.LineContents														;
+	  + IIf (Empty (lcAddlInfo), '', ccCRLF + 'NOTES: ' + lcAddlInfo)							;
+	  , MB_OK + MB_ICONEXCLAMATION, Evl (lcTitleBar, 'Error'))
+
+ENDPROC
+PROCEDURE showhelp
+Lparameters lnHelpID
+
+Local lcCurrentHelpFile, lcHelpFile, lcPath
+
+lcCurrentHelpFile = Set("Help",1)
+
+lcPath = This.cApplicationPath
+lcHelpFile = lcPath + "PemEditor.CHM"
+
+*** JRN 2010-05-06 : Remove security warning; from http://www.foxpert.com/knowlbits_200906_1.htm
+If File(lcHelpFile)
+	PEME_RemSecurityWarning(lcHelpFile)
+
+	Set Help To (lcHelpFile)
+
+	If Empty (lnHelpID)
+		Help
+	Else
+		Help Id (lnHelpID)
+	Endif
+Endif
+
+Set Help To (lcCurrentHelpFile)
+
+ENDPROC
+PROCEDURE striptabs
+Lparameters cAbstract
+
+* Abstract:
+*   Replace all tabs with spaces; also removes leading / trailing blanks
+*
+* Parameters:
+*	<cAbstract> = string to strip tabs/spaces from
+Return Alltrim (Chrtran (m.cAbstract, ccTab, ' '))
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*addmrufile Adds a file (or class within a file) to its appropriate VFP MRU list.  The last parameter is optional (can be inferred from the filename, after all)
+*atspecial 
+*browsefile 
+*checkoutscc 
+*diskfilename Returns the file name with the same case (upper/lower) as it is on disk.
+*editsourcex Enhanced version of VFP's EditSource: maintains case of file name, adds to MRU list, optionally checks out from source control.  For classes, opens up class browser.  For PRGs and text files, start and end points of text to be selected may be supplied.
+*getcontrolcount Returns the number of child objects in a container object
+*getmousecoordinates 
+*getmruid Returns the name of the MRU list associated with a file name or extension)
+*getmrulist Returns (as a collection) the list of all items for a particular MRU list.  <lcMRU_ID> may be the actual MRU name, a file name, or a file extension
+*getpemstatus 
+*getpluginpath 
+*getrelativepath 
+*isnamechar 
+*openurl 
+*pix2fox 
+*release Releases a FormSet or Form from memory.
+*showerrormsg 
+*showhelp 
+*striptabs 
+_memberdata XML Metadata for customizable properties
+lreleaseondestroy
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basecustom
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0OEVWC
+[CLASS] editbox
+[BASECLASS] editbox
+[OBJNAME] baseeditbox
+[START PROPERTIES]
+FontSize = 8
+IntegralHeight = .T.
+Name = "baseeditbox"
+SelectOnEntry = .T.
+lsaveanchor = .F.
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+* Write the current value to the ControlSource if necessary (otherwise
+* anything called from here can't check the value of our ControlSource), call
+* the AnyChange method, and restore the current cursor position in case
+* This.Refresh got called from AnyChange.
+
+local lnSelStart
+with This
+	lnSelStart = .SelStart
+	if .lUpdateControlSourceOnChange
+		.UpdateControlSource()
+	endif .lUpdateControlSourceOnChange
+	.AnyChange()
+	.SelStart = lnSelStart
+endwith
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE Valid
+* If we're not canceling, call the Validation method to do the actual
+* validation.
+
+local luReturn
+with This
+	if lastkey() <> 27
+		luReturn = .Validation()
+	else
+		luReturn = .T.
+	endif lastkey() <> 27
+endwith
+return luReturn
+
+ENDPROC
+PROCEDURE When
+* Store the current value into the Tag property so it can be restored if Valid
+* fails.
+
+This.Tag = This.Value
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with .Value in (lcAlias)
+		else
+			store .Value to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+PROCEDURE validation
+* Abstract method
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*lsaveanchor_assign 
+*updatecontrolsource Updates the ControlSource with the new value
+*validation Custom validation code
+lsaveanchor
+lupdatecontrolsourceonchange .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
+nanchor
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseeditbox
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _18B0TPO44
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] baseform
+[START PROPERTIES]
+AllowOutput = .F.
+AutoCenter = .T.
+Caption = "Form"
+DataSession = 2
+DoCreate = .T.
+FontSize = 8
+Name = "baseform"
+ShowTips = .T.
+cfoxuserid = 
+cfoxusername = 
+cpreferencesfile = (Home(7) + "PEMEditor_Preferences.DBF")
+lpemeditorform = .T.
+lpersistsizeposition = .T.
+lsavesettings = .T.
+nfontsize = 8
+nhighlightbackcolor = 0
+nhighlightforecolor = 0
+opersist = .NULL.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Destroy
+* Save the current settings
+
+if This.lSaveSettings
+	This.SaveSettings()
+endif This.lSaveSettings
+
+* Nuke member objects.
+
+This.oPersist = .NULL.
+
+ENDPROC
+PROCEDURE Init
+Local lcLibrary, lcMyFile, lcResourceFile, loData
+With This
+
+	* Restore saved options and the size and position of the form.
+
+	If .lSaveSettings
+		lcLibrary = 'PEME_FoxResource.prg'
+		.oPersist = Newobject ('FoxResource', lcLibrary)
+
+		*** JRN 02/10/2009 : Use own resource file, rather than FoxUser
+		lcResourceFile = .cPreferencesFile
+		lcMyFile	   = 'PEMEditor_Preferences'
+		If File (lcMyFile + '.DBF')
+			Try
+				Use (lcMyFile) Shared Again In 0 Alias My_Resources
+				lcResourceFile = Dbf('My_Resources')
+				Use in My_Resources
+				.cPreferencesFile = lcResourceFile
+			Catch
+			EndTry
+		EndIf 
+
+		Do Case
+			Case File (lcResourceFile)
+				.oPersist.UseResourceFile (lcResourceFile)
+			Otherwise
+				.oPersist.CreateResourceFile (lcResourceFile)
+		Endcase
+
+		.RestoreSettings()
+	Endif .lSaveSettings
+
+	DoDefault()
+
+Endwith
+
+ENDPROC
+PROCEDURE Load
+* Set up the environment.
+
+Set Deleted On
+Set Exact Off
+Set Exclusive Off
+Set Multilocks On
+Set Safety Off
+Set Talk Off
+Sys(3054, 0)
+
+With This
+	Declare Integer GetSysColor In "user32" Integer nIndex
+	.nHighlightBackColor  = GetSysColor (13)
+	.nHighlightForeColor  = GetSysColor (14)
+
+Endwith
+
+ENDPROC
+PROCEDURE addmrufile
+Lparameters lcFileName, lcClassName, lcMRU_ID
+
+#Define DELIMITERCHAR Chr(0)
+#Define MAXITEMS      24
+
+Local lcData, lcExt, lcLine25, lcList, lcNewData, lcSearchString, lcSourceFile, lnPos
+Local lnSelect
+
+If 'ON' # Set ('Resource')
+	Return
+Endif
+
+lcSourceFile = Set ('Resource', 1)
+lcExt		 = Upper (Justext (lcFileName))
+
+If Empty (lcMRU_ID)
+	lcList = ',VCX=MRUI,PRG=MRUB,MPR=MRUB,QPR=MRUB,SCX=MRUH,MNX=MRUE,FRX=MRUG,DBC=???,LBX=???,PJX=MRUL'
+	lnPos  = At (',' + lcExt + '=', lcList)
+	If lnPos = 0
+		lcMRU_ID = 'MRUC'
+	Else
+		lcMRU_ID = Substr (lcList, lnPos + 5, 4)
+		If lcMRU_ID = '?'
+			Return
+		Endif
+	Endif
+Endif
+
+If lcMRU_ID = 'MRUI'
+	If Empty (lcClassName)
+		lcMRU_ID	   = 'MRU2'
+		lcSearchString = lcFileName + DELIMITERCHAR
+	Else
+		lcSearchString = lcFileName + '|' + Lower (lcClassName) + DELIMITERCHAR
+	Endif
+Else
+	lcSearchString = lcFileName + DELIMITERCHAR
+Endif
+
+lnSelect = Select()
+Select 0
+Use (lcSourceFile) Again Shared Alias MRU_Resource_Add
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = DELIMITERCHAR + Substr (Data, 3)
+	lnPos  = Atcc (DELIMITERCHAR + lcSearchString, lcData)
+	Do Case
+		Case lnPos = 1
+			* already tops of the list
+			lcNewData = Data
+		Case lnPos = 0
+			* must add to list
+			lcNewData = Stuff (Data, 3, 0, lcSearchString)
+			* note that GetWordNum won't accept CHR(0) as a delimiter
+			lcLine25  = Getwordnum (Chrtran (Substr (lcNewData, 3), DELIMITERCHAR, CR), MAXITEMS + 1, CR)
+			If Not Empty (lcLine25)
+				lcNewData = Strtran (lcNewData, DELIMITERCHAR + lcLine25 + DELIMITERCHAR, DELIMITERCHAR, 1, 1, 1)
+			Endif
+		Otherwise
+			lcNewData = Stuff (Data, lnPos + 1, Len (lcSearchString), '')
+			lcNewData = Stuff (lcNewData, 3, 0, lcSearchString)
+	Endcase
+	Replace															;
+		Data	 With  lcNewData									;
+		ckval	 With  Val (Sys(2007, Substr (lcNewData, 3)))		;
+		Updated	 With  Date()
+Else
+	lcNewData = Chr(4) + DELIMITERCHAR + lcSearchString
+	Insert Into MRU_Resource_Add			;
+		(Type, Id, ckval, Data, Updated)	;
+		values 								;
+		('PREFW', lcMRU_ID, Val (Sys(2007, Substr (lcNewData, 3))), lcNewData, Date())
+
+	****************************************************************
+Endif
+
+Use
+Select (lnSelect)
+
+Return
+
+ENDPROC
+PROCEDURE calculateshortcutmenuposition
+Local loWas, lcPoint, loResult, lnSMCol, lnSMRow
+
+loWas = Newobject("WinApiSupport", "PEME_WinApiSupport.PRG")
+Declare Long GetCursorPos In WIN32API String @lpPoint
+Declare Long ScreenToClient In WIN32API Long HWnd, String @lpPoint
+
+lcPoint = Replicate(Chr(0), 8)
+&& Get mouse location in Windows desktop coordinates (pixels)
+= GetCursorPos(@lcPoint)
+&& Convert to VFP Desktop (_Screen) coordinates
+= ScreenToClient(_Screen.HWnd, @lcPoint)
+&& Covert the coordinates to foxels
+
+lnSMCol = This.Pix2Fox(loWas.Long2Num(Left(lcPoint,4)), .F., _Screen.FontName, _Screen.FontSize)
+lnSMRow = This.Pix2Fox(loWas.Long2Num(Right(lcPoint,4)), .T., _Screen.FontName, _Screen.FontSize)
+
+loResult = Createobject("Empty")
+AddProperty (loResult, 'Column', lnSMCol )
+AddProperty (loResult, 'Row', lnSMRow )
+Return loResult
+
+ENDPROC
+PROCEDURE createcontextmenu
+Lparameters lcMenuName
+Local loPosition
+
+loPosition = This.CalculateShortcutMenuPosition()
+
+*** JRN 2010-11-10 : Following is an attempt to solve the problem
+* when there is another form already open; apparently, if the 
+* focus is on the screen, the positioning of the popup still works OK
+_Screen.Show()
+
+Define Popup (lcMenuName)						;
+	shortcut									;
+	Relative									;
+	From loPosition.Row, loPosition.Column
+
+ENDPROC
+PROCEDURE diskfilename
+Lparameters lcFileName
+
+#Define MAX_PATH 260
+
+Local lnFindFileData, lnHandle, lcXXX
+Declare Integer FindFirstFile In win32api String @, String @
+Declare Integer FindNextFile In win32api Integer, String @
+Declare Integer FindClose In win32api Integer
+
+Do Case
+	Case ( Right (lcFileName, 1) == '\' )
+		Return Addbs (This.DiskFileName (Left (lcFileName, Len (lcFileName) - 1)))
+
+	Case Empty (lcFileName)
+		Return ''
+
+	Case ( Len (lcFileName) == 2 ) And ( Right (lcFileName, 1) == ':' )
+		Return Upper (lcFileName)	&& win2k gives curdir() for C:
+Endcase
+
+lnFindFileData = Space(4 + 8 + 8 + 8 + 4 + 4 + 4 + 4 + MAX_PATH + 14)
+lnHandle		 = FindFirstFile (@lcFileName, @lnFindFileData)
+
+If ( lnHandle < 0 )
+	If ( Not Empty (Justfname (lcFileName)) )
+		lcXXX = Justfname (lcFileName)
+	Else
+		lcXXX = lcFileName
+	Endif
+Else
+	= FindClose (lnHandle)
+	lcXXX	= Substr (lnFindFileData, 45, MAX_PATH)
+	lcXXX	= Left (lcXXX, At (Chr(0), lcXXX) - 1)
+Endif
+
+
+Do Case
+	Case Empty (Justpath (lcFileName))
+		Return lcXXX
+	Case ( Justpath (lcFileName) == '\' ) And (Left (lcFileName, 2) == '\\')	&& unc
+		Return '\\' + lcXXX
+	Otherwise
+		Return Addbs (This.DiskFileName (Justpath (lcFileName))) + lcXXX
+Endcase
+
+Return
+
+ENDPROC
+PROCEDURE get1value
+Lparameters loObject, lcPem
+Local lcResult
+
+Try
+	lcResult = Evaluate( [loObject.] + lcPem)
+Catch
+	lcResult = ''
+Endtry
+
+Return lcResult
+
+ENDPROC
+PROCEDURE getdisplayrelativepath
+Lparameters lcFileName, lcFolder, lcClass
+* returns the display form of a file name
+Local lcFileDisplayName, lcFName, lcQuote, lcResult
+
+lcFileDisplayName = Thisform.GetRelativePath (This.DiskFileName(lcFileName), Evl (lcFolder, Curdir()))
+lcFName = Justfname (lcFileDisplayName)
+lcQuote = Iif (" " $ lcFName, ['], '')
+If lcFName == lcFileDisplayName
+	lcResult = lcQuote + lcFName + lcQuote
+Else
+	lcResult = lcQuote + lcFName + lcQuote + "  from  " + Justpath (lcFileDisplayName)
+Endif
+
+Return lcResult 
+
+ENDPROC
+PROCEDURE getmrulist
+Lparameters lcMRU_ID
+
+#Define DELIMITERCHAR Chr(0)
+
+Local loCollection As 'Collection'
+Local laItems(1), lcData, lcList, lcSourceFile, lnI, lnPos, lnSelect
+
+loCollection = Createobject ('Collection')
+
+If 'ON' # Set ('Resource')
+	Return loCollection
+Endif
+
+lnSelect	 = Select()
+lcSourceFile = Set ('Resource', 1)
+Select 0
+Use (lcSourceFile) Again Shared Alias MRU_Resource
+
+If lcMRU_ID # 'MRU'
+	lcList = ',VCX=MRUI,PRG=MRUB,MPR=MRUB,QPR=MRUB,SCX=MRUH,MNX=MRUE,FRX=MRUG,DBC=???,LBX=???,PJX=MRUL,DBF=MRUS'
+	lnPos  = At (',' + Upper (JustExt ('.' + lcMRU_Id)) + '=', lcList)
+	If lnPos = 0
+		lcMRU_ID = 'MRUC'
+	Else
+		lcMRU_ID = Substr (lcList, lnPos + 5, 4)
+		If lcMRU_ID = '?'
+			Return
+		Endif
+	Endif
+Endif
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = Data
+	Alines (laItems, Substr (lcData, 3), 0, DELIMITERCHAR)
+	For lnI = 1 To Alen (laItems)
+		If Not Empty (laItems (lnI))
+			loCollection.Add (laItems (lnI))
+		Endif
+	Endfor
+Endif
+
+Use
+Select (lnSelect)
+Return loCollection
+
+
+ENDPROC
+PROCEDURE getpemstatus
+Lparameters loObject, lcPEM, nAttribute
+
+If Upper(loObject.BaseClass) = 'OLE'
+
+	Local laMembers(1), lnRow
+	Amembers(laMembers, loObject, 1, 'PHG#')
+	lnRow = Ascan(laMembers, lcPEM, -1, -1, 1, 15)
+
+	Do Case
+		Case lnRow = 0
+			Return .F.
+		Case nAttribute = 0 && changed
+			Return 'C' $ laMembers(lnRow,3)
+		Case nAttribute = 1 && readonly
+			Return 'R' $ laMembers(lnRow,3)
+		Case nAttribute = 2 && protected
+			Return 'P' $ laMembers(lnRow,3)
+		Case nAttribute = 3 && type
+			Return laMembers(lnRow,2)
+		Case nAttribute = 4 && user-defined
+			Return 'U' $ laMembers(lnRow,3)
+		Case nAttribute = 5 && defined
+			Return .T.
+		Case nAttribute = 6 && inherited
+			Return 'I' $ laMembers(lnRow,3)
+	Endcase
+
+Else
+
+	Return Pemstatus (loObject, lcPEM, nAttribute)
+
+Endif
+
+ENDPROC
+PROCEDURE getputsetting
+*  Routine to either save or restore a setting (based on flag parameter)
+*  Allows a single calling routine to handle all settings,
+*  insuring that all are saved and restored consistently
+
+Lparameters tcPropertyName, tcSettingName, txDefaultValue, tlPutFlag
+
+Local lxCurrentValue, lxCurrentSetting
+
+If tlPutFlag
+	lxCurrentValue = Getpem (Thisform, tcPropertyName)
+	This.PutSetting (tcSettingName, lxCurrentValue, txDefaultValue)
+Else
+	lxCurrentSetting = This.GetSetting (tcSettingName, txDefaultValue)
+	Thisform.AddProperty (tcPropertyName, lxCurrentSetting)
+Endif
+
+ENDPROC
+PROCEDURE getputsettings
+Lparameters lbPutFlag
+
+*  Routine to either save (lbPutFlag = .T.) or get (lbPutFlag = .F.) settings
+*  Structured this way so a single method call is this routine can be used
+*  both ways, insuring that all settings are handled consistently between
+*  saving and restoring.  Improved legibility as well.
+
+With This
+	.GetPutSetting ('Top', 		'Top', 		.Top + 1, 	lbPutFlag)
+	.GetPutSetting ('Left', 	'Left', 	.Left + 1, 	lbPutFlag)
+	.GetPutSetting ('Height', 	'Height', 	.Height + 1, lbPutFlag)
+	.GetPutSetting ('Width', 	'Width', 	.Width + 1, lbPutFlag)
+Endwith
+
+ENDPROC
+PROCEDURE getrelativepath
+Lparameters lcName, lcPath
+Local lcNew, lnPos
+If Empty (lcPath)
+	lcNew = Sys(2014, lcName)
+Else
+	lcNew = Sys(2014, lcName, lcPath)
+Endif
+
+If Len (lcNew) < Len (lcName)
+	lnPos = Rat ('..\', lcNew)
+	If lnPos # 0
+		lnPos = lnPos + 2
+	Endif
+	Return Left (lcNew, lnPos) + Right (lcName, Len (lcNew) - lnPos)
+Else
+	Return lcName
+EndIf 
+ENDPROC
+PROCEDURE getsetting
+Lparameters tcSettingName, txDefaultValue
+
+Return Nvl( This.oPersist.Get (tcSettingName), txDefaultValue)
+
+ENDPROC
+PROCEDURE getvalue
+Lparameters lcName, tbNative, tcResultType, tnObjNumber
+
+Local lcPem, lbFirst, lcValue, lxValue, lcNewValue, lxNewValue, lnRed, lnGreen, lnBlue
+Local loObject, lbTransform, loResult, lcTypes, lcNewType, lnI, lnJ, lnK
+
+lcPem = Thisform.JustPEM(lcName)
+lbTransform = .T.
+
+*** JRN 03/18/2009 : modifications to handle multiple objects
+Do Case
+	Case Not Empty(tnObjNumber)
+		loObject = Thisform.aSelectedObjects(tnObjNumber)
+		lcPem = Thisform.cEditPropertyName
+		lcValue = loObject.ReadExpression (lcPem)
+		lxValue = This.Get1Value (loObject, lcPem)
+		lcTypes = Vartype (lxValue)
+
+	Case (Thisform.lUseCSO) And Thisform.nSelectedObjects > 1
+		lbFirst = .T.
+		For lnI = 1 to Alen ( Thisform.aSelectedObjects)
+			loObject = Thisform.aSelectedObjects(lnI)
+			Do Case
+				Case Not Thisform.GetPEMStatus(loObject, lcPem, 5)
+
+				Case lbFirst
+					lcValue = loObject.ReadExpression (lcPem)
+					lxValue = This.Get1Value (loObject, lcPem)
+					lbFirst = .F.
+					lcTypes = Vartype (lxValue)
+				Otherwise
+					lcNewValue = loObject.ReadExpression (lcPem)
+					lxNewValue = This.Get1Value (loObject, lcPem)
+					lcNewType  = Vartype (lxValue)
+					If lbTransform
+						If (Not lcValue == lcNewValue)							;
+								or Vartype (lxValue) # Vartype (lxNewValue)		;
+								or lxValue # lxNewValue
+							lcValue = ' '
+							lbTransform = .F.
+							lcTypes = lcTypes + Iif (lcNewType $ lcTypes, '', lcNewType)
+						Endif
+					Else
+						lcTypes = lcTypes + Iif (lcNewType $ lcTypes, '', lcNewType)
+					Endif
+			Endcase
+		Endfor
+	Otherwise
+		lcValue = Thisform.oObject.ReadExpression (lcPem)
+		lxValue = This.Get1Value (Thisform.oObject, lcPem)
+		lcTypes = Vartype (lxValue)
+Endcase
+
+If lbTransform And Empty (lcValue)
+	Do Case
+			* handle null values
+		Case Isnull(lxValue)
+			lcValue = '.NULL.'
+			* Special handling for native colors
+		Case 'N' = Vartype (lxValue) And Thisform.IsNativeColor(lcPem, tbNative)
+			lnRed   = Bitand(lxValue, 255)
+			lnGreen = Bitrshift(Bitand(lxValue, 256 * 255), 8)
+			lnBlue  = Bitrshift(Bitand(lxValue, 256 * 256 * 255), 16)
+			lcValue = Transform(lnRed) + ',' + Transform(lnGreen) + ',' + Transform(lnBlue)
+		Case 'C' = Vartype (lxValue) And 0 = Len(lxValue) and tcResultType= 'Display'
+			lcValue = '(None)'
+		Case 'D' # Vartype (lxValue)
+			lcValue = Transform( lxValue )
+		Case Empty (lxValue)
+			lcValue = '{}'
+		Otherwise
+			lcValue = '{^' + Transform(Year(lxValue)) + "/" + Transform(Month(lxValue)) + "/" + Transform(Day(lxValue)) + "}"
+	Endcase
+Endif
+
+Do Case
+	Case tcResultType= 'Display'
+		Return Left (lcValue, 100)
+	Case tcResultType= 'Full Value'
+		Return lcValue
+	Case tcResultType= 'For Editing'
+		loResult = Createobject("Empty")
+		AddProperty (loResult, "Value", lxValue)
+		AddProperty (loResult, "CharValue", lcValue)
+		AddProperty (loResult, "Type", lcTypes)
+		AddProperty (loResult, "SingleValue", lbTransform)
+		Return loResult
+Endcase
+
+ENDPROC
+PROCEDURE justpem
+* Strip any index off the member name and convert it to lower case if necessary.
+
+Lparameters tcPEM, ;
+	tlLowerCase
+Local lcPem
+lcPem = Trim(tcPEM)
+Do Case
+	Case '[' $ lcPem
+		lcPem = Left(lcPem, At('[', lcPem) - 1)
+	Case '(' $ lcPem
+		lcPem = Left(lcPem, At('(', lcPem) - 1)
+Endcase
+Return Iif(tlLowerCase, Lower(lcPem), lcPem)
+
+ENDPROC
+PROCEDURE pix2fox
+LPARAMETER tnPixels, tlVertical, tcFontName, tnFontSize
+&& tnPixels - pixels to convert
+&& tlVertical - .F./.T. convert horizontal/vertical coordinates
+&& tcFontName, tnFontSize - use specified font/size 
+&&         or current form (active output window) font/size, if not specified 
+LOCAL lnFoxels
+ 
+IF PCOUNT() > 2
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6), tcFontName, tnFontSize)
+ELSE
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6))
+ENDIF	
+ 
+RETURN lnFoxels
+ENDPROC
+PROCEDURE putsetting
+Lparameters tcSettingName, lxCurrentValue, txDefaultValue
+Local lxCurrentSetting
+
+lxCurrentSetting = This.GetSetting(tcSettingName, txDefaultValue)
+
+If Vartype (lxCurrentValue) = Vartype (lxCurrentSetting)	;
+		and lxCurrentValue == lxCurrentSetting
+	* do nothing
+Else
+	This.oPersist.Set (tcSettingName, lxCurrentValue)
+Endif
+
+ENDPROC
+PROCEDURE refreshform
+* Lock for form while refreshing.
+
+This.LockScreen = .T.
+This.Refresh()
+This.LockScreen = .F.
+
+ENDPROC
+PROCEDURE restorecolumninfo
+Lparameters loGrid
+Local loColumn AS Object
+Local laColumnOrder[1], laColumnWidths[1], lcColumnOrder, lcColumnWidths, lnColumnOrder, lnColumnWidths
+Local lnI 
+
+With loGrid
+
+	lcColumnWidths = Nvl(Thisform.oPersist.Get('ColumnWidths'), [])
+	lnColumnWidths = Alines(laColumnWidths, Alltrim (lcColumnWidths), .T., " ")
+
+	lcColumnOrder = Nvl(Thisform.oPersist.Get('ColumnOrder'), [])
+	lnColumnOrder = Alines(laColumnOrder, Alltrim(lcColumnOrder), .T., " ")
+
+	For lnI = 1 To .ColumnCount
+		loColumn = .Columns(lnI)
+		If lnI <= lnColumnWidths And Val(laColumnWidths[lnI]) > 0
+			loColumn.Width = Val(laColumnWidths[lnI])
+		Else
+			loColumn.Width = loColumn.nWidth
+		Endif lnI <= lnColumnWidths ...
+
+		If .ColumnCount = lnColumnOrder And Val(laColumnOrder[lnI]) > 0
+			loColumn.ColumnOrder = Val(laColumnOrder[lnI])
+		Endif lnI <= lnColumnOrder ...
+	Next lnI
+
+Endw
+
+ENDPROC
+PROCEDURE restoresettings
+* Restore saved settings from FOXUSER.
+* Put code for settings into .GetPutSettings
+With This
+	.oPersist.Load(.cFoxUserID, .cFoxUserName)
+	.GetPutSettings(.F.)
+Endwith
+
+
+ENDPROC
+PROCEDURE savecolumninfo
+Lparameters loGrid
+Local loColumn AS Object
+Local lcColumnOrder, lcColumnWidths, lnI 
+With this
+	lcColumnWidths 	= []
+	lcColumnOrder 	= []
+	For lnI = 1 To loGrid.ColumnCount
+		loColumn       = loGrid.Columns[lnI]
+		lcColumnWidths = lcColumnWidths + ' ' + Transform(loColumn.Width)
+		lcColumnOrder  = lcColumnOrder  + ' ' + Transform(loColumn.ColumnOrder)
+	Next lnI
+
+	.PutSetting('ColumnWidths', Trim(lcColumnWidths))
+	.PutSetting('ColumnOrder' , Trim(lcColumnOrder))
+EndWith 
+ENDPROC
+PROCEDURE savesettings
+* Save settings to FOXUSER.
+* Put code for settings into .GetPutSettings
+
+With This
+	.GetPutSettings(.T.)
+	.oPersist.Save(.cFoxUserID, .cFoxUserName)
+Endwith
+
+ENDPROC
+PROCEDURE update1property
+Lparameters toObject, tcPem, tuVal
+Local loException, lcExpression
+
+*** JRN 12/21/2008 : for some native properties, not all values entered are valid
+* See also editpropertydialog.ApplyChanges
+If Not Thisform.GetPEMStatus (toObject, tcPem, 5)
+	Return
+Endif
+
+Try && for some native properties, not all values entered are valid
+	Do Case
+		Case Vartype(tuVal) = 'C' And tuVal = ['] And Not ['] $ Substr(tuVal,2)
+			toObject.WriteExpression (tcPem, [='] + Substr(tuVal,2) + [']) 
+		Case Vartype(tuVal) = 'C' And tuVal = '='
+			toObject.WriteExpression (tcPem, tuVal)
+		Otherwise
+			If Not Empty(toObject.ReadExpression (tcPem))
+				toObject.WriteExpression (tcPem, '') && clear out all expression, if any.
+			Endif
+			*** JRN 12/23/2008 : assignment rather than AddProperty, since that fails on OLEs
+			With toObject
+				lcExpression = "." + tcPem + " = tuVal"
+				&lcExpression && note that macro expansion works here
+			Endwith
+	Endcase
+
+Catch To loException
+	Messagebox(ccLOC_AddProperty_Failed + ccCRLF + ;
+		'Message: ' + loException.Message + ccCRLF,  ;
+		MB_OK + MB_ICONEXCLAMATION, 'Set Property!! Failure')
+Endtry
+
+ENDPROC
+PROCEDURE updateselectedcontrols
+*** JRN 03/17/2009 : use ASelObj to determine which objects, unless explicitly told to use the supplied object
+Lparameters toObject, tcPem, tuVal, tlOnlyOne
+
+Local Array laSelected[1]
+Local lnSelected, lnI
+
+With This
+	If tlOnlyOne
+		.Update1Property(toObject, tcPem, tuVal)
+	Else
+		lnSelected = Aselobj(laSelected)
+		If lnSelected > 0
+			For lnI = 1 To lnSelected
+				.Update1Property(laSelected[lnI], tcPem, tuVal)
+			Next lnI
+		Else
+			.Update1Property(toObject, tcPem, tuVal)
+		Endif lnSelected > 0
+	Endif
+Endwith
+
+If Used("csrMembers")
+	Replace lNonDefault With .T. In csrMembers
+	Thisform.Refresh()
+Endif
+
+Return
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+2[END RESERVED2]
+[START RESERVED3]
+*addmrufile 
+*calculateshortcutmenuposition 
+*createcontextmenu 
+*diskfilename 
+*get1value 
+*getdisplayrelativepath 
+*getmrulist 
+*getpemstatus 
+*getputsetting 
+*getputsettings 
+*getrelativepath 
+*getsetting 
+*getvalue 
+*justpem 
+*pix2fox 
+*putsetting 
+*refreshform Refreshes the form with the LockScreen .T.
+*restorecolumninfo 
+*restoresettings Restores saved settings from FOXUSER
+*savecolumninfo 
+*savesettings Saves settings to FOXUSER
+*update1property 
+*updateselectedcontrols 
+cfoxuserid The FOXUSER ID to save/restore settings to
+cfoxusername The FOXUSER NAME to save/restore settings to
+cpreferencesfile
+lpemeditorform Indicates that this is a PEM Editor form
+lpersistsizeposition .T. to persist the size and position of the form
+lsavesettings .T. to save and restore settings
+nfontsize
+nhighlightbackcolor
+nhighlightforecolor
+opersist A reference to a FoxResource object
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2P60JTZQL
+[CLASS] changefontsize
+[CLASSLOC] changefontsize.vcx
+[BASECLASS] custom
+[OBJNAME] ChangeFontSize
+[PARENT] baseform
+[START PROPERTIES]
+Height = 17
+Left = 16
+Name = "ChangeFontSize"
+Top = 16
+Width = 20
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseform
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _18B0TPO44
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] baseformnew
+[START PROPERTIES]
+AllowOutput = .F.
+AutoCenter = .T.
+BindControls = .F.
+Caption = "Form"
+DataSession = 2
+DoCreate = .T.
+FontSize = 8
+Name = "baseformnew"
+ShowTips = .T.
+_memberdata =      767<VFPData><memberdata name="omysettings" display="oMySettings"/><memberdata name="lpersistsizeposition" display="lPersistSizePosition"/><memberdata name="setdefaults" display="SetDefaults"/><memberdata name="changefont" display="ChangeFont"/><memberdata name="restorefont" display="RestoreFont"/><memberdata name="loadsettings" display="LoadSettings"/><memberdata name="cfoxuserid" display="cFoxUserID"/><memberdata name="savecolumninfo" display="SaveColumnInfo"/><memberdata name="loadcolumninfo" display="LoadColumnInfo"/><memberdata name="savesettings" display="SaveSettings"/><memberdata name="lbindcontrols" display="lBindControls"/><memberdata name="savedockinginfo" display="SaveDockingInfo"/><memberdata name="insurevisible" display="InsureVisible"/></VFPData>
+cfoxuserid = 
+cfoxusername = 
+lbindcontrols = .T.
+lpemeditorform = .T.
+lpersistsizeposition = .T.
+lsavesettings = .T.
+nfontsize = 8
+nhighlightbackcolor = 0
+nhighlightforecolor = 0
+omysettings = .NULL.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Destroy
+With This.oMySettings
+	This.SaveSettings()
+Endwith
+
+This.oMySettings = .Null.
+
+ENDPROC
+PROCEDURE Init
+DoDefault()
+
+With This
+	.oMySettings = Newobject ('PEME_BasePreferences', 'Peme_Preferences.VCX')
+	With .oMySettings
+		.LoadValues (This.cFoxUserID, 'Settings')
+		.UseDefaults()
+
+		With .oDefaults
+			.nTop		   = This.Top
+			.nLeft		   = This.Width
+			.nHeight	   = This.Height
+			.nWidth		   = This.Width
+			.nDockable	   = 2
+			.lDocked	   = .F.
+			.nDockPosition = -1
+			.cDockWindow   = ''
+			This.SetDefaults()
+		Endwith
+
+		This.LoadSettings()
+
+		If This.Dockable # 0
+			.nStartingTop = This.Top
+			.Top = -2000
+		Endif
+
+	Endwith
+
+	If .lBindControls
+		.BindControls = .T.
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE Load
+* Set up the environment.
+
+Set Deleted On
+Set Exact Off
+Set Exclusive Off
+Set Multilocks On
+Set Safety Off
+Set Talk Off
+Sys(3054, 0)
+
+With This
+	Declare Integer GetSysColor In 'user32' Integer nIndex
+	.nHighlightBackColor = GetSysColor (13)
+	.nHighlightForeColor = GetSysColor (14)
+Endwith
+
+ENDPROC
+PROCEDURE Show
+* Restore the Dockable setting if we're not being invoked modally. We have to
+* do it here because the form becomes visible as soon as Dockable is set to 1,
+* so we don't want this done earlier.
+Lparameters tnStyle
+
+Local lcDockWindow, llDocked, lnDockPosition, lnLeft
+Declare Integer GetSystemMetrics In user32 Integer nIndex
+
+If This.Dockable # 0
+	With This
+		lnLeft         = .Left
+		If PEME_IsVersion9() And (Vartype (tnStyle) # 'N' Or tnStyle # 1)
+			loSettings	   = This.oMySettings
+			.Dockable	   = loSettings.nDockable
+			llDocked	   = loSettings.lDocked
+			lnDockPosition = loSettings.nDockPosition
+			If .Dockable = 1 And llDocked
+				*** JRN 12/24/2008 : Tab docking
+				lcDockWindow = loSettings.cDockWindow
+				Do Case
+					Case Not Empty (lcDockWindow)
+						Try
+							Dock Name Thisform position 4 Window &lcDockWindow
+						Catch
+
+						Endtry
+					Case  Between (lnDockPosition, 0, 3)
+						.Dock (lnDockPosition)
+				Endcase
+				*** JRN 12/24/2008
+			Endif .Dockable = 1 ...
+
+		Endif PEME_IsVersion9() And (Vartype (tnStyle) # 'N' Or tnStyle # 1)
+
+		.Left = lnLeft
+		.Top  = loSettings.nStartingTop
+		.InsureFormVisible()
+
+	Endwith
+Endif
+
+DoDefault (tnStyle)
+
+
+ENDPROC
+PROCEDURE addmrufile
+Lparameters lcFileName, lcClassName, lcMRU_ID
+
+#Define DELIMITERCHAR Chr(0)
+#Define MAXITEMS      24
+
+Local lcData, lcExt, lcLine25, lcList, lcNewData, lcSearchString, lcSourceFile, lnPos
+Local lnSelect
+
+If 'ON' # Set ('Resource')
+	Return
+Endif
+
+lcSourceFile = Set ('Resource', 1)
+lcExt		 = Upper (Justext (lcFileName))
+
+If Empty (lcMRU_ID)
+	lcList = ',VCX=MRUI,PRG=MRUB,MPR=MRUB,QPR=MRUB,SCX=MRUH,MNX=MRUE,FRX=MRUG,DBC=???,LBX=???,PJX=MRUL'
+	lnPos  = At (',' + lcExt + '=', lcList)
+	If lnPos = 0
+		lcMRU_ID = 'MRUC'
+	Else
+		lcMRU_ID = Substr (lcList, lnPos + 5, 4)
+		If lcMRU_ID = '?'
+			Return
+		Endif
+	Endif
+Endif
+
+If lcMRU_ID = 'MRUI'
+	If Empty (lcClassName)
+		lcMRU_ID	   = 'MRU2'
+		lcSearchString = lcFileName + DELIMITERCHAR
+	Else
+		lcSearchString = lcFileName + '|' + Lower (lcClassName) + DELIMITERCHAR
+	Endif
+Else
+	lcSearchString = lcFileName + DELIMITERCHAR
+Endif
+
+lnSelect = Select()
+Select 0
+Use (lcSourceFile) Again Shared Alias MRU_Resource_Add
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = DELIMITERCHAR + Substr (Data, 3)
+	lnPos  = Atcc (DELIMITERCHAR + lcSearchString, lcData)
+	Do Case
+		Case lnPos = 1
+			* already tops of the list
+			lcNewData = Data
+		Case lnPos = 0
+			* must add to list
+			lcNewData = Stuff (Data, 3, 0, lcSearchString)
+			* note that GetWordNum won't accept CHR(0) as a delimiter
+			lcLine25  = Getwordnum (Chrtran (Substr (lcNewData, 3), DELIMITERCHAR, CR), MAXITEMS + 1, CR)
+			If Not Empty (lcLine25)
+				lcNewData = Strtran (lcNewData, DELIMITERCHAR + lcLine25 + DELIMITERCHAR, DELIMITERCHAR, 1, 1, 1)
+			Endif
+		Otherwise
+			lcNewData = Stuff (Data, lnPos + 1, Len (lcSearchString), '')
+			lcNewData = Stuff (lcNewData, 3, 0, lcSearchString)
+	Endcase
+	Replace															;
+		Data	 With  lcNewData									;
+		ckval	 With  Val (Sys(2007, Substr (lcNewData, 3)))		;
+		Updated	 With  Date()
+Else
+	lcNewData = Chr(4) + DELIMITERCHAR + lcSearchString
+	Insert Into MRU_Resource_Add			;
+		(Type, Id, ckval, Data, Updated)	;
+		values 								;
+		('PREFW', lcMRU_ID, Val (Sys(2007, Substr (lcNewData, 3))), lcNewData, Date())
+
+	****************************************************************
+Endif
+
+Use
+Select (lnSelect)
+
+Return
+
+ENDPROC
+PROCEDURE calculateshortcutmenuposition
+Local loWas, lcPoint, loResult, lnSMCol, lnSMRow
+
+loWas = Newobject("WinApiSupport", "PEME_WinApiSupport.PRG")
+Declare Long GetCursorPos In WIN32API String @lpPoint
+Declare Long ScreenToClient In WIN32API Long HWnd, String @lpPoint
+
+lcPoint = Replicate(Chr(0), 8)
+&& Get mouse location in Windows desktop coordinates (pixels)
+= GetCursorPos(@lcPoint)
+&& Convert to VFP Desktop (_Screen) coordinates
+= ScreenToClient(_Screen.HWnd, @lcPoint)
+&& Covert the coordinates to foxels
+
+lnSMCol = This.Pix2Fox(loWas.Long2Num(Left(lcPoint,4)), .F., _Screen.FontName, _Screen.FontSize)
+lnSMRow = This.Pix2Fox(loWas.Long2Num(Right(lcPoint,4)), .T., _Screen.FontName, _Screen.FontSize)
+
+loResult = Createobject("Empty")
+AddProperty (loResult, 'Column', lnSMCol )
+AddProperty (loResult, 'Row', lnSMRow )
+Return loResult
+
+ENDPROC
+PROCEDURE changefont
+Lparameters loObject
+Local laFont[1], lcFont, lcStyle
+
+With Thisform
+	lcStyle	= IIf (loObject.FontBold, 'B', '') + IIf (loObject.FontItalic, 'I', '')
+	lcFont	= Getfont (loObject.FontName, loObject.FontSize, lcStyle)
+	If Not Empty (lcFont)
+		Alines (laFont, lcFont, .T., ',')
+		With loObject
+			.FontName	= laFont[1]
+			.FontSize	= Val (laFont[2])
+			.FontBold	= 'B' $ laFont[3]
+			.FontItalic	= 'I' $ laFont[3]
+		Endwith
+
+		With Thisform.oMySettings
+			.cFontName	= loObject.FontName
+			.nFontSize	= loObject.FontSize
+			.cFontStyle	= IIf (loObject.FontBold, 'B', '') + IIf (loObject.FontItalic, 'I', '')
+		Endwith
+
+	Endif Not Empty (lcFont)
+Endwith
+
+ENDPROC
+PROCEDURE createcontextmenu
+Lparameters lcMenuName
+Local loPosition
+
+loPosition = This.CalculateShortcutMenuPosition()
+
+*** JRN 2010-11-10 : Following is an attempt to solve the problem
+* when there is another form already open; apparently, if the 
+* focus is on the screen, the positioning of the popup still works OK
+_Screen.Show()
+
+Define Popup (lcMenuName)						;
+	shortcut									;
+	Relative									;
+	From loPosition.Row, loPosition.Column
+
+ENDPROC
+PROCEDURE diskfilename
+Lparameters lcFileName
+
+#Define MAX_PATH 260
+
+Local lnFindFileData, lnHandle, lcXXX
+Declare Integer FindFirstFile In win32api String @, String @
+Declare Integer FindNextFile In win32api Integer, String @
+Declare Integer FindClose In win32api Integer
+
+Do Case
+	Case ( Right (lcFileName, 1) == '\' )
+		Return Addbs (This.DiskFileName (Left (lcFileName, Len (lcFileName) - 1)))
+
+	Case Empty (lcFileName)
+		Return ''
+
+	Case ( Len (lcFileName) == 2 ) And ( Right (lcFileName, 1) == ':' )
+		Return Upper (lcFileName)	&& win2k gives curdir() for C:
+Endcase
+
+lnFindFileData = Space(4 + 8 + 8 + 8 + 4 + 4 + 4 + 4 + MAX_PATH + 14)
+lnHandle		 = FindFirstFile (@lcFileName, @lnFindFileData)
+
+If ( lnHandle < 0 )
+	If ( Not Empty (Justfname (lcFileName)) )
+		lcXXX = Justfname (lcFileName)
+	Else
+		lcXXX = lcFileName
+	Endif
+Else
+	= FindClose (lnHandle)
+	lcXXX	= Substr (lnFindFileData, 45, MAX_PATH)
+	lcXXX	= Left (lcXXX, At (Chr(0), lcXXX) - 1)
+Endif
+
+
+Do Case
+	Case Empty (Justpath (lcFileName))
+		Return lcXXX
+	Case ( Justpath (lcFileName) == '\' ) And (Left (lcFileName, 2) == '\\')	&& unc
+		Return '\\' + lcXXX
+	Otherwise
+		Return Addbs (This.DiskFileName (Justpath (lcFileName))) + lcXXX
+Endcase
+
+Return
+
+ENDPROC
+PROCEDURE get1value
+Lparameters loObject, lcPem
+Local lcResult
+
+Try
+	lcResult = Evaluate( [loObject.] + lcPem)
+Catch
+	lcResult = ''
+Endtry
+
+Return lcResult
+
+ENDPROC
+PROCEDURE getdisplayrelativepath
+Lparameters lcFileName, lcFolder, lcClass
+* returns the display form of a file name
+Local lcFileDisplayName, lcFName, lcQuote, lcResult
+
+lcFileDisplayName = Thisform.GetRelativePath (This.DiskFileName(lcFileName), Evl (lcFolder, Curdir()))
+lcFName = Justfname (lcFileDisplayName)
+lcQuote = Iif (" " $ lcFName, ['], '')
+If lcFName == lcFileDisplayName
+	lcResult = lcQuote + lcFName + lcQuote
+Else
+	lcResult = lcQuote + lcFName + lcQuote + "  from  " + Justpath (lcFileDisplayName)
+Endif
+
+Return lcResult 
+
+ENDPROC
+PROCEDURE getmrulist
+Lparameters lcMRU_ID
+
+#Define DELIMITERCHAR Chr(0)
+
+Local loCollection As 'Collection'
+Local laItems(1), lcData, lcList, lcSourceFile, lnI, lnPos, lnSelect
+
+loCollection = Createobject ('Collection')
+
+If 'ON' # Set ('Resource')
+	Return loCollection
+Endif
+
+lnSelect	 = Select()
+lcSourceFile = Set ('Resource', 1)
+Select 0
+Use (lcSourceFile) Again Shared Alias MRU_Resource
+
+If lcMRU_ID # 'MRU'
+	lcList = ',VCX=MRUI,PRG=MRUB,MPR=MRUB,QPR=MRUB,SCX=MRUH,MNX=MRUE,FRX=MRUG,DBC=???,LBX=???,PJX=MRUL,DBF=MRUS'
+	lnPos  = At (',' + Upper (JustExt ('.' + lcMRU_Id)) + '=', lcList)
+	If lnPos = 0
+		lcMRU_ID = 'MRUC'
+	Else
+		lcMRU_ID = Substr (lcList, lnPos + 5, 4)
+		If lcMRU_ID = '?'
+			Return
+		Endif
+	Endif
+Endif
+
+Locate For Id = lcMRU_ID
+If Found()
+	lcData = Data
+	Alines (laItems, Substr (lcData, 3), 0, DELIMITERCHAR)
+	For lnI = 1 To Alen (laItems)
+		If Not Empty (laItems (lnI))
+			loCollection.Add (laItems (lnI))
+		Endif
+	Endfor
+Endif
+
+Use
+Select (lnSelect)
+Return loCollection
+
+
+ENDPROC
+PROCEDURE getpemstatus
+Lparameters loObject, lcPEM, nAttribute
+
+If Upper(loObject.BaseClass) = 'OLE'
+
+	Local laMembers(1), lnRow
+	Amembers(laMembers, loObject, 1, 'PHG#')
+	lnRow = Ascan(laMembers, lcPEM, -1, -1, 1, 15)
+
+	Do Case
+		Case lnRow = 0
+			Return .F.
+		Case nAttribute = 0 && changed
+			Return 'C' $ laMembers(lnRow,3)
+		Case nAttribute = 1 && readonly
+			Return 'R' $ laMembers(lnRow,3)
+		Case nAttribute = 2 && protected
+			Return 'P' $ laMembers(lnRow,3)
+		Case nAttribute = 3 && type
+			Return laMembers(lnRow,2)
+		Case nAttribute = 4 && user-defined
+			Return 'U' $ laMembers(lnRow,3)
+		Case nAttribute = 5 && defined
+			Return .T.
+		Case nAttribute = 6 && inherited
+			Return 'I' $ laMembers(lnRow,3)
+	Endcase
+
+Else
+
+	Return Pemstatus (loObject, lcPEM, nAttribute)
+
+Endif
+
+ENDPROC
+PROCEDURE getputsettings
+Lparameters lbPutFlag
+
+*  Routine to either save (lbPutFlag = .T.) or get (lbPutFlag = .F.) settings
+*  Structured this way so a single method call is this routine can be used
+*  both ways, insuring that all settings are handled consistently between
+*  saving and restoring.  Improved legibility as well.
+
+With This
+	.GetPutSetting ('Top', 		'Top', 		.Top + 1, 	lbPutFlag)
+	.GetPutSetting ('Left', 	'Left', 	.Left + 1, 	lbPutFlag)
+	.GetPutSetting ('Height', 	'Height', 	.Height + 1, lbPutFlag)
+	.GetPutSetting ('Width', 	'Width', 	.Width + 1, lbPutFlag)
+Endwith
+
+ENDPROC
+PROCEDURE getrelativepath
+Lparameters lcName, lcPath
+Local lcNew, lnPos
+If Empty (lcPath)
+	lcNew = Sys(2014, lcName)
+Else
+	lcNew = Sys(2014, lcName, lcPath)
+Endif
+
+If Len (lcNew) < Len (lcName)
+	lnPos = Rat ('..\', lcNew)
+	If lnPos # 0
+		lnPos = lnPos + 2
+	Endif
+	Return Left (lcNew, lnPos) + Right (lcName, Len (lcNew) - lnPos)
+Else
+	Return lcName
+EndIf 
+ENDPROC
+PROCEDURE getvalue
+Lparameters lcName, tbNative, tcResultType, tnObjNumber
+
+Local lcPem, lbFirst, lcValue, lxValue, lcNewValue, lxNewValue, lnRed, lnGreen, lnBlue
+Local loObject, lbTransform, loResult, lcTypes, lcNewType, lnI, lnJ, lnK
+
+lcPem = Thisform.JustPEM(lcName)
+lbTransform = .T.
+
+*** JRN 03/18/2009 : modifications to handle multiple objects
+Do Case
+	Case Not Empty(tnObjNumber)
+		loObject = Thisform.aSelectedObjects(tnObjNumber)
+		lcPem = Thisform.cEditPropertyName
+		lcValue = loObject.ReadExpression (lcPem)
+		lxValue = This.Get1Value (loObject, lcPem)
+		lcTypes = Vartype (lxValue)
+
+	Case (Thisform.lUseCSO) And Thisform.nSelectedObjects > 1
+		lbFirst = .T.
+		For lnI = 1 to Alen ( Thisform.aSelectedObjects)
+			loObject = Thisform.aSelectedObjects(lnI)
+			Do Case
+				Case Not Thisform.GetPEMStatus(loObject, lcPem, 5)
+
+				Case lbFirst
+					lcValue = loObject.ReadExpression (lcPem)
+					lxValue = This.Get1Value (loObject, lcPem)
+					lbFirst = .F.
+					lcTypes = Vartype (lxValue)
+				Otherwise
+					lcNewValue = loObject.ReadExpression (lcPem)
+					lxNewValue = This.Get1Value (loObject, lcPem)
+					lcNewType  = Vartype (lxValue)
+					If lbTransform
+						If (Not lcValue == lcNewValue)							;
+								or Vartype (lxValue) # Vartype (lxNewValue)		;
+								or lxValue # lxNewValue
+							lcValue = ' '
+							lbTransform = .F.
+							lcTypes = lcTypes + Iif (lcNewType $ lcTypes, '', lcNewType)
+						Endif
+					Else
+						lcTypes = lcTypes + Iif (lcNewType $ lcTypes, '', lcNewType)
+					Endif
+			Endcase
+		Endfor
+	Otherwise
+		lcValue = Thisform.oObject.ReadExpression (lcPem)
+		lxValue = This.Get1Value (Thisform.oObject, lcPem)
+		lcTypes = Vartype (lxValue)
+Endcase
+
+If lbTransform And Empty (lcValue)
+	Do Case
+			* handle null values
+		Case Isnull(lxValue)
+			lcValue = '.NULL.'
+			* Special handling for native colors
+		Case 'N' = Vartype (lxValue) And Thisform.IsNativeColor(lcPem, tbNative)
+			lnRed   = Bitand(lxValue, 255)
+			lnGreen = Bitrshift(Bitand(lxValue, 256 * 255), 8)
+			lnBlue  = Bitrshift(Bitand(lxValue, 256 * 256 * 255), 16)
+			lcValue = Transform(lnRed) + ',' + Transform(lnGreen) + ',' + Transform(lnBlue)
+		Case 'C' = Vartype (lxValue) And 0 = Len(lxValue) and tcResultType= 'Display'
+			lcValue = '(None)'
+		Case 'D' # Vartype (lxValue)
+			lcValue = Transform( lxValue )
+		Case Empty (lxValue)
+			lcValue = '{}'
+		Otherwise
+			lcValue = '{^' + Transform(Year(lxValue)) + "/" + Transform(Month(lxValue)) + "/" + Transform(Day(lxValue)) + "}"
+	Endcase
+Endif
+
+Do Case
+	Case tcResultType= 'Display'
+		Return Left (lcValue, 100)
+	Case tcResultType= 'Full Value'
+		Return lcValue
+	Case tcResultType= 'For Editing'
+		loResult = Createobject("Empty")
+		AddProperty (loResult, "Value", lxValue)
+		AddProperty (loResult, "CharValue", lcValue)
+		AddProperty (loResult, "Type", lcTypes)
+		AddProperty (loResult, "SingleValue", lbTransform)
+		Return loResult
+Endcase
+
+ENDPROC
+PROCEDURE insurevisible
+Local loObject As Object
+Local lnMaxHeight, lnMaxLeft, lnMaxTop, lnMaxWidth
+
+loObject = Thisform
+*** JRN 2009-09-14 : Following code courtesy of Doug Hennig's blog
+#Define SM_XVIRTUALSCREEN  76     && virtual left
+#Define SM_YVIRTUALSCREEN  77     && virtual top
+#Define SM_CXVIRTUALSCREEN 78   && virtual width
+#Define SM_CYVIRTUALSCREEN 79   && virtual height
+* #Define SM_CXFULLSCREEN    16     && screen width accounting for taskbar
+* #Define SM_CYFULLSCREEN    17     && screen height accounting for taskbar
+
+Do Case
+	Case Pemstatus(loObject, 'Dockable', 5) And loObject.Dockable = 1
+		Declare Integer GetSystemMetrics In Win32API Integer
+		lnMaxLeft   = GetSystemMetrics(SM_XVIRTUALSCREEN)
+		lnMaxTop    = GetSystemMetrics(SM_YVIRTUALSCREEN)
+		lnMaxWidth  = GetSystemMetrics(SM_CXVIRTUALSCREEN)
+		lnMaxHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN)
+	Case Pemstatus(loObject, 'Desktop', 5) And (loObject.Desktop Or loObject.ShowWindow = 2)
+		Declare Integer GetSystemMetrics In Win32API Integer
+		lnMaxLeft   = GetSystemMetrics(SM_XVIRTUALSCREEN)
+		lnMaxTop    = GetSystemMetrics(SM_YVIRTUALSCREEN)
+		lnMaxWidth  = GetSystemMetrics(SM_CXFULLSCREEN)
+		lnMaxHeight = GetSystemMetrics(SM_CYFULLSCREEN)
+	Otherwise
+		lnMaxLeft   = 0
+		lnMaxTop    = 0
+		lnMaxWidth  = _Screen.Width
+		lnMaxHeight = _Screen.Height - ;
+			Iif(Pemstatus(loObject, 'TitleBar', 5) And ;
+			loObject.TitleBar = 1, Sysmetric(9), 0)
+		&& account for the title bar height if necessary
+Endcase
+
+loObject.Width = Min(Max(loObject.Width, 0, loObject.MinWidth), ;
+	lnMaxWidth)
+loObject.Height = Min(Max(loObject.Height, 0, loObject.MinHeight), ;
+	lnMaxHeight)
+
+Do Case
+
+		* If we're past the left edge, move it to the left edge.
+
+	Case loObject.Left < lnMaxLeft
+		loObject.Left = lnMaxLeft
+
+		* If we're past the right edge of the screen, move it to the right edge.
+
+	Case loObject.Left + loObject.Width > lnMaxWidth + lnMaxLeft
+		loObject.Left = lnMaxWidth + lnMaxLeft - loObject.Width
+Endcase
+Do Case
+
+		* If we're past the top edge, move it to the top edge.
+
+	Case loObject.Top < lnMaxTop
+		loObject.Top = lnMaxTop
+
+		* If we're past the bottom edge of the screen, move it to the bottom edge.
+
+	Case loObject.Top + loObject.Height > lnMaxHeight + lnMaxTop
+		loObject.Top = lnMaxHeight + lnMaxTop - loObject.Height
+Endcase
+****************************************************************
+****************************************************************
+
+ENDPROC
+PROCEDURE justpem
+* Strip any index off the member name and convert it to lower case if necessary.
+
+Lparameters tcPEM, ;
+	tlLowerCase
+Local lcPem
+lcPem = Trim(tcPEM)
+Do Case
+	Case '[' $ lcPem
+		lcPem = Left(lcPem, At('[', lcPem) - 1)
+	Case '(' $ lcPem
+		lcPem = Left(lcPem, At('(', lcPem) - 1)
+Endcase
+Return Iif(tlLowerCase, Lower(lcPem), lcPem)
+
+ENDPROC
+PROCEDURE loadcolumninfo
+Lparameters loGrid
+Local loColumn As Object
+Local laColumnOrder[1], laColumnWidths[1], lcColumnOrder, lcColumnWidths, lnColumnOrder
+Local lnColumnWidths, lnI
+
+lcColumnWidths = .cColumnWidths
+lcColumnOrder  = .cColumnOrder
+
+With loGrid
+
+	lnColumnWidths = Alines (laColumnWidths, Alltrim (lcColumnWidths), .T., ' ')
+	lnColumnOrder  = Alines (laColumnOrder, Alltrim (lcColumnOrder), .T., ' ')
+
+	For lnI = 1 To .ColumnCount
+		loColumn = .Columns (lnI)
+		If lnI <= lnColumnWidths And Val (laColumnWidths[lnI]) > 0
+			loColumn.Width = Val (laColumnWidths[lnI])
+		Endif lnI <= lnColumnWidths ...
+
+		If .ColumnCount = lnColumnOrder And Val (laColumnOrder[lnI]) > 0
+			loColumn.ColumnOrder = Val (laColumnOrder[lnI])
+		Endif lnI <= lnColumnOrder ...
+	Next lnI
+
+Endw
+
+ENDPROC
+PROCEDURE loadsettings
+If This.lPersistSizePosition
+	This.Top  = .nTop
+	This.Left = .nLeft
+	If This.BorderStyle = 3
+		This.Height	= .nHeight
+		This.Width	= .nWidth
+	Endif
+Endif
+
+
+ENDPROC
+PROCEDURE pix2fox
+LPARAMETER tnPixels, tlVertical, tcFontName, tnFontSize
+&& tnPixels - pixels to convert
+&& tlVertical - .F./.T. convert horizontal/vertical coordinates
+&& tcFontName, tnFontSize - use specified font/size 
+&&         or current form (active output window) font/size, if not specified 
+LOCAL lnFoxels
+ 
+IF PCOUNT() > 2
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6), tcFontName, tnFontSize)
+ELSE
+	lnFoxels = tnPixels/FONTMETRIC(IIF(tlVertical, 1, 6))
+ENDIF	
+ 
+RETURN lnFoxels
+ENDPROC
+PROCEDURE refreshform
+* Lock for form while refreshing.
+
+This.LockScreen = .T.
+This.Refresh()
+This.LockScreen = .F.
+
+ENDPROC
+PROCEDURE restorefont
+Lparameters loObject
+
+Local lcStyle
+
+With loObject
+	.FontName = This.oMySettings.cFontName
+	.FontSize = This.oMySettings.nFontSize
+
+	lcStyle		= This.oMySettings.cFontStyle
+	.FontBold	= 'B' $ lcStyle
+	.FontItalic	= 'I' $ lcStyle
+Endw
+
+ENDPROC
+PROCEDURE savecolumninfo
+Lparameters loGrid
+Local lcColumnOrder, lcColumnWidths, lnI, loColumn
+
+With This
+	lcColumnWidths = []
+	lcColumnOrder  = []
+	For lnI = 1 To loGrid.ColumnCount
+		loColumn	   = loGrid.Columns[lnI]
+		lcColumnWidths = lcColumnWidths + ' ' + Transform (loColumn.Width)
+		lcColumnOrder  = lcColumnOrder  + ' ' + Transform (loColumn.ColumnOrder)
+	Next lnI
+
+Endwith
+
+.cColumnWidths = Trim(lcColumnWidths)
+.cColumnOrder = Trim(lcColumnOrder)
+
+.oDefaults.cColumnWidths = ''
+.oDefaults.cColumnOrder = ''
+
+ENDPROC
+PROCEDURE savedockinginfo
+*** JRN 12/24/2008 : Save all docking info; called by AfterDock and UnDock
+
+Local laDock[1], lcDockWindow, lnRow, lnRowDocked, loSettings
+
+If Not PEME_IsVersion9()
+	Return
+Endif
+
+With This
+
+	* Persist the docking information.
+	If .Dockable # 0
+		loSettings			 = This.oMySettings
+		loSettings.nDockable = .Dockable
+		loSettings.lDocked	 = .Docked
+		If .Docked
+			Adockstate (laDock)
+			lnRow = Ascan (laDock, .Caption, -1, -1, 1, 15)
+			*** JRN 12/24/2008 : Remember window that we're docked to
+			lcDockWindow = ''
+			If lnRow > 0
+				loSettings.nDockPosition = laDock[lnRow, 3]
+				If laDock[lnRow, 4] # _Screen.Caption And Not Empty (laDock[lnRow, 4])
+					lcDockWindow = laDock[lnRow, 4]
+				Else
+					lnRowDocked = Ascan (laDock, .Caption, -1, -1, 4, 15)
+					If lnRowDocked > 0
+						lcDockWindow = laDock[lnRowDocked, 1]
+					Endif
+				Endif
+			Endif lnRow > 0
+			loSettings.cDockWindow = lcDockWindow
+			*** JRN 12/24/2008
+		Endif .Docked
+	Endif
+
+Endwith
+
+ENDPROC
+PROCEDURE savesettings
+With This.oMySettings
+	.nTop	 = This.Top
+	.nLeft	 = This.Left
+	.nHeight = This.Height
+	.nWidth	 = This.Width
+	This.SaveDockingInfo()
+	.SaveValues()
+Endwith
+
+
+ENDPROC
+PROCEDURE setdefaults
+*
+ENDPROC
+PROCEDURE update1property
+Lparameters toObject, tcPem, tuVal
+Local loException, lcExpression
+
+*** JRN 12/21/2008 : for some native properties, not all values entered are valid
+* See also editpropertydialog.ApplyChanges
+If Not Thisform.GetPEMStatus (toObject, tcPem, 5)
+	Return
+Endif
+
+Try && for some native properties, not all values entered are valid
+	Do Case
+		Case Vartype(tuVal) = 'C' And tuVal = ['] And Not ['] $ Substr(tuVal,2)
+			toObject.WriteExpression (tcPem, [='] + Substr(tuVal,2) + [']) 
+		Case Vartype(tuVal) = 'C' And tuVal = '='
+			toObject.WriteExpression (tcPem, tuVal)
+		Otherwise
+			If Not Empty(toObject.ReadExpression (tcPem))
+				toObject.WriteExpression (tcPem, '') && clear out all expression, if any.
+			Endif
+			*** JRN 12/23/2008 : assignment rather than AddProperty, since that fails on OLEs
+			With toObject
+				*** JRN 2011-05-25 : remove erroneous characters from ControlSource or RecordSource
+				If Upper(tcPEM) == 'CONTROLSOURCE' or Upper(tcPEM) == 'RECORDSOURCE'
+					If 'C' = Vartype(tuVal)
+						tuVal = Chrtran(tuVal, ' ' + ccCR + ccLF + ccTAB, '')
+					EndIf
+				EndIf 
+				lcExpression = "." + tcPem + " = tuVal"
+				&lcExpression && note that macro expansion works here
+			Endwith
+	Endcase
+
+Catch To loException
+	Messagebox(ccLOC_AddProperty_Failed + ccCRLF + ;
+		'Message: ' + loException.Message + ccCRLF,  ;
+		MB_OK + MB_ICONEXCLAMATION, 'Set Property!! Failure')
+Endtry
+
+ENDPROC
+PROCEDURE updateselectedcontrols
+*** JRN 03/17/2009 : use ASelObj to determine which objects, unless explicitly told to use the supplied object
+Lparameters toObject, tcPem, tuVal, tlOnlyOne
+
+Local Array laSelected[1]
+Local lnSelected, lnI
+
+With This
+	If tlOnlyOne
+		.Update1Property(toObject, tcPem, tuVal)
+	Else
+		lnSelected = Aselobj(laSelected)
+		If lnSelected > 0
+			For lnI = 1 To lnSelected
+				.Update1Property(laSelected[lnI], tcPem, tuVal)
+			Next lnI
+		Else
+			.Update1Property(toObject, tcPem, tuVal)
+		Endif lnSelected > 0
+	Endif
+Endwith
+
+If Used("csrMembers")
+	Replace lNonDefault With .T. In csrMembers
+	Thisform.Refresh()
+Endif
+
+Return
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+2[END RESERVED2]
+[START RESERVED3]
+*addmrufile 
+*calculateshortcutmenuposition 
+*changefont 
+*createcontextmenu 
+*diskfilename 
+*get1value 
+*getdisplayrelativepath 
+*getmrulist 
+*getpemstatus 
+*getputsettings 
+*getrelativepath 
+*getvalue 
+*insurevisible 
+*justpem 
+*loadcolumninfo 
+*loadsettings 
+*pix2fox 
+*refreshform Refreshes the form with the LockScreen .T.
+*restorefont 
+*savecolumninfo 
+*savedockinginfo 
+*savesettings Saves settings to FOXUSER
+*setdefaults 
+*update1property 
+*updateselectedcontrols 
+_memberdata XML Metadata for customizable properties
+cfoxuserid The FOXUSER ID to save/restore settings to
+cfoxusername The FOXUSER NAME to save/restore settings to
+lbindcontrols
+lpemeditorform Indicates that this is a PEM Editor form
+lpersistsizeposition .T. to persist the size and position of the form
+lsavesettings .T. to save and restore settings
+nfontsize
+nhighlightbackcolor
+nhighlightforecolor
+omysettings
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2P60JTZQL
+[CLASS] changefontsize
+[CLASSLOC] changefontsize.vcx
+[BASECLASS] custom
+[OBJNAME] ChangeFontSize
+[PARENT] baseformnew
+[START PROPERTIES]
+Height = 17
+Left = 16
+Name = "ChangeFontSize"
+Top = 16
+Width = 20
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseformnew
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2IX0M8NQI
+[CLASS] grid
+[BASECLASS] grid
+[OBJNAME] basegrid
+[START PROPERTIES]
+AllowCellSelection = .F.
+ColumnCount = 0
+DeleteMark = .F.
+GridLines = 0
+Name = "basegrid"
+Panel = 1
+RecordMark = .F.
+SplitBar = .F.
+TabIndex = 1
+ZOrderSet = 0
+lsaveanchor = .F.
+nanchor = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Setup grid highlighting.
+Local loColumn As Object
+Local lnI
+
+For lnI = 1 To This.ColumnCount
+	loColumn = This.Columns(lnI)
+	loColumn.AddProperty ("nWidth", loColumn.Width)
+Endfor
+
+With This
+	.HighlightBackColor = Thisform.nHighlightBackColor
+	.HighlightForeColor = Thisform.nHighlightForeColor
+
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If This.GridLines= 0
+		.RowHeight  = .RowHeight - 1
+	Endif
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+*** JRN 2010-03-26 : Changing FontSize (above) resizes all columns
+For lnI = 1 To This.ColumnCount
+	loColumn = This.Columns(lnI)
+	loColumn.Width = loColumn.nWidth
+Endfor
+
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*lsaveanchor_assign 
+*setbmp 
+lsaveanchor
+nanchor
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basegrid
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 32, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2NH11L370
+[CLASS] image
+[BASECLASS] image
+[OBJNAME] baseimage
+[START PROPERTIES]
+Height = 17
+Name = "baseimage"
+Width = 100
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseimage
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NKBXQ
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] baselabel
+[START PROPERTIES]
+AutoSize = .T.
+BackStyle = 0
+Caption = "Label1"
+FontSize = 8
+Name = "baselabel"
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baselabel
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0RP0KP8Y2
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] baselabelledbox
+[START PROPERTIES]
+BackStyle = 0
+BorderWidth = 0
+Height = 133
+Name = "baselabelledbox"
+Style = 3
+Width = 168
+builder = BaseLabelledBoxBuilder.PRG
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE height_assign
+* When the height of the container is resized, resize the shape.
+
+lparameters tnHeight
+This.Height = tnHeight
+This.shpBox.Height = tnHeight - This.shpBox.Top
+
+ENDPROC
+PROCEDURE width_assign
+* When the width of the container is resized, resize the shape.
+
+lparameters tnWidth
+store tnWidth to This.Width, This.shpBox.Width
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+3[END RESERVED2]
+[START RESERVED3]
+*height_assign 
+*width_assign 
+builder Specifies the builder for this object
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0RP0KXY9D
+[CLASS] baselabel
+[CLASSLOC] property editors\anchoreditor\basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblBox
+[PARENT] baselabelledbox
+[START PROPERTIES]
+BackStyle = 1
+Left = 10
+Name = "lblBox"
+Style = 3
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0RP0KXY92
+[CLASS] baseline3d
+[CLASSLOC] property editors\anchoreditor\basecontrols.vcx
+[BASECLASS] shape
+[OBJNAME] shpBox
+[PARENT] baselabelledbox
+[START PROPERTIES]
+Height = 124
+Name = "shpBox"
+Top = 7
+Width = 166
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baselabelledbox
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2WC0V7NSN
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] baseline
+[START PROPERTIES]
+Height = 17
+Name = "baseline"
+Width = 100
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseline
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NS0R832K
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] baseline3d
+[START PROPERTIES]
+BackStyle = 0
+Height = 1
+Name = "baseline3d"
+SpecialEffect = 0
+Style = 3
+Width = 100
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseline3d
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NH0MVC3K
+[CLASS] listbox
+[BASECLASS] listbox
+[OBJNAME] baselistbox
+[START PROPERTIES]
+FontSize = 8
+IntegralHeight = .T.
+ItemTips = .T.
+Name = "baselistbox"
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+with This
+	if .lUpdateControlSourceOnChange
+		.UpdateControlSource()
+	endif .lUpdateControlSourceOnChange
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with .Value in (lcAlias)
+		else
+			store .Value to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*updatecontrolsource Updates the ControlSource with the new value
+lupdatecontrolsourceonchange .T. if UpdateControlSource should be called from InteractiveChange
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baselistbox
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _33X0DCHHK
+[CLASS] olecontrol
+[BASECLASS] olecontrol
+[OBJNAME] baseoletreeview
+[START PROPERTIES]
+Height = 100
+Name = "baseoletreeview"
+Width = 100
+_memberdata = <VFPData><memberdata name="lsaveanchor_assign" display="lsaveanchor_Assign"/><memberdata name="nmousebutton" display="nMouseButton"/><memberdata name="nmouseshift" display="nMouseShift"/></VFPData>
+lsaveanchor = .F.
+nanchor = 0
+nmousebutton = 0
+nmouseshift = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+PROCEDURE MouseDown
+*** ActiveX Control Event ***
+Lparameters tnButton, ;
+	tnShift, ;
+	tnX, ;
+	tnY
+
+With This
+	.nMouseButton = tnButton
+	.nMouseShift = tnShift
+EndWith 
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+[END METHODS]
+[BINSTART OLE]
+CHECKSUM=27578
+[BINEND OLE]
+[BINSTART OLE2]
+CHECKSUM=26800
+[BINEND OLE2]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*lsaveanchor_assign 
+_memberdata XML Metadata for customizable properties
+lsaveanchor
+nanchor
+nmousebutton
+nmouseshift
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseoletreeview
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NXWHS
+[CLASS] optionbutton
+[BASECLASS] optionbutton
+[OBJNAME] baseoptionbutton
+[START PROPERTIES]
+AutoSize = .T.
+BackStyle = 0
+Caption = "Option1"
+FontSize = 8
+Name = "baseoptionbutton"
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseoptionbutton
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NWI42
+[CLASS] optiongroup
+[BASECLASS] optiongroup
+[OBJNAME] baseoptiongroup
+[START PROPERTIES]
+BackStyle = 0
+BorderStyle = 0
+ButtonCount = 0
+Height = 46
+MemberClass = "baseoptionbutton"
+MemberClassLibrary = basecontrols.vcx
+Name = "baseoptiongroup"
+Value = 0
+Width = 71
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+with This
+	if .lUpdateControlSourceOnChange
+		.UpdateControlSource()
+	endif .lUpdateControlSourceOnChange
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE enabled_assign
+lparameters tlEnabled
+This.Enabled = tlEnabled
+This.SetAll('Enabled', tlEnabled)
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with .Value in (lcAlias)
+		else
+			store .Value to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*enabled_assign 
+*updatecontrolsource Updates the ControlSource with the new value
+lupdatecontrolsourceonchange .T. if UpdateControlSource should be called from InteractiveChange
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseoptiongroup
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NH0LD5ZU
+[CLASS] page
+[BASECLASS] page
+[OBJNAME] basepage
+[START PROPERTIES]
+Caption = "Page1"
+FontSize = 8
+Height = 135
+Name = "basepage"
+Width = 135
+nhelpid = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+* Refresh all controls.
+
+Local llLockScreen
+With This
+	Thisform.nHelpID = This.nHelpID
+	llLockScreen = Thisform.LockScreen
+	If Not llLockScreen
+		Thisform.LockScreen = .T.
+	Endif Not llLockScreen
+
+	.FontBold = .T.
+	.Refresh()
+
+	If Not llLockScreen
+		Thisform.LockScreen = .F.
+	Endif Not llLockScreen
+Endwith
+
+ENDPROC
+PROCEDURE Deactivate
+With This
+	.FontBold =.F.
+Endwith
+
+ENDPROC
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+Endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+nhelpid
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basepage
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0NEI3J
+[CLASS] pageframe
+[BASECLASS] pageframe
+[OBJNAME] basepageframe
+[START PROPERTIES]
+ActivePage = 0
+ErasePage = .T.
+Height = 248
+MemberClass = "basepage"
+MemberClassLibrary = basecontrols.vcx
+Name = "basepageframe"
+PageCount = 0
+TabStyle = 1
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+PROCEDURE activepage_assign
+lparameters tActivePage
+This.ActivePage = tActivePage
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*activepage_assign 
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basepageframe
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _1A20U8PB3
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] baseshape
+[START PROPERTIES]
+BackStyle = 0
+Height = 17
+Name = "baseshape"
+Width = 100
+lsaveanchor = .F.
+nanchor = 0
+nsavedanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+If PEME_IsVersion9()
+	This.Anchor = this.nAnchor 
+EndIf 
+
+ENDPROC
+PROCEDURE lsaveanchor_assign
+lparameters tlSaveAnchor
+do case
+	Case not PEME_IsVersion9()
+	case tlSaveAnchor and This.nSavedAnchor > 0 and This.Anchor = 0
+	case tlSaveAnchor
+		This.nSavedAnchor = This.Anchor
+		This.Anchor       = 0
+	otherwise
+		This.Anchor = This.nSavedAnchor
+endcase
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*lsaveanchor_assign 
+lsaveanchor
+nanchor
+nsavedanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] baseshape
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0OM0FJA9Q
+[CLASS] spinner
+[BASECLASS] spinner
+[OBJNAME] basespinner
+[START PROPERTIES]
+FontSize = 8
+Height = 22
+Name = "basespinner"
+SelectOnEntry = .T.
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Error
+lparameters tnError, ;
+	tcMethod, ;
+	tnLine
+do case
+
+* Spinners bound to object properties seem to have a problem when invalid
+* values are entered from the keyboard: the Error method fires with error 1469
+* (property value is out of bounds) with tcMethod being "ControlSource" rather
+* than the Valid method catching it.
+
+	case tnError = 1469
+		return
+
+* Ignore "property is read-only" errors.
+
+	case tnError = 1743
+		return
+
+* All other errors get passed on to the form.
+
+	otherwise
+		Thisform.Error(tnError, This.Name + '.' + tcMethod, tnLine)
+endcase
+
+ENDPROC
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+* Write the current value to the ControlSource if necessary (otherwise
+* anything called from here can't check the value of our ControlSource), call
+* the AnyChange method, and restore the current cursor position in case
+* This.Refresh is called from AnyChange.
+
+local lnSelStart
+with This
+	do case
+		case not between(.Value, .SpinnerLowValue, .SpinnerHighValue)
+			nodefault
+		case not .lUpdateControlSourceOnChange
+		case not .UpdateControlSource()
+			nodefault
+		otherwise
+			lnSelStart = .SelStart
+			.AnyChange()
+			.SelStart = lnSelStart
+	endcase
+endwith
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+* Write the current value to the ControlSource if necessary (otherwise
+* anything called from here can't check the value of our ControlSource), call
+* the AnyChange method. Note: if the value is invalid, don't do anything.
+
+with This
+	do case
+		case not between(.Value, .SpinnerLowValue, .SpinnerHighValue)
+			nodefault
+		case not .UpdateControlSource()
+			nodefault
+		otherwise
+			.AnyChange()
+	endcase
+endwith
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	luValue, ;
+	lcAlias, ;
+	lcField
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		luValue = iif(vartype(.Value) = 'C', trim(.Value), .Value)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		if used(lcAlias)
+			replace (lcField) with luValue in (lcAlias)
+		else
+			store luValue to (.ControlSource)
+		endif used(lcAlias)
+	endif lnPos > 0 ...
+endwith
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*updatecontrolsource Updates the ControlSource with the new value
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basespinner
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _0NG0O3172
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] basetextbox
+[START PROPERTIES]
+FontSize = 8
+Format = "T"
+Height = 22
+Name = "basetextbox"
+SelectOnEntry = .T.
+lupdatecontrolsourceonchange = .F.
+nanchor = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.FontName = ccFontSizeName
+	.FontSize = ccFontSizeMedium
+	If PEME_IsVersion9()
+		.Anchor = .nAnchor
+	Endif
+Endwith
+
+
+ENDPROC
+PROCEDURE InteractiveChange
+* Write the current value to the ControlSource if necessary (otherwise
+* anything called from here can't check the value of our ControlSource), then
+* call the AnyChange method, and restore the current cursor position in case
+* This.Refresh got called from AnyChange.
+
+local lnSelStart
+with This
+	do case
+		case not .lUpdateControlSourceOnChange
+		case not .UpdateControlSource()
+			nodefault
+		otherwise
+			lnSelStart = .SelStart
+			.AnyChange()
+			.SelStart = lnSelStart
+	endcase
+endwith
+
+ENDPROC
+PROCEDURE KeyPress
+* Prevent Ctrl-0 from inserting a null value.
+
+lparameters tnKeyCode, ;
+	tnShiftAltCtrl
+if tnKeyCode = asc('0') and bittest(tnShiftAltCtrl, 1)
+	nodefault
+endif tnKeyCode = asc('0') ...
+
+ENDPROC
+PROCEDURE ProgrammaticChange
+with This
+	.UpdateControlSource()
+	.AnyChange()
+endwith
+
+ENDPROC
+PROCEDURE Valid
+* If we're not canceling, call the Validation method to do the actual
+* validation.
+
+local luReturn
+with This
+	if lastkey() <> 27
+		luReturn = .Validation()
+	else
+		luReturn = .T.
+	endif lastkey() <> 27
+endwith
+return luReturn
+
+ENDPROC
+PROCEDURE When
+* Store the current value into the Tag property so it can be restored if Valid
+* fails.
+
+This.Tag = This.Value
+
+ENDPROC
+PROCEDURE anychange
+* Abstract method.
+
+ENDPROC
+PROCEDURE updatecontrolsource
+local lnPos, ;
+	luValue, ;
+	lcAlias, ;
+	lcField, ;
+	llReturn
+with This
+	lnPos = at('.', .ControlSource)
+	if lnPos > 0 and not .Value == evaluate(.ControlSource)
+		luValue = iif(vartype(.Value) = 'C', trim(.Value), .Value)
+		lcAlias = left(.ControlSource, lnPos - 1)
+		lcField = substr(.ControlSource, lnPos + 1)
+		try
+			if used(lcAlias)
+				replace (lcField) with luValue in (lcAlias)
+			else
+				store luValue to (.ControlSource)
+			endif used(lcAlias)
+			llReturn = .T.
+		catch
+		endtry
+	endif lnPos > 0 ...
+endwith
+return llReturn
+
+ENDPROC
+PROCEDURE validation
+* Abstract method
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED3]
+*anychange Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
+*updatecontrolsource Updates the ControlSource with the new value
+*validation Custom validation code
+lupdatecontrolsourceonchange .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
+nanchor
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+editpropertydialog.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] basetextbox
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+[END PROPERTIES]
+[EOF]

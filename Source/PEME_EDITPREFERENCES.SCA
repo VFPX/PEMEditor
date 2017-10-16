@@ -1,0 +1,2778 @@
+﻿SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Screen    
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+[START RESERVED8]
+peme_preferences.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] dataenvironment
+[BASECLASS] dataenvironment
+[OBJNAME] Dataenvironment
+[START PROPERTIES]
+DataSource = .NULL.
+Height = 0
+Left = 0
+Name = "Dataenvironment"
+Top = 0
+Width = 0
+[END PROPERTIES]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+2[END RESERVED4]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRN0
+[CLASS] baseformnew
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] form
+[OBJNAME] PREFS
+[START PROPERTIES]
+BorderStyle = 2
+Caption = "Preferences"
+Closable = .F.
+Desktop = .T.
+DoCreate = .T.
+Height = 420
+MaxButton = .F.
+MinButton = .F.
+Name = "PREFS"
+Visible = .T.
+Width = 380
+WindowType = 1
+_memberdata = <VFPData><memberdata name="oprefs" display="oPrefs"/><memberdata name="nhelpid" display="nHelpID"/><memberdata name="setgridhighlighting" display="SetGridHighlighting"/><memberdata name="lreturnvalue" display="lReturnValue"/></VFPData>
+cfoxuserid = Preferences
+cfoxusername = EditPMPreferences
+changefontsize.Name = "changefontsize"
+chelpfile = 
+lpersistsizeposition = .F.
+lreturnvalue = .F.
+lsavesettings = .T.
+nhelpid = 0
+noriginaltooltiptimeout = 0
+npage = 0
+ntop = 0
+oprefs = .NULL.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+If Not Empty (This.nPage)
+	This.Frame.Pages(This.nPage).SetFocus()
+	This.nPage = 0
+Endif
+
+
+ENDPROC
+PROCEDURE Destroy
+_TooltipTimeout = This.nOriginalToolTipTimeout
+DoDefault()
+
+ENDPROC
+PROCEDURE Init
+Lparameters loPrefs, lnPage
+Local lnHeight, lnLeft, lnTop, lnWidth
+
+With This
+
+	.oPrefs = loPrefs
+	.oPrefs.CopySettings() && so we can restore them, if cancelled.
+
+	DoDefault()
+
+	.nOriginalToolTipTimeout = _ToolTipTimeOut
+	_ToolTipTimeOut = 0
+	
+	.Caption = ccLOC_Pref_Cap_PREFERENCES
+	.Refresh()
+
+	.nPage = lnPage
+	
+Endwith
+
+ENDPROC
+PROCEDURE QueryUnload
+lnResponse = MessageBox('Close the form, discarding all changes?', 32 + 3)
+If lnResponse # 6
+	NoDefault
+	Return
+EndIf
+This.lReturnValue = .F.
+ENDPROC
+PROCEDURE Unload
+Return This.lReturnValue
+
+ENDPROC
+PROCEDURE editdefaultaccess
+Lparameters tcCaption, lcCode
+
+Local lcFileName, lcWindowName 
+lcWindowName = "Default.Property" + tcCaption
+lcFileName = Sys(2023) + "\" + lcWindowName
+
+*** JRN 12/18/2008 : if already being shown ... close it
+If Wexist(lcWindowName)
+	Release Windows (lcWindowName)
+Endif
+Strtofile(lcCode, lcFileName, 0)
+
+Modify Command (lcFileName)
+
+Return Filetostr(lcFileName)
+
+
+ENDPROC
+PROCEDURE setgridhighlighting
+Lparameters lcNewSetting
+
+With Thisform
+	.oPrefs.cGridHighLights = lcNewSetting
+	.Refresh()
+EndWith 
+
+ENDPROC
+[END METHODS]
+[START RESERVED3]
+*editdefaultaccess 
+*setgridhighlighting 
+chelpfile
+lreturnvalue
+nhelpid
+noriginaltooltiptimeout
+npage
+ntop
+oprefs
+[END RESERVED3]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdResetAllDefaults
+[PARENT] PREFS
+[START PROPERTIES]
+Caption = "Reset all Defaults"
+Height = 23
+Left = 7
+Name = "cmdResetAllDefaults"
+TabIndex = 2
+Top = 348
+Width = 120
+ZOrderSet = 11
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Local lcPrompt, lnMsgBox
+
+lcPrompt = ccLOC_Pref_ASK_ResetAllDefaults
+lnMsgBox = Messagebox (lcPrompt, 4+32, Thisform.Caption)
+If lnMsgBox = 7
+	Return
+Endif
+
+With Thisform
+	.oPrefs.ResetDefaults
+	.RefreshForm()
+EndWith 
+
+
+ENDPROC
+PROCEDURE Init
+This.Caption = ccLOC_Pref_Cap_ResetAllDefaults
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Editpropertycommandbutton1
+[PARENT] PREFS
+[START PROPERTIES]
+Caption = "Save"
+FontBold = .T.
+FontSize = 9
+Height = 23
+Left = 36
+Name = "Editpropertycommandbutton1"
+TabIndex = 2
+Top = 387
+Width = 120
+ZOrderSet = 11
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+ThisForm.lReturnValue = .T.
+Thisform.Release()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _33212QP6Q
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] Editpropertycommandbutton2
+[PARENT] PREFS
+[START PROPERTIES]
+Caption = "Cancel"
+FontBold = .T.
+FontSize = 9
+Height = 23
+Left = 192
+Name = "Editpropertycommandbutton2"
+TabIndex = 2
+Top = 387
+Width = 120
+ZOrderSet = 11
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+ThisForm.lReturnValue = .F.
+Thisform.Release()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJCW
+[CLASS] basepageframe
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] pageframe
+[OBJNAME] Frame
+[PARENT] PREFS
+[START PROPERTIES]
+Basepage1.Caption = "Display"
+Basepage1.FontBold = .T.
+Basepage1.Name = "PageGeneral"
+Basepage1.PageOrder = 1
+Basepage2.Caption = "Processing"
+Basepage2.Name = "PageHighlighting"
+Basepage2.PageOrder = 2
+Basepage2.nhelpid = 85
+Basepage3.Caption = "Filter Defaults"
+Basepage3.Name = "FilterDefaults"
+Basepage3.PageOrder = 4
+Basepage3.nhelpid = 87
+Basepage4.Caption = "Startup / Shutdown"
+Basepage4.Name = "Basepage4"
+Basepage4.PageOrder = 3
+ErasePage = .T.
+Height = 338
+Left = 6
+Name = "Frame"
+PageCount = 4
+TabIndex = 1
+TabStretch = 1
+TabStyle = 1
+Top = 6
+Width = 369
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJET
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkDocTreeView
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = "Start Document TreeView?"
+ControlSource = ""
+Left = 24
+Name = "chkDocTreeView"
+TabIndex = 2
+Top = 191
+ZOrderSet = 9
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lStartFormattingForm'
+	.Caption	   = "Open form 'Format Size and Position' when PEM Editor starts"
+	.Visible       = .F.
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEP
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkEscClosesForm
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = "Escape close form?"
+ControlSource = ""
+Left = 24
+Name = "chkEscClosesForm"
+TabIndex = 4
+Top = 94
+ZOrderSet = 6
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lEscClosesForm'
+	.Caption	   = ccLOC_Pref_Cap_EscClosesForm
+	.ToolTipText   = ccLOC_Pref_Tip_EscClosesForm
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJER
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkHidetracewindow
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = "Hide trace window (in debugger) during execution?"
+ControlSource = ""
+Left = 24
+Name = "chkHidetracewindow"
+TabIndex = 3
+Top = 68
+ZOrderSet = 9
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lCloseDebuggerWindows'
+	.Caption	   = ccLOC_Pref_Cap_CloseTrace
+	.ToolTipText   = ccLOC_Pref_Tip_CloseTrace
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEU
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences1
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = "Start Document TreeView?"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences1"
+TabIndex = 2
+Top = 42
+ZOrderSet = 9
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lStartDocTreeView'
+	.Caption	   = ccLOC_Pref_CAP_DocumentTreeView
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEQ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkRestartDefaultFilters
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = "Reset filters when PEM Editor starts"
+ControlSource = ""
+Left = 24
+Name = "chkRestartDefaultFilters"
+TabIndex = 1
+Top = 16
+ZOrderSet = 6
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lStartWithDefaultFilters'
+	.Caption	   = ccLOC_Pref_Cap_UseDefaultFilters
+	.ToolTipText   = ccLOC_Pref_Tip_UseDefaultFilters
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJES
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkSurviveClearAll
+[PARENT] PREFS.Frame.Basepage4
+[START PROPERTIES]
+Alignment = 0
+Caption = 'Survive "Clear All"'
+ControlSource = ""
+Left = 24
+Name = "chkSurviveClearAll"
+TabIndex = 5
+Top = 120
+ZOrderSet = 13
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lRestartAfterClearAll'
+	.Caption	   = ccLOC_Pref_Cap_RestartAfterClearAll
+	.ToolTipText   = ccLOC_Pref_Tip_RestartAfterClearAll
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEK
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkFavorites
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+Alignment = 0
+Caption = "Favorites"
+ControlSource = ""
+Left = 134
+Name = "chkFavorites"
+TabIndex = 3
+Top = 202
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultFavorites'
+	.Caption	   = ccLOC_CAP_FAVORITES
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEN
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkResetFilters
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+Alignment = 0
+Caption = "Reset filters when opening another class or form"
+ControlSource = ""
+Left = 46
+Name = "chkResetFilters"
+TabIndex = 4
+Top = 254
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lResetFiltersonChange'
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEO
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkRestartDefaultFilters
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+Alignment = 0
+Caption = "Reset filters when PEM Editor starts"
+ControlSource = ""
+Left = 46
+Name = "chkRestartDefaultFilters"
+TabIndex = 1
+Top = 230
+ZOrderSet = 6
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lStartWithDefaultFilters'
+	.Caption	   = ccLOC_Pref_Cap_UseDefaultFilters
+	.ToolTipText   = ccLOC_Pref_Tip_UseDefaultFilters
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEL
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] choNonDefault
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+Alignment = 0
+Caption = "Non-Default"
+ControlSource = ""
+Left = 134
+Name = "choNonDefault"
+TabIndex = 2
+Top = 184
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultNonDefault'
+	.Caption	   = ccLOC_CAP_NonDefaultPr
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEM
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdResetAllDefaults
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+AutoSize = .T.
+Caption = "Reset filters to system defaults"
+Height = 25
+Left = 86
+Name = "cmdResetAllDefaults"
+TabIndex = 5
+Top = 278
+Width = 166
+ZOrderSet = 11
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+With Thisform.oPrefs
+
+	.lDefaultTypeProperty = 	.Null.
+	.lDefaultTypeMethod = .Null.
+	.lDefaultTypeEvent = .Null.
+
+	.lDefaultHierarchyNative = .Null.
+	.lDefaultHierarchyInherited = .Null.
+	.lDefaultHierarchyCustom = .Null.
+
+	.lDefaultMethodViewLocal = .Null.
+	.lDefaultMethodViewInherited = .Null.
+	.lDefaultMethodViewMethodNone = .Null.
+	.lDefaultMethodViewEventNone = .Null.
+
+	.lDefaultFavorites = .Null.
+	.lDefaultnonDefault = .Null.
+
+Endwith
+
+Thisform.Refresh()
+
+ENDPROC
+PROCEDURE Init
+This.Caption = ccLOC_CAP_RESETFilterDEFAULTS
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE7
+[CLASS] basepageframe
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] pageframe
+[OBJNAME] pgf
+[PARENT] PREFS.Frame.FilterDefaults
+[START PROPERTIES]
+Basepage1.Caption = "Property View"
+Basepage1.Name = "pagPropertyView1"
+Basepage1.nhelpid = 87
+Basepage2.Caption = "Method View"
+Basepage2.Name = "pagMethodView1"
+Basepage2.nhelpid = 87
+ErasePage = .T.
+Height = 169
+Left = 74
+Name = "pgf"
+PageCount = 2
+TabIndex = 1
+TabStyle = 0
+Top = 7
+Width = 207
+ZOrderSet = 25
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEF
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMethodInherited
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Inherited Code"
+ControlSource = ""
+Left = 59
+Name = "chkMethodInherited"
+TabIndex = 3
+Top = 46
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultMethodViewInherited'
+	.Caption	   = ccLOC_CAP_MV_Inherited
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEE
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMethodLocal
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Local Code"
+ControlSource = ""
+Left = 59
+Name = "chkMethodLocal"
+TabIndex = 2
+Top = 26
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultMethodViewLocal'
+	.Caption	   = ccLOC_CAP_MV_Local
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEH
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMethodNoEvent
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Empty Events"
+ControlSource = ""
+Left = 59
+Name = "chkMethodNoEvent"
+TabIndex = 6
+Top = 116
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultMethodViewEventNone'
+	.Caption	   = ccLOC_CAP_MV_NoEvent
+	.ToolTipText   = ccLOC_CAP_MV_NoEventTip
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEG
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMethodNoMethod
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Empty Methods"
+ControlSource = ""
+Left = 59
+Name = "chkMethodNoMethod"
+TabIndex = 5
+Top = 96
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultMethodViewMethodNone'
+	.Caption	   = ccLOC_CAP_MV_NoMethod
+	.ToolTipText   = ccLOC_CAP_MV_NoMethodTip
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEI
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblFilters
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Caption = "Without Code:"
+Height = 16
+Left = 59
+Name = "lblFilters"
+TabIndex = 4
+Top = 76
+Width = 69
+ZOrderSet = 22
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+This.Caption = ' ' + ccLOC_CAP_MV_None + ' '
+DoDefault()
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEJ
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblWithCode
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagMethodView1
+[START PROPERTIES]
+Caption = "With Code:"
+Height = 16
+Left = 59
+Name = "lblWithCode"
+TabIndex = 1
+Top = 6
+Width = 54
+ZOrderSet = 22
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+This.Caption = ' ' + ccLOC_CAP_MV_With_Code + ' '
+DoDefault()
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJED
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkCustom
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Custom"
+ControlSource = ""
+Left = 59
+Name = "chkCustom"
+TabIndex = 6
+Top = 108
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultHierarchyCustom'
+	.Caption	   = ccLOC_CAP_CUSTOM
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEA
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkEvents
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Events"
+ControlSource = ""
+Left = 59
+Name = "chkEvents"
+TabIndex = 3
+Top = 46
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultTypeEvent'
+	.Caption	   = ccLOC_CAP_EVENTS
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEC
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkInherited
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Inherited"
+ControlSource = ""
+Left = 59
+Name = "chkInherited"
+TabIndex = 5
+Top = 90
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultHierarchyInherited'
+	.Caption	   = ccLOC_CAP_INHERITED
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE9
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMethods
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Methods"
+ControlSource = ""
+Left = 59
+Name = "chkMethods"
+TabIndex = 2
+Top = 28
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultTypeMethod'
+	.Caption	   = ccLOC_CAP_METHODS
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJEB
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkNative
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Native"
+ControlSource = ""
+Left = 59
+Name = "chkNative"
+TabIndex = 4
+Top = 72
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultHierarchyNative'
+	.Caption	   = ccLOC_CAP_NATIVE
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE8
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkProperties
+[PARENT] PREFS.Frame.FilterDefaults.pgf.pagPropertyView1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Properties"
+ControlSource = ""
+Left = 59
+Name = "chkProperties"
+TabIndex = 1
+Top = 10
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDefaultTypeProperty'
+	.Caption	   = ccLOC_CAP_PROPERTIES
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJCX
+[CLASS] basepageframe
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] pageframe
+[OBJNAME] Frame
+[PARENT] PREFS.Frame.PageGeneral
+[START PROPERTIES]
+Basepage1.Caption = "Grid Highlighting"
+Basepage1.FontBold = .F.
+Basepage1.Name = "pagProcessing1"
+Basepage1.PageOrder = 2
+Basepage1.nhelpid = 82
+Basepage2.Caption = "Orientation, font size, etc."
+Basepage2.FontBold = .T.
+Basepage2.Name = "PageHighlighting"
+Basepage2.PageOrder = 1
+Basepage2.nhelpid = 86
+ErasePage = .T.
+Height = 304
+Left = 5
+Name = "Frame"
+PageCount = 2
+TabIndex = 1
+TabStretch = 1
+TabStyle = 1
+Top = 4
+Width = 352
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDJ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkAbbreviations
+[PARENT] PREFS.Frame.PageGeneral.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Use abbreviations in grid columns"
+ControlSource = ""
+Left = 40
+Name = "chkAbbreviations"
+TabIndex = 2
+Top = 40
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lUseAbbreviations'
+	.Caption	   = ccLOC_Pref_Cap_UseAbbreviations
+	.ToolTipText   = ccLOC_Pref_Tip_UseAbbreviations
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDI
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkGridAbove
+[PARENT] PREFS.Frame.PageGeneral.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Position grid above other controls"
+ControlSource = ""
+Height = 16
+Left = 40
+Name = "chkGridAbove"
+TabIndex = 1
+Top = 16
+Width = 179
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+Local lcToolTipText
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lGridAbove'
+	.Caption	   = ccLOC_Pref_Cap_GridAbove
+	.ToolTipText   = ccLOC_Pref_Tip_GridAbove
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDF
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblOverallfontsize
+[PARENT] PREFS.Frame.PageGeneral.Frame.PageHighlighting
+[START PROPERTIES]
+Caption = "Overall font size"
+Height = 16
+Left = 61
+Name = "lblOverallfontsize"
+TabIndex = 4
+Top = 72
+Width = 81
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.Caption 		= ccLOC_Pref_Cap_FontSize
+EndWith
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDH
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblOverallfontsize2
+[PARENT] PREFS.Frame.PageGeneral.Frame.PageHighlighting
+[START PROPERTIES]
+AutoSize = .F.
+Caption = "Overall font size"
+Height = 46
+Left = 34
+Name = "lblOverallfontsize2"
+TabIndex = 5
+Top = 94
+Width = 291
+WordWrap = .T.
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.Caption 		= ccLOC_Pref_Cap_FontSizeNote
+EndWith
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDG
+[CLASS] basespinner
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] spinner
+[OBJNAME] spnnFontSize
+[PARENT] PREFS.Frame.PageGeneral.Frame.PageHighlighting
+[START PROPERTIES]
+ControlSource = "ThisForm.oPrefs.nFontSize"
+Height = 22
+Increment =   1.00
+KeyboardHighValue = 16
+KeyboardLowValue = 6
+Left = 152
+Name = "spnnFontSize"
+SpinnerHighValue =  16.00
+SpinnerLowValue =   6.00
+TabIndex = 3
+Top = 68
+Width = 55
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDC
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdSample1
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Caption = "Sample 1"
+Left = 22
+Name = "cmdSample1"
+TabIndex = 4
+Top = 244
+ZOrderSet = 28
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Thisform.SetGridHighlighting(Thisform.oPrefs.cSampleColors1)
+
+ENDPROC
+PROCEDURE Init
+This.Caption = PF_CAP_SAMPLE_1
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJCY
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdSample2
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Caption = "Sample 2"
+Left = 97
+Name = "cmdSample2"
+TabIndex = 5
+Top = 244
+ZOrderSet = 18
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Thisform.SetGridHighlighting(Thisform.oPrefs.cSampleColors2)
+
+ENDPROC
+PROCEDURE Init
+This.Caption = PF_CAP_SAMPLE_2
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJCZ
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdSample3
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Caption = "Sample 3"
+Left = 172
+Name = "cmdSample3"
+TabIndex = 6
+Top = 244
+ZOrderSet = 21
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Thisform.SetGridHighlighting(Thisform.oPrefs.cSampleColors3)
+
+ENDPROC
+PROCEDURE Init
+This.Caption = PF_CAP_SAMPLE_3
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD0
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdSample4
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Caption = "Sample 4"
+Left = 247
+Name = "cmdSample4"
+TabIndex = 7
+Top = 244
+ZOrderSet = 22
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Thisform.SetGridHighlighting(Thisform.oPrefs.cSampleColors4)
+
+ENDPROC
+PROCEDURE Init
+This.Caption = PF_CAP_SAMPLE_4
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDE
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntFavorites
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Left = 39
+Name = "cntFavorites"
+TabIndex = 3
+Top = 210
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_Cap_Favorites
+	.nRow 	  = 7
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDD
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntNonDefault
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Left = 39
+Name = "cntNonDefault"
+TabIndex = 2
+Top = 186
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_Cap_NonDefault
+	.nRow 	  = 6
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD1
+[CLASS] basepageframe
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] pageframe
+[OBJNAME] pgf
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1
+[START PROPERTIES]
+Basepage1.Caption = "Property View"
+Basepage1.Name = "pagPropertyView1"
+Basepage1.nhelpid = 85
+Basepage2.Caption = "Method View"
+Basepage2.Name = "pagMethodView1"
+Basepage2.nhelpid = 85
+ErasePage = .T.
+Height = 170
+Left = 28
+Name = "pgf"
+PageCount = 2
+TabIndex = 1
+TabStyle = 0
+Top = 10
+Width = 297
+ZOrderSet = 25
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD9
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntInheritedCode
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1
+[START PROPERTIES]
+Left = 10
+Name = "cntInheritedCode"
+TabIndex = 2
+Top = 30
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_Inherited
+	.nRow 	  = 9
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD8
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntLocalCode
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1
+[START PROPERTIES]
+Left = 10
+Name = "cntLocalCode"
+TabIndex = 1
+Top = 6
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_Local
+	.nRow 	  = 8
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDB
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntNative
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1
+[START PROPERTIES]
+Left = 10
+Name = "cntNative"
+TabIndex = 5
+Top = 102
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = ccLOC_Pref_Cap_Native
+	.nRow 	  = 11
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDA
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntNonNative
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1
+[START PROPERTIES]
+Left = 10
+Name = "cntNonNative"
+TabIndex = 4
+Top = 78
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_NonNative
+	.nRow 	  = 10
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD7
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblFilters
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1
+[START PROPERTIES]
+BackStyle = 0
+Caption = "Without Code:"
+Left = 25
+Name = "lblFilters"
+TabIndex = 3
+Top = 62
+Width = 69
+ZOrderSet = 22
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+This.Caption = ' ' + PF_CAP_With_Code + ' '
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD4
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntCustom
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1
+[START PROPERTIES]
+Left = 10
+Name = "cntCustom"
+TabIndex = 3
+Top = 60
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_CUSTOM
+	.nRow 	  = 3
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD5
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntInherited
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1
+[START PROPERTIES]
+Left = 10
+Name = "cntInherited"
+TabIndex = 4
+Top = 84
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_INHERITED
+	.nRow 	  = 4
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD3
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntMethods
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1
+[START PROPERTIES]
+Left = 10
+Name = "cntMethods"
+TabIndex = 2
+Top = 30
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_METHODS
+	.nRow 	  = 2
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD6
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntNative
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1
+[START PROPERTIES]
+Left = 10
+Name = "cntNative"
+TabIndex = 5
+Top = 108
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_NATIVE
+	.nRow 	  = 5
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJD2
+[CLASS] cnthighlighting
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] container
+[OBJNAME] cntProperties
+[PARENT] PREFS.Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1
+[START PROPERTIES]
+Left = 10
+Name = "cntProperties"
+TabIndex = 1
+Top = 6
+Visible = .T.
+cboHighlightProperties.Name = "cboHighlightProperties"
+cmdColor.Name = "cmdColor"
+lblCaption.Name = "lblCaption"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+* Set the caption to a localized string.
+
+With This
+	.cCaption = PF_CAP_PROPERTIES
+	.nRow 	  = 1
+EndWith 
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDK
+[CLASS] basepageframe
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] pageframe
+[OBJNAME] Frame
+[PARENT] PREFS.Frame.PageHighlighting
+[START PROPERTIES]
+Basepage1.Caption = "Visibility / Access & Assign"
+Basepage1.Name = "pagProcessing1"
+Basepage1.PageOrder = 3
+Basepage1.nhelpid = 82
+Basepage2.Caption = "General"
+Basepage2.Name = "PageHighlighting"
+Basepage2.PageOrder = 1
+Basepage2.nhelpid = 86
+Basepage3.Caption = "MemberData"
+Basepage3.Name = "Special"
+Basepage3.PageOrder = 2
+Basepage3.nhelpid = 84
+Basepage4.Caption = "Handlers"
+Basepage4.Name = "pagHandlers1"
+Basepage4.PageOrder = 4
+Basepage4.nhelpid = 217
+ErasePage = .T.
+Height = 304
+Left = 4
+Name = "Frame"
+PageCount = 4
+TabIndex = 1
+TabStretch = 1
+TabStyle = 1
+Top = 4
+Width = 352
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDU
+[CLASS] cboprefs
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] combobox
+[OBJNAME] cboAnchorEditor
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+ControlSource = "Thisform.oPrefs.nAnchorEditor"
+FontSize = 8
+Height = 22
+Left = 146
+Name = "cboAnchorEditor"
+RowSourceType = 0
+TabIndex = 10
+Top = 236
+Value = 2
+Width = 134
+ZOrderSet = 4
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+With This
+	.AddItem(ccLOC_Cap_Anchor_None)
+	.AddItem(ccLOC_Cap_Anchor_VFP)
+	.AddItem(ccLOC_Cap_Anchor_AnchorBuilder)
+Endwith
+
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDZ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkApplytoggleeditor
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Apply toggle editor for non-native logical properties"
+ControlSource = ""
+Left = 24
+Name = "chkApplytoggleeditor"
+TabIndex = 9
+Top = 213
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lToggleEditor'
+	.Caption	   = ccLOC_Pref_CAP_ToggleEditor
+	.ToolTipText   = ccLOC_Pref_TIP_ToggleEditor
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE0
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkDefaultValues
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Assign default value to new properties"
+ControlSource = ""
+Left = 24
+Name = "chkDefaultValues"
+TabIndex = 4
+Top = 37
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lAssignDefaultValue'
+	.Caption	   = ccLOC_Pref_Cap_ASSIGN_DEFAULT_VALUE
+	.ToolTipText   = ccLOC_Pref_Tip_ASSIGN_DEFAULT_VALUE
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDX
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkNotifyNewPEM
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Notify if new PEM and not in grid?"
+ControlSource = ""
+Left = 24
+Name = "chkNotifyNewPEM"
+TabIndex = 5
+Top = 58
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lNotifyNewPemsHidden'
+	.Caption	   = ccLOC_Pref_Cap_NotifyNewPemsHidden
+	.ToolTipText   = ccLOC_Pref_Tip_NotifyNewPemsHidden
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences2
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Check out files using Source Control"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences2"
+TabIndex = 8
+Top = 121
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lCheckOutSCC'
+	.Caption	   = 'Check out files using Source Code Control'
+	.ToolTipText   = ''
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences3
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Add new PEMs to Custom Keyword List"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences3"
+TabIndex = 8
+Top = 142
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lAddNewPEMstoCKL'
+	.ToolTipText   = ''
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences4
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Disable timer if debugger is open"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences4"
+TabIndex = 8
+Top = 163
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDisableIfDebuggerOpen'
+	TEXT TO .ToolTipText NOSHOW TEXTMERGE
+Disables the timer when the debugger is open so that it does not interfere with the debugger.
+
+The timer can be re-enabled by clicking on PEM Editor.
+	ENDTEXT
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _4700X0V2M
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences5
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Close debugger during refresh"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences5"
+TabIndex = 8
+Top = 184
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lCloseDebuggeronRefresh'
+	TEXT TO .ToolTipText NOSHOW TEXTMERGE
+Closes the debugger when the PEM Editor form refreshes as a result of selecting a different object in the form or class being edited.
+
+The debugger is re-opened when the refresh completes.
+	ENDTEXT
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDT
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkRemovalPrompt
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Prompt before removing PEMs"
+ControlSource = ""
+Left = 24
+Name = "chkRemovalPrompt"
+TabIndex = 6
+Top = 79
+ZOrderSet = 4
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lPromptOnRemoval'
+	.Caption	   = ccLOC_Pref_Cap_REMOVALPROMPT
+	.ToolTipText   = ccLOC_Pref_Tip_REMOVALPROMPT
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDR
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkWhenmovingto
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = " When moving to a different control, stay on same PEM?"
+ControlSource = ""
+Left = 24
+Name = "chkWhenmovingto"
+TabIndex = 3
+Top = 16
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lStayOnSamePEM'
+	.Caption	   = ' ' + ccLOC_Pref_Cap_StayOnSamePEM
+	.ToolTipText   = ccLOC_Pref_Tip_StayOnSamePEM
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDY
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Editpropertycheckbox1
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 0
+Caption = "Prompt before auto-renaming objects"
+ControlSource = ""
+Left = 24
+Name = "Editpropertycheckbox1"
+TabIndex = 7
+Top = 100
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lPromptAutoRename'
+	.Caption	   = ccLOC_Pref_Cap_AutoRenamePrompt
+	.ToolTipText   = ccLOC_Pref_Tip_AutoRenamePrompt
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDS
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblAnchorEditor
+[PARENT] PREFS.Frame.PageHighlighting.Frame.PageHighlighting
+[START PROPERTIES]
+Alignment = 1
+AutoSize = .F.
+Caption = "Anchor Editor to use:"
+FontSize = 8
+Height = 16
+Left = 26
+Name = "lblAnchorEditor"
+TabIndex = 11
+Top = 240
+Width = 116
+ZOrderSet = 3
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+This.Caption = ccLOC_Pref_CAP_AnchorEditor 
+DoDefault()
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3GI11GA71
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkRestartDefaultFilters
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagHandlers1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Debug mode (for builders and event handlers)"
+ControlSource = ""
+Left = 24
+Name = "chkRestartDefaultFilters"
+TabIndex = 2
+Top = 88
+ZOrderSet = 6
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lDebugMode'
+	.Caption	   = ccLOC_Pref_Cap_DebugMode
+	.ToolTipText   = ccLOC_Pref_Tip_DebugMode
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE4
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] lEventHandlersEnabled
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagHandlers1
+[START PROPERTIES]
+Alignment = 0
+Caption = "Event Handlers enabled?"
+ControlSource = ""
+Left = 24
+Name = "lEventHandlersEnabled"
+TabIndex = 1
+Top = 16
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lEventHandlersEnabled'
+	.Caption	   = ccLOC_Pref_Cap_HandlersEnabled
+	.ToolTipText   = ccLOC_Pref_Tip_HandlersEnabled
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE6
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] lHandleevent_Caption
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagHandlers1
+[START PROPERTIES]
+Alignment = 0
+Caption = "When moving to a different control, stay on same PEM?"
+ControlSource = ""
+Left = 24
+Name = "lHandleevent_Caption"
+TabIndex = 3
+Top = 64
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lHandleevent_Caption'
+	.Caption	   = ccLOC_Pref_Cap_EventCaption
+	.ToolTipText   = ccLOC_Pref_Tip_EventCaption
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE5
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] lHandleevent_Resize
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagHandlers1
+[START PROPERTIES]
+Alignment = 0
+Caption = "When moving to a different control, stay on same PEM?"
+ControlSource = ""
+Left = 24
+Name = "lHandleevent_Resize"
+TabIndex = 2
+Top = 40
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lHandleevent_Resize'
+	.Caption	   = ccLOC_Pref_Cap_EventResize
+	.ToolTipText   = ccLOC_Pref_Tip_EventResize
+Endwith
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDQ
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] Baselabel1
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+Alignment = 1
+AutoSize = .F.
+Caption = "Default Visibility for new PEMs"
+Height = 16
+Left = 17
+Name = "Baselabel1"
+TabIndex = 2
+Top = 20
+Width = 149
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDO
+[CLASS] cboprefs
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] combobox
+[OBJNAME] Cboprefs1
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+ControlSource = "Thisform.oPrefs.nStartVisibility"
+FontSize = 8
+Height = 22
+Left = 175
+Name = "Cboprefs1"
+RowSourceType = 0
+TabIndex = 1
+Top = 16
+Value = 1
+Width = 152
+ZOrderSet = 4
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+WITH This
+  .AddItem(ccLOC_STR_Public)
+  .AddItem(ccLOC_CAP_Vis_Protected)
+  .AddItem(ccLOC_CAP_Vis_Hidden)
+ENDWITH 
+
+DoDefault()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDP
+[CLASS] cboprefs
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] combobox
+[OBJNAME] Cboprefs2
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+ControlSource = "Thisform.oPrefs.nAssignVisibility"
+FontSize = 8
+Height = 22
+Left = 175
+Name = "Cboprefs2"
+RowSourceType = 0
+TabIndex = 1
+Top = 52
+Value = 1
+Width = 152
+ZOrderSet = 4
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+WITH This
+  .AddItem(ccLOC_STR_Public)
+  .AddItem(ccLOC_CAP_Vis_Protected)
+  .AddItem(ccLOC_CAP_Vis_Hidden)
+  .AddItem('Same as that of property')
+ENDWITH 
+
+DoDefault()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDM
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdDefaultAccess
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+AutoSize = .F.
+Caption = "Default _Access Method"
+Left = 94
+Name = "cmdDefaultAccess"
+TabIndex = 11
+Top = 101
+Width = 132
+ZOrderSet = 8
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Local lcCode, lcNewCode
+lcCode = Thisform.oPrefs.cAccessCode
+lcNewCode = Thisform.EditDefaultAccess(ccLOC_Pref_ID_Default_Access, lcCode)
+Thisform.oPrefs.cAccessCode = lcNewCode
+
+
+ENDPROC
+PROCEDURE Init
+This.Caption = ccLOC_Pref_Cap_Default_Access
+DoDefault()
+
+ENDPROC
+PROCEDURE MouseEnter
+LPARAMETERS nButton, nShift, nXCoord, nYCoord
+
+This.ToolTipText = ccLOC_Pref_Tip_Default_Access
+
+ENDPROC
+PROCEDURE RightClick
+Local loMenu As 'ContextMenu' Of  'PEME_Menu.vcx'
+Local lcChoice, lcCode, lcNewCode
+
+loMenu = Newobject ('ContextMenu', 'PEME_Menu.vcx')
+
+With loMenu
+	If .AddSubMenu('Simple (non-array) properties')
+		.AddMenuItem(pf_LOC_CMA_Edit, 'Edit Scalar')
+		.AddMenuItem(pf_LOC_CMA_Reset, 'Scalar Default')
+		.EndSubmenu()
+	Endif
+
+	If .AddSubMenu('Array properties')
+		.AddMenuItem(pf_LOC_CMA_Edit, 'Edit Array')
+		.AddMenuItem(pf_LOC_CMA_Reset, 'Array Default')
+		.EndSubmenu()
+	Endif
+Endwith
+
+If Not loMenu.Activate()
+	Return
+Endif
+
+lcChoice = loMenu.Keyword
+
+Do Case
+
+	Case lcChoice = 'Edit Scalar'
+		lcCode = Thisform.oPrefs.cAccessCode
+		lcNewCode = Thisform.EditDefaultAccess(ccLOC_Pref_ID_Default_Access, lcCode)
+		Thisform.oPrefs.cAccessCode = lcNewCode
+
+	Case lcChoice = 'Scalar Default'
+		Thisform.oPrefs.cAccessCode = .Null.
+
+	Case lcChoice = 'Edit Array'
+		lcCode = Thisform.oPrefs.cArrayAccessCode
+		lcNewCode = Thisform.EditDefaultAccess(ccLOC_Pref_ID_Default_Access, lcCode)
+		Thisform.oPrefs.cArrayAccessCode = lcNewCode
+
+	Case lcChoice = 'Array Default'
+		Thisform.oPrefs.cArrayAccessCode = .Null.
+
+Endcase
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDL
+[CLASS] editpropertycommandbutton
+[CLASSLOC] editproperty.vcx
+[BASECLASS] commandbutton
+[OBJNAME] cmdDefaultAssign
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+AutoSize = .F.
+Caption = "Default _Assign Method"
+Left = 94
+Name = "cmdDefaultAssign"
+TabIndex = 12
+Top = 134
+Width = 132
+ZOrderSet = 7
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+Local lcCode, lcNewCode
+lcCode = Thisform.oPrefs.cAssignCode
+lcNewCode = Thisform.EditDefaultAccess(ccLOC_Pref_ID_Default_Assign, lcCode)
+Thisform.oPrefs.cAssignCode = lcNewCode
+
+ENDPROC
+PROCEDURE Init
+This.Caption = ccLOC_Pref_Cap_Default_Assign
+DoDefault()
+
+ENDPROC
+PROCEDURE MouseEnter
+LPARAMETERS nButton, nShift, nXCoord, nYCoord
+
+This.ToolTipText = ccLOC_Pref_Tip_Default_Assign
+
+ENDPROC
+PROCEDURE RightClick
+Local loMenu As 'ContextMenu' Of  'PEME_Menu.vcx'
+Local lcChoice, lcCode, lcNewCode
+
+loMenu = Newobject ('ContextMenu', 'PEME_Menu.vcx')
+
+With loMenu
+	If .AddSubMenu('Simple (non-array) properties')
+		.AddMenuItem(pf_LOC_CMA_Edit, 'Edit Scalar')
+		.AddMenuItem(pf_LOC_CMA_Reset, 'Scalar Default')
+		.EndSubmenu()
+	Endif
+
+	If .AddSubMenu('Array properties')
+		.AddMenuItem(pf_LOC_CMA_Edit, 'Edit Array')
+		.AddMenuItem(pf_LOC_CMA_Reset, 'Array Default')
+		.EndSubmenu()
+	Endif
+Endwith
+
+If Not loMenu.Activate()
+	Return
+Endif
+
+lcChoice = loMenu.Keyword
+
+Do Case
+
+	Case lcChoice = 'Edit Scalar'
+		lcCode = Thisform.oPrefs.cAssignCode
+		lcNewCode = Thisform.EditDefaultAssign(ccLOC_Pref_ID_Default_Assign, lcCode)
+		Thisform.oPrefs.cAssignCode = lcNewCode
+
+	Case lcChoice = 'Scalar Default'
+		Thisform.oPrefs.cAssignCode = .Null.
+
+	Case lcChoice = 'Edit Array'
+		lcCode = Thisform.oPrefs.cArrayAssignCode
+		lcNewCode = Thisform.EditDefaultAssign(ccLOC_Pref_ID_Default_Assign, lcCode)
+		Thisform.oPrefs.cArrayAssignCode = lcNewCode
+
+	Case lcChoice = 'Array Default'
+		Thisform.oPrefs.cArrayAssignCode = .Null.
+
+Endcase
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJDN
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblMenuforPEM
+[PARENT] PREFS.Frame.PageHighlighting.Frame.pagProcessing1
+[START PROPERTIES]
+Alignment = 1
+AutoSize = .F.
+Caption = "Visibility for new Access and Assign methods (when created by checkboxes)"
+Height = 40
+Left = 17
+Name = "lblMenuforPEM"
+TabIndex = 2
+Top = 42
+Width = 143
+WordWrap = .T.
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3GL0GSFCV
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkMemberData
+[PARENT] PREFS.Frame.PageHighlighting.Frame.Special
+[START PROPERTIES]
+Alignment = 0
+Caption = "Do not create or use _MemberData"
+ControlSource = ""
+Left = 24
+Name = "chkMemberData"
+TabIndex = 1
+Top = 16
+ZOrderSet = 5
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lUseMemberData'
+	.Caption	   = ccLOC_Pref_Cap_No_MemberData
+	.ToolTipText   = ccLOC_Pref_Tip_No_MemberData
+Endwith
+
+ENDPROC
+PROCEDURE Refresh
+DoDefault()
+This.Enabled = PEME_IsVersion9()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3BY0FDJE2
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] chkOldPropertyEditors
+[PARENT] PREFS.Frame.PageHighlighting.Frame.Special
+[START PROPERTIES]
+Alignment = 0
+AutoSize = .F.
+Caption = "VFP-Style property editors using Memberdata 'script' -- does not mangle MemberData"
+ControlSource = ""
+Height = 32
+Left = 24
+Name = "chkOldPropertyEditors"
+TabIndex = 1
+Top = 58
+Width = 273
+WordWrap = .T.
+ZOrderSet = 14
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lMemberDataKeepType'
+	.Caption	   = ccLOC_Pref_CAP_Keep_Style
+	.ToolTipText   = ccLOC_Pref_TIP_Keep_Style
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3GL0GSFCW
+[CLASS] chkpreferences
+[CLASSLOC] peme_preferences.vcx
+[BASECLASS] checkbox
+[OBJNAME] Chkpreferences3
+[PARENT] PREFS.Frame.PageHighlighting.Frame.Special
+[START PROPERTIES]
+Alignment = 0
+Caption = "Do not allow upper case characters in new PEMs"
+ControlSource = ""
+Left = 24
+Name = "Chkpreferences3"
+TabIndex = 2
+Top = 37
+ZOrderSet = 5
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+DoDefault()
+
+With This
+	.ControlSource = 'Thisform.oPrefs.lLowerCaseOnly'
+Endwith
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2YW0I13B6
+[CLASS] basecommandbutton
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] commandbutton
+[OBJNAME] imgHelp
+[PARENT] PREFS
+[START PROPERTIES]
+Caption = ""
+Height = 21
+Left = 762
+Name = "imgHelp"
+Picture = ..\images\refhelp.bmp
+PicturePosition = 13
+SpecialEffect = 2
+Top = 8
+Width = 21
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+_oPEMEditor.oUtils.ShowHelp (Thisform.nHelpID)
+
+ENDPROC
+PROCEDURE Init
+With This
+	.ToolTipText = ccLOC_CAP_ContextHelp
+EndWith 	
+DoDefault()
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3270CHCW5
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label7
+[PARENT] PREFS
+[START PROPERTIES]
+AutoSize = .T.
+BackStyle = 0
+Caption = "Visit the PEM Editor blog:"
+FontSize = 7
+Height = 14
+Left = 124
+Name = "Label7"
+Top = 373
+Width = 108
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _3270CHCW6
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label8
+[PARENT] PREFS
+[START PROPERTIES]
+AutoSize = .T.
+BackStyle = 0
+Caption = "http://PEMEditor.blogspot.com/"
+FontSize = 7
+FontUnderline = .T.
+ForeColor = 0,0,255
+Height = 14
+Left = 236
+MousePointer = 15
+Name = "Label8"
+ToolTipText = "Click to follow link"
+Top = 373
+Width = 132
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+LOCAL loHyperlink, lcLink
+lcLink = "http://pemeditor.blogspot.com/"
+loHyperlink = CREATEOBJECT("Hyperlink") 
+loHyperlink.navigateto(lcLink)
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2I50FLRMJ
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblFolder
+[PARENT] PREFS
+[START PROPERTIES]
+Alignment = 1
+AutoSize = .F.
+Caption = "Folder Where Installed"
+FontSize = 7
+Height = 11
+Left = 115
+Name = "lblFolder"
+TabIndex = 3
+Top = 348
+Width = 255
+ZOrderSet = 0
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+Local lcSys16
+
+* extra directory path
+lcSys16 = Justpath (Justpath (This.Parent.ClassLibrary))
+
+This.Caption = lcSys16
+DoDefault()
+This.FontSize = PF_FontSizeSmall
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _2IL0O4S57
+[CLASS] baselabel
+[CLASSLOC] peme_basecontrols.vcx
+[BASECLASS] label
+[OBJNAME] lblVersion
+[PARENT] PREFS
+[START PROPERTIES]
+Alignment = 1
+AutoSize = .F.
+Caption = "Version 1.00 - Oct. 28, 2008"
+FontSize = 7
+Height = 11
+Left = 115
+Name = "lblVersion"
+TabIndex = 4
+Top = 360
+Width = 255
+ZOrderSet = 12
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Refresh
+DoDefault()
+This.Caption = Thisform.oPrefs.cVersion
+This.FontSize = PF_FontSizeSmall
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 29, 3, 0
+Arial, 1, 9, 6, 15, 12, 32, 3, 0
+[END PROPERTIES]
+[EOF]
