@@ -1,0 +1,9 @@
+Lparameters toUpdateInfo
+
+AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.30.00 - January 31, 2018 - 20180131')
+AddProperty(toUpdateInfo, 'SourceFileUrl', 		'https://raw.githubusercontent.com/VFPX/PEMEditor/master/ThorUpdater/PEMEditor_Source.Zip')
+AddProperty(toUpdateInfo, 'LinkPrompt', 		'PEM Editor Home Page')
+AddProperty(toUpdateInfo, 'Link', 				'https://github.com/VFPX/PEMEditor')
+
+Execscript (_Screen.cThorDispatcher, 'Result=', toUpdateInfo)
+Return toUpdateInfo
