@@ -5,45 +5,43 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.20 Released 2012-08-19
+Version 7.30 Released 2018-01-31
 
-[**<font size="4">What's new in this release</font>**](#WhatsNew)
+## Introduction
 
-This release introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
+PEM Editor introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
 
-Each of the tools is documented separately; **[Click here for complete online documentation of IDE Tools](PEM%20Editor%20IDE%20Tools%20Help.html).**
+Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation/PEM%20Editor%20IDE%20Tools%20Help.html).**
 
-These tools are accessible thru [Thor](https://github/VFPX/Thor) and do not require the existence of the PEM Editor form.
+These tools are accessible thru [Thor](https://github.com/VFPX/Thor) and do not require the existence of the PEM Editor form.
 
-**Download**
+## Download
 
-PEM Editor 7 with IDE Tools is automatically downloaded and installed by using [One-Click Update of Thor](https://github/VFPX/Thor).
+PEM Editor 7 with IDE Tools is automatically downloaded and installed by using [One-Click Update of Thor](https://github.com/VFPX/Thor/blob/master/Docs/Thor_one-click_update.md).
 
 The download can also be downloaded manually from this repository.
 
 To install,
 
-<pre>     Clear All
-     Do PEMEditor.APP </pre>
+    Clear All
+    Do PEMEditor.APP
 
 This will not only install PEM Editor, but will also register it so that all of the new IDE Tools are available in Thor.
 
 ## Documentation and videos
 
-*   **[Click here for complete online documentation of IDE Tools](PEM%20Editor%20IDE%20Tools%20Help.html)**
+*   **[Click here for complete online documentation of IDE Tools](Documentation/PEM%20Editor%20IDE%20Tools%20Help.html)**
 *   PEMEditor.chm in the Documentation folder
 
-<a name="WhatsNew">**What's New**</a>
+### Version 7.30: Bug fixes
 
-<a name="WhatsNew">Thor 1.30 – Released 2012-08-19</a>
-
-<a name="WhatsNew"></a>
+Version 7.30 fixes a bug in handling containers with controls that fully overlap the container and fixes the support for Thor Check for Updates.
 
 ### Version 7.20: IntellisenseX
 
 IntellisenseX provides downdown lists of properties or field names when setting the ControlSource property.
 
-![](https://github.com/vfpx/intellisensex/blob/master/thor%20intellisensex%20controlsources_snaghtmlafe99.png)
+![](https://github.com/VFPX/IntelliSenseX/blob/master/Thor%20IntellisenseX%20ControlSources_SNAGHTMLafe99.png)
 
 See [Setting ControlSources in PEM Editor](https://github.com/VFPX/IntelliSenseX/Thor%20IntellisenseX%20ControlSources.html).
 
@@ -67,9 +65,9 @@ There are separate files in the Documentation folder for each of these tools. Th
 
 PEM Editor also publishes two objects that can be accessed by using Thor, to assist in building tools.  
 
-[EditorWindow Object](PEM%20Editor%20EditorWindow%20Object.html) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window.  
+[EditorWindow Object](Documentation/PEM%20Editor%20EditorWindow%20Object.html) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window. 
 
-[Tools Object](PEM%20Editor%20Tools%20Object.html) -- A collection of miscellaneous tools  
+[Tools Object](Documentation/PEM%20Editor%20Tools%20Object.html) -- A collection of miscellaneous tools  
 
 ***********************************************************  
 

@@ -8,7 +8,7 @@ With loUpdateObject
     .VersionLocalFilename = 'PEM Editor Version.txt'
     .RegisterWithThor     = 'Do "##InstallFolder##PEMEditor.APP" with "Thor"'
     .ShowErrorMessage     = 'No'
-    .SourceFileURL        = 'PEMEditor_Source.Zip = https://raw.githubusercontent.com/VFPX/PEMEditor/master/ThorUpdater/PEMEditor_Source.Zip'
+    .SourceFileURL        = 'https://raw.githubusercontent.com/VFPX/PEMEditor/master/ThorUpdater/PEMEditor_Source.zip'
     .Link                 = 'https://github.com/VFPX/PEMEditor'
     .LinkPrompt           = 'PEM Editor Home Page'
 Endwith
