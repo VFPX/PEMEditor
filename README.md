@@ -43,7 +43,7 @@ IntellisenseX provides downdown lists of properties or field names when setting 
 
 ![](https://github.com/VFPX/IntelliSenseX/blob/master/Thor%20IntellisenseX%20ControlSources_SNAGHTMLafe99.png)
 
-See [Setting ControlSources in PEM Editor](https://github.com/VFPX/IntelliSenseX/Thor%20IntellisenseX%20ControlSources.html).
+See [Setting ControlSources in PEM Editor](https://github.com/VFPX/IntelliSenseX/blob/master/Thor%20IntellisenseX%20ControlSources.html).
 
 ### Version 7.11: What's new in this release
 
