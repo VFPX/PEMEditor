@@ -1,5 +1,0 @@
-lctext = ''
-Scan
-	lcText = lcText + Trim(cPropName) + ', '
-EndScan 
-Return lctext

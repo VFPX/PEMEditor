@@ -58,8 +58,8 @@ Procedure DefinePRG (loTool, lcPath, lcVersion)
 		.Description   = Evl(loTool.Descript, loTool.Summary)
 		.prgName       = 'Thor_Tool_PEME_' + loTool.prgName
 		.AppName       = 'PEMEditor.APP'
-		.Classes       = 'loTools = Tools of PEME_Tools|http://vfpx.codeplex.com/wikipage?title=Thor%20Tools%20Object';
-			+ ', loEditorWin = EditorWin of PEME_EditorWin|http://vfpx.codeplex.com/wikipage?title=Thor%20EditorWindow%20Object'
+		.Classes       = 'loTools = Tools of PEME_Tools|https://github.com/VFPX/Thor/blob/master/Docs/Thor_tools_object.md';
+			+ ', loEditorWin = EditorWin of PEME_EditorWin|https://github.com/VFPX/Thor/blob/master/Docs/Thor_editorwindow_object.md'
 
 		TEXT to .Code noshow textmerge
 If Type('_Screen.cThorDispatcher') = 'C'
@@ -83,7 +83,8 @@ Endif
 		.Sort		   = loTool.SortOrder && the sort order for all items from the same .Source
 		*	.MinorSort	   = loTool.MinorSort && the sort order for all items from the same .Source
 		If Not Empty(loTool.WebPage)
-			.Link      = 'http://vfpx.codeplex.com/wikipage?title=' + Strtran(Trim(loTool.WebPage), ' ', '%20')
+*** DH 2018-02-07: commented out because simple concatenation link this may not work
+***			.Link      = 'http://vfpx.codeplex.com/wikipage?title=' + Strtran(Trim(loTool.WebPage), ' ', '%20')
 		Endif
 
 		If loTool.Optioncls
