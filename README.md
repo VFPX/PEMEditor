@@ -9,6 +9,8 @@ Version 7.30 Released 2018-01-31
 
 ## Introduction
 
+<!-- tb -->
+
 PEM Editor introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
 
 Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation/PEM%20Editor%20IDE%20Tools%20Help.html).**
