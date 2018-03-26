@@ -12,7 +12,7 @@ Version 7.30 Released 2018-01-31
 
 PEM Editor introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
 
-Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation/PEM%20Editor%20IDE%20Tools%20Help.html).**
+Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation\pemeditor_ide_tools_help.md).**
 
 These tools are accessible thru [Thor](https://github.com/VFPX/Thor) and do not require the existence of the PEM Editor form.
 
@@ -31,7 +31,7 @@ This will not only install PEM Editor, but will also register it so that all of 
 
 ## Documentation and videos
 
-*   **[Click here for complete online documentation of IDE Tools](Documentation/PEM%20Editor%20IDE%20Tools%20Help.html)**
+*   **[Click here for complete online documentation of IDE Tools](Documentation\pemeditor_ide_tools_help.md)**
 *   PEMEditor.chm in the Documentation folder
 
 ### Version 7.30: Bug fixes
@@ -42,9 +42,9 @@ Version 7.30 fixes a bug in handling containers with controls that fully overlap
 
 IntellisenseX provides downdown lists of properties or field names when setting the ControlSource property.
 
-![](https://github.com/VFPX/IntelliSenseX/blob/master/Thor%20IntellisenseX%20ControlSources_SNAGHTMLafe99.png)
+![](Documentation/images/thor_intellisensex_controlsources_snaghtmlafe99.png)
 
-See [Setting ControlSources in PEM Editor](https://github.com/VFPX/IntelliSenseX/blob/master/Thor%20IntellisenseX%20ControlSources.html).
+See [Setting ControlSources in PEM Editor](https://github.com/VFPX/IntelliSenseX/blob/master/documents/Thor_IntellisenseX_ControlSources.md).
 
 ### Version 7.11: What's new in this release
 
@@ -60,15 +60,15 @@ As noted, this release contains a long list of new IDE Tools. They are listed be
 
 There are separate files in the Documentation folder for each of these tools. This documentation is also accessible from within the Thor User Interface.  
 
-![](Documentation/PEM%20Editor%207%20with%20IDE%20Tools_PEMeditor.jpg)
+![](Documentation/images/pem_editor_7_with_ide_tools_pemeditor.jpg)
 
 #### Objects published by PEM Editor
 
 PEM Editor also publishes two objects that can be accessed by using Thor, to assist in building tools.  
 
-[EditorWindow Object](Documentation/PEM%20Editor%20EditorWindow%20Object.html) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window. 
+[EditorWindow Object](Documentation\pemeditor_editorwindow_object.md) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window. 
 
-[Tools Object](Documentation/PEM%20Editor%20Tools%20Object.html) -- A collection of miscellaneous tools  
+[Tools Object](Documentation\pemeditor_tools_object.md) -- A collection of miscellaneous tools  
 
 ***********************************************************  
 
