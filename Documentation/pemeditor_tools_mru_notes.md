@@ -17,7 +17,7 @@ There are two distinct issues which may be of interest to those who use Source C
 
 **To the rescue …**
 
-All files opened by PEM Editor and [GoFish](https://github.com/mattslay/GoFish){:target="_blank"} use the same method to open files, and this method performs three additional tasks:
+All files opened by PEM Editor and [GoFish](https://github.com/mattslay/GoFish) use the same method to open files, and this method performs three additional tasks:
 
 1.  It adds the file to the appropriate MRU list (and, if the file is a class library, maintains a separate MRU list only for class libraries).
 2.  It opens the file with the same case as it exists on disk, which implies that the case of the name will not be changed when it is saved.
