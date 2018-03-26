@@ -6,7 +6,7 @@ The copied properties and methods can be used a number of different ways:
 
 *   By selecting a different object and then using [Compare with copied object](pemeditor_tools_compare_objects.md)
 *   By selecting a different object and then using [Paste properties and method code](pemeditor_tools_paste_properties.md)
-*   By using [Paste Object](pemeditor_tools_paste_object.html) to create a new object.
+*   By using [Paste Object](pemeditor_tools_paste_object.md) to create a new object.
 
 The "different object" can be another object on the same form or class, in a different form or class, or in the parent class.
 
