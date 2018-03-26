@@ -1,7 +1,4 @@
-﻿<style> 
-th  { font-weight: bold;}
-tbody tr:nth-child(even) {  background-color: #ddd}
-</style>
+﻿<link rel="stylesheet" href="css/thortable.css">
 
 The **PEM Editor Tools Object**, documented here, contains a number of useful tools of value in building tools in Thor.
 
