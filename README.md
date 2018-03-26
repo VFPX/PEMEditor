@@ -12,7 +12,7 @@ Version 7.30 Released 2018-01-31
 
 PEM Editor introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
 
-Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation\pemeditor_ide_tools_help.md).**
+Each of the tools is documented separately; **[click here for complete online documentation of IDE Tools](Documentation/pemeditor_ide_tools_help.md).**
 
 These tools are accessible thru [Thor](https://github.com/VFPX/Thor) and do not require the existence of the PEM Editor form.
 
@@ -31,7 +31,7 @@ This will not only install PEM Editor, but will also register it so that all of 
 
 ## Documentation and videos
 
-*   **[Click here for complete online documentation of IDE Tools](Documentation\pemeditor_ide_tools_help.md)**
+*   **[Click here for complete online documentation of IDE Tools](Documentation/pemeditor_ide_tools_help.md)**
 *   PEMEditor.chm in the Documentation folder
 
 ### Version 7.30: Bug fixes
@@ -66,9 +66,9 @@ There are separate files in the Documentation folder for each of these tools. Th
 
 PEM Editor also publishes two objects that can be accessed by using Thor, to assist in building tools.  
 
-[EditorWindow Object](Documentation\pemeditor_editorwindow_object.md) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window. 
+[EditorWindow Object](Documentation/pemeditor_editorwindow_object.md) -- wrappers for the functions from FoxTools.fll to access and modify the currently open editing window. 
 
-[Tools Object](Documentation\pemeditor_tools_object.md) -- A collection of miscellaneous tools  
+[Tools Object](Documentation/pemeditor_tools_object.md) -- A collection of miscellaneous tools  
 
 ***********************************************************  
 

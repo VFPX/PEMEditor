@@ -11,7 +11,7 @@ Thereafter, all of the other methods of this object refer to this saved window h
 
 Some further notes:
 
-1.  Character positions and line counts start at 0, not 1\. (i.e., be careful)
+1.  Character positions and line counts start at 0, not 1. (i.e., be careful)
 2.  There is full documentation for the functions in FoxTools.fll available, in a sub-folder of PEM Editor's Source folder.
 
 It is always available by executing the following line of code (which uses the Thor Dispatcher).  Note that the PEM Editor form need not be open for this to work.
