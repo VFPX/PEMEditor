@@ -22,7 +22,7 @@ There is a bug in native beatify having to do with the handling of mixed case ke
 
 
 **Creating Locals:**  
-BeautifyX can also incorporate another tool, <u>[Create Locals](http://vfpx.codeplex.com/wikipage?title=PEMEditor%20Tools%20Create%20LOCALs)</u>, so that it is run at the same time as the rest of BeautifyX.</td>
+BeautifyX can also incorporate another tool, [Create Locals](pemeditor_tools_create_locals.md), so that it is run at the same time as the rest of BeautifyX.
 
 ![](images/pemeditor_tools_beautifyx_snaghtml4ad9711.png)
 

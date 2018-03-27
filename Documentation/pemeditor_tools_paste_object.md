@@ -2,7 +2,7 @@
 
 This feature creates a new object, using the class name and library captured by "Copy Object" and then pastes the properties and method code that has been copied into that object.
 
-The new object will be a child of the currently viewed object, if that object can have children; otherwise, it will be a sibling of the currently viewed object. <
+The new object will be a child of the currently viewed object, if that object can have children; otherwise, it will be a sibling of the currently viewed object.
 
 ![](images/pemeditor_tools_paste_object_snaghtml1b7a09de.png)
 

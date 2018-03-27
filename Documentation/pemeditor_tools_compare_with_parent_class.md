@@ -8,4 +8,4 @@ Note that if the object is actually a member of a parent class, it actually digs
 
 All values which are identical to the parent class are initially checked off (and bold).  The list of selected items can be modified as needed.  Then, if desired, the button 'Reset Selected Items to Default' can be used.
 
-This feature is also used as the final step when copying properties and method code from an object into its parent class during re-factoring.  See also [Paste properties and Method Code](pemeditor_tools_paste_properties.html)
+This feature is also used as the final step when copying properties and method code from an object into its parent class during re-factoring.  See also [Paste properties and Method Code](pemeditor_tools_paste_properties.md)
