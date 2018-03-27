@@ -12,4 +12,4 @@ Notes:
 *   The window will not be resized so that it is too wide or too tall; thus, you can set the Width and Height values to be very large (say, 5000) and the window will expand to the maximum that will fit.
 *   The check box about automatically doing this on opening windows applies to all windows opened by PEM Editor, Document TreeView, or and of the IDE Tools that come with PEM Editor.
 
-> [![SNAGHTML2009f172](http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=256979 "SNAGHTML2009f172")](http://download.codeplex.com/download?ProjectName=vfpx&DownloadId=256978)
+![](images/Resize_Window_SNAGHTML2009f172.png)
