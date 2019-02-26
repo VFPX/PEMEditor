@@ -5,7 +5,7 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.30 Released 2018-01-31
+Version 7.30.02 Released 2018-02-26
 
 ## Introduction
 
@@ -33,6 +33,10 @@ This will not only install PEM Editor, but will also register it so that all of 
 
 *   **[Click here for complete online documentation of IDE Tools](Documentation/pemeditor_ide_tools_help.md)**
 *   PEMEditor.chm in the Documentation folder
+
+### Version 7.30.02: Bug fixes
+
+Version 7.30.02 *really* fixes a bug in handling containers with controls that fully overlap the container.
 
 ### Version 7.30: Bug fixes
 

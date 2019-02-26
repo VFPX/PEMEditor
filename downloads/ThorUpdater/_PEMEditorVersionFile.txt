@@ -1,6 +1,6 @@
 Lparameters toUpdateInfo
 
-AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.30.01 - February 7, 2018 - 20180207')
+AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.30.02 - February 26, 2019 - 20190226')
 AddProperty(toUpdateInfo, 'SourceFileUrl', 		'https://raw.githubusercontent.com/VFPX/PEMEditor/master/ThorUpdater/PEMEditor_Source.zip')
 AddProperty(toUpdateInfo, 'LinkPrompt', 		'PEM Editor Home Page')
 AddProperty(toUpdateInfo, 'Link', 				'https://github.com/VFPX/PEMEditor')

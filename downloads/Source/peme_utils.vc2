@@ -4307,10 +4307,13 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 			loObject	 = loItem.Object
 			lnLeft		 = loItem.Left
 			llNonDefault = loItem.NonDefault
+		*** DH 2019-02-26: fixed bug: the logic to reset to default vs setting Left was reversed
 			If llNonDefault
-				loObject.ResetToDefault('Left')
-			Else
+		***		loObject.ResetToDefault('Left')
 				loObject.Left = lnLeft
+			Else
+		***		loObject.Left = lnLeft
+				loObject.ResetToDefault('Left')
 			Endif
 		Endfor && lnI = 1 to loMovedControls.Count
 		
