@@ -33,7 +33,7 @@ _AutoIncrement = "0"
 
 
 *<BuildProj>
-*<.HomeDir = 'c:\users\dhennig\desktop\pemeditor\source' />
+*<.HomeDir = 'c:\users\dhennig\desktop\pemeditor\downloads\source' />
 
 FOR EACH loProject IN _VFP.Projects FOXOBJECT
 	loProject.Close()
@@ -112,7 +112,7 @@ WITH loProject.FILES
 	.ADD('askaddpemnewstayopen.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('buildpemeditor.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('changefontsize.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('editproperty.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="BAAUAGVkaXRwcm9wZXJ0eWRpYWxvZy5o7gCGXT9MGwBlZGl0cHJvcGVydHlkaWFsb2dlbmdsaXNoLmj2AYZdP0wKAGJlYXV0aWZ5Lmj+AoZdP0xFAC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaAYEC4KJMQ==" />
+	.ADD('editproperty.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="BAAUAGVkaXRwcm9wZXJ0eWRpYWxvZy5oxvxtaUVMGwBlZGl0cHJvcGVydHlkaWFsb2dlbmdsaXNoLmjO/W1pRUwKAGJlYXV0aWZ5LmjW/m1pRUxIAC4uXC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaN7/C4KJMQ==" />
 	.ADD('editproperty.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('editpropertydialog.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" DevInfo="" />
 	.ADD('editpropertydialogenglish.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" DevInfo="" />
@@ -123,7 +123,7 @@ WITH loProject.FILES
 	.ADD('peme_basecontrols.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_basecontrols.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_beautify.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AQAKAGJlYXV0aWZ5Lmg2Z0tyiTE=" />
-	.ADD('peme_beautifycode.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AQAKAGJlYXV0aWZ5Lmim6oZdP0w=" />
+	.ADD('peme_beautifycode.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AQAKAGJlYXV0aWZ5Lmj2Lm1pRUw=" />
 	.ADD('peme_beautifycode.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_clearwaitcursor.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_createthormenus.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
@@ -135,21 +135,21 @@ WITH loProject.FILES
 	.ADD('peme_find.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_findtopmostparent.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_format.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('peme_foxmatch.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwANAHBlbWVfZm94cmVmLmgGaoZdP0xFAC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaA5rC4KJMUUALi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5oFmwLgokx" />
+	.ADD('peme_foxmatch.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwANAHBlbWVfZm94cmVmLmiem21pRUxIAC4uXC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaKacC4KJMUgALi5cLi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5orp0Lgokx" />
 	.ADD('peme_foxmatch.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('peme_foxrefengine.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwBFAC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaNb8C4KJMQ0AcGVtZV9mb3hyZWYuaN79hl0/TEUALi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5o5v4Lgokx" />
+	.ADD('peme_foxrefengine.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwBIAC4uXC4uXC4uXC4uXC4uXC4uXHByb2dyYW0gZmlsZXMgKHg4NilcbWljcm9zb2Z0IHZpc3VhbCBmb3hwcm8gOVxmb3hwcm8uaJ6bC4KJMQ0AcGVtZV9mb3hyZWYuaKacbWlFTEgALi5cLi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5orp0Lgokx" />
 	.ADD('peme_foxrefengine.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_foxresource.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_foxresource.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('peme_foxtabsmanager.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AQAOAHBlbWVfZm94dGFicy5ofnKGXT9M" />
+	.ADD('peme_foxtabsmanager.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AQAOAHBlbWVfZm94dGFicy5oHjltaUVM" />
 	.ADD('peme_help_internal.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_idex.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_isversion9.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_isx.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_ls_internal.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_main.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('peme_mdcleaner.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaNb8hl0/TBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaN79hl0/TEUALi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5o5v4Lgokx" />
-	.ADD('peme_memberdataengine.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaG6whl0/TBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaHaxhl0/TEUALi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5ofrILgokx" />
+	.ADD('peme_mdcleaner.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaJ6bbWlFTBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaKacbWlFTEgALi5cLi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5orp0Lgokx" />
+	.ADD('peme_memberdataengine.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaJ6bbWlFTBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaKacbWlFTEgALi5cLi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5orp0Lgokx" />
 	.ADD('peme_menu.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_mxbrowser.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_new_snippet.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
@@ -160,7 +160,7 @@ WITH loProject.FILES
 	.ADD('peme_opentable.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_preferences.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_remsecuritywarning.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
-	.ADD('peme_server.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaNb8hl0/TBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaN79hl0/TEUALi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5o5v4Lgokx" />
+	.ADD('peme_server.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="AwASAG1lbWJlcmRhdGFlZGl0b3IuaJ6bbWlFTBkAbWVtYmVyZGF0YWVkaXRvcmVuZ2xpc2guaKacbWlFTEgALi5cLi5cLi5cLi5cLi5cLi5ccHJvZ3JhbSBmaWxlcyAoeDg2KVxtaWNyb3NvZnQgdmlzdWFsIGZveHBybyA5XGZveHByby5orp0Lgokx" />
 	.ADD('peme_sfcombotree.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_sfsplitter.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
 	.ADD('peme_snippet_case_internal.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" DevInfo="" />
