@@ -579,15 +579,15 @@ DEFINE CLASS peme_sfsplitterh AS peme_sfsplitter OF "peme_sfsplitter.vcx"
 	imgDownArrow.Height = 21
 	imgDownArrow.Name = "imgDownArrow"
 	imgDownArrow.Width = 21
-	ImgLeftArrow.Height = 17
-	ImgLeftArrow.Name = "ImgLeftArrow"
-	ImgLeftArrow.Width = 17
-	ImgRightArrow.Height = 17
-	ImgRightArrow.Name = "ImgRightArrow"
-	ImgRightArrow.Width = 17
 	imgUpArrow.Height = 21
 	imgUpArrow.Name = "imgUpArrow"
 	imgUpArrow.Width = 21
+	ImgRightArrow.Height = 17
+	ImgRightArrow.Name = "ImgRightArrow"
+	ImgRightArrow.Width = 17
+	ImgLeftArrow.Height = 17
+	ImgLeftArrow.Name = "ImgLeftArrow"
+	ImgLeftArrow.Width = 17
 	
 	PROCEDURE adjustminimum
 		* Don't allow the form to be sized smaller than the left object should be.
@@ -674,15 +674,15 @@ DEFINE CLASS peme_sfsplitterv AS peme_sfsplitter OF "peme_sfsplitter.vcx"
 	imgDownArrow.Height = 21
 	imgDownArrow.Name = "imgDownArrow"
 	imgDownArrow.Width = 21
-	ImgLeftArrow.Height = 17
-	ImgLeftArrow.Name = "ImgLeftArrow"
-	ImgLeftArrow.Width = 17
-	ImgRightArrow.Height = 17
-	ImgRightArrow.Name = "ImgRightArrow"
-	ImgRightArrow.Width = 17
 	imgUpArrow.Height = 21
 	imgUpArrow.Name = "imgUpArrow"
 	imgUpArrow.Width = 21
+	ImgRightArrow.Height = 17
+	ImgRightArrow.Name = "ImgRightArrow"
+	ImgRightArrow.Width = 17
+	ImgLeftArrow.Height = 17
+	ImgLeftArrow.Name = "ImgLeftArrow"
+	ImgLeftArrow.Width = 17
 	
 	PROCEDURE adjustminimum
 		* Don't allow the form to be sized smaller than the top object should be.

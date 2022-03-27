@@ -599,8 +599,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 210, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.cntNonDefault' AS cnthighlighting WITH ;
@@ -610,8 +610,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 186, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf' AS basepageframe WITH ;
@@ -640,8 +640,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 30, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1.cntLocalCode' AS cnthighlighting WITH ;
@@ -651,8 +651,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 6, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1.cntNative' AS cnthighlighting WITH ;
@@ -662,8 +662,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 102, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1.cntNonNative' AS cnthighlighting WITH ;
@@ -673,8 +673,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 78, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagMethodView1.lblFilters' AS baselabel WITH ;
@@ -695,8 +695,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 60, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1.cntInherited' AS cnthighlighting WITH ;
@@ -706,8 +706,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 84, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1.cntMethods' AS cnthighlighting WITH ;
@@ -717,8 +717,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 30, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1.cntNative' AS cnthighlighting WITH ;
@@ -728,8 +728,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 108, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageGeneral.Frame.pagProcessing1.pgf.pagPropertyView1.cntProperties' AS cnthighlighting WITH ;
@@ -739,8 +739,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Top = 6, ;
 		Visible = .T., ;
 		cboHighlightProperties.Name = "cboHighlightProperties", ;
-		cmdColor.Name = "cmdColor", ;
-		lblCaption.Name = "lblCaption"
+		lblCaption.Name = "lblCaption", ;
+		cmdColor.Name = "cmdColor"
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="container" />
 
 	ADD OBJECT 'Frame.PageHighlighting.Frame' AS basepageframe WITH ;

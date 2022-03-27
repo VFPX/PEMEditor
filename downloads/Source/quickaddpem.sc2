@@ -32,25 +32,17 @@ DEFINE CLASS askaddpem1 AS askaddpem OF "editproperty.vcx"
 	outils = .F.
 	Width = 246
 	WindowType = 0
-	Baseline1.Name = "Baseline1"
-	Baseline1.Width = 500
 	changefontsize.Name = "changefontsize"
+	lblTitle.Name = "lblTitle"
+	lblTitle.TabIndex = 6
+	cmdAddasProperty.Name = "cmdAddasProperty"
+	cmdAddasProperty.TabIndex = 2
 	cmdAddasMethod.Name = "cmdAddasMethod"
 	cmdAddasMethod.TabIndex = 3
 	cmdAddasMethod2.Name = "cmdAddasMethod2"
 	cmdAddasMethod2.TabIndex = 4
-	cmdAddasProperty.Name = "cmdAddasProperty"
-	cmdAddasProperty.TabIndex = 2
-	cntDescription.edtDescription.Left = 0
-	cntDescription.edtDescription.Name = "edtDescription"
-	cntDescription.edtDescription.Top = 16
-	cntDescription.edtDescription.Width = 222
-	cntDescription.lblDescription.Name = "lblDescription"
-	cntDescription.lblnnn255.Name = "lblnnn255"
-	cntDescription.Name = "cntDescription"
-	cntDescription.TabIndex = 5
-	lblTitle.Name = "lblTitle"
-	lblTitle.TabIndex = 6
+	Baseline1.Name = "Baseline1"
+	Baseline1.Width = 500
 	TXTNEWNAME.Anchor = 10
 	TXTNEWNAME.Enabled = .T.
 	TXTNEWNAME.Height = 22
@@ -59,6 +51,14 @@ DEFINE CLASS askaddpem1 AS askaddpem OF "editproperty.vcx"
 	TXTNEWNAME.TabIndex = 1
 	TXTNEWNAME.Top = 11
 	TXTNEWNAME.Width = 185
+	cntDescription.edtDescription.Left = 0
+	cntDescription.edtDescription.Name = "edtDescription"
+	cntDescription.edtDescription.Top = 16
+	cntDescription.edtDescription.Width = 222
+	cntDescription.lblDescription.Name = "lblDescription"
+	cntDescription.lblnnn255.Name = "lblnnn255"
+	cntDescription.Name = "cntDescription"
+	cntDescription.TabIndex = 5
 	
 	PROCEDURE Activate
 		Execscript (_Screen.cThorDispatcher, 'PEMEditor_StartIDETools')

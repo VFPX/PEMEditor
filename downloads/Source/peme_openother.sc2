@@ -25,8 +25,8 @@ DEFINE CLASS frmopenother AS frmopenfile OF "editproperty.vcx"
 	DoCreate = .T.
 	Name = "frmOpenOther"
 	changefontsize.Name = "changefontsize"
-	cmdCancel.Name = "cmdCancel"
 	cmdSearch.Name = "cmdSearch"
+	cmdCancel.Name = "cmdCancel"
 	cntClass.cbobaseclass.Name = "cbobaseclass"
 	cntClass.cboclasslookfor.Name = "cboclasslookfor"
 	cntClass.chkExactMatch1.Alignment = 0

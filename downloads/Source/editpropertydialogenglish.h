@@ -766,10 +766,6 @@
 #Define ccLOC_Pref_Cap_KeyWordIndent	"Indent for SELECT /" + 0h0D0A +;
 										"UPDATE key words "
 #Define ccLOC_Pref_Tip_KeyWordIndent	"Indentation for primary key words (WHERE, FROM, INTO, etc.)"
-#Define ccLOC_Pref_Cap_KeyWordIndent_01	"Indent for SELECT or UNION /" + 0h0D0A +;
-										"UPDATE key words "
-#Define ccLOC_Pref_Tip_KeyWordIndent_01	"Indentation for primary key words (WHERE, FROM, INTO, etc.)" + 0h0D0A0D0A +;
-										"If UNION is in SELECT, indentation for UNION. "
 
 #Define ccLOC_Pref_Cap_ReplaceKeyWords	"Indent for REPLACE key words"
 #Define ccLOC_Pref_Tip_ReplaceKeyWords	"Indentation for primary key words (FOR, WHILE, IN)"
@@ -779,22 +775,24 @@
 
 #Define ccLOC_Pref_CAP_IndentON			"Indent ON like JOIN "
 #Define ccLOC_Pref_Tip_IndentON			"Move the indentation of the ON clause on the same level as the JOIN and FROM. "
-#Define ccLOC_Pref_CAP_UnionIndentAlter	"Optional Union Indentation "
-#Define ccLOC_Pref_Tip_UnionIndentAlter	"All UNION clauses will be moved on the position of SELECT," + 0h0D0A +;
-										"while all all other clauses will be indented with UNION indentation (see below) " + 0h0D0A0D0A +;
-										"If UNION is found, "Indent for UNION" and "Indent for SELECT" is swapped"
+#Define ccLOC_Pref_CAP_UnionIndentAlter	"Optional UNION Indentation "
+#Define ccLOC_Pref_Tip_UnionIndentAlter	"Indent method for SELECT with UNIONS," + 0h0D0A +;
+										'if OFF, "Indent for SELECT key word after UNION" will indent a single line after each UNION,' + 0h0D0A +;
+										'if ON, "Indent all SELECT in UNION" will indent all SELECT statements except UNION.'
 
-#Define ccLOC_Pref_Cap_UNIONIndent		"Indent for UNION"
-#Define ccLOC_Pref_Tip_UNIONIndent		"Indent for UNION"
-#Define ccLOC_Pref_Cap_UNIONIndent_01	"Indent SELECT for combined SELECT "
-#Define ccLOC_Pref_Tip_UNIONIndent_01	"On SQL SELECT combined with UNION, " + 0h0D0A +;
-										"indentation of SELECT clauses. "
-
+#Define ccLOC_Pref_Cap_UNIONIndent		"Indent for UNION "
+#Define ccLOC_Pref_Tip_UNIONIndent		"Indent for UNION keyword"
 #Define ccLOC_Pref_Cap_SETIndent		"Indent before SET"
 
-#Define ccLOC_Pref_Cap_SELECTIndent		"Indent for SELECT after UNION"
-#Define ccLOC_Pref_Tip_SELECTIndent		"Indentation for key words (WHERE, FROM, INTO, etc.)"
-
+#Define ccLOC_Pref_Cap_SELECTIndent		"Indent for SELECT key word after UNION "
+#Define ccLOC_Pref_Tip_SELECTIndent		"Indentation for SELECT key word following UNION key word," + 0h0D0A +;
+										"not the whole SELECT statement. "
+*SF
+#Define ccLOC_Pref_Cap_SELECTIndent_01	"Indent all SELECT in UNION "
+#Define ccLOC_Pref_Tip_SELECTIndent_01	"On SQL SELECT combined with UNION, " + 0h0D0A +;
+										"indentation of SELECT statements. " + 0h0D0A0D0A +;
+										"Additional ident for anything except UNION. "
+*/SF
 #Define ccLOC_Pref_Cap_HangingIndent	"Addtional indent for continuation lines"
 #Define ccLOC_Pref_Tip_HangingIndent	"Indentation for continuation lines of key word phrases"
 

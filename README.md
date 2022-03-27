@@ -36,7 +36,7 @@ This will not only install PEM Editor, but will also register it so that all of 
 
 ### Version 7.40.00: What's new in this release
 
-* **[Click here for change list](Documentation/pemeditor_tor_changes_7_40.md)**
+* **[Click here for change list](Documentation/pemeditor_thor_changes_7_40.md)**
 
 ### Version 7.30.02: Bug fixes
 

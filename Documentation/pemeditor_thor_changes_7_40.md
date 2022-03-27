@@ -4,7 +4,7 @@ To allow work with git on bash, all filenames are converted to lower case.
 There was a mixup of cases, so on bash it was impossible to numerate files with *?.
 ## bug fixes
 ### found a bug in Create LOCALs that blocked the recognition of existing variables.
-Variables declared in the following manner when not found:
+Variables declared in the following manner where not found:
 ```
 LOCAL;
  lvVar1
@@ -16,9 +16,12 @@ LPARAMETERS;
 ```
 The beautify class parses the Keywords with `GETWORDNUM(String,Index)`.
 This will fail on the code above because the semicolon will be included.
-A new method `GetWordNumX()`, sharing the parameters with *GetWwordNum* is introduced,
-to replace it and parce out the trailing semicolon.
-Not all occurrences of *GetWordNum* are replaced.   
+A new method `GetWordNumX()`, sharing the parameters with *GetWordNum* is introduced,
+to replace it and parse out the trailing semicolon.
+It also fixes the problem that `GETWORDNUM()` w/o 3th paramater does not include CR - 0h0D as delimiter.
+The help says so, but it does not.
+The problem with CR exists in `GETWORDCOUNT()` too, so a method `GetWordCountX()` is introduced.
+Not all occurrences of *GetWordNum* and *GetWordCount* are replaced.   
 The failure was a general one.
 
 ### found a bug that stopped recognition of *EndText*
@@ -41,13 +44,12 @@ as well, the code is added to *GetWordNumX*.
 Since the original code came with `LOCAL;`, LOCALs inserted should follow this style.
 A new option is created.
 #### Align AS
-Option to align *AS* clauses for newly inserted LOCALs.
+Option to align *AS* clauses for newly inserted LOCALs.   
+Setting _Maximum column for 'AS'_ to 0 (**option of BeautifyX**) now acts like _no limit_.
 #### Beautify on keywords
 Keywords inserted with new LOCAL declaration are now beautified.
 #### Space after comma
 as on other places of BeautifyX, if, or if not a space is inserted befor semicolon, is controled by BeautifyX option 'Add space before commas'.
-#### Beautify on keywords
-Keywords inserted with new LOCAL declaration are now beautified.
 #### Height of Thor config form
 The Create LOCALs settings class forces a resize of Thors setting form
 to allow all options be visible.   
@@ -58,8 +60,7 @@ to allow all options be visible.
    - peme_preferences OF pemeditor\downloads\source\peme_preferences.vcx
    - beautify OF pemeditor\downloads\source\peme_beautify.vcx
    - pemeditor\downloads\source\editpropertydialogenglish.h
-   - pemeditor\downloads\source\pemeditorversion.h   
-   
+
 ---------------
 ### BeautifyX, SELECTs / Updates
 #### inverted loop
@@ -134,8 +135,25 @@ UNION;
      INNER JOIN cxy    AS Cur5;
      ON .T.
 ```
+#### Split into separate lines, options
+New options added to prohibit splitting of 
+- SELECT items
+- FROM tables
+- ORDER BY fields
+- GROUP BY fields
+- other comma seperated fields, if existing   
+Those options can be turned of as a group.
+#### UPDATE, placement of SET
+If set was placed on the wrong position, indentation failed.   
+The following form is still parsed wrong:
+```
+UPDATE;
+ Cur1 SET;
+     nF2 = xx
+```
+
 #### TabIndex, alignment
-TabIndex and alignment of options reworked. Was a bit wobbly while switching.
+TabIndex and alignment of options form reworked. Was a bit wobbly while switching.
 #### This changes.
 - ThorRepository
    - clsbeautifyx OF thorrepository\source\procs\thor_options_beautifyx.vcx
@@ -143,4 +161,22 @@ TabIndex and alignment of options reworked. Was a bit wobbly while switching.
    - peme_preferences OF pemeditor\downloads\source\peme_preferences.vcx
    - beautify OF pemeditor\downloads\source\peme_beautify.vcx
    - pemeditor\downloads\source\editpropertydialogenglish.h
+#### Todo
+- SELECT, UPDATE, REPLACE and the like will not be splited if written as single line.
+  - beautify::BeautifySingleLine does not check this.
+  - It needs at least one continuation.
+- UPDATE, SET
+  - See above
+
+
+## Files changed:
+- ThorRepository
+   - clscreatelocals OF thorrepository\source\procs\thor_options_createlocals.vcx
+   - clsbeautifyx OF thorrepository\source\procs\thor_options_beautifyx.vcx
+
+- PEMEditor
+   - pemeditor\downloads\source\editpropertydialogenglish.h
+   - peme_preferences OF pemeditor\downloads\source\peme_preferences.vcx
+   - beautify OF pemeditor\downloads\source\peme_beautify.vcx
+*
    - pemeditor\downloads\source\pemeditorversion.h

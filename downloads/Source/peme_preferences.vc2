@@ -510,10 +510,14 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lRestartAfterClearAll		  = .F.
 				.lSettingsChanged			  = .F.
 				.lSelectCommasBeginLine		  = .F.
-				.lSelectExpandFields          = .T.
 				.lSelectExpandJoins           = .T.
 				.lSelectExpandOn              = .T.
 				.lSelectExpandAndOr           = .T.
+				.lSelectExpandFields          = .T.
+				.lSelectExpandSelectItem      = .T.
+				.lSelectExpandFrom            = .T.
+				.lSelectExpandOrderBy         = .T.
+				.lSelectExpandGroupBy         = .T.
 				.lShowAllCustomMethods		  = .F.
 				.lShowAllInheritedCode		  = .F.
 				.lShowChildInheritedCode	  = .F.

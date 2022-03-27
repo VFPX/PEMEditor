@@ -37,14 +37,14 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkAutoMoveWindow" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkCommasBeforeLocals" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkMultiplevariablesper" UniqueID="" Timestamp="" />
-	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkRemoveOrphans" UniqueID="" Timestamp="" />
-	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkMoveLOCALsto" UniqueID="" Timestamp="" />
-	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences1" UniqueID="" Timestamp="" />
-	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences2" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkLocalsAlignAS" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkLocalsPureLocal" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences2" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences1" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkMoveLOCALsto" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkRemoveOrphans" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.lblIndentforeach2" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.txt3" UniqueID="" Timestamp="" />
-	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkLocalsAlignAS" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.Beautify.Frame" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.Beautify.Frame.Fields.Frame" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.Beautify.Frame.Fields.Frame.Fields.cntCustom" UniqueID="" Timestamp="" />
@@ -1390,12 +1390,13 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 	ADD OBJECT 'Frame.OnKeyLabels.chkLocalsAlignAS' AS chkpreferences WITH ;
 		Alignment = 1, ;
 		AutoSize = .F., ;
-		Caption = "LOCAL single on line", ;
+		Caption = "Align AS ", ;
 		ControlSource = "", ;
 		Height = 16, ;
 		Left = 17, ;
 		Name = "chkLocalsAlignAS", ;
 		TabIndex = 12, ;
+		ToolTipText = "Align the as keywords in new LOCAL statement. ", ;
 		Top = 244, ;
 		Width = 240, ;
 		ZOrderSet = 5

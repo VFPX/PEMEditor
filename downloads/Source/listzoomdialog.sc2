@@ -22,9 +22,9 @@ DEFINE CLASS listzoom1 AS listzoom OF "editproperty.vcx"
 
 	DoCreate = .T.
 	Name = "Listzoom1"
-	cmdCancel.Name = "cmdCancel"
-	cmdFont.Name = "cmdFont"
 	cmdOK.Name = "cmdOK"
+	cmdCancel.Name = "cmdCancel"
 	lstZoom.Name = "lstZoom"
+	cmdFont.Name = "cmdFont"
 
 ENDDEFINE

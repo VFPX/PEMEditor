@@ -25,6 +25,9 @@
 *.SAVE
 *.zip
 *.ZIP
+*.lnk
+foxbin2prg.cfg
+
 
 # code ref files
 *_ref.*
