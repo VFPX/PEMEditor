@@ -24,12 +24,12 @@ DEFINE CLASS spinnerzoom1 AS spinnerzoom OF "editproperty.vcx"
 
 	DoCreate = .T.
 	Name = "Spinnerzoom1"
+	changefontsize.Name = "changefontsize"
+	cmdOK.Name = "cmdOK"
+	cmdCancel.Name = "cmdCancel"
 	Baseeditbox1.Name = "Baseeditbox1"
 	Baselabel1.Name = "Baselabel1"
-	Baselabel2.Name = "Baselabel2"
-	changefontsize.Name = "changefontsize"
-	cmdCancel.Name = "cmdCancel"
-	cmdOK.Name = "cmdOK"
 	spnValue.Name = "spnValue"
+	Baselabel2.Name = "Baselabel2"
 
 ENDDEFINE

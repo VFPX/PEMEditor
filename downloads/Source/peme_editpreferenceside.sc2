@@ -37,6 +37,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkAutoMoveWindow" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkCommasBeforeLocals" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkMultiplevariablesper" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkLocalsAlignAS" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkLocalsPureLocal" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences2" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.Chkpreferences1" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Frame.OnKeyLabels.chkMoveLOCALsto" UniqueID="" Timestamp="" />
@@ -1379,8 +1381,37 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "chkCommasBeforeLocals", ;
-		TabIndex = 9, ;
+		TabIndex = 8, ;
 		Top = 192, ;
+		Width = 240, ;
+		ZOrderSet = 5
+		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="checkbox" />
+
+	ADD OBJECT 'Frame.OnKeyLabels.chkLocalsAlignAS' AS chkpreferences WITH ;
+		Alignment = 1, ;
+		AutoSize = .F., ;
+		Caption = "Align AS ", ;
+		ControlSource = "", ;
+		Height = 16, ;
+		Left = 17, ;
+		Name = "chkLocalsAlignAS", ;
+		TabIndex = 12, ;
+		ToolTipText = "Align the as keywords in new LOCAL statement. ", ;
+		Top = 244, ;
+		Width = 240, ;
+		ZOrderSet = 5
+		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="checkbox" />
+
+	ADD OBJECT 'Frame.OnKeyLabels.chkLocalsPureLocal' AS chkpreferences WITH ;
+		Alignment = 1, ;
+		AutoSize = .F., ;
+		Caption = "LOCAL single on line", ;
+		ControlSource = "", ;
+		Height = 16, ;
+		Left = 17, ;
+		Name = "chkLocalsPureLocal", ;
+		TabIndex = 11, ;
+		Top = 220, ;
 		Width = 240, ;
 		ZOrderSet = 5
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="checkbox" />
@@ -1393,7 +1424,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "chkMoveLOCALsto", ;
-		TabIndex = 6, ;
+		TabIndex = 4, ;
 		Top = 94, ;
 		Width = 240, ;
 		ZOrderSet = 5
@@ -1407,7 +1438,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "chkMultiplevariablesper", ;
-		TabIndex = 8, ;
+		TabIndex = 7, ;
 		Top = 166, ;
 		Width = 240, ;
 		ZOrderSet = 5
@@ -1421,7 +1452,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "Chkpreferences1", ;
-		TabIndex = 7, ;
+		TabIndex = 6, ;
 		Top = 142, ;
 		Width = 240, ;
 		ZOrderSet = 5
@@ -1435,8 +1466,8 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "Chkpreferences2", ;
-		TabIndex = 5, ;
-		Top = 244, ;
+		TabIndex = 13, ;
+		Top = 268, ;
 		Width = 240, ;
 		ZOrderSet = 5
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="checkbox" />
@@ -1449,7 +1480,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 17, ;
 		Name = "chkRemoveOrphans", ;
-		TabIndex = 4, ;
+		TabIndex = 5, ;
 		Top = 118, ;
 		Width = 240, ;
 		ZOrderSet = 5
@@ -1474,7 +1505,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 16, ;
 		Left = 34, ;
 		Name = "lblIndentforeach2", ;
-		TabIndex = 11, ;
+		TabIndex = 10, ;
 		Top = 194, ;
 		Width = 200
 		*< END OBJECT: ClassLib="peme_basecontrols.vcx" BaseClass="label" />
@@ -1485,7 +1516,7 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		Height = 22, ;
 		Left = 244, ;
 		Name = "txt3", ;
-		TabIndex = 10, ;
+		TabIndex = 9, ;
 		Top = 190, ;
 		Width = 62
 		*< END OBJECT: ClassLib="peme_preferences.vcx" BaseClass="textbox" />
@@ -2598,6 +2629,38 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		
 	ENDPROC
 
+	PROCEDURE Frame.OnKeyLabels.chkLocalsAlignAS.Init
+		DoDefault()
+		
+		With This
+			.ControlSource = 'Thisform.oPrefs.lLocalsAlignAS'
+			.Caption	   = ccLOC_Pref_CAP_LocalsAlignAS
+			.ToolTipText   = ccLOC_Pref_TIP_LocalsAlignAS
+		Endwith
+		
+	ENDPROC
+
+	PROCEDURE Frame.OnKeyLabels.chkLocalsAlignAS.Refresh
+		This.Visible = not Thisform.oPrefs.lLocalsMultPerLine and Thisform.oPrefs.lLocalsUseAS
+		
+	ENDPROC
+
+	PROCEDURE Frame.OnKeyLabels.chkLocalsPureLocal.Init
+		DoDefault()
+		
+		With This
+			.ControlSource = 'Thisform.oPrefs.lLocalsPureLocal'
+			.Caption	   = ccLOC_Pref_CAP_LocalsPureLocal
+			.ToolTipText   = ccLOC_Pref_TIP_LocalsPureLocal
+		Endwith
+		
+	ENDPROC
+
+	PROCEDURE Frame.OnKeyLabels.chkLocalsPureLocal.Refresh
+		This.Visible = not Thisform.oPrefs.lLocalsMultPerLine
+		
+	ENDPROC
+
 	PROCEDURE Frame.OnKeyLabels.chkMoveLOCALsto.Init
 		DoDefault()
 		
@@ -2639,6 +2702,12 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 			.Caption	   = ccLOC_Pref_CAP_LocalsUseAS
 			.ToolTipText   = ccLOC_Pref_TIP_LocalsUseAS
 		Endwith
+		
+	ENDPROC
+
+	PROCEDURE Frame.OnKeyLabels.Chkpreferences1.Valid
+		DoDefault()
+		This.Parent.Refresh()
 		
 	ENDPROC
 

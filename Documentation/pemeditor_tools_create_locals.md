@@ -15,12 +15,22 @@ There are a number of user preferences available (see the preferences form, belo
 *   Controlling the format of the LOCALs statements:
     *   All other LOCALs statements can be merged into the newly created statements.
     *   The implicit datatype for each variable ('lnCounter as Numeric") can be displayed.
+        *   The 'AS' clauses can be aligned.
     *   You can control how many variables are displayed per line:
         *   If you do not check 'Multiple variables per line', you will get one LOCAL statement with many continuation lines, one variable per line. 
-
+    
 ```foxpro
     Local lnDay, ;
         lnI, ;
+        lnPeriod
+```
+*   If you do not check 'Multiple variables per line' and check 'LOCAL single on line', 
+you will get one LOCAL statement with many continuation lines, one variable per line. The term 'LOCAL'  as ther only tem on first line
+
+```foxpro
+    Local;
+        lnDay,;
+        lnI,;
         lnPeriod
 ```
 
@@ -30,6 +40,7 @@ There are a number of user preferences available (see the preferences form, belo
     Local lnDay, lnI, lnPeriod
 ```
 
+*   If, or if not a space is inserted befor semicolon, is controled by BeautifyX option 'Add space before commas'.
 
 **Customization:** There is a plug-In PRG that allows you to modify the behavior of this tool to fit your own needs.  (See [Plug-Ins](pemeditor_tools_plug-in_prgs.md).)
 

@@ -1,9 +1,35 @@
 Lparameters toUpdateInfo
 
-AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.30.02 - February 26, 2019 - 20190226')
+AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.40.00 - March 20, 2022 - 220320')
 AddProperty(toUpdateInfo, 'SourceFileUrl', 		'https://raw.githubusercontent.com/VFPX/PEMEditor/master/downloads/ThorUpdater/PEMEditor_Source.zip')
 AddProperty(toUpdateInfo, 'LinkPrompt', 		'PEM Editor Home Page')
 AddProperty(toUpdateInfo, 'Link', 				'https://github.com/VFPX/PEMEditor')
 
 Execscript (_Screen.cThorDispatcher, 'Result=', toUpdateInfo)
 Return toUpdateInfo
+
+procedure GetNotes
+ local lcNotes
+
+Contains BeautifyX, Create Locals, Move / Resize Code Window, Redefine Parent Class, SourceControl
+?
+
+ text to lcNotes noshow
++++++++++++++++++++++++ Change History +++++++++++++++++++++++
+2022-03-20 v7.40.00
+see https://github.com/VFPX/PEMEditor/tree/master/Documentation/pemeditor_thor_changes_7_40.md
+
+BeautifyX
+ Bugfixes, new functions to beautify
+ internal changes
+
+Create Locals
+ New format options
+ 
+Overall
+ Settings appearance reworked
+ 
+ endtext
+
+ return lcNotes
+endproc

@@ -273,6 +273,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 
 	#INCLUDE "editpropertydialog.h"
 	*<DefinedPropArrayMethod>
+		*m: addalignasblock
 		*m: addasphase
 		*m: addnewlocal
 		*m: addobjectidlist
@@ -284,6 +285,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*m: beautifyselectcode
 		*m: beautifyselectcreatebreakpoints
 		*m: beautifyselectmain
+		*m: beautifyselectmain_splitfields		&& The part of beautifyselectmain dealing to split fields to new lines due to single options. Not dealing with select items or fields to update.
 		*m: beautifyselectstandard
 		*m: beautifyselectx
 		*m: beautifysingleline
@@ -315,6 +317,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*m: getsourcecodeline
 		*m: getvariableslist
 		*m: getwindowhandle
+		*m: getwordcountx		&& Do GetWordCount and check for CR in default search.
+		*m: getwordnumx		&& Do GetWordNum and remove trailing semicolon. Check for CR in default search.
 		*m: insertconstants
 		*m: insertid
 		*m: insertidothers
@@ -442,35 +446,59 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		<memberdata name="lautoaddtockl" display="lAutoAddtoCKL"/>
 		</VFPData>
 	
-	PROCEDURE addasphase
-		Lparameters lcName, lcASPhrase
-		Local lcSuffix, lcVartype 
+	PROCEDURE addalignasblock
+		Lparameters;
+			taBlockArray,;
+			tiIndex,;
+			tiStart,;
+			tiEnd,;
+			tiPos
 		
+		External Array;
+			taBlockArray
+		
+		tiIndex = tiIndex + 1
+		
+		Dimension;
+			taBlockArray(tiIndex, 5)
+		
+		taBlockArray(tiIndex, 1) = tiStart
+		taBlockArray(tiIndex, 2) = tiEnd
+		taBlockArray(tiIndex, 3) = tiPos
+		
+	ENDPROC
+
+	PROCEDURE addasphase
+		Lparameters lcName, lcASPhrase, lcAS
+		Local lcSuffix, lcVartype 
+		*SF 2022/03/19
+		*Beautify phrases
 		lcVartype = Upper(Substr(lcName, 2, 1))
+		lcAS = EVL(m.lcAS,This.BeautifyWord(" as "))
 		
 		Do Case
 			Case Not Empty (lcASPhrase)
-				Return lcName + ' as ' + lcASPhrase
+				Return lcName + m.lcAS + lcASPhrase
 			Case lcName # 'l'
 				Return lcName
 			Case lcVartype = "N"
-				lcSuffix = " as Number"
+				lcSuffix = m.lcAS + This.BeautifyWord("Number")
 			Case lcVartype = "I"
-				lcSuffix = " as Integer"
+				lcSuffix = m.lcAS + This.BeautifyWord("Integer")
 			Case lcVartype = "O"
-				lcSuffix = " as Object"
+				lcSuffix = m.lcAS + This.BeautifyWord("Object")
 			Case lcVartype = "L"
-				lcSuffix = " as Boolean"
+				lcSuffix = m.lcAS + This.BeautifyWord("Boolean")
 			Case lcVartype = "C"
-				lcSuffix = " as String"
+				lcSuffix = m.lcAS + This.BeautifyWord("String")
 			Case lcVartype = "U"
-				lcSuffix = " as Variant"
+				lcSuffix = m.lcAS + This.BeautifyWord("Variant")
 			Case lcVartype = "D"
-				lcSuffix = " as Date"
+				lcSuffix = m.lcAS + This.BeautifyWord("Date")
 			Case lcVartype = "T"
-				lcSuffix = " as DateTime"
+				lcSuffix = m.lcAS + This.BeautifyWord("DateTime")
 			Case lcVartype = "Y"
-				lcSuffix = " as Currency"
+				lcSuffix = m.lcAS + This.BeautifyWord("Currency")
 			Otherwise
 				lcSuffix = ''
 		EndCase
@@ -670,7 +698,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		For lnCount = 1 To lnLinesCount
 			lcLine = laLines[lnCount]
-			lcFirstWord = Upper (Getwordnum (lcLine,1))
+			lcFirstWord = Upper (THIS.GetWordNumX (lcLine,1))
 			lcThisContinuationChar = This.GetContinuationChar (lcLine)
 		
 			Do Case
@@ -691,7 +719,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							lcType = 'Select'
 						Case This.oPrefs.lBeautifyTEXTasSelect
 							For lnI = lnCount + 1 To lnLinesCount
-								lcFW = Upper (Getwordnum (laLines[lnI],1))
+								lcFW = Upper (THIS.GetWordNumX (laLines[lnI],1))
 								Do Case
 									Case Empty(lcFW)
 		
@@ -709,7 +737,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 					For lnCount = lnCount + 1 To lnLinesCount
 						lcLine = laLines[lnCount]
-						lcFirstWord = Upper (Getwordnum (lcLine,1))
+						lcFirstWord = Upper (THIS.GetWordNumX (lcLine,1))
 						If lcFirstWord == 'ENDTEXT'
 							Exit
 						Endif
@@ -847,6 +875,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Endfor
 		
 		lnStart = 0
+		lcNewCode = ''
+		
 		If This.oPrefs.lFixAssignments
 			For lnI = 1 To lnResultLineCount
 				lnW = laResultLines (lnI, 2)
@@ -864,21 +894,27 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lnStart = 0
 				Endif
 			Endfor
+		*SF 2022/03/1
+		*splited Result line for within the if, and not within
+		*odd results for not within
+			For lnI = 1 To lnResultLineCount
+				lcLine = laResultLines (lnI, 1)
+				lnCol = At('=', lcLine) - 1
+				lnW = laResultLines (lnI, 3)
+				If 'N' = Vartype(lnW) And lnW > 0
+					lcNewCode = lcNewCode + LINEEND ;
+						+ This.AddWhiteSpace(This.TrimTrailingWhiteSpace(Left (lcLine, lnCol)), lnW + 2);
+						+ This.TrimLeadingWhiteSpace(Substr (lcLine, lnCol + 1))
+				Else
+					lcNewCode = lcNewCode + LINEEND + lcLine
+				Endif
+			Endfor
+		Else
+			For lnI = 1 To lnResultLineCount
+				lcNewCode = lcNewCode + LINEEND + laResultLines (lnI, 1)
+			Endfor
 		Endif
 		
-		lcNewCode = ''
-		For lnI = 1 To lnResultLineCount
-			lcLine = laResultLines (lnI, 1)
-			lnCol = At('=', lcLine) - 1
-			lnW = laResultLines (lnI, 3)
-			If 'N' = Vartype(lnW) And lnW > 0
-				lcNewCode = lcNewCode + LINEEND ;
-					+ This.AddWhiteSpace(This.TrimTrailingWhiteSpace(Left (lcLine, lnCol)), lnW + 2);
-					+ This.TrimLeadingWhiteSpace(Substr (lcLine, lnCol + 1))
-			Else
-				lcNewCode = lcNewCode + LINEEND + lcLine
-			Endif
-		Endfor
 		
 		Return Trim(Substr (lcNewCode, 1 + Len (LINEEND)), 1, ' ', Tab)
 		
@@ -894,10 +930,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		For lnCount = 1 To lnLineCount
 			lcLine = laLines (lnCount)
 		
-			If Upper (Getwordnum (lcLine, 1)) == 'SELECT'
+			If Upper (THIS.GetWordNumX (lcLine, 1)) == 'SELECT'
 				For lnCount = lnCount + 1 To lnLineCount
 					lcLine = lcLine + LINEEND + laLines (lnCount)
-				Endfor
+				ENDFOR
 				lcLine = This.BeautifySelectCode(lcLine, .T., This.nTabWidth)
 			Endif
 		
@@ -927,7 +963,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Do Case
 				Case Empty (lcLine)
 		
-				Case Inlist (Upper (Getwordnum (lcLine, 1)) + ' ', 'REPLACE ')
+				Case Inlist (Upper (THIS.GetWordNumX (lcLine, 1)) + ' ', 'REPLACE ')
 					Exit
 				Otherwise
 					Return lcCode
@@ -935,13 +971,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Endfor
 		
 		lnIndentAll= This.CountCharacterWidth (This.GetIndent (lcLine))
-		lcCurrentKeyWord = Upper (Getwordnum (lcLine, 1))
+		lcCurrentKeyWord = Upper (THIS.GetWordNumX (lcLine, 1))
 		* determine indent to be applied to all lines
 		lcResult = ''
 		
 		For lnCount = lnCount To lnLineCount
 			lcLine = This.TrimLeadingWhiteSpace (laLines (lnCount))
-			lcFirstWord = Upper (Getwordnum (lcLine, 1))
+			lcFirstWord = Upper (THIS.GetWordNumX (lcLine, 1))
 			llFixWITH	= .F.
 		
 			Do Case
@@ -950,7 +986,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lnEndParenCount = This.CountParens (lcLine)
 					lnIndent = 0
 					lnHangingIndent = This.oPrefs.nReplaceFieldIndent + This.oPrefs.nSingleREPLACEFieldIndent
-					If Upper (Getwordnum (lcLine, 3)) == 'WITH'
+					If Upper (THIS.GetWordNumX (lcLine, 3)) == 'WITH'
 						llFixWITH = .T.
 						lcLine = This.AddWhiteSpace (Left (lcLine,7), This.oPrefs.nReplaceFieldIndent + 1) + This.TrimLeadingWhiteSpace (Substr (lcLine,8))
 					Endif
@@ -961,10 +997,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lnIndent = This.oPrefs.nReplaceKeywords
 					lnHangingIndent = lnIndent + This.oPrefs.nReplaceHangingIndent
 		
-				Case (Upper (Getwordnum (lcLine, 2)) == 'WITH' Or Upper (Getwordnum (lcLine, 3)) == 'WITH') And lnParenCount = 0
+				Case (Upper (THIS.GetWordNumX (lcLine, 2)) == 'WITH' Or Upper (THIS.GetWordNumX (lcLine, 3)) == 'WITH') And lnParenCount = 0
 					ln = 0
 					lnEndParenCount = This.CountParens (lcLine)
-					lnIndent = This.oPrefs.nReplaceFieldIndent - IIf (Upper (Getwordnum (lcLine, 1)) = ',', 2, 0)
+					lnIndent = This.oPrefs.nReplaceFieldIndent - IIf (Upper (THIS.GetWordNumX (lcLine, 1)) = ',', 2, 0)
 					lnHangingIndent = This.oPrefs.nReplaceFieldIndent + This.oPrefs.nSingleREPLACEFieldIndent
 					llFixWITH	= .T.
 		
@@ -1017,20 +1053,24 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		lcCode = Strtran(tcCode, Tab, Space(lnTabWidth)) 
 		lcResult = This.Beautifyselectx(lcCode, tlSemiColons)
 		
+		*SF 2020/10/29 Run only if Beautify Option is set to tabs
+		*        4 = tabs/spaces, 						1 - use tabs, 2 - use spaces, 3 = no change
+		If This.nBeautifyOptions(4)=1 THEN
 		* leading tabs, where approppriate
-		If lnTabWidth > 1
-			lnLastLen = 0
-			lcNewResult = ccCR + lcResult
-			lnTabs = 0
-			Do While Len(lcNewResult) #lnLastLen
-				lnLastLen = Len(lcNewResult)
-				lcNewResult = Strtran(lcNewResult;
-					, ccCR + Replicate(Tab, lnTabs) + Space(lnTabWidth);
-					, ccCR + Replicate(Tab, lnTabs + 1))
-				lnTabs = lnTabs + 1
-			Enddo
-			lcResult = Substr(lcNewResult, 2)
-		Endif
+			If lnTabWidth > 1
+				lnLastLen = 0
+				lcNewResult = ccCR + lcResult
+				lnTabs = 0
+				Do While Len(lcNewResult) #lnLastLen
+					lnLastLen = Len(lcNewResult)
+					lcNewResult = Strtran(lcNewResult;
+						, ccCR + Replicate(Tab, lnTabs) + Space(lnTabWidth);
+						, ccCR + Replicate(Tab, lnTabs + 1))
+					lnTabs = lnTabs + 1
+				Enddo
+				lcResult = Substr(lcNewResult, 2)
+			Endif
+		Endif &&This.nBeautifyOptions(4)=1 
 		
 		Return lcResult
 		
@@ -1044,7 +1084,9 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		loMatches = This.RegExpSearch (lcPattern, tcText)
 		
 		Create Cursor (lcAlias) (Start N(8), End N(8), Value c(1), nParens N(4), notcode L)
-		Insert Into (lcAlias) (Start) Values (1)
+		*SF 2022/03/17
+		*first index is 0, not 1
+		Insert Into (lcAlias) (Start) Values (0)
 		lnParens = 0
 		For lnI = 1 To loMatches.Count
 			loMatch		 = loMatches.Item (lnI - 1)
@@ -1093,10 +1135,12 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		* A long procedure, but done this way because it recursive
 		
-		Local laEndParen[1], laMatch[1], laSELECTS[1], lcAlias, lcBeforeThisLine, lcBreakWords
+		Local laEndParen[1], laMatch[1], laSELECTS[1], lcAlias, lcBreakWords
 		Local lcEndThisLine, lcNewLine, lcReplaceText, lcResultText, lcSelectText, lcSubQ, lcSubQuery
-		Local lcThisLine, llAnyFound, llFromFound, lnEndChars, lnFirstIndex, lnI, lnIndent, lnOffset, lnPos
-		Local lnSubQueries, loMatch, loMatches, lnLeadingBlanks
+		Local lcThisLine, llAnyFound, lnFirstIndex, lnLastIndex, lnI, lnIndent, lnOffset, lnPos
+		Local lcFirstWord, lcSecondWord
+		Local lnSubQueries, loMatch, loMatches
+		Local lSelectExpandFields, llSelectExpandGroupBy, llSelectExpandOrderBy, llSelectExpandFrom, llSelectExpandSelectItem
 		
 		* our important breakpoints
 		lcAlias = Sys(2015)
@@ -1144,11 +1188,22 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		* Major keyword substitutions, as well as commas for fields
 		lcResultText = lcText
 		
-		lcBreakWords = '\Wselect\W|\Wfrom\W|\Wwhere\W|\Wgroup by\W|\Worder by\W|\Whaving\W|\Wunion\W|\Winto\W'
+		*SF 2022/03/17
+		*just break on delete / select too
+		lcBreakWords = '\Wupdate\W|\Wdelete\W|\Wselect\W|\Wfrom\W|\Wwhere\W|\Wgroup by\W|\Worder by\W|\Whaving\W|\Wunion\W|\Winto\W'
+		*lcBreakWords = '\Wselect\W|\Wfrom\W|\Wwhere\W|\Wgroup by\W|\Worder by\W|\Whaving\W|\Wunion\W|\Winto\W'
 		
+		*SF 2022/03/17
+		* we parse out the cmmas on special method, new properties
 		If This.oPrefs.lSelectExpandFields
-			lcBreakWords = '\,|' + lcBreakWords
+		*	lcBreakWords = '\,|' + lcBreakWords
+			lSelectExpandFields      = .T.
+			llSelectExpandGroupBy    = This.oPrefs.lSelectExpandGroupBy
+			llSelectExpandOrderBy    = This.oPrefs.lSelectExpandOrderBy
+			llSelectExpandFrom       = This.oPrefs.lSelectExpandFrom
+			llSelectExpandSelectItem = This.oPrefs.lSelectExpandSelectItem
 		Endif
+		*/SF 17.03.2022
 		
 		If This.oPrefs.lSelectExpandJoins
 			lcBreakWords = lcBreakWords + '|\Wleft join\W|\Wleft outer join\W|\Wright join\W|\Wright outer join\W|\Wfull join\W' ;
@@ -1160,17 +1215,25 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Endif
 		
 		If This.oPrefs.lSelectExpandAndOr
+		*SF 2022/03/16 I have the strange feeling that "." must be escaped, needs check. At least "\W. looks odd, since the dot is word boundary .
 			lcBreakWords = lcBreakWords + '|\W.and.\W|\W.or.\W|\Wand\W|\Wor\W'
+		*	lcBreakWords = lcBreakWords + '|\W\.and\.\W|\W\.or\.\W|\Wand\W|\Wor\W'
+		*/SF 2022/03/16
 		Endif
 		
 		loMatches	= This.RegExpSearch ('(' + lcBreakWords + ')', lcText)
 		lnOffset	= 1 && because search includes leading blank character!
 		lcNewLine	= Iif (llSemiColons, ';' + CR, ' ' + CR)
-		llFromFound	= .F.
-		
-		For lnI = 1 To loMatches.Count
+		lnLastIndex = Len (lcResultText) 
+		SET STEP ON 
+		* SF 2022/03/17
+		* rewitten to split the items (the part before FROM)
+		For lnI =  loMatches.Count To 1 STEP -1
 			loMatch		 = loMatches.Item (lnI - 1)
 			lnFirstIndex = loMatch.FirstIndex
+			lcFirstWord	 = Upper (This.GetWordNumX (loMatch.Value, 1))
+			lcSecondWord = Upper (This.GetWordNumX (loMatch.Value, 2))
+		
 			Select  nParens								  ;
 				From (lcAlias)							  ;
 				Where Between (lnFirstIndex, Start, End)  ;
@@ -1178,53 +1241,35 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 				Into Array laMatch
 			If _Tally > 0
 				lnFirstIndex = lnFirstIndex + lnOffset
-				If loMatch.Value = ','
+		*SF 2022/03/17
+		*		If loMatch.Value = ','
 					Do Case
-						Case llFromFound
-		
 						Case laMatch[1] # 0
 							* lnFirstIndex points to the comma
 		
-						Case llCommasBeginLine
-							lcEndThisLine = Substr (lcResultText, lnFirstIndex + 1)
-							lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
-							If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
-								* lcResultText = Stuff (lcResultText, lnFirstIndex + 1, 1 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)))
-								lcResultText = Stuff (lcResultText, lnFirstIndex, 2 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)) + ',')
-							Else
-								lnLeadingBlanks = Len(lcEndThisLine) - Len(Ltrim(lcEndThisLine))
-								If lnLeadingBlanks # 1
-									lcResultText = Stuff (lcResultText, lnFirstIndex + 1, lnLeadingBlanks, ' ')
-									lnOffset	 = lnOffset + 1 - lnLeadingBlanks
-								Endif
-							Endif
-							lcBeforeThisLine = Left (lcResultText, lnFirstIndex - 1)
-							lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
-							If Not Empty (lcBeforeThisLine)
-								lcResultText = Stuff (lcResultText, lnFirstIndex, 0, lcNewLine)
-								lnOffset	 = lnOffset + 2
-							Endif
+						Case lcFirstWord=='GROUP' AND lcSecondWord=='BY'
+		*if GROUP BY, and expand fields in GROUP BY
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandGroupBy)
+							
+						Case lcFirstWord=='ORDER' AND lcSecondWord=='BY'
+							
+		*if ORDER BY, and expand fields in ORDER BY
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandOrderBy)
 		
-						Otherwise
-							lcEndThisLine = Substr (lcResultText, lnFirstIndex + 1)
-							lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
-							If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
-								* already at end of line
-							Else
-								lcResultText = Stuff (lcResultText, lnFirstIndex + 1, 0, lcNewLine)
-								lnOffset	 = lnOffset + 2
-							Endif
+						Case lcFirstWord=='FROM'
+		*if FROM clause, and expand cursors in FROM clause
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandFrom)
 		
-							lcBeforeThisLine = Left (lcResultText, lnFirstIndex - 1)
-							lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
-							If Empty (lcBeforeThisLine)
-								lnEndChars   = Iif(llSemiColons, 2, 1)
-								lcResultText = Stuff (lcResultText, lnFirstIndex - Len (lcBeforeThisLine) - lnEndChars, Len (lcBeforeThisLine) + lnEndChars, '')
-								lnOffset	 = lnOffset - (Len (lcBeforeThisLine) + lnEndChars)
-							Endif
-					Endcase
+						Case Inlist(' '+lcFirstWord+' ',' SELECT ',' UPDATE ',' DELETE ')
+		*if Select-item-list, and expand Select-item-list
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandSelectItem)
 		
-				Else
+						CASE lSelectExpandFields
+		*whatever else ist expandable
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, .T.)
+						
+						OTHERWISE
+		*nothing to expand
 					lcThisLine = Left (lcResultText, lnFirstIndex)
 					lcThisLine = Substr (lcThisLine, Rat (CR, lcThisLine) + 1)
 					If Not Empty (lcThisLine)
@@ -1232,19 +1277,24 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
 						lcEndThisLine = Strtran(lcEndThisLine, Getwordnum(lcEndThisLine, 1), '')
 						If Not Empty (Chrtran(lcEndThisLine, ccCR + ccLF + ccTAB + ';', Space(4)))
-							lcResultText = Stuff (lcResultText, lnFirstIndex + 1, 0, lcNewLine)
-							lnOffset	 = lnOffset + 2
+		*					lcResultText = Stuff (lcResultText, lnFirstIndex + 1, 0, lcNewLine)
+							lcResultText = TRIM(LEFT(lcResultText, lnFirstIndex),' ','	') + lcNewLine + RIGHT(lcResultText, LEN(lcResultText) - lnFirstIndex) 
+		*					lnOffset	 = lnOffset + 2
 						Endif
 					Endif
-					llFromFound = (llFromFound Or 'FROM' $ Upper (loMatch.Value)) And Not 'UNION' $ Upper (loMatch.Value)
-				Endif
+		
+				Endcase
+		*/SF 17.03.2022
 			Endif
+			lnLastIndex  = lnFirstIndex-1
+		
 		Endfor
 		
 		* Expand our SELECT subqueries, stuff 'em back in,
 		*   making sure to expand leading white space.
 		*   (note the assumption that there are no tabs involved!
-		lcResultText = Strtran(This.BeautifySelectStandard (lcResultText), LF, '')
+		lcResultText = Strtran(This.BeautifySelectStandard (lcResultText, llSemiColons), LF, '')
+		
 		For lnI = 1 To lnSubQueries
 			lcSubQuery	  = This.BeautifySelectMain (laSELECTS (lnI, 1), llSemiColons, llCommasBeginLine)
 			lcReplaceText = laSELECTS (lnI, 2)
@@ -1254,17 +1304,147 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lcResultText  = Stuff (lcResultText, lnPos, Len (lcReplaceText), lcSubQ)
 		Endfor
 		
+		*SF 2022/03/17 Alias should be closed after
+		Use In Select (lcAlias)
+		
 		Return lcResultText
+	ENDPROC
+
+	PROCEDURE beautifyselectmain_splitfields		&& The part of beautifyselectmain dealing to split fields to new lines due to single options. Not dealing with select items or fields to update.
+		LPARAMETERS;
+		 tcText,;
+		 tnFirstIndex,;
+		 tnLastIndex,;
+		 tcAlias,;
+		 tlSemiColons,;
+		 tlCommasBeginLine,;
+		 tlBreakOnComma
+		
+		*SF 2022/03/19
+		*new method to split snippets into fields
+		
+		Local laMatch[1], lcBeforeThisLine
+		Local lcEndThisLine, lcNewLine, lcStartLine, lcSnippet
+		Local lcThisLine, lnEndChars, lnFirstIndex, lnI, lnOffset
+		Local loMatch, loMatches, lnLeadingBlanks
+		
+		lcSnippet   = Substr (tcText, tnFirstIndex + 1, tnLastIndex - tnFirstIndex)
+		
+		lcStartLine = ''
+		lcNewLine	= Iif (tlSemiColons, ';' + CR, ' ' + CR)
+		
+		lcThisLine = Left (tcText, tnFirstIndex)
+		lcThisLine = Substr (lcThisLine, Rat (CR, lcThisLine) + 1)
+		If Not Empty (lcThisLine)
+			lcEndThisLine = Substr (tcText, tnFirstIndex + 1)
+			lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
+			lcEndThisLine = Strtran(lcEndThisLine, Getwordnum(lcEndThisLine, 1), '')
+			If Not Empty (Chrtran(lcEndThisLine, ccCR + ccLF + ccTAB + ';', Space(4)))
+				lcStartLine = lcNewLine
+			Endif
+		Endif
 		
 		
+		loMatches	= This.RegExpSearch ('\,', lcSnippet)
+		lnOffset	= 1 && because search includes leading blank character!
+		
+		IF loMatches.Count = 0 OR !m.tlBreakOnComma THEN
+			If Not Empty (lcThisLine)
+				If Not Empty (Chrtran(lcEndThisLine, ccCR + ccLF + ccTAB + ';', Space(4)))
+					tcText      = TRIM(LEFT(tcText, tnFirstIndex),' ','	') + lcNewLine + RIGHT(tcText, LEN(tcText) - tnFirstIndex) 
+				Endif
+			Endif
+		ELSE  &&loMatches.Count = 0OR !m.tlBreakOnComma
+			For lnI =  loMatches.Count To 1 STEP -1
+				loMatch		 = loMatches.Item (lnI - 1)
+				lnFirstIndex = loMatch.FirstIndex
+				Select  nParens	;
+					From (tcAlias)	;
+					Where Between (lnFirstIndex + tnFirstIndex, Start, End)  ; 
+					And Not notcode	;
+					Into Array laMatch
+		
+				If _Tally > 0
+					lnFirstIndex = lnFirstIndex + lnOffset
+						Do Case
+		
+							Case laMatch[1] # 0
+							* lnFirstIndex points to the comma
+		
+							Case tlCommasBeginLine
+								lcEndThisLine = Substr (lcSnippet, lnFirstIndex + 1)
+								lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
+								If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
+									* lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 1 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)))
+									lcSnippet = Stuff (lcSnippet, lnFirstIndex, 2 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)) + ',')
+								Else
+									lnLeadingBlanks = Len(lcEndThisLine) - Len(Ltrim(lcEndThisLine))
+									If lnLeadingBlanks # 1
+										lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, lnLeadingBlanks, ' ')
+		*								lnOffset	 = lnOffset + 1 - lnLeadingBlanks
+									Endif
+								Endif
+								lcBeforeThisLine = Left (lcSnippet, lnFirstIndex - 1)
+								lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
+								If Not Empty (lcBeforeThisLine)
+									lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
+		*							lnOffset	 = lnOffset + 2
+								Endif
+		
+							Otherwise
+								lcEndThisLine = Substr (lcSnippet, lnFirstIndex + 1)
+								lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
+								If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
+									* already at end of line
+								Else
+									lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
+		*							lnOffset	 = lnOffset + 2
+								Endif
+		
+								lcBeforeThisLine = Left (lcSnippet, lnFirstIndex - 1)
+								lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
+								If Empty (lcBeforeThisLine)
+									lnEndChars = Iif(tlSemiColons, 2, 1)
+									lcSnippet  = TRIM(LEFT(lcSnippet, lnFirstIndex - Len (lcBeforeThisLine) - lnEndChars - 1),' ','	') + RIGHT(lcSnippet, LEN(lcSnippet) - lnFirstIndex + 1) 
+								Endif
+						Endcase
+		
+				Endif
+			Endfor
+		
+			tcText = STUFF(tcText, tnFirstIndex + 1, tnLastIndex - tnFirstIndex, lcStartLine + lcSnippet)
+		*	tcText = STUFF(tcText, tnFirstIndex + 1, tnLastIndex - tnFirstIndex, lcSnippet)
+		
+		ENDIF &&loMatches.Count = 0 OR !m.tlBreakOnComma
+		
+		RETURN tcText
 	ENDPROC
 
 	PROCEDURE beautifyselectstandard
-		Lparameters lcCode
+		Lparameters lcCode, llSemiColons
 		Local laLines[1], laResult[1], lcCurrentKeyWord, lcFirstWord, lcIndent, lcLine, lcNewLine, lcResult
-		Local llFieldNextLineIndent, llFieldThisLineIndent, lnASCol, lnAfterAS, lnBeforeAS, lnCount
+		Local llFieldNextLineIndent, llFieldThisLineIndent, lnASCol, lnAfterAS, lnBeforeAS, lnCount, lnCount1
 		Local lnEndParenCount, lnHangingIndent, lnIndent, lnIndentAll, lnLineCount, lnParenCount
-		Local lnParentCount, lnPos, lnTotalIndent
+		Local lnParentCount, lnPos, lnTotalIndent, lnAsColumn
+		Local lnLen, lcLastPart, llUnionIndentAlter, llUnionFound, lnUnionCount, lnUnionIndentAlter, lnUnionIndentFirst
+		Local lcIndentJoin, llIndentOn
+		Local llAlignASFieldBlocks, lnAlignASBlockMax, lnAlignASBlock, laAlignASBlocks(1, 5), lnASCol2
+		
+		
+		llUnionIndentAlter		= NVL(This.oPrefs.lUnionIndentAlter,.F.)
+		lnUnionIndentAlter		= 0
+		
+		llIndentOn = NVL(This.oPrefs.lIndentON,.F.)
+		If llIndentOn Then
+			lcIndentJoin = ' INNER OUTER JOIN LEFT RIGHT FULL ON '
+		Else  &&llIndentOn
+			lcIndentJoin = ' INNER OUTER JOIN LEFT RIGHT FULL '
+		Endif &&llIndentOn
+		
+		llAlignASFieldBlocks	= NVL(This.oPrefs.lAlignASFieldBlocks,.F.)
+		lnAlignASBlockMax   	= 0
+		laAlignASBlocks         = 0
+		lnAsColumn              = EVL(This.oPrefs.nAsColumn,1000)
 		
 		lnLineCount = Alines (laLines, lcCode + ' ', .F.)
 		Acopy (laLines, laResult)
@@ -1275,37 +1455,106 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Do Case
 				Case Empty (lcLine)
 		
-				Case Inlist (Upper (Getwordnum (lcLine, 1)) + ' ', 'SELECT ', 'UPDATE ', 'DELETE ')
+				Case Inlist (Upper (This.GetWordNumX (lcLine, 1)) + ' ', 'SELECT ', 'UPDATE ', 'DELETE ')
 					Exit
 				Otherwise
 					Return lcCode
 			Endcase
 		Endfor
 		
-		lnIndentAll		 = This.CountCharacterWidth (This.GetIndent (lcLine))
-		lcCurrentKeyWord = Upper (Getwordnum (lcLine, 1))
+		lnHangingIndent	= This.oPrefs.nFieldIndent
+		
+		lnIndentAll		 = IIF(m.llSemiColons,This.CountCharacterWidth (This.GetIndent (lcLine)),0)
+		lcCurrentKeyWord = Upper (This.GetWordNumX (lcLine, 1))
 		lnPos			 = At (lcCurrentKeyWord, Upper (lcLine))
-		lcLine			 = Left (lcLine, lnPos + 5) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + This.TrimLeadingWhiteSpace (Substr (lcLine, lnPos + 6))
+		*direct trailing ;? then one or no space according to This.oPrefs.lSpaceBeforeCommas
+		*lcLine			 = Left (lcLine, lnPos + 5) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + This.TrimLeadingWhiteSpace (Substr (lcLine, lnPos + 6))
+		lnLen			 = Len (lcCurrentKeyWord)
+		lcLine           = This.TrimLeadingWhiteSpace (lcLine)
+		lcLastPart       = This.TrimLeadingWhiteSpace (Substr (lcLine, lnLen + 1))
+		
+		lnUnionIndentFirst = lnCount
+		lnASCol = 0
+		
+		If lcLastPart = ';' Then
+			lcLine			= SPACE(lnIndentAll) + Left (lcLine, lnLen) + lcLastPart
+			lnParenCount	= 0
+			llFieldNextLineIndent = .F.
+		
+			This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount + 1, lnLineCount, 0 )
+		
+		Else  &&lcLastPart = ';'
+			lcLine			= SPACE(lnIndentAll) + Left (lcLine, lnLen) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + lcLastPart
+			lnParenCount	= This.CountParens (lcLine)
+			IF m.lcCurrentKeyWord=='UPDATE' THEN
+		*SF 2022/03/15
+		* first line after UPDATE should not be autoindent. it's
+		* -a SET is in UPDATE line, so next line is expected as field
+		* -b SET is on next line, this will suit itself below
+		* this will fail on table and SET on second line, but we ignore this for now. like:
+		* UPDATE;
+		*  xxx SET ...
+		* it must be parsed out in the loop below, but seems to be to much work for this  exotic case
+				llFieldNextLineIndent = lnParenCount # 0
+		*SF 2022/03/15
+		* just check if SET is on this line, so we set as lcCurrentKeyWord (or some indent will not work)
+		        FOR lnCount1 = 1 To THIS.GetWordCountX (lcLine)  
+		        	If Upper (This.GetWordNumX (lcLine, lnCount1)) == 'SET' Then 
+		        		lcCurrentKeyWord = 'SET'
+		        		exit
+		        	Endif &&Upper (This.GetWordNumX (lcLine, lnCount1)) == 'SET'
+		        Endfor &&lnCount1
+		
+			Else  &&m.lcCurrentKeyWord=='UPDATE'
+				llFieldNextLineIndent = lnParenCount # 0 Or (		;
+					This.LastCharIn (lcLine) # ','					;
+					And THIS.GetWordCountX (lcLine) > 1					;
+					And Not Inlist (Upper (This.GetWordNumX (lcLine, THIS.GetWordCountX (lcLine) - 1)), 'SELECT', 'DISTINCT'))
+			
+			Endif &&m.lcCurrentKeyWord=='UPDATE' 
+		*/SF 15.3.2022
+		
+		
+			If This.oPrefs.lAlignAS
+				lnASCol = This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcLine)))
+				This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount, lnLineCount, lnASCol )
+			Endif
+		
+		Endif &&lcLastPart = ';'
+		*/direct trailing ;?
 		laResult (lnCount) = lcLine
-		If This.oPrefs.lAlignAS
-			lnASCol = This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcLine)))
-		Else
-			lnASCol = 0
-		Endif
 		*
 		lnHangingIndent	= This.oPrefs.nFieldIndent
-		lnParenCount	= This.CountParens (lcLine)
-		llFieldNextLineIndent = lnParenCount # 0 Or (		;
-			  This.LastCharIn (lcLine) # ','				;
-			  And Not Inlist (Upper (Getwordnum (lcLine, Getwordcount (lcLine) - 1)), 'SELECT', 'DISTINCT'))
 		
 		For lnCount = lnCount + 1 To lnLineCount
 			lcLine			= This.TrimLeadingWhiteSpace (laLines (lnCount))
-			lcFirstWord		= Upper (Getwordnum (lcLine, 1))
+			lcFirstWord		= Upper (This.GetWordNumX (lcLine, 1))
 			lnEndParenCount	= Max (0, lnParenCount + This.CountParens (lcLine))
 		
 			Do Case
-				Case (' ' + lcFirstWord + ' ') $ ' FROM WHERE HAVING INTO TO ' And lnParenCount = 0
+				Case (' ' + lcFirstWord + ' ') $ ' FROM ' And lnParenCount = 0
+					lcCurrentKeyWord	  = lcFirstWord
+					lnParentCount		  = 0
+		*			lnEndParenCount		  = This.CountParens (lcLine)
+					lnIndent			  = This.oPrefs.nKeyWordIndent
+					lnHangingIndent		  = lnIndent + This.oPrefs.nHangingIndent
+					llFieldThisLineIndent = .F.
+					llFieldNextLineIndent = .F.
+		
+					lnLen		= Len (lcCurrentKeyWord)
+					lcLastPart	= This.TrimLeadingWhiteSpace (Substr (lcLine, lnLen + 1))
+					laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+		
+					If lcLastPart = ';' Then
+						lnEndParenCount	= 0
+						This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount+1, lnLineCount, 0 )
+					Else  &&lcLastPart = ';'
+						lnEndParenCount	= This.CountParens (lcLine)
+						This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount, lnLineCount,;
+							IIF(This.oPrefs.lAlignAS, This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcLine))), 0) )
+					Endif &&lcLastPart = ';'
+		
+				Case (' ' + lcFirstWord + ' ') $ ' WHERE HAVING INTO TO ' And lnParenCount = 0
 					lcCurrentKeyWord	  = lcFirstWord
 					lnParentCount		  = 0
 					lnEndParenCount		  = This.CountParens (lcLine)
@@ -1314,16 +1563,26 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					llFieldThisLineIndent = .F.
 					llFieldNextLineIndent = .F.
 		
-				Case Inlist (lcFirstWord, 'GROUP', 'ORDER') And Upper (Getwordnum (lcLine, 2)) == 'BY' And lnParenCount = 0
+					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+					Endif
+		
+				Case Inlist (lcFirstWord, 'GROUP', 'ORDER') And Upper (This.GetWordNumX (lcLine, 2)) == 'BY' And lnParenCount = 0
 					lcCurrentKeyWord	  = lcFirstWord
 					lnParentCount		  = 0
 					lnEndParenCount		  = This.CountParens (lcLine)
 					lnIndent			  = This.oPrefs.nKeyWordIndent
-					lnHangingIndent		  = This.oPrefs.nFieldIndent
+		*			lnHangingIndent		  = This.oPrefs.nFieldIndent
+					lnHangingIndent		  = lnIndent + This.oPrefs.nHangingIndent
 					llFieldThisLineIndent = .F.
-					llFieldNextLineIndent = lnParenCount # 0 Or This.LastCharIn (lcLine) # ','
+		*			llFieldNextLineIndent = lnParenCount # 0 Or This.LastCharIn (lcLine) # ','
+					llFieldNextLineIndent = .F.
 		
-				Case (' ' + lcFirstWord + ' ') $ ' INNER OUTER JOIN LEFT RIGHT FULL ' And lnParenCount = 0
+					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+					Endif
+		
+				Case (' ' + lcFirstWord + ' ') $ lcIndentJoin And lnParenCount = 0	&&' INNER OUTER JOIN LEFT RIGHT FULL ON '
 					lcCurrentKeyWord	  = lcFirstWord
 					lnParentCount		  = 0
 					lnEndParenCount		  = This.CountParens (lcLine)
@@ -1336,22 +1595,60 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lcCurrentKeyWord	  = lcFirstWord
 					lnParentCount		  = 0
 					lnEndParenCount		  = This.CountParens (lcLine)
-					lnIndent			  = This.oPrefs.nUNIONIndent
+		*			lnIndent			  = Iif(llUnionIndentAlter, This.oPrefs.nUNIONIndent, -This.oPrefs.nSELECTIndent)
+					lnIndent			  = Iif(llUnionIndentAlter, -This.oPrefs.nSELECTIndent, This.oPrefs.nUNIONIndent)
 					lnHangingIndent		  = lnIndent + This.oPrefs.nHangingIndent
 					llFieldThisLineIndent = .F.
 					llFieldNextLineIndent = .F.
 		
-				Case (' ' + lcFirstWord + ' ') $ ' SELECT ' And lnParenCount = 0
-					lnPos  = At ('SELECT', Upper (lcLine))
-					lcLine = Substr (lcLine, lnPos, 6) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + This.TrimLeadingWhiteSpace (Substr (lcLine, lnPos + 6))
+					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+					Endif
+					If Not llUnionFound Then
+						llUnionFound  = .T.
+						If llUnionIndentAlter Then
+		*					lnUnionIndentAlter = This.oPrefs.nUNIONIndent
+							lnUnionIndentAlter = This.oPrefs.nSELECTIndent
+							lnASCol = Iif(lnASCol = 0, 0 , lnASCol + This.oPrefs.nSELECTIndent)
+							For lnAlignASBlock = 1 To lnAlignASBlockMax
+								laAlignASBlocks(lnAlignASBlock, 3) = Iif(laAlignASBlocks(lnAlignASBlock, 3) = 0, 0, laAlignASBlocks(lnAlignASBlock, 3) + This.oPrefs.nSELECTIndent)
+							Endfor
+							For lnUnionCount = lnUnionIndentFirst To lnCount-1
+								laResult (lnUnionCount) = Space(lnUnionIndentAlter) + laResult (lnUnionCount)
+							Endfor
+						ELSE  &&llUnionIndentAlter
+							lnUnionIndentAlter = 0
+						Endif &&llUnionIndentAlter
+					Endif &&NOT llUnionFound
 		
-					lcCurrentKeyWord	  = lcFirstWord
+				Case (' ' + lcFirstWord + ' ') $ ' SELECT ' And lnParenCount = 0
+					lnPos  				= At ('SELECT', Upper (lcLine))
+					lcCurrentKeyWord	= lcFirstWord
+					lnLen				= Len (lcCurrentKeyWord)
+					lcLastPart			= This.TrimLeadingWhiteSpace (Substr (lcLine, lnLen + 1))
+		
 					lnParentCount		  = 0
-					lnEndParenCount		  = This.CountParens (lcLine)
-					lnIndent			  = This.oPrefs.nSELECTIndent
+					If lcLastPart = ';' Then
+						lcLine = Substr (lcLine, lnPos, 6) + lcLastPart
+						lnEndParenCount		  = 0
+						llFieldNextLineIndent = .F.
+						This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount+1, lnLineCount, 0 )
+					Else  &&lcLastPart = ';'
+						lcLine = Substr (lcLine, lnPos, 6) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + lcLastPart
+						lnEndParenCount		  = This.CountParens (lcLine)
+						llFieldNextLineIndent = lnParenCount # 0 Or (This.LastCharIn (lcLine) # ',' And THIS.GetWordCountX (lcLine)>1)
+						This.AddAlignAsBlock(@laAlignASBlocks, @lnAlignASBlockMax, lnCount, lnLineCount,;
+							IIF(This.oPrefs.lAlignAS, This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcLine))), 0) )
+		
+					Endif &&lcLastPart = ';'
+		*			lcLine = Substr (lcLine, lnPos, 6) + Space (Max (1, This.oPrefs.nCharsAfterSelect)) + This.TrimLeadingWhiteSpace (Substr (lcLine, lnPos + 6))
+		
+		* comes after UNION. In UNION the overall Indent after UNION will be set in lnUnionIndentAlter,
+		* This is the total indentation of the SELECT Statement, so lnIndent is 0
+					lnIndent			  = Iif(llUnionIndentAlter,0 ,This.oPrefs.nSELECTIndent)
+		*			lnIndent			  = 0
 					lnHangingIndent		  = This.oPrefs.nFieldIndent
 					llFieldThisLineIndent = .F.
-					llFieldNextLineIndent = lnParenCount # 0 Or This.LastCharIn (lcLine) # ','
 		
 				Case (' ' + lcFirstWord + ' ') $ ' SET ' And lnParenCount = 0
 					lnPos  = At ('SET', Upper (lcLine))
@@ -1363,35 +1660,52 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lnIndent			  = This.oPrefs.nSETIndent
 					lnHangingIndent		  = This.oPrefs.nSETFieldIndent
 					llFieldThisLineIndent = .F.
+		*SF 2022/03/15
+		* fails if SET is alone on line, then there is no field break
+		* needs to parse out;  ugly 
+		* Hint: This.GetContinuationChar (lcLine) gets ;
+		
 					llFieldNextLineIndent = lnParenCount # 0 Or This.LastCharIn (lcLine) # ','
 		
 				Otherwise
 					lnIndent = lnHangingIndent
-					* additional indentation for fields defs that span multiple lines
+		* additional indentation for fields defs that span multiple lines
 					llFieldThisLineIndent = llFieldNextLineIndent
 					llFieldNextLineIndent = Inlist (lcCurrentKeyWord + ' ', 'SELECT ', 'GROUP ', 'ORDER ', 'SET ') ;
-						And (lnEndParenCount # 0 Or This.LastCharIn (lcLine) # ',')
-					*** JRN 2010-05-27 : Correction for lines where leading comma means a new field
+						And (lnEndParenCount # 0;
+						Or (Not EMPTY(lcFirstWord);
+						And This.LastCharIn (lcLine) # ','))
+		*** JRN 2010-05-27 : Correction for lines where leading comma means a new field
 					If Inlist (lcCurrentKeyWord + ' ', 'SELECT ', 'GROUP ', 'ORDER ') And lnParenCount = 0 And lcFirstWord = ','
 						llFieldThisLineIndent = .F.
-						lnIndent			  = lnIndent - 2
+						lnIndent			  = MAX(0, lnIndent - 2)
 					Endif
+		        FOR lnCount1 = 1 To THIS.GetWordCountX (lcLine)  
+		        	If Upper (This.GetWordNumX (lcLine, lnCount1)) == 'SET' Then 
+		        		lcCurrentKeyWord = 'SET'
+		        		exit
+		        	Endif &&Upper (This.GetWordNumX (lcLine, lnCount1)) == 'SET'
+		        Endfor &&lnCount1
 		
 			Endcase
 		
-			lnTotalIndent = lnIndentAll + lnIndent														;
+			lnTotalIndent = lnIndentAll + lnIndent + lnUnionIndentAlter									;
 				+ (This.oPrefs.nParenIndent * lnParenCount)												;
-				+ IIf (llFieldThisLineIndent And lcFirstWord # '&',										;
-				  IIf (lcCurrentKeyWord = 'SET', This.oPrefs.nSingleSETFieldIndent, This.oPrefs.nSingleFieldIndent) ;
-				  , 0)
+				+ Iif (llFieldThisLineIndent And lcFirstWord # '&',										;
+				IIf (lcCurrentKeyWord = 'SET', This.oPrefs.nSingleSETFieldIndent, This.oPrefs.nSingleFieldIndent) ;
+				, 0)
 			lcIndent = Space (lnTotalIndent)
-			*	lcNewIndent = This.ConvertTabsForIndent(lcIndent)
+		*	lcNewIndent = This.ConvertTabsForIndent(lcIndent)
 			lcNewIndent = lcIndent
 		
 			lcNewLine = lcNewIndent + lcLine
 		
 			If This.oPrefs.lAlignAS
-				lnASCol = Max (lnASCol, This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcNewLine))))
+				lnASCol2 = This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcNewLine)))
+				lnASCol	 = Max (lnASCol  				    , lnASCol2)
+				If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+					laAlignASBlocks(lnAlignASBlockMax, 3) = Max (laAlignASBlocks(lnAlignASBlockMax, 3), lnASCol2)
+				Endif
 			Endif
 		
 			laResult (lnCount) = lcNewLine
@@ -1400,22 +1714,47 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Endfor
 		
 		lcResult   = ''
-		lnBeforeAS = This.CalcColumnOffset (lnASCol, This.oPrefs.nBeforeAS)
-		lnBeforeAS = Min (lnBeforeAS, This.oPrefs.nAsColumn)
-		lnAfterAS  = This.CalcColumnOffset (lnBeforeAS + 1, This.oPrefs.nAfterAS)
+		If llAlignASFieldBlocks Then
+			For lnAlignASBlock = 1 To lnAlignASBlockMax
+				laAlignASBlocks(lnAlignASBlock, 4) = This.CalcColumnOffset (laAlignASBlocks(lnAlignASBlock, 3), This.oPrefs.nBeforeAS)
+				laAlignASBlocks(lnAlignASBlock, 4) = Min (laAlignASBlocks(lnAlignASBlock, 4), lnAsColumn)
+				laAlignASBlocks(lnAlignASBlock, 5) = This.CalcColumnOffset (laAlignASBlocks(lnAlignASBlock, 4) + 1, This.oPrefs.nAfterAS)
+			Endfor
 		
-		For lnCount = 1 To lnLineCount
-			lcLine = laResult (lnCount)
+			lnAlignASBlock = 1
+			For lnCount = 1 To lnLineCount
+				lcLine = laResult (lnCount)
 		
-			If lnASCol # 0
-				lcNewLine = This.FixASColumn (lcLine, 2, lnBeforeAS, lnAfterAS)
-			Else
-				lcNewLine = lcLine
-			Endif
+				If Between(lnCount,laAlignASBlocks(lnAlignASBlock, 1),laAlignASBlocks(lnAlignASBlock, 2)) And laAlignASBlocks(lnAlignASBlock, 3) # 0
+					lcNewLine = This.FixASColumn (lcLine, 2, laAlignASBlocks(lnAlignASBlock, 4), laAlignASBlocks(lnAlignASBlock, 4))
+				Else
+					lcNewLine = lcLine
+				Endif
+				lcResult = lcResult + LINEEND + This.TrimTrailingWhiteSpace (lcNewLine)
 		
-			lcResult = lcResult + LINEEND + This.TrimTrailingWhiteSpace (lcNewLine)
+				If lnCount = laAlignASBlocks(lnAlignASBlock, 2) And lnAlignASBlock<lnAlignASBlockMax Then
+					lnAlignASBlock = lnAlignASBlock+1
+				Endif &&lnCount = laAlignASBlocks(lnAlignASBlock, 2) AND lnAlignASBlock<lnAlignASBlockMax
 		
-		Endfor
+			Endfor
+		Else  &&llAlignASFieldBlocks
+			lnBeforeAS = This.CalcColumnOffset (lnASCol, This.oPrefs.nBeforeAS)
+			lnBeforeAS = Min (lnBeforeAS, lnAsColumn)
+			lnAfterAS  = This.CalcColumnOffset (lnBeforeAS + 1, This.oPrefs.nAfterAS)
+		
+			For lnCount = 1 To lnLineCount
+				lcLine = laResult (lnCount)
+		
+				If lnASCol # 0
+					lcNewLine = This.FixASColumn (lcLine, 2, lnBeforeAS, lnAfterAS)
+				Else
+					lcNewLine = lcLine
+				Endif
+		
+				lcResult = lcResult + LINEEND + This.TrimTrailingWhiteSpace (lcNewLine)
+		
+			Endfor
+		Endif &&llAlignASFieldBlocks
 		
 		Return Substr (lcResult, 1 + Len (LINEEND))
 		
@@ -1455,7 +1794,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		#Define OPERATORS 	'+-*/=$#%<>'
 		lcOperators = Chrtran (OPERATORS, Evl (tcIgnoreTextOperators, ''), '')
 		*** JRN 2010-07-06 : Some commands allow wildcards not within string constants
-		If (' ' + Upper (Getwordnum (tcCode, 1)) + ' ') $ ' APPEND COPY SORT COPY SCATTER GATHER PRIVATE RELEASE SAVE SET ERASE DELETE COMPILE '
+		If (' ' + Upper (THIS.GetWordNumX (tcCode, 1)) + ' ') $ ' APPEND COPY SORT COPY SCATTER GATHER PRIVATE RELEASE SAVE SET ERASE DELETE COMPILE '
 			lcOperators = Chrtran (OPERATORS, '*?-', '')
 		Endif
 		lcOperators		 = Iif (This.oPrefs.lSpacesAroundOperators, lcOperators, '')
@@ -1463,8 +1802,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		lcCode = This.TrimTrailingWhiteSpace (tcCode)
 		If Empty (lcCode) ;
-				Or Inlist (Getwordnum (tcCode, 1), '*', '#', INLINECOMMENTS, '\') ;
-				or Upper(Getwordnum (tcCode, 1)) == 'RUN'
+				Or Inlist (THIS.GetWordNumX (tcCode, 1), '*', '#', INLINECOMMENTS, '\') ;
+				or Upper(THIS.GetWordNumX (tcCode, 1)) == 'RUN'
 			Return lcCode
 		Endif
 		
@@ -1649,7 +1988,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					Endif
 		
 					* Add a space after operators or commas
-				Case lcPrevChar $ lcCommaOperators And Not lcThisChar ISABLANK
+				Case This.oPrefs.lSpaceAfterCommas AND lcPrevChar $ lcCommaOperators And Not lcThisChar ISABLANK
 					lcCharsToAdd = " " + lcCharsToAdd
 		
 			Endcase
@@ -1759,8 +2098,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 				lcSourceLine = .Replace (lcSourceLine, ' ')
 			Endwith
 		
-			lcWord1		 = Upper (Getwordnum (lcSourceLine, 1))
-			lcWord2		 = Getwordnum (lcSourceLine, 2)
+			lcWord1		 = Upper (THIS.GetWordNumX (lcSourceLine, 1))
+			lcWord2		 = THIS.GetWordNumX (lcSourceLine, 2)
 			llLongEnough = Len (lcWord1) >= 4
 		
 			*** JRN 2010-08-16 : pseudo line allowed to identify tables in use
@@ -1787,10 +2126,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 				)
 		
 			If lcWord1 == 'DECLARE'
-				If 'IN' == Upper (Getwordnum (lcSourceLine, 3))
-					This.InsertID (Getwordnum (lcSourceLine, 2), TYPE_Declared)
+				If 'IN' == Upper (THIS.GetWordNumX (lcSourceLine, 3))
+					This.InsertID (THIS.GetWordNumX (lcSourceLine, 2), TYPE_Declared)
 				Else
-					This.InsertID (Getwordnum (lcSourceLine, 3), TYPE_Declared)
+					This.InsertID (THIS.GetWordNumX (lcSourceLine, 3), TYPE_Declared)
 				Endif
 				Loop
 			Endif
@@ -1832,8 +2171,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 			Endif
 		
-			For lnI = 1 To Getwordcount (lcNewCode)
-				lcWord		= Getwordnum (lcNewCode, lnI)
+			For lnI = 1 To THIS.GetWordCountX (lcNewCode)
+				lcWord		= THIS.GetWordNumX (lcNewCode, lnI)
 				lcUpperWord	= Upper (lcWord)
 		
 				Do Case
@@ -1852,39 +2191,39 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							Case Upper (lcWord2) == 'WHILE'
 							Case Upper (lcWord2) == 'FORM'
 								lnType = TYPE_Forms
-								lcWord = Getwordnum (lcNewCode, lnI + 2)
+								lcWord = THIS.GetWordNumX (lcNewCode, lnI + 2)
 								This.InsertID (lcWord, lnType)
 							Otherwise
 								lnType = TYPE_Procedures
-								lcWord = Getwordnum (lcNewCode, lnI + 1)
+								lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
 								This.InsertID (lcWord, lnType)
 						Endcase
 		
 						* Tables
 					Case lcUpperWord == 'USE'
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 1)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
 						This.InsertID (lcWord, lnType)
 		
 					Case lcUpperWord == 'JOIN'
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 1)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
 						This.InsertID (lcWord, lnType)
 						Do Case
-							Case Upper (Getwordnum (lcNewCode, lnI + 2)) == 'AS'
-								lcWord = Getwordnum (lcNewCode, lnI + 3)
+							Case Upper (THIS.GetWordNumX (lcNewCode, lnI + 2)) == 'AS'
+								lcWord = THIS.GetWordNumX (lcNewCode, lnI + 3)
 								This.InsertID (lcWord, lnType)
-							Case Not Upper (Getwordnum (lcNewCode, lnI + 2)) == 'ON'
-								lcWord = Getwordnum (lcNewCode, lnI + 2)
+							Case Not Upper (THIS.GetWordNumX (lcNewCode, lnI + 2)) == 'ON'
+								lcWord = THIS.GetWordNumX (lcNewCode, lnI + 2)
 								This.InsertID (lcWord, lnType)
 						Endcase
 		
 					Case lcUpperWord == 'FROM'
 						lnType = TYPE_Tables
-						For lnJ = lnI + 1 To Getwordcount (lcNewCode)
-							lcWord = Getwordnum (lcNewCode, lnJ)
+						For lnJ = lnI + 1 To THIS.GetWordCountX (lcNewCode)
+							lcWord = THIS.GetWordNumX (lcNewCode, lnJ)
 							This.InsertID (lcWord, lnType)
-							lcWordNew = Getwordnum (lcNewCode, lnJ + 1)
+							lcWordNew = THIS.GetWordNumX (lcNewCode, lnJ + 1)
 							Do Case
 								Case Empty (lcWord)
 									Exit
@@ -1899,36 +2238,36 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 					Case lcUpperWord == 'IN' And lcWord1 # 'FOR'
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 1)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
 						If Not Inlist (Upper (lcWord) + ' ', 'SCREEN ', 'WIN32API ', 'KERNEL32 ')
 							This.InsertID (lcWord, lnType)
 						Endif
 		
 					Case lcUpperWord == 'SELECT'
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 1)
-						If Empty (Getwordnum (lcNewCode, lnI + 2))
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
+						If Empty (THIS.GetWordNumX (lcNewCode, lnI + 2))
 							This.InsertID (lcWord, lnType)
 						Endif
 		
-					Case lcUpperWord == 'CREATE' And Inlist (' ' + Upper (Getwordnum (lcNewCode, lnI + 1)), ' TABLE', ' CURSOR')
+					Case lcUpperWord == 'CREATE' And Inlist (' ' + Upper (THIS.GetWordNumX (lcNewCode, lnI + 1)), ' TABLE', ' CURSOR')
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 2)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 2)
 						This.InsertID (lcWord, lnType)
 		
-					Case lcUpperWord == 'INSERT' And Upper (Getwordnum (lcNewCode, lnI + 1)) =  'INTO'
+					Case lcUpperWord == 'INSERT' And Upper (THIS.GetWordNumX (lcNewCode, lnI + 1)) =  'INTO'
 						lnI	   = lnI + 2
-						lcWord = Getwordnum (lcNewCode, lnI)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI)
 		
 						Do Case
 							Case lcWord = '('
 								Do While .T.
 									lnI		= lnI + 1
-									lcWord2	= Getwordnum (lcNewCode, lnI)
+									lcWord2	= THIS.GetWordNumX (lcNewCode, lnI)
 									If Empty (lcWord2) Or lcWord2 = ')'
 										Exit
 									Else
-										This.InsertIDOthers (lcWord2, Getwordnum (lcNewCode, lnI + 1))
+										This.InsertIDOthers (lcWord2, THIS.GetWordNumX (lcNewCode, lnI + 1))
 									Endif
 								Enddo
 								lcWord = '?Table'
@@ -1946,11 +2285,11 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						Endcase
 		
 						lnI		= lnI + 1
-						lcWord2	= Getwordnum (lcNewCode, lnI)
+						lcWord2	= THIS.GetWordNumX (lcNewCode, lnI)
 						If lcWord2 = '('
 							Do While .T.
 								lnI		= lnI + 1
-								lcWord2	= Getwordnum (lcNewCode, lnI)
+								lcWord2	= THIS.GetWordNumX (lcNewCode, lnI)
 								If Empty (lcWord2) Or lcWord2 = ')'
 									Exit
 								Else
@@ -1959,21 +2298,21 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							Enddo
 						Endif
 		
-					Case lcUpperWord == 'INTO' And Inlist (' ' + Upper (Getwordnum (lcNewCode, lnI + 1)), ' TABLE', ' CURSOR')
+					Case lcUpperWord == 'INTO' And Inlist (' ' + Upper (THIS.GetWordNumX (lcNewCode, lnI + 1)), ' TABLE', ' CURSOR')
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 2)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 2)
 						This.InsertID (lcWord, lnType)
 		
 					Case Inlist (lcUpperWord, 'UPDATE', 'ALIAS')
 						lnType = TYPE_Tables
-						lcWord = Getwordnum (lcNewCode, lnI + 1)
+						lcWord = THIS.GetWordNumX (lcNewCode, lnI + 1)
 						This.InsertID (lcWord, lnType)
 		
 					Case 1 = Len (lcWord) And lcUpperWord $ ASDATATYPE_CHARS
 						* do nothing for single character names that can be used in Cast( AS ...) or Create Cursor or Create Table
 		
 					Otherwise
-						This.InsertIDOthers (lcWord, Getwordnum (lcNewCode, lnI + 1))
+						This.InsertIDOthers (lcWord, THIS.GetWordNumX (lcNewCode, lnI + 1))
 		
 				Endcase
 			Endfor
@@ -2079,7 +2418,9 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Local lcArrayDims, lcASPhrase, lcCode, lcLine, lcLocalName, lcLocalPhrase, lcLocalsPlugIn, lcName
 		Local lcResult, lcVar, llAlreadyLocal, llArray, llCommasBeforeLocals, llContinuation, llHasASPhrase
 		Local llStartsWithL, llUseAsPhrase, llUseTabs, lnMaxWidth, lnRow, lnSelectionType, lnType
-		Local llAssigned, llRemoveOrphanLocals, llSortCreatedLocals  
+		Local llAssigned, llRemoveOrphanLocals, llSortCreatedLocals
+		Local  llLocalsPureLocal, llSpaceBeforeCommas, llLocalsAlignAS
+		Local  lcComma, lnLines, lnLine, lnPos, lnPosMax, lcAS
 		
 		If This.nNewLocalsCount = 0
 			Return ''
@@ -2095,30 +2436,49 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		****************************************************************
 		
 		This.SetBeautifyOptions()
-		lcLocalName = This.BeautifyWord('Local ')
+		lcLocalName = This.BeautifyWord('Local')
+		lcAS = This.BeautifyWord(' as ')
 		llUseTabs = This.nBeautifyOptions(4) = 1
 		
 		With This.oPrefs
 			llContinuation		 = Not .lLocalsMultPerLine
+			llLocalsPureLocal	 = nvl(.lLocalsPureLocal, .F.)
+			llSpaceBeforeCommas	 = .lSpaceBeforeCommas
 			lnSelectionType		 = .nLocalsSelectionType
 			lnMaxWidth			 = .nLocalsLineWidth
 			llUseAsPhrase		 = .lLocalsUseAS
 			llCommasBeforeLocals = .lCommasBeforeLocals
 			llRemoveOrphanLocals = .lRemoveOrphanLocals
-			llSortCreatedLocals  = .lSortCreatedLocals 
+			llSortCreatedLocals  = .lSortCreatedLocals
+			llLocalsAlignAS		 = nvl(.lLocalsAlignAS, .F.)
 		Endwith
+		
+		If m.llSpaceBeforeCommas Then
+			lcComma     = ', '
+		Else  &&m.llSpaceBeforeCommas
+			lcComma     = ','
+		Endif &&m.llSpaceBeforeCommas
 		
 		****************************************************************
 		With This
 		
-			If llSortCreatedLocals  
+			If llSortCreatedLocals
 				Asort (.aNewLocals, 1, -1, 0, 0)
-			EndIf 
+			Endif
 		
 			lcResult = ''
 			For lnType = 1 To 4
 				lcLine = ''
 				For lnRow = 1 To Alen (.aNewLocals, 1)
+		
+					Do Case
+						Case Empty (m.lcLine) And m.llContinuation And m.llLocalsPureLocal And m.llSpaceBeforeCommas
+							lcLocalPhrase = ' ;' + LINEEND + Iif (llUseTabs, Tab, ' ')
+						Case Empty (m.lcLine) And m.llContinuation And m.llLocalsPureLocal
+							lcLocalPhrase = ';' + LINEEND + Iif (llUseTabs, Tab, ' ')
+						Otherwise
+							lcLocalPhrase = ' '
+					Endcase
 		
 					lcName		   = .aNewLocals (lnRow, 1)
 					lcASPhrase	   = .aNewLocals (lnRow, 2)
@@ -2129,67 +2489,67 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lcArrayDims	   = .aNewLocals (lnRow, 7)
 					llAssigned     = .aNewLocals (lnRow, 8)
 		
-					lcName = lcName + IIf (llArray, '[' + lcArrayDims + ']', '')
+					lcName = lcName + Iif (llArray, '[' + lcArrayDims + ']', '')
 		
 					Do Case
 		
-							****************************************************************
-						Case llRemoveOrphanLocals and llAlreadyLocal and (not llAssigned) and (not llArray)
+		****************************************************************
+						Case llRemoveOrphanLocals And llAlreadyLocal And (Not llAssigned) And (Not llArray)
 							Loop
-							
+		
 						Case llUseAsPhrase And llStartsWithL
 							If lnType = 1
-								lcVar		  = This.AddASPhase (lcName, lcASPhrase)
-								lcLocalPhrase = lcLocalName
+								lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
+								lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 							Else
 								Loop
 							Endif
 		
 						Case llUseAsPhrase And lnType = 1 And lnSelectionType = 4
-							lcVar		  = This.AddASPhase (lcName, lcASPhrase)
-							lcLocalPhrase = lcLocalName
+							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Case llUseAsPhrase And lnType = 2 And lnSelectionType = 3
-							lcVar		  = This.AddASPhase (lcName, lcASPhrase)
-							lcLocalPhrase = lcLocalName
+							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Case llUseAsPhrase And lnType = 3 And lnSelectionType = 2
-							lcVar		  = This.AddASPhase (lcName, lcASPhrase)
-							lcLocalPhrase = '*:Global '
+							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
+							lcLocalPhrase = '*:Global' + m.lcLocalPhrase
 		
 						Case llUseAsPhrase
 							Loop
 		
-							****************************************************************
+		****************************************************************
 						Case lnSelectionType = 1 And Not llStartsWithL
 							Loop
 		
 						Case llHasASPhrase And lnType = 1
-							lcVar		  = lcName + This.BeautifyWord(' as ') + lcASPhrase
-							lcLocalPhrase = lcLocalName
+							lcVar		  = lcName + m.lcAS + lcASPhrase
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 						Case llHasASPhrase
 							Loop
 		
 						Case llStartsWithL And lnType = 2
 							lcVar		  = lcName
-							lcLocalPhrase = lcLocalName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 						Case llStartsWithL
 							Loop
 		
 						Case lnSelectionType = 4 And lnType = 2
 							lcVar		  = lcName
-							lcLocalPhrase = lcLocalName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Case lnSelectionType = 2 And lnType = 3 And llAlreadyLocal
 							lcVar		  = lcName
-							lcLocalPhrase = lcLocalName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Case lnSelectionType = 2 And lnType = 4 And Not llAlreadyLocal
 							lcVar		  = lcName
-							lcLocalPhrase = '*:Global '
+							lcLocalPhrase = '*:Global' + m.lcLocalPhrase
 						Case lnSelectionType = 3 And lnType = 4
 							lcVar		  = lcName
-							lcLocalPhrase = lcLocalName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Otherwise
 							Loop
@@ -2200,12 +2560,12 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							lcLine = lcLocalPhrase  + lcVar
 						Case llContinuation Or llUseAsPhrase
 							If llCommasBeforeLocals
-								lcLine = lcLine + ';' + LINEEND + IIf (llUseTabs, Tab, '') + ', ' + lcVar
+								lcLine = lcLine + ';' + LINEEND + Iif (llUseTabs, Tab, ' ') + m.lcComma + lcVar
 							Else
-								lcLine = lcLine + ', ;' + LINEEND + IIf (llUseTabs, Tab, '') + lcVar
+								lcLine = lcLine + m.lcComma+';' + LINEEND + Iif (llUseTabs, Tab, ' ') + lcVar
 							Endif
 						Case lnType # 1 And (Len (lcLine) + 2 + Len (lcVar)) <= lnMaxWidth
-							lcLine = lcLine + ', ' + lcVar
+							lcLine = lcLine + m.lcComma + lcVar
 						Otherwise
 							lcResult = lcResult + lcLine + LINEEND
 							lcLine	 = lcLocalPhrase  + lcVar
@@ -2218,6 +2578,29 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Endfor
 		
 		Endwith
+		
+		If m.llContinuation  And m.llUseAsPhrase And m.llLocalsAlignAS Then
+			lnLines = Alines(laLocals,m.lcResult)
+			lcResult = ''
+			lcVar    = This.BeautifyWord(' as ')
+		    lnPosMax = 0
+			For lnLine = 1 To m.lnLines
+		        lnPosMax = Max(m.lnPosMax,AT(m.lcAS,laLocals(m.lnLine)))
+			Endfor &&lnLine
+			For lnLine = 1 To m.lnLines
+		        lnPos = AT(m.lcAS,laLocals(m.lnLine))
+		        IF m.lnPos = 0 THEN
+		            lcResult = m.lcResult + laLocals(m.lnLine) + LINEEND
+		        Else  &&m.lnPos = 0 
+		*            lcResult = m.lcResult + STUFF(laLocals(m.lnLine),m.lnPos,1,SPACE(m.lnPosMax-m.lnPos+1)) + LINEEND
+		            lcResult = m.lcResult + ;
+						+ This.AddWhiteSpace(This.TrimTrailingWhiteSpace(Left (laLocals(m.lnLine), lnPos)), lnPosMax + 1);
+						+ This.TrimLeadingWhiteSpace(Substr (laLocals(m.lnLine), lnPos + 1)) + ;
+		            LINEEND
+		        Endif &&m.lnPos = 0 
+			Endfor &&lnLine
+			
+		Endif &&m.llContinuation AND m.llUseAsPhrase AND m.llLocalsAlignAS
 		
 		Return Left (lcResult, Len (lcResult) - 2)
 		
@@ -2248,8 +2631,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		For lnLoop = lnStartLoop To lnEndLoop
 			lcSourceLine = This.GetSourceCodeLine (@lnLoop, , .T.)
-			lcWord1 = Lower (Getwordnum (lcSourceLine, 1))
-			lcWord2 = Lower (Getwordnum (lcSourceLine, 2))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine, 1))
+			lcWord2 = Lower (THIS.GetWordNumX (lcSourceLine, 2))
 		
 			If llFixWITHs
 				lcSourceLine = This.FixWithStatements(lcSourceLine)
@@ -2286,7 +2669,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						If Empty (lcWord)
 							Exit
 						Else
-							This.AddNewLocal (Getwordnum (lcWord, 1), , .T.)
+							This.AddNewLocal (THIS.GetWordNumX (lcWord, 1), , .T.)
 						Endif
 					Endfor
 		
@@ -2309,8 +2692,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							If Empty (lcWord) 
 								Exit
 							Else
-								This.AddNewLocal (Getwordnum (lcWord, 1))
-								If 1 # GetWordCount(lcWord)
+								This.AddNewLocal (THIS.GetWordNumX (lcWord, 1))
+								If 1 # THIS.GetWordCountX(lcWord)
 									Exit
 								EndIf 
 							Endif
@@ -2333,26 +2716,26 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					Endif
 		
 				Case 'catch ' = lcWord1 And 'to ' = lcWord2
-					This.AddNewLocal (Getwordnum (lcSourceLine, 3))
+					This.AddNewLocal (THIS.GetWordNumX (lcSourceLine, 3))
 				Case 'select ' = lcWord1 And ' into array ' $ Lower (lcSourceLine)
-					lcParse = GetWordNum (Substr (lcSourceLine, Rat (' into array ', Lower (lcSourceLine)) + 12), 1)
+					lcParse = THIS.GetWordNumX (Substr (lcSourceLine, Rat (' into array ', Lower (lcSourceLine)) + 12), 1)
 					This.AddNewLocal (lcParse + '(1)')
 				Case 'scatter ' = lcWord1 And ' name ' $ Lower (lcSourceLine)
 					lcParse = Strextract (lcSourceLine, ' name ', ' ', 1, 1 + 2)
-					This.AddNewLocal (Getwordnum (lcParse, 1))
+					This.AddNewLocal (THIS.GetWordNumX (lcParse, 1))
 				Case Lower (Left (lcSourceLine, 9)) = 'for each '
 					lcParse = Strextract (lcSourceLine, 'for each ', ' ', 1, 3)
 					If ' as ' $ Lower (lcSourceLine)
 						lcASPhrase = Strextract (lcSourceLine, ' as ', ' ', 1, 3)
-						This.AddNewLocal (Getwordnum (lcParse, 1), Getwordnum (lcASPhrase, 1))
+						This.AddNewLocal (THIS.GetWordNumX (lcParse, 1), THIS.GetWordNumX (lcASPhrase, 1))
 					Else
-						This.AddNewLocal (Getwordnum (lcParse, 1))
+						This.AddNewLocal (THIS.GetWordNumX (lcParse, 1))
 					Endif
 				Case 'for ' = lcWord1
 					lcParse = Strextract (lcSourceLine, 'for ', '=', 1, 3)
 					This.AddNewLocal (lcParse)
 				Case Left (Lower (lcSourceLine), 8) = 'text to '
-					lcParse = Getwordnum (lcSourceLine, 3)
+					lcParse = THIS.GetWordNumX (lcSourceLine, 3)
 					This.AddNewLocal (lcParse)
 				Case '=' $ lcSourceLine
 					lnPos = At ('=', lcSourceLine)
@@ -2395,7 +2778,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses'
 			lcArrayParse = ''
 			lcArrayLine = Chrtran (lcSourceLine, ' ', '')
-			For lnI = 1 To Getwordcount (lcArrayFunctions, ',')
+			For lnI = 1 To GetWordCount (lcArrayFunctions, ',')
 				lcArrayFunc = Getwordnum (lcArrayFunctions, lnI, ',')
 				*** JRN 2010-04-21 : check character before reference to make sure it is not part of a name ... laMouseObj, e.g.,
 				If lcArrayFunc + '(' $ Lower (lcArrayLine)
@@ -2414,12 +2797,12 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			*-- RCE 01/23/09 - Support for WITH clause; respect Current Locals
 			If Left (Lower (lcSourceLine), 8) = 'do form '
 				If ' to ' $ Lower (lcSourceLine)
-					lcTmp = Getwordnum (Substr (lcSourceLine, Rat ([ to ], Lower (lcSourceLine)) + 4), 1)
+					lcTmp = THIS.GetWordNumX (Substr (lcSourceLine, Rat ([ to ], Lower (lcSourceLine)) + 4), 1)
 					This.AddNewLocal (lcTmp)
 				Endif
 		
 				If ' name ' $ Lower (lcSourceLine)
-					lcTmp = Getwordnum (Substr (lcSourceLine, Rat ([ name ], Lower (lcSourceLine)) + 6), 1)
+					lcTmp = THIS.GetWordNumX (Substr (lcSourceLine, Rat ([ name ], Lower (lcSourceLine)) + 6), 1)
 					This.AddNewLocal (lcTmp, 'Form')
 				Endif
 		
@@ -2470,7 +2853,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Case This.oPrefs.lBeautifyTEXTasSelect
 				For lnI = lnLoop + 1 To lnLinesCount
 					lcLine		= This.aCodeLines[lnI]
-					lcFirstWord	= Upper (Getwordnum (lcLine, 1))
+					lcFirstWord	= Upper (THIS.GetWordNumX (lcLine, 1))
 					Do Case
 						Case Empty (lcFirstWord)
 		
@@ -2489,7 +2872,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		If lcType = 'Ignore'
 			For lnI = lnLoop + 1 To lnLinesCount
 				lcLine		= This.aCodeLines[lnI]
-				lcFirstWord	= Upper (Getwordnum (lcLine, 1))
+				lcFirstWord	= Upper (THIS.GetWordNumX (lcLine, 1))
 				If lcFirstWord == 'ENDTEXT'
 					Return lnI
 				Endif
@@ -2527,7 +2910,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		For lnLoop = lnStartLine To lnEndLine
 			lnLoopValueBefore = lnLoop
 			lcSourceLine = This.GetSourceCodeLine (@lnLoop, , .T.)
-			lcWord1 = Lower (Getwordnum (lcSourceLine,1))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
 			llAddTheseLines = .T.
 			llInsertNewLocals = .F.
 		
@@ -2619,7 +3002,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			*--------------------------------------------------
 			*-- GLR 8/31/2006 : added 'Define' to list
 			*-- THM 8/31/2006 : removed 'dimens' from list.
-			lcWord1 = Lower (Getwordnum (lcSourceLine, 1))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine, 1))
 			If Inlist (lcWord1, 'local', 'privat', 'public', 'parame', 'lparam', '*:glob',		;
 					  'proced', 'functi', 'endpro', 'endfun', 'define')
 				lcType = 'other'
@@ -2636,7 +3019,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						lcType		 = lcWord1
 						lcSourceLine = Substr (lcSourceLine, 1 + Len (lcWord1))
 		
-						If Lower (Getwordnum (lcSourceLine, 1)) == 'array'
+						If Lower (THIS.GetWordNumX (lcSourceLine, 1)) == 'array'
 							lcSourceLine = Alltrim (lcSourceLine)
 							lcSourceLine = Substr (lcSourceLine, 7)
 						Endif
@@ -2704,7 +3087,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		For lnLoop = lnStartLoop To Alen (This.aCodeLines)
 			lnLoopValueBefore = lnLoop
 			lcSourceLine = This.GetSourceCodeLine (@lnLoop, , .T.)
-			lcWord1 = Lower (Getwordnum (lcSourceLine,1))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
 		
 			Do Case
 				Case Empty (lcSourceLine)
@@ -2753,8 +3136,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		For lnCounter = 1 To lnCurrentLine
 			lnCounterNow = lnCounter
 			lcSourceLine = This.GetSourceCodeLine (@lnCounter)
-			lcWord1 = Lower (Getwordnum (lcSourceLine,1))
-			lcWord2 = Lower (Getwordnum (lcSourceLine,2))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
+			lcWord2 = Lower (THIS.GetWordNumX (lcSourceLine,2))
 		
 			If Len (lcWord1) >= 4											;
 					and ('procedure ' = lcWord1 or 'function ' = lcWord1)
@@ -2829,7 +3212,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Return
 		Endif
 		
-		lcWord1 = Upper (Getwordnum (lcSourceLine,1))
+		lcWord1 = Upper (THIS.GetWordNumX (lcSourceLine,1))
 		
 		Do Case
 			Case lcWord1 == 'WITH'
@@ -2920,7 +3303,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		For lnI = 0 To loResults.Count - 1
 			lcValue  = Chrtran (loResults.Item (lnI).Value, Chr(13) + Chr(10), '')
-			Insert Into crsr_IDs_Constants Values (Upper (Getwordnum (lcValue, 2)))
+			Insert Into crsr_IDs_Constants Values (Upper (THIS.GetWordNumX (lcValue, 2)))
 		Endfor
 		
 		*   #Includes
@@ -3007,11 +3390,11 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lnCounter	 = lnCounter + 1
 		
 			Do Case
-				Case llTextBlock And Upper (Getwordnum (lcLine, 1)) == 'ENDTEXT'
+				Case llTextBlock And Upper (THIS.GetWordNumX (lcLine, 1)) == 'ENDTEXT'
 					Exit
 				Case llTextBlock
 					Loop
-				Case Upper (Getwordnum (lcLine, 1)) == 'TEXT'
+				Case Upper (THIS.GetWordNumX (lcLine, 1)) == 'TEXT'
 					If llIgnoreTextMerge
 						lnCounter = This.DoIDListText(lcSourceLine, lnCounter, Alen (This.aCodeLines))
 						Exit
@@ -3020,11 +3403,11 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					Endif
 					Loop
 		
-				Case llHashIFBlock And Upper (Getwordnum (lcLine, 1)) == '#ENDIF'
+				Case llHashIFBlock And Upper (THIS.GetWordNumX (lcLine, 1)) == '#ENDIF'
 					Exit
 				Case llHashIFBlock
 					Loop
-				Case llIgnoreHashIF And Upper (Getwordnum (lcLine, 1)) == '#IF'
+				Case llIgnoreHashIF And Upper (THIS.GetWordNumX (lcLine, 1)) == '#IF'
 					llHashIFBlock = .T.
 					Loop
 		
@@ -3161,9 +3544,62 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 	ENDPROC
 
+	PROCEDURE getwordcountx		&& Do GetWordCount and check for CR in default search.
+		LPARAMETERS;
+		 tcString,;
+		 tcDelimiters
+		
+		LOCAL;
+		 lnReturn AS integer
+		
+		IF PCOUNT()=1 THEN
+		*SF 2022/03/17
+		*see https://github.com/VFPX/HelpFile/issues/17
+		*This is Space+Tab+CR+LF
+		 lnReturn = GETWORDCOUNT(m.tcString,0h20090D0A)
+		ELSE  &&PCOUNT()=2
+		 lnReturn = GETWORDCOUNT(m.tcString,m.tcDelimiters)
+		ENDIF &&PCOUNT()=2
+		
+		
+		RETURN m.lnReturn
+		
+	ENDPROC
+
+	PROCEDURE getwordnumx		&& Do GetWordNum and remove trailing semicolon. Check for CR in default search.
+		LPARAMETERS;
+		 tcString,;
+		 tnIndex,;
+		 tcDelimiters
+		
+		LOCAL;
+		 lcReturn AS CHARACTER
+		
+		IF PCOUNT()=2 THEN
+		*SF 2022/03/17
+		*see https://github.com/VFPX/HelpFile/issues/17
+		* lcReturn = GETWORDNUM(m.tcString,m.tnIndex)
+		*This is Space+Tab+CR+LF
+		 lcReturn = GETWORDNUM(m.tcString,m.tnIndex,0h20090D0A)
+		ELSE  &&PCOUNT()=2
+		 lcReturn = GETWORDNUM(m.tcString,m.tnIndex,m.tcDelimiters)
+		ENDIF &&PCOUNT()=2
+		
+		IF ';' $ m.lcReturn THEN
+		 m.lcReturn = LEFT(m.lcReturn,AT(';',m.lcReturn,1)-1)
+		ENDIF &&';' $ m.lcReturn 
+		
+		IF '&'+'&' $ m.lcReturn THEN
+		 m.lcReturn = LEFT(m.lcReturn,AT('&'+'&',m.lcReturn,1)-1)
+		ENDIF &&RIGHT(m.lcReturn,1)==';'
+		
+		RETURN m.lcReturn
+		
+	ENDPROC
+
 	HIDDEN PROCEDURE Init
 		Lparameters loUtils, loPrefs, loEditorWin, lcSystemMemoryVariables
-		
+		 
 		Local lcDBF, lcPlugIn, loThor
 		
 		With This
@@ -3276,8 +3712,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Lparameters lcNewCode, lnType, lnStartWord
 		
 		Local lcWord2, lnI
-		For lnI = lnStartWord To Getwordcount (lcNewCode)
-			lcWord2		= Getwordnum (lcNewCode, lnI)
+		For lnI = lnStartWord To THIS.GetWordCountX (lcNewCode)
+			lcWord2		= THIS.GetWordNumX (lcNewCode, lnI)
 			If Upper (lcWord2) == 'AS' Or Upper (lcWord2) == 'OF'
 				lnI = lnI + 1
 			Endif
@@ -3312,7 +3748,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lcSourceLine = IIf (Lower (Left (lcSourceLine, 7)) == 'hidden ', Alltrim (Substr (lcSourceLine, 8)), lcSourceLine)
 			lcSourceLine = IIf (Lower (Left (lcSourceLine, 10)) == 'protected ', Alltrim (Substr (lcSourceLine, 11)), lcSourceLine)
 		
-			lcWord1 = Lower (Getwordnum (lcSourceLine,1))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
 		
 			Do Case
 				Case Len (lcWord1) >= 4 And 'local ' = lcWord1
@@ -3533,9 +3969,9 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		For lnCount = 1 To lnLineCount
 			lnCounterNow = lnCount
 			lcSourceLine = This.GetSourceCodeLine (@lnCount)
-			lcWord1 = Lower (Getwordnum (lcSourceLine,1))
-			lcWord2 = Lower (Getwordnum (lcSourceLine,2))
-			lcWord3 = Lower (Getwordnum (lcSourceLine,3))
+			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
+			lcWord2 = Lower (THIS.GetWordNumX (lcSourceLine,2))
+			lcWord3 = Lower (THIS.GetWordNumX (lcSourceLine,3))
 		
 			Do Case
 				Case Empty (lcSourceLine)
@@ -3547,7 +3983,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						lnCurrentRow = lnCurrentRow + 1
 						Dimension This.aPRGCodeBlocks (lnCurrentRow, 4)
 					Endif
-					lcName = Getwordnum (lcSourceLine,2)
+					lcName = THIS.GetWordNumX (lcSourceLine,2)
 					If '(' $ lcName
 						lcName = Left (lcName, At('(', lcName) - 1)
 					Endif
@@ -3565,7 +4001,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						lnCurrentRow = lnCurrentRow + 1
 						Dimension This.aPRGCodeBlocks (lnCurrentRow, 4)
 					Endif
-					lcName = Getwordnum (lcSourceLine,3)
+					lcName = THIS.GetWordNumX (lcSourceLine,3)
 					If '(' $ lcName
 						lcName = Left (lcName, At('(', lcName) - 1)
 					Endif
@@ -3583,7 +4019,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						lnCurrentRow = lnCurrentRow + 1
 						Dimension This.aPRGCodeBlocks (lnCurrentRow, 4)
 					Endif
-					This.aPRGCodeBlocks (lnCurrentRow, 1) = Getwordnum (lcSourceLine,3)
+					This.aPRGCodeBlocks (lnCurrentRow, 1) = THIS.GetWordNumX (lcSourceLine,3)
 					This.aPRGCodeBlocks (lnCurrentRow, 2) = 'C'
 					This.aPRGCodeBlocks (lnCurrentRow, 3) = lnCounterNow
 					This.aPRGCodeBlocks (lnCurrentRow, 4) = lnCounterNow
@@ -3693,10 +4129,11 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Endif
 		Endif
 		
-		If Right (lcCodeSource, 1) $ LINEEND
+		*SF 2020/10/29 RIGHT(..,1) will never be LINEEND, because LINEEND is CRLF ...
+		If Right (lcCodeSource, 2) $ LINEEND
 			lcNewCode = lcNewCode + LINEEND
 		Endif
-		
+		 
 		****************************************************************
 		****************************************************************
 		

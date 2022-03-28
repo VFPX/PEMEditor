@@ -25,9 +25,8 @@ DEFINE CLASS frmopenclass1 AS frmopenclass OF "editproperty.vcx"
 	DoCreate = .T.
 	Name = "Frmopenclass1"
 	changefontsize.Name = "changefontsize"
-	cmdCancel.Name = "cmdCancel"
-	cmdClassIcon.Name = "cmdClassIcon"
 	cmdSearch.Name = "cmdSearch"
+	cmdCancel.Name = "cmdCancel"
 	cntClass.cbobaseclass.Name = "cbobaseclass"
 	cntClass.chkExactMatch1.Alignment = 0
 	cntClass.chkExactMatch1.Name = "chkExactMatch1"
@@ -105,5 +104,6 @@ DEFINE CLASS frmopenclass1 AS frmopenclass OF "editproperty.vcx"
 	grdResults.colTimeStamp.Text1.Name = "Text1"
 	grdResults.Name = "grdResults"
 	imgClassIcon.Name = "imgClassIcon"
+	cmdClassIcon.Name = "cmdClassIcon"
 
 ENDDEFINE

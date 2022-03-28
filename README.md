@@ -34,6 +34,10 @@ This will not only install PEM Editor, but will also register it so that all of 
 *   **[Click here for complete online documentation of IDE Tools](Documentation/pemeditor_ide_tools_help.md)**
 *   PEMEditor.chm in the Documentation folder
 
+### Version 7.40.00: What's new in this release
+
+* **[Click here for change list](Documentation/pemeditor_thor_changes_7_40.md)**
+
 ### Version 7.30.02: Bug fixes
 
 Version 7.30.02 *really* fixes a bug in handling containers with controls that fully overlap the container.

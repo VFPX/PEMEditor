@@ -385,6 +385,7 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
  	*< CLASSDATA: Baseclass="custom" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "peme_defaultvalues.h"
+	Comment = "lShowChildInheritedCode"
 	Name = "peme_preferences"
 	
 	PROCEDURE Init
@@ -445,6 +446,11 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lAlignAS					  = .F.
 				.lAlignSemicolons			  = .F.
 				.lAlignWITH					  = .F.
+		
+				.lUnionIndentAlter			  = .F.
+				.lIndentON					  = .F.
+				.lAlignASFieldBlocks		  = .F.
+		
 				.lAssignDefaultValue		  = .T.
 				.lAutoMoveWindow			  = .F.
 				.lBeautifyLocals			  = .F.
@@ -484,7 +490,9 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lIDListSeparate			  = .T.                           
 				.lLocalsAllProcs			  = .F.
 				.lLocalsMultPerLine			  = .T.
+				.lLocalsPureLocal			  = .F.
 				.lLocalsUseAS				  = .F.
+				.lLocalsAlignAS				  = .F.
 				.lLowerCaseOnly				  = .F.
 				.lMemberDataKeepType		  = .F.
 				.lMethodViewEventNone 		  = .T.                           
@@ -502,10 +510,14 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lRestartAfterClearAll		  = .F.
 				.lSettingsChanged			  = .F.
 				.lSelectCommasBeginLine		  = .F.
-				.lSelectExpandFields          = .T.
 				.lSelectExpandJoins           = .T.
 				.lSelectExpandOn              = .T.
 				.lSelectExpandAndOr           = .T.
+				.lSelectExpandFields          = .T.
+				.lSelectExpandSelectItem      = .T.
+				.lSelectExpandFrom            = .T.
+				.lSelectExpandOrderBy         = .T.
+				.lSelectExpandGroupBy         = .T.
 				.lShowAllCustomMethods		  = .F.
 				.lShowAllInheritedCode		  = .F.
 				.lShowChildInheritedCode	  = .F.

@@ -712,6 +712,12 @@
 #Define ccLOC_Pref_CAP_AlignAS 			'Align AS keywords?'
 #Define ccLOC_Pref_Tip_AlignAS			'Causes AS keywords to be aligned to the same column' 
 
+#Define ccLOC_Pref_CAP_AlignASFieldBlocks	"Use blocks of AS phrases "
+#Define ccLOC_Pref_Tip_AlignASFieldBlocks	"AS phrases will be alligned in blocks." + 0h0D0A +;
+											"Each block contains of a related group of fields" + 0h0D0A +;
+											"or a related group of FROM and JOINS."
+
+
 #Define ccLOC_Pref_Cap_AlignBeforeAS	"Spacing before AS:"
 #Define ccLOC_Pref_Tip_AlignBeforeAS	"Spacing between each field expression and the AS that follows."
 
@@ -757,7 +763,8 @@
 #Define ccLOC_Pref_Cap_AfterWithColumn	"Preferred column for expression after 'WITH'"
 #Define ccLOC_Pref_Tip_AfterWithColumn	"NOTE: Does not work for proportional fonts"
 
-#Define ccLOC_Pref_Cap_KeyWordIndent	"Indent for SELECT / UPDATE key words"
+#Define ccLOC_Pref_Cap_KeyWordIndent	"Indent for SELECT /" + 0h0D0A +;
+										"UPDATE key words "
 #Define ccLOC_Pref_Tip_KeyWordIndent	"Indentation for primary key words (WHERE, FROM, INTO, etc.)"
 
 #Define ccLOC_Pref_Cap_ReplaceKeyWords	"Indent for REPLACE key words"
@@ -766,14 +773,26 @@
 #Define ccLOC_Pref_Cap_JOINIndent		"Indent for JOIN key words"
 #Define ccLOC_Pref_Tip_JOINIndent		"Indentation for LEFT|RIGHT|INNER|OUTER|FULL JOINs"
 
-#Define ccLOC_Pref_Cap_UNIONIndent		"Indent for UNION"
-#Define ccLOC_Pref_Tip_UNIONIndent		"Indent for UNION"
+#Define ccLOC_Pref_CAP_IndentON			"Indent ON like JOIN "
+#Define ccLOC_Pref_Tip_IndentON			"Move the indentation of the ON clause on the same level as the JOIN and FROM. "
+#Define ccLOC_Pref_CAP_UnionIndentAlter	"Optional UNION Indentation "
+#Define ccLOC_Pref_Tip_UnionIndentAlter	"Indent method for SELECT with UNIONS," + 0h0D0A +;
+										'if OFF, "Indent for SELECT key word after UNION" will indent a single line after each UNION,' + 0h0D0A +;
+										'if ON, "Indent all SELECT in UNION" will indent all SELECT statements except UNION.'
 
+#Define ccLOC_Pref_Cap_UNIONIndent		"Indent for UNION "
+#Define ccLOC_Pref_Tip_UNIONIndent		"Indent for UNION keyword"
 #Define ccLOC_Pref_Cap_SETIndent		"Indent before SET"
 
-#Define ccLOC_Pref_Cap_SELECTIndent		"Indent for SELECT after UNION"
-#Define ccLOC_Pref_Tip_SELECTIndent		"Indentation for key words (WHERE, FROM, INTO, etc.)"
-
+#Define ccLOC_Pref_Cap_SELECTIndent		"Indent for SELECT key word after UNION "
+#Define ccLOC_Pref_Tip_SELECTIndent		"Indentation for SELECT key word following UNION key word," + 0h0D0A +;
+										"not the whole SELECT statement. "
+*SF
+#Define ccLOC_Pref_Cap_SELECTIndent_01	"Indent all SELECT in UNION "
+#Define ccLOC_Pref_Tip_SELECTIndent_01	"On SQL SELECT combined with UNION, " + 0h0D0A +;
+										"indentation of SELECT statements. " + 0h0D0A0D0A +;
+										"Additional ident for anything except UNION. "
+*/SF
 #Define ccLOC_Pref_Cap_HangingIndent	"Addtional indent for continuation lines"
 #Define ccLOC_Pref_Tip_HangingIndent	"Indentation for continuation lines of key word phrases"
 
@@ -846,6 +865,10 @@
 #Define ccLOC_Pref_Cap_VarSelect4		"All variables, merged"
 #Define ccLOC_Pref_CAP_MultLocalsPerLine 'Multiple variables per line  '
 #Define ccLOC_Pref_TIP_MultLocalsPerLine ''
+#Define ccLOC_Pref_CAP_LocalsPureLocal 	'LOCAL single on line '
+#Define ccLOC_Pref_TIP_LocalsPureLocal	'LOCAL as only word on the line. '
+#Define ccLOC_Pref_CAP_LocalsAlignAS	'Align AS '
+#Define ccLOC_Pref_TIP_LocalsAlignAS	'Align the as keywords in new LOCAL statement. '
 #Define ccLOC_Pref_CAP_LineWidth		'Line Width'
 #Define ccLOC_Pref_CAP_MoveLocals		"Move/merge LOCALs statements to top  "
 #Define ccLOC_Pref_TIP_MoveLocals		"Move all LOCALs statements so that they are together at the top of the procedure and merge them with any new variables that are to be added."
