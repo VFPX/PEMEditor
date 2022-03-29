@@ -11,10 +11,9 @@ Return toUpdateInfo
 procedure GetNotes
  local lcNotes
 
-Contains BeautifyX, Create Locals, Move / Resize Code Window, Redefine Parent Class, SourceControl
-?
-
  text to lcNotes noshow
+Contains BeautifyX, Create Locals, Move / Resize Code Window, Redefine Parent Class, SourceControl
+
 +++++++++++++++++++++++ Change History +++++++++++++++++++++++
 2022-03-29 v7.40.01
 recompiled in VFP9SP2
