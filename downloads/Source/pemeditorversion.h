@@ -1,8 +1,8 @@
 * 7.40.01
 
-#Define cnVersion         7.40.02
+#Define cnVersion         7.40.03
 #Define cdVersionDate     March 30, 2022
-#Define	ccPEMEVERSION     [PEM Editor - 7.40.02 - March 30, 2022 - 20220330]
+#Define	ccPEMEVERSION     [PEM Editor - 7.40.03 - March 30, 2022 - 20220330]
 #Define	ccThorVERSIONFILE [ThorVersion.txt]
 
 *!*	* 7.30.02
