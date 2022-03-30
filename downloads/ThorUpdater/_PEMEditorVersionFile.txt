@@ -17,7 +17,7 @@ Contains BeautifyX, Create Locals, Move / Resize Code Window, Redefine Parent Cl
  text to lcNotes noshow
 +++++++++++++++++++++++ Change History +++++++++++++++++++++++
 2022-03-30 v7.40.02
-Different place to compile PEMEditor.APP, to get relative paths. 
+Different place to compile PEMEditor.APP, to get relative paths.
 
 2022-03-29 v7.40.01
 recompiled in VFP9SP2
