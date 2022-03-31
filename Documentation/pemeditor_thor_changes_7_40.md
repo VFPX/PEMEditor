@@ -60,7 +60,8 @@ to allow all options be visible.
    - peme_preferences OF pemeditor\downloads\source\peme_preferences.vcx
    - beautify OF pemeditor\downloads\source\peme_beautify.vcx
    - pemeditor\downloads\source\editpropertydialogenglish.h
-
+   - pemeditor\downloads\source\pemeditorversion.h   
+   
 ---------------
 ### BeautifyX, SELECTs / Updates
 #### inverted loop
@@ -180,3 +181,5 @@ TabIndex and alignment of options form reworked. Was a bit wobbly while switchin
    - beautify OF pemeditor\downloads\source\peme_beautify.vcx
 *
    - pemeditor\downloads\source\pemeditorversion.h
+
+Last changed: _2022/03/31_
