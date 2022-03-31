@@ -33,13 +33,15 @@ Compile the _downloads\Source\pemeditor.pjx_ to _downloads\pemeditor.app_ **Do n
 Please note, there are some tasks to set up a new version.
 Stuff is a bit scattered, so this is where to look up.
 1. Please create a fork at github
-2. In _downloads\source\pemeditorversion.h_ set up the version number as well as the date of version. Blease change all three DEFINES.   
+2. In _downloads\source\pemeditorversion.h_ set up the version number as well as the date of version. Please change all three DEFINES.   
 3. Alter version in _README.md_, add description of the change.
 4. On major changes add a description to the _docs_ folder, see _docs\FoxBin2Prg_Changes.md_ as example.
 5. If a change to the config is made, update https://github.com/VFPX/ThorRepository and file _Thor_Update_Thor_Repository.prg_ of https://github.com/VFPX/Thor/blob/master/ThorUpdater/Updates.zip
-6. Please alter the footer of *.md files touched to recent date.
+6. Please alter the footer of \*.md files touched to recent date.
 7. **Repeat:** Compile the _downloads\Source\pemeditor.pjx_ to _downloads\pemeditor.app_ **Do not copy, set the folder in compile!**
 8. Change Thor (see below)
+9. push to your fork
+0. create a pull request
 
 ## Thor conventions
 This project is part of [VFPX](https://vfpx.github.io/) and published via [Thor](https://github.com/VFPX/Thor).   
