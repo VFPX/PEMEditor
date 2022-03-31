@@ -34,6 +34,7 @@ This will not only install PEM Editor, but will also register it so that all of 
 *   **[Click here for complete online documentation of IDE Tools](Documentation/pemeditor_ide_tools_help.md)**
 *   PEMEditor.chm in the Documentation folder
 
+## Changes
 ### Version 7.40.03
 Debug code removed
 
