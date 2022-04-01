@@ -182,4 +182,4 @@ TabIndex and alignment of options form reworked. Was a bit wobbly while switchin
 *
    - pemeditor\downloads\source\pemeditorversion.h
 
-Last changed: _2022/03/31_
+Last changed: _2022/03/31_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
