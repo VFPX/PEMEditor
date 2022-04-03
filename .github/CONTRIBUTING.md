@@ -38,7 +38,7 @@ Stuff is a bit scattered, so this is where to look up.
    - See this [guide](https://www.dataschool.io/how-to-contribute-on-github/) for setting up and using a fork
 1. Make whatever changes are necessary.
 2. Run FoxBin2Prg to create the text files.
-**   - `DO foxbin2prg.prg WITH 'BIN2PRG','downloads\source'`
+   - `DO foxbin2prg.prg WITH 'BIN2PRG','downloads\source'`
 2. In _downloads\source\pemeditorversion.h_ set up the version number as well as the date of version. Please change all three DEFINES.   
 3. Alter version in _README.md_, add description of the change.
 4. On major changes add a description to the _docs_ folder, see _Documentation/pemeditor_thor_changes_7_40.md_ as example.
