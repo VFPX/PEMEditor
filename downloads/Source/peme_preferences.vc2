@@ -447,6 +447,7 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lAlignSemicolons			  = .F.
 				.lAlignWITH					  = .F.
 		
+				.lExpandSingleLineSQL		  = .F.
 				.lUnionIndentAlter			  = .F.
 				.lIndentON					  = .F.
 				.lAlignASFieldBlocks		  = .F.
@@ -493,6 +494,8 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lLocalsPureLocal			  = .F.
 				.lLocalsUseAS				  = .F.
 				.lLocalsAlignAS				  = .F.
+				.lLocalArray				  = .F.
+				.lArrayRoundBracket			  = .F.
 				.lLowerCaseOnly				  = .F.
 				.lMemberDataKeepType		  = .F.
 				.lMethodViewEventNone 		  = .T.                           
