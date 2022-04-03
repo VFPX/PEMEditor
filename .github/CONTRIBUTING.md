@@ -1,14 +1,16 @@
 # How to contribute to PEMEDitor
+
 ## Bug report?
 - Please check  [issues](https://github.com/VFPX/PEMEditor/issues) if the bug is reported
 - If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.
+
 ### Did you write a patch that fixes a bug?
 - Open a new GitHub pull request with the patch.
 - Ensure the PR description clearly describes the problem and solution.
   - Include the relevant version number if applicable.
+- See [New version](#new-version) for additional tasks
 
 ## Coding conventions
-
 Start reading our code and you'll get the hang of it. We optimize for readability:
 
 - Beautification is done like:
@@ -33,7 +35,10 @@ Compile the _downloads\Source\pemeditor.pjx_ to _downloads\pemeditor.app_ **Do n
 Please note, there are some tasks to set up a new version.
 Stuff is a bit scattered, so this is where to look up.
 1. Please create a fork at github
+   - See this [guide](https://www.dataschool.io/how-to-contribute-on-github/) for setting up and using a fork
 1. Make whatever changes are necessary.
+2. Run FoxBin2Prg to create the text files.
+**   - `DO foxbin2prg.prg WITH 'BIN2PRG','downloads\source'`
 2. In _downloads\source\pemeditorversion.h_ set up the version number as well as the date of version. Please change all three DEFINES.   
 3. Alter version in _README.md_, add description of the change.
 4. On major changes add a description to the _docs_ folder, see _Documentation/pemeditor_thor_changes_7_40.md_ as example.
@@ -43,7 +48,8 @@ Stuff is a bit scattered, so this is where to look up.
    - see that PEMEDitor, ThorRepository and Thor are pushed as close as possible. The order how to publish is on the maintainers of Thor.
 6. Please alter the footer of \*.md files touched to recent date.
 7. **Repeat:** Compile the _downloads\Source\pemeditor.pjx_ to _downloads\pemeditor.app_ **Do not copy, set the folder in compile!**
-8. Change Thor (see below)
+8. Change Thor ([see below](#thor-conventions))
+8. commit
 9. push to your fork
 0. create a pull request
 
@@ -60,4 +66,4 @@ In Folder _downloads\ThorUpdater_
 Thanks
 
 ----
-Last changed: _2022/04/01_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2022/04/03_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)

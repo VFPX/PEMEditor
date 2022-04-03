@@ -804,7 +804,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 								lcLine = Stuff (lcLine, 1 + Len (lcThisIndent), 0, lcNewIndent)
 							Endif
 							lnEndParenCount = Max (0, lnEndParenCount + This.CountParens (lcLine))
-		
+		 
 							lcCleanedLine = This.BeautifySingleLine (lcLine)
 							lcContinuationBlock = lcContinuationBlock + LINEEND + lcCleanedLine
 							lcContinuationChar = This.GetContinuationChar (lcLine)
@@ -1225,8 +1225,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		lnOffset	= 1 && because search includes leading blank character!
 		lcNewLine	= Iif (llSemiColons, ';' + CR, ' ' + CR)
 		lnLastIndex = Len (lcResultText) 
-		SET STEP ON 
-		* SF 2022/03/17
+		
 		* rewitten to split the items (the part before FROM)
 		For lnI =  loMatches.Count To 1 STEP -1
 			loMatch		 = loMatches.Item (lnI - 1)
@@ -1793,214 +1792,239 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		#Define OPERATORS 	'+-*/=$#%<>'
 		lcOperators = Chrtran (OPERATORS, Evl (tcIgnoreTextOperators, ''), '')
+		*!*	Changed by: SF 1.4.2022
+		*!*	<pdm>
+		*!*	<change date="{^2022-04-01,11:40:00}">Changed by: SF<br />
+		*!*	deflate single line SQL
+		*!*	</change>
+		*!*	</pdm>
+		If Inlist (Upper (This.GetWordNumX (tcCode, 1)) + ' ', 'SELECT ', 'UPDATE ', 'DELETE ')
+			lcThisContinuationChar = This.GetContinuationChar (tcCode)
+			If This.oPrefs.lExpandSingleLineSQL And lcThisContinuationChar = ' '
+				lcResult = This.BeautifySelectCode (tcCode, .T., This.nTabWidth)
+			Endif
+		Endif
+		
+		If Empty (lcResult)
+		*!*	/Changed by: SF 1.4.2022
+		
 		*** JRN 2010-07-06 : Some commands allow wildcards not within string constants
-		If (' ' + Upper (THIS.GetWordNumX (tcCode, 1)) + ' ') $ ' APPEND COPY SORT COPY SCATTER GATHER PRIVATE RELEASE SAVE SET ERASE DELETE COMPILE '
-			lcOperators = Chrtran (OPERATORS, '*?-', '')
-		Endif
-		lcOperators		 = Iif (This.oPrefs.lSpacesAroundOperators, lcOperators, '')
-		lcCommaOperators = Iif (This.oPrefs.lSpaceBeforeCommas, ',', '') + lcOperators
+			If (' ' + Upper (This.GetWordNumX (tcCode, 1)) + ' ') $ ' APPEND COPY SORT COPY SCATTER GATHER PRIVATE RELEASE SAVE SET ERASE DELETE COMPILE '
+				lcOperators = Chrtran (OPERATORS, '*?-', '')
+			Endif
+			lcOperators		 = Iif (This.oPrefs.lSpacesAroundOperators, lcOperators, '')
+			lcCommaOperators = Iif (This.oPrefs.lSpaceBeforeCommas, ',', '') + lcOperators
 		
-		lcCode = This.TrimTrailingWhiteSpace (tcCode)
-		If Empty (lcCode) ;
-				Or Inlist (THIS.GetWordNumX (tcCode, 1), '*', '#', INLINECOMMENTS, '\') ;
-				or Upper(THIS.GetWordNumX (tcCode, 1)) == 'RUN'
-			Return lcCode
-		Endif
+			lcCode = This.TrimTrailingWhiteSpace (tcCode)
+			If Empty (lcCode) ;
+					Or Inlist (This.GetWordNumX (tcCode, 1), '*', '#', INLINECOMMENTS, '\') ;
+					or Upper(This.GetWordNumX (tcCode, 1)) == 'RUN'
+				Return lcCode
+			Endif
 		
-		lcResult = ''
+			lcResult = ''
 		
-		lnCharscount = Len (lcCode)
-		lcPrevChar	 = ''
-		For lnCharPos = 1 To lnCharscount
+			lnCharscount = Len (lcCode)
+			lcPrevChar	 = ''
+			For lnCharPos = 1 To lnCharscount
 		
-			lcThisChar	 = Substr (lcCode, lnCharPos, 1)
-			lcNextChar	 = Substr (lcCode, lnCharPos + 1, 1)
-			lcCharsToAdd = lcThisChar
-			llIsOperator = .T.
+				lcThisChar	 = Substr (lcCode, lnCharPos, 1)
+				lcNextChar	 = Substr (lcCode, lnCharPos + 1, 1)
+				lcCharsToAdd = lcThisChar
+				llIsOperator = .T.
 		
-			Do Case
+				Do Case
 		
-					* database!tablename
-				Case lcThisChar = '!'					  ;
-						And This.isnamechar (lcPrevChar)  ;
-						And This.isnamechar (lcNextChar)
-					lcCharsToAdd = lcThisChar + lcNextChar
-					lnCharPos	 = lnCharPos + 1
+		* database!tablename
+					Case lcThisChar = '!'					  ;
+							And This.isnamechar (lcPrevChar)  ;
+							And This.isnamechar (lcNextChar)
+						lcCharsToAdd = lcThisChar + lcNextChar
+						lnCharPos	 = lnCharPos + 1
 		
-					* !/
-				Case lcThisChar = '!'  ;
-						And This.TrimLeadingWhiteSpace (Substr (lcCode, lnCharPos + 1)) = '/'
-					For lnCharPos = lnCharPos + 1 To lnCharscount
-						lcThisChar	 = Substr (lcCode, lnCharPos, 1)
-						lcCharsToAdd = lcCharsToAdd + lcThisChar
-						If Not (lcThisChar ISABLANK Or lcThisChar = '/')
-							Exit
+		* !/
+					Case lcThisChar = '!'  ;
+							And This.TrimLeadingWhiteSpace (Substr (lcCode, lnCharPos + 1)) = '/'
+						For lnCharPos = lnCharPos + 1 To lnCharscount
+							lcThisChar	 = Substr (lcCode, lnCharPos, 1)
+							lcCharsToAdd = lcCharsToAdd + lcThisChar
+							If Not (lcThisChar ISABLANK Or lcThisChar = '/')
+								Exit
+							Endif
+						Endfor
+		
+		* substitutions for 'NOT' and !
+					Case This.oPrefs.nDefinitionForNOT  = 2  ;
+							And lcThisChar = '!'	  ;
+							And lcNextChar # '='
+						lnOption = This.nBeautifyOptions (2)
+						lcNot	 = Iif (lnOption = 1, 'NOT', Iif (lnOption = 2, 'not', 'Not'))
+						lcCharsToAdd = Iif (lcPrevChar ISABLANK Or lcPrevChar $ '(', '', ' ')  ;
+							+ lcNot + Iif (lcNextChar ISABLANK, '', ' ')
+		
+					Case This.oPrefs.nDefinitionForNOT  = 3							;
+							And Not This.isnamechar (lcPrevChar)				;
+							And Upper (Substr (lcCode, lnCharPos, 3)) == 'NOT'	;
+							And Not This.isnamechar (Substr (lcCode, lnCharPos + 3, 1))
+						lcCharsToAdd = Iif (lcPrevChar $ lcCommaOperators, ' ', '') + '!'
+						lnCharPos	 = lnCharPos + 2
+		
+					Case This.isnamechar (lcThisChar)
+		* Add a space after operators or commas
+						If lcPrevChar $ lcCommaOperators
+		* But not if this is negative constant
+							If Not (lcPrevChar == "-"															;
+									And Isdigit (lcThisChar)													;
+									And Right (This.TrimTrailingWhiteSpace (Left (lcCode, lnCharPos - 2)), 1) $ '([,' + lcOperators ;
+									)
+								lcCharsToAdd = " " + lcCharsToAdd
+							Endif
 						Endif
-					Endfor
 		
-					* substitutions for 'NOT' and !
-				Case This.oPrefs.nDefinitionForNOT  = 2  ;
-						And lcThisChar = '!'	  ;
-						And lcNextChar # '='
-					lnOption = This.nBeautifyOptions (2)
-					lcNot	 = Iif (lnOption = 1, 'NOT', Iif (lnOption = 2, 'not', 'Not'))
-					lcCharsToAdd = Iif (lcPrevChar ISABLANK Or lcPrevChar $ '(', '', ' ')  ;
-						+ lcNot + Iif (lcNextChar ISABLANK, '', ' ')
+		* substitutions for  # and != and <>
+					Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 2 And Inlist (lcThisChar + lcNextChar, '!=', '<>')
+						lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '#'
+						lnCharPos	 = lnCharPos + 1
 		
-				Case This.oPrefs.nDefinitionForNOT  = 3							;
-						And Not This.isnamechar (lcPrevChar)				;
-						And Upper (Substr (lcCode, lnCharPos, 3)) == 'NOT'	;
-						And Not This.isnamechar (Substr (lcCode, lnCharPos + 3, 1))
-					lcCharsToAdd = Iif (lcPrevChar $ lcCommaOperators, ' ', '') + '!'
-					lnCharPos	 = lnCharPos + 2
+					Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 3 And lcThisChar = '#'
+						lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '!='
 		
-				Case This.isnamechar (lcThisChar)
-					* Add a space after operators or commas
-					If lcPrevChar $ lcCommaOperators
-						* But not if this is negative constant
-						If Not (lcPrevChar == "-"															;
-								And Isdigit (lcThisChar)													;
-								And Right (This.TrimTrailingWhiteSpace (Left (lcCode, lnCharPos - 2)), 1) $ '([,' + lcOperators ;
-								)
+					Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 3 And lcThisChar + lcNextChar = '<>'
+						lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '!='
+						lnCharPos	 = lnCharPos + 1
+		
+					Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 4 And lcThisChar = '#'
+						lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '<>'
+		
+					Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 4 And lcThisChar + lcNextChar = '!='
+						lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '<>'
+						lnCharPos	 = lnCharPos + 1
+		
+					Case lcThisChar $ ['"{] Or	;
+							(lcThisChar = '[' And Not This.isnamechar (Right (This.TrimTrailingWhiteSpace (lcResult), 1)))
+		* Grab entire character string (or date string .. {^2010,10,01}
+						lcRestLineString	  = Substr (lcCode, lnCharPos + 1)
+						lnClosingCharPosition = At (Iif (lcThisChar = "[", "]", Iif (lcThisChar = "{", "}", lcThisChar)), lcRestLineString)
+						lcStringConstant	  = lcThisChar + Left (lcRestLineString, lnClosingCharPosition )
+		*** JRN 2010-05-03 : select 'normal' string delimiters
+						Do Case
+							Case This.oPrefs.nStringDelimiters = 2	 ;
+									And lcThisChar = ["]	 ;
+									And Not ['] $ lcStringConstant
+								lcStringConstant = ['] + Left (lcRestLineString, lnClosingCharPosition - 1) + [']
+							Case This.oPrefs.nStringDelimiters = 3	 ;
+									And lcThisChar = [']	 ;
+									And Not ["] $ lcStringConstant
+								lcStringConstant = ["] + Left (lcRestLineString, lnClosingCharPosition - 1) + ["]
+							Case This.oPrefs.nStringDelimiters = 4	 ;
+									And lcThisChar $ ['"]	 ;
+									And Not ('[' $ lcStringConstant Or ']' $ lcStringConstant)
+								lcStringConstant = '[' + Left (lcRestLineString, lnClosingCharPosition - 1) + ']'
+						Endcase
+		
+						lcCharsToAdd = lcStringConstant
+						lcThisChar	 = Right (lcStringConstant, 1)
+						lnCharPos	 = lnCharPos + lnClosingCharPosition
+		* Add a space after operators or commas
+						If lcPrevChar $ lcCommaOperators
 							lcCharsToAdd = " " + lcCharsToAdd
 						Endif
-					Endif
 		
-					* substitutions for  # and != and <>
-				Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 2 And Inlist (lcThisChar + lcNextChar, '!=', '<>')
-					lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '#'
-					lnCharPos	 = lnCharPos + 1
+					Case lcPrevChar == "&" And lcThisChar == "&"
+		* double && -- trailing comment
+						lcResult = lcResult + Substr (lcCode, lnCharPos)
+						Exit
 		
-				Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 3 And lcThisChar = '#'
-					lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '!='
+					Case lcPrevChar == "(" Or lcThisChar == ")"
+		* no spaces after ( or before )
 		
-				Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 3 And lcThisChar + lcNextChar = '<>'
-					lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '!='
-					lnCharPos	 = lnCharPos + 1
+		* Case lcThisChar $ lcOperators And lcPrevChar $ lcOperators
 		
-				Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 4 And lcThisChar = '#'
-					lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '<>'
+					Case tlTextMerge And lcPrevChar + lcThisChar = '<<'
+		* no added space after << within text merging
+						lcCharsToAdd = lcThisChar + lcNextChar
+						lnCharPos	 = lnCharPos + 1
 		
-				Case (Not tlTextMerge) And This.oPrefs.nDefinitionForNOTEQUAL = 4 And lcThisChar + lcNextChar = '!='
-					lcCharsToAdd = Iif (This.oPrefs.lSpacesAroundOperators And Not lcPrevChar ISABLANK, ' ', '') + '<>'
-					lnCharPos	 = lnCharPos + 1
+					Case tlTextMerge And lcThisChar + lcNextChar = '>>'
+		* no added space before >> within text merging
 		
-				Case lcThisChar $ ['"{] Or	;
-						(lcThisChar = '[' And Not This.isnamechar (Right (This.TrimTrailingWhiteSpace (lcResult), 1)))
-					* Grab entire character string (or date string .. {^2010,10,01}
-					lcRestLineString	  = Substr (lcCode, lnCharPos + 1)
-					lnClosingCharPosition = At (Iif (lcThisChar = "[", "]", Iif (lcThisChar = "{", "}", lcThisChar)), lcRestLineString)
-					lcStringConstant	  = lcThisChar + Left (lcRestLineString, lnClosingCharPosition )
-					*** JRN 2010-05-03 : select 'normal' string delimiters
-					Do Case
-						Case This.oPrefs.nStringDelimiters = 2	 ;
-								And lcThisChar = ["]	 ;
-								And Not ['] $ lcStringConstant
-							lcStringConstant = ['] + Left (lcRestLineString, lnClosingCharPosition - 1) + [']
-						Case This.oPrefs.nStringDelimiters = 3	 ;
-								And lcThisChar = [']	 ;
-								And Not ["] $ lcStringConstant
-							lcStringConstant = ["] + Left (lcRestLineString, lnClosingCharPosition - 1) + ["]
-						Case This.oPrefs.nStringDelimiters = 4	 ;
-								And lcThisChar $ ['"]	 ;
-								And Not ('[' $ lcStringConstant Or ']' $ lcStringConstant)
-							lcStringConstant = '[' + Left (lcRestLineString, lnClosingCharPosition - 1) + ']'
-					Endcase
+					Case lcThisChar + lcNextChar = '->'
+		* no added space before >> within text merging
+						lcCharsToAdd = lcThisChar + lcNextChar + Substr (lcCode, lnCharPos + 2, 1)
+						lnCharPos	 = lnCharPos + 2
 		
-					lcCharsToAdd = lcStringConstant
-					lcThisChar	 = Right (lcStringConstant, 1)
-					lnCharPos	 = lnCharPos + lnClosingCharPosition
-					* Add a space after operators or commas
-					If lcPrevChar $ lcCommaOperators
+					Case Inlist (lcPrevChar + lcThisChar, "<=", ">=", "<>", "==", "!=", "**", ".*", "<<", ">>", "{/", "//", "/:", "/}", "--", "/*", "*/", "=<", "=>")
+		* Special cases for  <=   >=   <>   ==   !=  **   .*
+		
+					Case lcThisChar == "+" And							;
+							(											;
+							Upper (Right (lcResult, 3)) == "ALT" Or	;
+							Upper (Right (lcResult, 4)) == "CTRL" Or	;
+							Upper (Right (lcResult, 5)) == "SHIFT"	;
+							)
+		* no space for hotkey definitions (CTRL+X, etc)
+						lcCharsToAdd = lcThisChar + lcNextChar
+						lnCharPos	 = lnCharPos + 1
+		
+					Case lcThisChar $ lcOperators And Not (lcPrevChar ISABLANK)
+		* space before operators (finally!)
+						If lnCharPos > 1
+		
+		***********************************************
+							If Not Empty (This.cpluginisoperator)
+		* 2011.11.22 MarioPeschke
+		*            allowed to add spaces, only for specific structures
+								Try
+										llIsOperator = Execscript (This.cpluginisoperator, lcCode,lnCharPos)
+									Catch To loException
+										This.ShowErrorMsg (loException, 'IsOperator Failure')
+								Endtry
+							Endif
+							If llIsOperator
+								lcCharsToAdd = " " + lcThisChar
+							Endif
+						Endif
+		
+					Case This.oPrefs.nBeforeLeftParens = 3	 ;
+							And lcThisChar = '('			 ;
+							And (Not (lcPrevChar ISABLANK))	 ;
+							And (Not (Isdigit (lcNextChar) Or lcNextChar = ')'))
+		* (conditionally) add space before left parenthesis
+						lcCharsToAdd = " " + lcThisChar
+		
+					Case (lcThisChar == "," And This.oPrefs.lSpaceBeforeCommas) Or (lcThisChar = '(' And This.oPrefs.nBeforeLeftParens = 2)
+		* remove spaces or tabs before comma and left parentheses
+						If Not Empty (lcResult)
+							lcResult = This.TrimTrailingWhiteSpace (lcResult)
+						Endif
+		* but leave spaces between multiples commas   (a, b, , ,)
+						If Right (lcResult, 1) = ','
+							lcCharsToAdd = ' ' + lcThisChar
+						Endif
+		
+		* Add a space after operators or commas
+					Case This.oPrefs.lSpaceAfterCommas And lcPrevChar $ lcCommaOperators And Not lcThisChar ISABLANK
 						lcCharsToAdd = " " + lcCharsToAdd
-					Endif
 		
-				Case lcPrevChar == "&" And lcThisChar == "&"
-					* double && -- trailing comment
-					lcResult = lcResult + Substr (lcCode, lnCharPos)
-					Exit
+				Endcase
 		
-				Case lcPrevChar == "(" Or lcThisChar == ")"
-					* no spaces after ( or before )
+				lcResult   = lcResult + lcCharsToAdd
+				If llIsOperator
+					lcPrevChar = Right (lcCharsToAdd, 1)
+				Else
+					lcPrevChar = 'X'
+				Endif
 		
-					* Case lcThisChar $ lcOperators And lcPrevChar $ lcOperators
+			Endfor
 		
-				Case tlTextMerge And lcPrevChar + lcThisChar = '<<'
-					* no added space after << within text merging
-					lcCharsToAdd = lcThisChar + lcNextChar
-					lnCharPos	 = lnCharPos + 1
-		
-				Case tlTextMerge And lcThisChar + lcNextChar = '>>'
-					* no added space before >> within text merging
-		
-				Case lcThisChar + lcNextChar = '->'
-					* no added space before >> within text merging
-					lcCharsToAdd = lcThisChar + lcNextChar + Substr (lcCode, lnCharPos + 2, 1)
-					lnCharPos	 = lnCharPos + 2
-		
-				Case Inlist (lcPrevChar + lcThisChar, "<=", ">=", "<>", "==", "!=", "**", ".*", "<<", ">>", "{/", "//", "/:", "/}", "--", "/*", "*/", "=<", "=>")
-					* Special cases for  <=   >=   <>   ==   !=  **   .*
-		
-				Case lcThisChar == "+" And							;
-						(											;
-						Upper (Right (lcResult, 3)) == "ALT" Or	;
-						Upper (Right (lcResult, 4)) == "CTRL" Or	;
-						Upper (Right (lcResult, 5)) == "SHIFT"	;
-						)
-					* no space for hotkey definitions (CTRL+X, etc)
-					lcCharsToAdd = lcThisChar + lcNextChar
-					lnCharPos	 = lnCharPos + 1
-		
-				Case lcThisChar $ lcOperators And Not (lcPrevChar ISABLANK)
-					* space before operators (finally!)
-					If lnCharPos > 1
-		
-						***********************************************
-						If Not Empty (This.cpluginisoperator)
-						* 2011.11.22 MarioPeschke
-						*            allowed to add spaces, only for specific structures
-							Try
-								llIsOperator = Execscript (This.cpluginisoperator, lcCode,lnCharPos)
-							Catch To loException
-								This.ShowErrorMsg (loException, 'IsOperator Failure')
-							Endtry
-						Endif
-						If llIsOperator
-							lcCharsToAdd = " " + lcThisChar
-						Endif
-					Endif
-		
-				Case This.oPrefs.nBeforeLeftParens = 3	 ;
-						And lcThisChar = '('			 ;
-						And (Not (lcPrevChar ISABLANK))	 ;
-						And (Not (Isdigit (lcNextChar) Or lcNextChar = ')'))
-					* (conditionally) add space before left parenthesis
-					lcCharsToAdd = " " + lcThisChar
-		
-				Case (lcThisChar == "," And This.oPrefs.lSpaceBeforeCommas) Or (lcThisChar = '(' And This.oPrefs.nBeforeLeftParens = 2)
-					* remove spaces or tabs before comma and left parentheses
-					If Not Empty (lcResult)
-						lcResult = This.TrimTrailingWhiteSpace (lcResult)
-					Endif
-					* but leave spaces between multiples commas   (a, b, , ,)
-					If Right (lcResult, 1) = ','
-						lcCharsToAdd = ' ' + lcThisChar
-					Endif
-		
-					* Add a space after operators or commas
-				Case This.oPrefs.lSpaceAfterCommas AND lcPrevChar $ lcCommaOperators And Not lcThisChar ISABLANK
-					lcCharsToAdd = " " + lcCharsToAdd
-		
-			Endcase
-		
-			lcResult   = lcResult + lcCharsToAdd
-			If llIsOperator
-				lcPrevChar = Right (lcCharsToAdd, 1)
-			Else
-				lcPrevChar = 'X'
-		 	EndIf 
-		
-		Endfor
+		*!*	Changed by: SF 1.4.2022
+		*!*	<pdm>
+		*!*	<change date="{^2022-04-01,11:40:00}">Changed by: SF<br />
+		*!*	defalte single line SQL
+		*!*	</change>
+		*!*	</pdm>
+		Endif &&Empty (lcResult)
+		*!*	/Changed by: SF 1.4.2022
 		
 		Return lcResult
 		
@@ -2419,8 +2443,9 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Local lcResult, lcVar, llAlreadyLocal, llArray, llCommasBeforeLocals, llContinuation, llHasASPhrase
 		Local llStartsWithL, llUseAsPhrase, llUseTabs, lnMaxWidth, lnRow, lnSelectionType, lnType
 		Local llAssigned, llRemoveOrphanLocals, llSortCreatedLocals
-		Local  llLocalsPureLocal, llSpaceBeforeCommas, llLocalsAlignAS
-		Local  lcComma, lnLines, lnLine, lnPos, lnPosMax, lcAS
+		Local llLocalsPureLocal, llSpaceBeforeCommas, llLocalsAlignAS
+		Local llLocalArray, llArrayRoundBracket, lcLocalArrayName, lcLocalKeyWrd, lcResultArray, lcArrayBracket_Start, lcArrayBracket_End
+		Local lcComma, lnLines, lnLine, lnPos, lnPosMax, Lcas
 		
 		If This.nNewLocalsCount = 0
 			Return ''
@@ -2436,13 +2461,15 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		****************************************************************
 		
 		This.SetBeautifyOptions()
-		lcLocalName = This.BeautifyWord('Local')
-		lcAS = This.BeautifyWord(' as ')
+		lcLocalKeyWrd = This.BeautifyWord('Local')
+		Lcas = This.BeautifyWord(' as ')
 		llUseTabs = This.nBeautifyOptions(4) = 1
+		
+		lcLocalArrayName = lcLocalKeyWrd + ' ' + This.BeautifyWord('Array')
 		
 		With This.oPrefs
 			llContinuation		 = Not .lLocalsMultPerLine
-			llLocalsPureLocal	 = nvl(.lLocalsPureLocal, .F.)
+			llLocalsPureLocal	 = Nvl(.lLocalsPureLocal, .F.)
 			llSpaceBeforeCommas	 = .lSpaceBeforeCommas
 			lnSelectionType		 = .nLocalsSelectionType
 			lnMaxWidth			 = .nLocalsLineWidth
@@ -2450,7 +2477,16 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			llCommasBeforeLocals = .lCommasBeforeLocals
 			llRemoveOrphanLocals = .lRemoveOrphanLocals
 			llSortCreatedLocals  = .lSortCreatedLocals
-			llLocalsAlignAS		 = nvl(.lLocalsAlignAS, .F.)
+			llLocalsAlignAS		 = Nvl(.lLocalsAlignAS, .F.)
+		*!*	<pdm>
+		*!*	<change date="{^2022-03-31,18:17:00}">Changed by: SF<br />
+		*!*	Dealing with Arrays like LOCAL ARRAY
+		*!*	Option to use round bracktes for array declaration
+		*!*	</change>
+		*!*	</pdm>
+			llLocalArray		 = .lLocalArray
+			llArrayRoundBracket	 = .lArrayRoundBracket
+		*!*	/Changed by: SF 31.3.2022
 		Endwith
 		
 		If m.llSpaceBeforeCommas Then
@@ -2458,6 +2494,14 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Else  &&m.llSpaceBeforeCommas
 			lcComma     = ','
 		Endif &&m.llSpaceBeforeCommas
+		
+		If llArrayRoundBracket
+			lcArrayBracket_Start = '('
+			lcArrayBracket_End	 = ')'
+		Else
+			lcArrayBracket_Start = '['
+			lcArrayBracket_End	 = ']'
+		Endif
 		
 		****************************************************************
 		With This
@@ -2467,7 +2511,30 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Endif
 		
 			lcResult = ''
-			For lnType = 1 To 4
+			lcResultArray = ''
+		*!*	<pdm>
+		*!*	<change date="{^2022-03-31,18:17:00}">Changed by: SF<br />
+		*!*	Dealing with Arrays like LOCAL ARRAY
+		*!*	</change>
+		*!*	</pdm>
+		
+		*	For lnType = 0 To 4
+			For lnType = Iif(llLocalArray, -1, 1) To 4
+		
+				If lnType > 0
+					lcLocalName = lcLocalKeyWrd
+				Else
+					lcLocalName = lcLocalArrayName
+				Endif
+		
+				If lnType = 1 And llLocalArray
+		*buffer local array
+					lcResultArray =  lcResult
+					lcResult = ''
+		
+				Endif
+		
+		*!*	/Changed by: SF 31.3.2022
 				lcLine = ''
 				For lnRow = 1 To Alen (.aNewLocals, 1)
 		
@@ -2489,33 +2556,46 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					lcArrayDims	   = .aNewLocals (lnRow, 7)
 					llAssigned     = .aNewLocals (lnRow, 8)
 		
-					lcName = lcName + Iif (llArray, '[' + lcArrayDims + ']', '')
+					lcName = lcName + Iif (llArray, lcArrayBracket_Start + lcArrayDims + lcArrayBracket_End, '')
 		
 					Do Case
 		
 		****************************************************************
+						Case lnType < 1  And (Not llArray)
+		* lnType,-1,0 only array
+							Loop
+		
+						Case lnType > 0  And llLocalArray And llArray
+		* And llStartsWithL
+		* local array on llLocalArray only on lnType < 1
+							Loop
+		
 						Case llRemoveOrphanLocals And llAlreadyLocal And (Not llAssigned) And (Not llArray)
 							Loop
 		
 						Case llUseAsPhrase And llStartsWithL
-							If lnType = 1
+							If Inlist (lnType, -1, 1)
 								lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
 								lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 							Else
 								Loop
 							Endif
 		
-						Case llUseAsPhrase And lnType = 1 And lnSelectionType = 4
+						Case llUseAsPhrase And Inlist (lnType, -1, 1) And lnSelectionType = 4
 							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
 							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
-						Case llUseAsPhrase And lnType = 2 And lnSelectionType = 3
+						Case llUseAsPhrase And Inlist (lnType,  0, 2) And lnSelectionType = 3
 							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
 							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
 						Case llUseAsPhrase And lnType = 3 And lnSelectionType = 2
 							lcVar		  = This.AddASPhase (lcName, lcASPhrase, m.lcAS)
 							lcLocalPhrase = '*:Global' + m.lcLocalPhrase
+		
+						Case lnType = 0 And lnSelectionType = 2 AND Not llStartsWithL
+							lcVar		  = lcName
+							lcLocalPhrase = '*:Global Array' + m.lcLocalPhrase
 		
 						Case llUseAsPhrase
 							Loop
@@ -2524,8 +2604,21 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						Case lnSelectionType = 1 And Not llStartsWithL
 							Loop
 		
+						Case lnType = -1 And lnSelectionType = 4 
+							lcVar		  = lcName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
+		
+						Case lnType = 0 And lnSelectionType = 4 
+							loop
+		
 						Case llHasASPhrase And lnType = 1
 							lcVar		  = lcName + m.lcAS + lcASPhrase
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
+						Case Not llHasASPhrase And lnType = -1 And llStartsWithL
+							lcVar		  = lcName
+							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
+						Case Not llHasASPhrase And lnType =  0 And Not llStartsWithL
+							lcVar		  = lcName
 							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 						Case llHasASPhrase
 							Loop
@@ -2544,9 +2637,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							lcVar		  = lcName
 							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
 		
-						Case lnSelectionType = 2 And lnType = 4 And Not llAlreadyLocal
+						Case lnSelectionType = 2 And lnType = 4
 							lcVar		  = lcName
 							lcLocalPhrase = '*:Global' + m.lcLocalPhrase
+		
 						Case lnSelectionType = 3 And lnType = 4
 							lcVar		  = lcName
 							lcLocalPhrase = lcLocalName + m.lcLocalPhrase
@@ -2564,7 +2658,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							Else
 								lcLine = lcLine + m.lcComma+';' + LINEEND + Iif (llUseTabs, Tab, ' ') + lcVar
 							Endif
-						Case lnType # 1 And (Len (lcLine) + 2 + Len (lcVar)) <= lnMaxWidth
+						Case Not Inlist(lnType, -1, 1) And (Len (lcLine) + 2 + Len (lcVar)) <= lnMaxWidth
 							lcLine = lcLine + m.lcComma + lcVar
 						Otherwise
 							lcResult = lcResult + lcLine + LINEEND
@@ -2583,26 +2677,43 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lnLines = Alines(laLocals,m.lcResult)
 			lcResult = ''
 			lcVar    = This.BeautifyWord(' as ')
-		    lnPosMax = 0
+			lnPosMax = 0
 			For lnLine = 1 To m.lnLines
-		        lnPosMax = Max(m.lnPosMax,AT(m.lcAS,laLocals(m.lnLine)))
+				lnPosMax = Max(m.lnPosMax,At(m.lcAS,laLocals(m.lnLine)))
 			Endfor &&lnLine
 			For lnLine = 1 To m.lnLines
-		        lnPos = AT(m.lcAS,laLocals(m.lnLine))
-		        IF m.lnPos = 0 THEN
-		            lcResult = m.lcResult + laLocals(m.lnLine) + LINEEND
-		        Else  &&m.lnPos = 0 
+				lnPos = At(m.lcAS,laLocals(m.lnLine))
+				If m.lnPos = 0 Then
+					lcResult = m.lcResult + laLocals(m.lnLine) + LINEEND
+				Else  &&m.lnPos = 0
 		*            lcResult = m.lcResult + STUFF(laLocals(m.lnLine),m.lnPos,1,SPACE(m.lnPosMax-m.lnPos+1)) + LINEEND
-		            lcResult = m.lcResult + ;
+					lcResult = m.lcResult + ;
 						+ This.AddWhiteSpace(This.TrimTrailingWhiteSpace(Left (laLocals(m.lnLine), lnPos)), lnPosMax + 1);
 						+ This.TrimLeadingWhiteSpace(Substr (laLocals(m.lnLine), lnPos + 1)) + ;
-		            LINEEND
-		        Endif &&m.lnPos = 0 
+						LINEEND
+				Endif &&m.lnPos = 0
 			Endfor &&lnLine
-			
+		
 		Endif &&m.llContinuation AND m.llUseAsPhrase AND m.llLocalsAlignAS
 		
-		Return Left (lcResult, Len (lcResult) - 2)
+		
+		*!*	<pdm>
+		*!*	<change date="{^2022-03-31,18:17:00}">Changed by: SF<br />
+		*!*	Dealing with Arrays like LOCAL ARRAY
+		*!*	Option to use round bracktes for array declaration
+		*!*	</change>
+		*!*	</pdm>
+		If Not Empty (lcResultArray) Then
+			If Empty (lcResult) Then
+				lcResult = lcResultArray
+			Else  &&EMPTY(lcResult)
+				lcResult = lcResult + LINEEND + lcResultArray
+			Endif &&EMPTY(lcResult)
+		Endif &&m.llContinuation AND m.llUseAsPhrase AND m.llLocalsAlignAS
+		*!*	/Changed by: SF 31.3.2022
+		
+		Return lcResult
+		
 		
 	ENDPROC
 
@@ -2621,13 +2732,28 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*    Col 10 = <Unused>
 		
 		Local laLocals[1], laWithEndWith[1]
-		Local lcArrayFunc, lcArrayFunctions, lcArrayLine, lcArrayParse, lcASPhrase, lcChar
+		Local lcArrayFunc, lcArrayFunctions, lcArrayLine, lcASPhrase, lcChar
 		Local lcCurrentWithEndWith, lcDims, lcExpression, lcName, lcObjClassLib, lcObjType, lcParams, lcParse
 		Local lcSourceLine, lcTmp, lcVar, lcWord, lcWord1, lcWord2, llCreateObject, llFirstTimeThru, llNameOK
 		Local lnI, lnLoop, lnPos, lnWithEndWithLevel, lnWord
+		Local lcIncludeFile, lcValue, lnI, loIncludeFiles, loRegExp, loResults
 		
 		llFirstTimeThru = .T.
 		This.FixWithStatements()
+		
+		*!*	Changed by: SF 31.3.2022
+		*!*	<pdm>
+		*!*	<change date="{^2022-03-31,18:17:00}">Changed by: SF<br />
+		*!*	Problems searching array names in array-funtions
+		*!*	Problems to locating array-funtions in constructs like <expr>FOR ALINES(</expr>
+		*!*	</change>
+		*!*	</pdm>
+		
+		loRegExp = This.oUtils.GetRegExp()
+		loRegExp.Pattern  = '((\s)*\;?)*\('
+		
+		*!*	/Changed by: SF 31.3.2022
+		
 		
 		For lnLoop = lnStartLoop To lnEndLoop
 			lcSourceLine = This.GetSourceCodeLine (@lnLoop, , .T.)
@@ -2776,8 +2902,19 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lcArrayFunctions = 'aclass,acopy,adatabases,adbobjects,adir,adlls,adockstate,aerror,aevents,afields,' ;
 				+ 'afont,agetclass,agetfileversion,ainstance,alanguage,alines,amembers,amouseobj,anetresources,aprinters,' ;
 				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses'
-			lcArrayParse = ''
-			lcArrayLine = Chrtran (lcSourceLine, ' ', '')
+		
+		*!*	Changed by: SF 31.3.2022
+		*!*	<pdm>
+		*!*	<change date="{^2022-03-31,18:17:00}">Changed by: SF<br />
+		*!*	Problems searching array names in array-funtions
+		*!*	Problems to locating array-funtions in constructs like <expr>FOR ALINES(</expr>
+		*!*	</change>
+		*!*	</pdm>
+		
+			lcArrayLine = loRegExp.Replace (lcSourceLine,'(')
+		
+		*!*	/Changed by: SF 31.3.2022
+		
 			For lnI = 1 To GetWordCount (lcArrayFunctions, ',')
 				lcArrayFunc = Getwordnum (lcArrayFunctions, lnI, ',')
 				*** JRN 2010-04-21 : check character before reference to make sure it is not part of a name ... laMouseObj, e.g.,
@@ -2885,7 +3022,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 	PROCEDURE dolocals
 		Lparameters lnStartLine, lnEndLine
 		Local lcLocalStatements, lcNewCode, lcSourceLine, lcWord1, llAddTheseLines, llInsertLocalsLater
-		Local llInsertNewLocals, lnI, lnLoop, lnLoopValueBefore
+		Local llLocalRun
 		
 		This.nNewLocalsCount = 0
 		Dimension This.aNewlocals(1,10)
@@ -2919,6 +3056,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					If This.oPrefs.lMoveLocals
 						llAddTheseLines = .F.
 						llInsertNewLocals = .T.
+						llLocalRun = .T.
 					Else
 						llInsertLocalsLater = .T.
 					Endif
@@ -2932,6 +3070,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					llInsertNewLocals = .T.
 		
 				Case Inlist (lcWord1, '*', '#', INLINECOMMENTS)
+					llLocalRun = .F.
 		
 				Case Len (lcWord1) >= 4 And 			;
 						('procedure ' 		= lcWord1 	;
@@ -2944,8 +3083,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 						or 'private ' 		= lcWord1 	;
 						or '*:global ' 		= lcWord1 	;
 						)
+					llLocalRun = .F.
 		
 				Otherwise
+					llLocalRun = .F.
 					llInsertNewLocals = .T.
 		
 			Endcase
@@ -2955,9 +3096,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 				lcLocalStatements = ''
 			Endif
 		
-			If llAddTheseLines
+			If llAddTheseLines And Not llLocalRun
 				For lnI = lnLoopValueBefore To lnLoop
-					lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + LINEEND) + This.aCodeLines (lnI)
+		*			lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + Replicate (LINEEND, lnLocalRun + 1)) + This.aCodeLines (lnI)
+					lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + LINEEND ) + This.aCodeLines (lnI)
 				Endfor
 			Endif
 		Endfor
