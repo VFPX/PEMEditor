@@ -2750,8 +2750,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*!*	</pdm>
 		
 		loRegExp = This.oUtils.GetRegExp()
-		loRegExp.Pattern  = '((\s)*\;?)*\('
-		
+		loRegExp.Pattern  = '[\s\;]*\('
 		*!*	/Changed by: SF 31.3.2022
 		
 		
