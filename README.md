@@ -5,10 +5,9 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.41.01 Released 2022-04-07
+Version 7.41.02 Released 2022-05-29
 
 ## Introduction
-
 
 PEM Editor introduces a wide range of new IDE Tools and includes enhancements to those IDE Tools in release 6.10. The concepts for these tools have originated in Visual Studio and other environments, or are due to the originality of a few contributors to the cause.
 
@@ -35,7 +34,11 @@ This will not only install PEM Editor, but will also register it so that all of 
 *   PEMEditor.chm in the Documentation folder
 
 ## Changes
-### Version 7.41.01
+### Version 7.41.02, released 2022-05-29
+
+* Fixed a bug in BeautifyX that caused an error beautifying a SQL SELECT statement under some conditions.
+
+### Version 7.41.01, released 2022-04-07
 #### Create Locals
 - Fixed issue #24 _IntellisenseX with Dot / LOCALs etc_
 

@@ -1,4 +1,4 @@
-# How to contribute to PEMEDitor
+# How to contribute to PEMEditor
 
 ## Bug report?
 - Please check  [issues](https://github.com/VFPX/PEMEditor/issues) if the bug is reported
@@ -57,10 +57,10 @@ Stuff is a bit scattered, so this is where to look up.
 This project is part of [VFPX](https://vfpx.github.io/) and published via [Thor](https://github.com/VFPX/Thor).   
 There are some considerations to make to add a new version to Thor.   
 In Folder _downloads\ThorUpdater_
-- _PEMEditorVersionFile.txt_ set up version information and brief list of changes
-- _PEM Editor Version.txt_: set up version information
-- _PEMEditor_Source.zip_
-  - copy _PEM Editor Version.txt_ and _pemeditor.app_
+- _PEMEditorVersionFile.txt: set up version information and brief list of changes
+- PEM Editor Version.txt: set up version information
+- PEMEditor_Source.zip
+  - copy PEM Editor Version.txt and pemeditor.app
   - replace the folders touched (since this is a binary repository all files of _source_ folder are changing on compile ...)
 
 Thanks
