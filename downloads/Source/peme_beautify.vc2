@@ -1542,7 +1542,9 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 					lnLen		= Len (lcCurrentKeyWord)
 					lcLastPart	= This.TrimLeadingWhiteSpace (Substr (lcLine, lnLen + 1))
-					laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+					if lnAlignASBlockMax > 0
+						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
+					endif lnAlignASBlockMax > 0
 		
 					If lcLastPart = ';' Then
 						lnEndParenCount	= 0
@@ -1562,7 +1564,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					llFieldThisLineIndent = .F.
 					llFieldNextLineIndent = .F.
 		
-					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+					if lnAlignASBlockMax > 0 and laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
 						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
 					Endif
 		
@@ -1577,7 +1579,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*			llFieldNextLineIndent = lnParenCount # 0 Or This.LastCharIn (lcLine) # ','
 					llFieldNextLineIndent = .F.
 		
-					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+					if lnAlignASBlockMax > 0 and laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
 						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
 					Endif
 		
@@ -1600,7 +1602,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					llFieldThisLineIndent = .F.
 					llFieldNextLineIndent = .F.
 		
-					If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+					if lnAlignASBlockMax > 0 and laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
 						laAlignASBlocks(lnAlignASBlockMax, 2) = lnCount-1
 					Endif
 					If Not llUnionFound Then
@@ -1702,7 +1704,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			If This.oPrefs.lAlignAS
 				lnASCol2 = This.CountCharacterWidth (This.TrimTrailingWhiteSpace (This.FindBeforeAS (lcNewLine)))
 				lnASCol	 = Max (lnASCol  				    , lnASCol2)
-				If laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
+				if lnAlignASBlockMax > 0 and laAlignASBlocks(lnAlignASBlockMax, 2) > lnCount Then
 					laAlignASBlocks(lnAlignASBlockMax, 3) = Max (laAlignASBlocks(lnAlignASBlockMax, 3), lnASCol2)
 				Endif
 			Endif
