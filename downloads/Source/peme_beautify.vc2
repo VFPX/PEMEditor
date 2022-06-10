@@ -3533,11 +3533,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			lnCounter	 = lnCounter + 1
 		
 			Do Case
-				Case llTextBlock And Upper (THIS.GetWordNumX (lcLine, 1)) == 'ENDTEXT'
+				Case llTextBlock And Upper (This.GetWordNumX (lcLine, 1)) == 'ENDTEXT'
+		*SF changed 202200610 (see below)
+					llTextBlock = .F.
 					Exit
 				Case llTextBlock
 					Loop
-				Case Upper (THIS.GetWordNumX (lcLine, 1)) == 'TEXT'
+				Case Upper (This.GetWordNumX (lcLine, 1)) == 'TEXT'
 					If llIgnoreTextMerge
 						lnCounter = This.DoIDListText(lcSourceLine, lnCounter, Alen (This.aCodeLines))
 						Exit
@@ -3546,11 +3548,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					Endif
 					Loop
 		
-				Case llHashIFBlock And Upper (THIS.GetWordNumX (lcLine, 1)) == '#ENDIF'
+				Case llHashIFBlock And Upper (This.GetWordNumX (lcLine, 1)) == '#ENDIF'
+		*SF changed 202200610 (see below)
+					llHashIFBlock = .F.
 					Exit
 				Case llHashIFBlock
 					Loop
-				Case llIgnoreHashIF And Upper (THIS.GetWordNumX (lcLine, 1)) == '#IF'
+				Case llIgnoreHashIF And Upper (This.GetWordNumX (lcLine, 1)) == '#IF'
 					llHashIFBlock = .T.
 					Loop
 		
@@ -3567,6 +3571,15 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Exit
 		
 		Enddo
+		
+		*SF changed 202200610, 
+		*https://github.com/VFPX/PEMEditor/issues/28
+		*Problem when ENDTEXT / #ENDIF is missing, lnCounter will be one to large
+		If llTextBlock Or llHashIFBlock Then
+			lnCounter = lnCounter - 1
+		Endif &&llTextBlock Or llHashIFBlock
+		*/SF 20220610
+		
 		Return lcSourceLine
 		
 	ENDPROC
