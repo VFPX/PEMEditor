@@ -51,6 +51,7 @@ loProject = _VFP.Projects('pemeditor.pjx')
 
 WITH loProject.FILES
 	.ADD('..\..\..\..\foxpro\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_bottom.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_horizontal_centers.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_left.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
@@ -192,6 +193,7 @@ WITH loProject.FILES
 
 	*<ExcludedFiles>
 	.ITEM(lcCurdir + '..\..\..\..\foxpro\foxtools.fll').Exclude = .T.
+	.ITEM(lcCurdir + '..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h').Exclude = .T.
 	.ITEM(lcCurdir + 'buildpemeditor.prg').Exclude = .T.
 	.ITEM(lcCurdir + 'c:\program files (x86)\microsoft visual foxpro 9\beautify.app').Exclude = .T.
 	.ITEM(lcCurdir + 'peme_opentable.prg').Exclude = .T.
@@ -199,6 +201,7 @@ WITH loProject.FILES
 	*</ExcludedFiles>
 
 	*<TextFiles>
+	.ITEM(lcCurdir + '..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h').Type = 'T'
 	.ITEM(lcCurdir + 'editpropertydialog.h').Type = 'T'
 	.ITEM(lcCurdir + 'editpropertydialogenglish.h').Type = 'T'
 	.ITEM(lcCurdir + 'memberdataeditor.h').Type = 'T'

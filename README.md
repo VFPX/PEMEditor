@@ -5,7 +5,7 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.41.02 Released 2022-05-29
+Version 7.41.03 Released 2022-06-10
 
 ## Introduction
 
@@ -34,6 +34,10 @@ This will not only install PEM Editor, but will also register it so that all of 
 *   PEMEditor.chm in the Documentation folder
 
 ## Changes
+### Version 7.41.03, released 2022-06-10
+
+* Fixed a bug in Create Locals that caused an error when code block with TEXT or #IF was not closed with ENDTEXT / #ENDIF
+
 ### Version 7.41.02, released 2022-05-29
 
 * Fixed a bug in BeautifyX that caused an error beautifying a SQL SELECT statement under some conditions.
@@ -146,4 +150,4 @@ Version 1.0 by Marcia Akins
 ## Contribution
 See [contribution](./.github/CONTRIBUTING.md)
 
-Last changed: _2022/04/07_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2022/06/10_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
