@@ -1194,7 +1194,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*lcBreakWords = '\Wselect\W|\Wfrom\W|\Wwhere\W|\Wgroup by\W|\Worder by\W|\Whaving\W|\Wunion\W|\Winto\W'
 		
 		*SF 2022/03/17
-		* we parse out the cmmas on special method, new properties
+		* we parse out the commas on special method, new properties
 		If This.oPrefs.lSelectExpandFields
 		*	lcBreakWords = '\,|' + lcBreakWords
 			lSelectExpandFields      = .T.
@@ -3534,7 +3534,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 			Do Case
 				Case llTextBlock And Upper (This.GetWordNumX (lcLine, 1)) == 'ENDTEXT'
-		*SF changed 202200610 (see below)
+		*SF changed 2022/06/10 (see below)
 					llTextBlock = .F.
 					Exit
 				Case llTextBlock
@@ -3549,7 +3549,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					Loop
 		
 				Case llHashIFBlock And Upper (This.GetWordNumX (lcLine, 1)) == '#ENDIF'
-		*SF changed 202200610 (see below)
+		*SF changed 2022/06/10 (see below)
 					llHashIFBlock = .F.
 					Exit
 				Case llHashIFBlock
@@ -3572,13 +3572,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		Enddo
 		
-		*SF changed 202200610, 
+		*SF changed 2022/06/10, 
 		*https://github.com/VFPX/PEMEditor/issues/28
 		*Problem when ENDTEXT / #ENDIF is missing, lnCounter will be one to large
 		If llTextBlock Or llHashIFBlock Then
 			lnCounter = lnCounter - 1
 		Endif &&llTextBlock Or llHashIFBlock
-		*/SF 20220610
+		*/SF 2022/06/10
 		
 		Return lcSourceLine
 		

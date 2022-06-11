@@ -1,6 +1,6 @@
 Lparameters toUpdateInfo
 
-AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.41.03 - June 10, 2022 - 20220610')
+AddProperty(toUpdateInfo, 'AvailableVersion',	'PEM Editor - 7.41.04 - June 11, 2022 - 20220611')
 AddProperty(toUpdateInfo, 'SourceFileUrl', 		'https://raw.githubusercontent.com/VFPX/PEMEditor/master/downloads/ThorUpdater/PEMEditor_Source.zip')
 AddProperty(toUpdateInfo, 'LinkPrompt', 		'PEM Editor Home Page')
 AddProperty(toUpdateInfo, 'Link', 				'https://github.com/VFPX/PEMEditor')
@@ -16,7 +16,7 @@ procedure GetNotes
 Contains BeautifyX, Create Locals, Move / Resize Code Window, Redefine Parent Class, SourceControl
 
 +++++++++++++++++++++++ Change History +++++++++++++++++++++++
-2022-06-10 v7.41.03
+2022-06-11 v7.41.04
 Fixed a bug when code block with TEXT or #IF was not closed with ENDTEXT / #ENDIF
 
 2022-05-29 v7.41.02
