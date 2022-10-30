@@ -8707,7 +8707,7 @@ DEFINE CLASS editpropertyform AS baseform OF "peme_basecontrols.vcx"
 		If tlPasteMode
 			* note that leading fields here must match normal case, but can't have a Memo field
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;  && ccNameCol
+				cName 		C (128)		, 	;  && ccNameCol
 				cType 		C (1)		, 	;  && ccTypeCol
 				lAccess 	L			, 	;  && ccAccessCol
 				lAssign 	L			, 	;  && ccAssignCol
@@ -8736,7 +8736,7 @@ DEFINE CLASS editpropertyform AS baseform OF "peme_basecontrols.vcx"
 		Else
 		
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;
+				cName 		C (128)		, 	;
 				cType 		C (1)		, 	;
 				lAccess 	L			, 	;
 				lAssign 	L			, 	;
@@ -10029,7 +10029,7 @@ DEFINE CLASS editpropertyform AS baseform OF "peme_basecontrols.vcx"
 		
 				If Thisform.lTreeViewShowMethods
 					loResult = Thisform.oServer.GetMethodList(loParent, Thisform.lClass, Thisform.lIsTopOfForm And Thisform.lClass)
-					Create Cursor cMyMembers (cName C(60), cType C(1), SortKey C(60))
+					Create Cursor cMyMembers (cName C(128), cType C(1), SortKey C(128))
 					Append From Array loResult.MethodList
 				Endif
 			Endif
@@ -11004,7 +11004,7 @@ DEFINE CLASS frmcompareproperties AS frmpeme_base OF "editproperty.vcx"
 		Local lnCurRowA, lnCurRowB, lnRowsA, lnRowsB
 		
 		Create Cursor csrCompareObject (													    ;
-			cName 			C (60),													    ;
+			cName 			C (128),													    ;
 			VarTypeA		C (1),													    ;
 			DisplayA		C (100),												    ;
 			NonDefaultA		L,															;
@@ -11408,7 +11408,7 @@ DEFINE CLASS frmeditparentclass AS frmpeme_base OF "editproperty.vcx"
 			.cSourceFileName  = lcSourceFileName
 			.cClassName		  = Evl(lcClassName, '')
 		
-			Create Cursor crsr_ParentClasses (Class C(60), RelativePath C(250), VCX C(250), BaseClass C(20))
+			Create Cursor crsr_ParentClasses (Class C(128), RelativePath C(250), VCX C(250), BaseClass C(20))
 		
 			For lnI = 1 To loParentClasses.Count
 				lcClass = loParentClasses(lnI).Class
@@ -11867,7 +11867,7 @@ DEFINE CLASS frmidlist AS frmpeme_base OF "editproperty.vcx" 		&& Description go
 		Top = 48, ;
 		Width = 100, ;
 		ZOrderSet = 3
-		*< END OBJECT: BaseClass="olecontrol" OLEObject="c:\windows\syswow64\mscomctl.ocx" Value="0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9/////v////7////+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////1IAbwBvAHQAIABFAG4AdAByAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAUA//////////8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAZWOr1V88BAwAAAEABAAAAAAAAAwBPAGwAZQBPAGIAagBlAGMAdABEAGEAdABhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAgEDAAAAAgAAAP////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAAAAAAADAEEAYwBjAGUAcwBzAE8AYgBqAFMAaQB0AGUARABhAHQAYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgACAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABcAAAAAAAAAAMAQwBoAGEAbgBnAGUAZABQAHIAbwBwAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAIA////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAQAAAAAAAAABAAAAAIAAAD+/////v////7///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8jfyQskYXREbFqAMDwKDYoIUM0EggAAADtAwAA7QMAAIB+4eYAAAYAIAAAAAAAAADAwMAA//9EAAHvzasAAAUAXAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAACQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5MzY4MjY1RS04NUZFLTExZDEtOEJFMy0wMDAwRjg3NTREQTF+AEMAXgAsAEsARgB2ADgAWgAhAFAAQwBlAHEARwA3ADMAOAABAACAKwAxACYAOAA2AFsAYwA5ADcANAB0AEYAbgAxAGsATwB1AEIAUQB+AGUAMAArAGkAeQAnAEcAQQBfAF4AAAAAAAYAAAD/////BQAAgAAAAAAAAAAAAAAAAG8AfQBvAEAAeQA/ACkAKABxAHMAdwBNACkALgB1AF0AdgBSAFsAXgBEAEoAKAA9AC0AKQB+ACgAWwBJAG4AcwBfAHIAUwBWACEASwA5AEcAaQA1ACsAPwBSADcAcQApAHUAOQAnADAAWgBeAAIAUAByAG8AZAB1AGMAdABGAGkAbABlAHMAAAAAAAAAbgAAbgRtAAAg9MIAiO/CAHcAYQByAGUAXABNAGkAYwByAG8AcwBvAGYAdABcAFcAaQBuAGQAbwB3AHMAXABDAHUAcgByAGUAbgB0AFYAZQByAHMAaQBvAA==" />
+		*< END OBJECT: BaseClass="olecontrol" OLEObject="c:\windows\syswow64\mscomctl.ocx" Value="0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9/////v////7////+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////1IAbwBvAHQAIABFAG4AdAByAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAUA//////////8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGCZklNo7NgBAwAAAEABAAAAAAAAAwBPAGwAZQBPAGIAagBlAGMAdABEAGEAdABhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAgEDAAAAAgAAAP////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAAAAAAADAEEAYwBjAGUAcwBzAE8AYgBqAFMAaQB0AGUARABhAHQAYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgACAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABcAAAAAAAAAAMAQwBoAGEAbgBnAGUAZABQAHIAbwBwAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAIA////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAQAAAAAAAAABAAAAAIAAAD+/////v////7///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8jfyQskYXREbFqAMDwKDYoIUM0EggAAADtAwAA7QMAAIB+4eYAAAYAIAAAAAAAAADAwMAA//9EAAHvzasAAAUAXAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAACQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5MzY4MjY1RS04NUZFLTExZDEtOEJFMy0wMDAwRjg3NTREQTF+AEMAXgAsAEsARgB2ADgAWgAhAFAAQwBlAHEARwA3ADMAOAABAACAKwAxACYAOAA2AFsAYwA5ADcANAB0AEYAbgAxAGsATwB1AEIAUQB+AGUAMAArAGkAeQAnAEcAQQBfAF4AUFxtCAYAAAD/////BQAAgChH0wAAAAAAAAAAAG8AfQBvAEAAeQA/ACkAKABxAHMAdwBNACkALgB1AF0AdgBSAFsAXgBEAEoAKAA9AC0AKQB+ACgAWwBJAG4AcwBfAHIAUwBWACEASwA5AEcAaQA1ACsAPwBSADcAcQApAHUAOQAnADAAWgBeAAIAUAByAG8AZAB1AGMAdABGAGkAbABlAHMAAAAAAAAAbgAAbgRtAAAg9MIAiO/CAHcAYQByAGUAXABNAGkAYwByAG8AcwBvAGYAdABcAFcAaQBuAGQAbwB3AHMAXABDAHUAcgByAGUAbgB0AFYAZQByAHMAaQBvAA==" />
 
 	ADD OBJECT 'oTree' AS baseoletreeview WITH ;
 		Height = 254, ;
@@ -11877,7 +11877,7 @@ DEFINE CLASS frmidlist AS frmpeme_base OF "editproperty.vcx" 		&& Description go
 		Top = 0, ;
 		Width = 180, ;
 		ZOrderSet = 4
-		*< END OBJECT: ClassLib="peme_basecontrols.vcx" BaseClass="olecontrol" OLEObject="c:\windows\syswow64\mscomctl.ocx" Value="0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9/////v////7///8EAAAA/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////1IAbwBvAHQAIABFAG4AdAByAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAUA//////////8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALCOWOr1V88BAwAAAIACAAAAAAAAAwBPAGwAZQBPAGIAagBlAGMAdABEAGEAdABhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAgEDAAAAAgAAAP////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiwAAAAAAAAADAEEAYwBjAGUAcwBzAE8AYgBqAFMAaQB0AGUARABhAHQAYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgACAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABcAAAAAAAAAAMAQwBoAGEAbgBnAGUAZABQAHIAbwBwAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAIA////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAACcBAAAAAAAACAAAAAIAAAD+////BAAAAAUAAAAGAAAABwAAAP7///8JAAAA/v////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2kEHHiYXREbFqAMDwKDYoIUM0EggAAACbEgAAQBoAALE8wWoBAAYAIgAAAD0AAAAJAQAADAAAAAEAAAAB782rXAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAACQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5MzY4MjY1RS04NUZFLTExZDEtOEJFMy0wMDAwRjg3NTREQTEAAAAAKNsAAAAAAADg2wAAAAAAAIjcAAAAAAAAkNIAAAAAAAABAACADgAAAEhpZGVTZWxlY3Rpb24ABQAAAEwAAAAADAAAAEluZGVudGF0aW9uABEAAABODQAAAAcAAAAAAAAAAAAkQAoAAABMYWJlbEVkaXQACQAAAEkKAAAAAQAAAAoAAABMaW5lU3R5bGUACQAAAEkKAAAAAQAAAA0AAABNb3VzZVBvaW50ZXIACQAAAEkKAAAAAAAAAA4AAABQYXRoU2VwYXJhdG9yAAoAAABIAAAAAAEAAABcDAAAAE9MRURyYWdNb2RlAAkAAABJCgAAAAAAAAAMAAAAT0xFRHJvcE1vZGUACQAAAEkKAAAAAAAAAAsAAABBcHBlYXJhbmNlAAkAAABJCgAAAAAAAAAMAAAASG90VHJhY2tpbmcABQAAAEwBAAAAAF4PAQAAAAAAnA4BAAAAAADkEAEAAAAAAAAABQBgNUMNAgBjAAAAAAAFAACAYOkYAAEAAABcAB/e7L0BAAUAqekYAANS4wuRj84RneMAqgBLuFEBAAAAkAGQXwEABlRhaG9tYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+		*< END OBJECT: ClassLib="peme_basecontrols.vcx" BaseClass="olecontrol" OLEObject="c:\windows\syswow64\mscomctl.ocx" Value="0M8R4KGxGuEAAAAAAAAAAAAAAAAAAAAAPgADAP7/CQAGAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAEAAAAgAAAAEAAAD+////AAAAAAAAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9/////v////7///8EAAAA/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////1IAbwBvAHQAIABFAG4AdAByAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAUA//////////8BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKA1k1No7NgBAwAAAIACAAAAAAAAAwBPAGwAZQBPAGIAagBlAGMAdABEAGEAdABhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAgEDAAAAAgAAAP////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiwAAAAAAAAADAEEAYwBjAGUAcwBzAE8AYgBqAFMAaQB0AGUARABhAHQAYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgACAP///////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABcAAAAAAAAAAMAQwBoAGEAbgBnAGUAZABQAHIAbwBwAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAIA////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAACcBAAAAAAAACAAAAAIAAAD+////BAAAAAUAAAAGAAAABwAAAP7///8JAAAA/v////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2kEHHiYXREbFqAMDwKDYoIUM0EggAAACbEgAAQBoAALE8wWoBAAYAIgAAAD0AAAAJAQAADAAAAAEAAAAB782rXAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAACQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5MzY4MjY1RS04NUZFLTExZDEtOEJFMy0wMDAwRjg3NTREQTEAAAAAKNsAAAAAAADg2wAAAAAAAIjcAAAAAAAAkNIAAAAAAAABAACADgAAAEhpZGVTZWxlY3Rpb24ABQAAAEwAAAAADAAAAEluZGVudGF0aW9uABEAAABODQAAAAcAAAAAAAAAAAAkQAoAAABMYWJlbEVkaXQACQAAAEkKAAAAAQAAAAoAAABMaW5lU3R5bGUACQAAAEkKAAAAAQAAAA0AAABNb3VzZVBvaW50ZXIACQAAAEkKAAAAAAAAAA4AAABQYXRoU2VwYXJhdG9yAAoAAABIAAAAAAEAAABcDAAAAE9MRURyYWdNb2RlAAkAAABJCgAAAAAAAAAMAAAAT0xFRHJvcE1vZGUACQAAAEkKAAAAAAAAAAsAAABBcHBlYXJhbmNlAAkAAABJCgAAAAAAAAAMAAAASG90VHJhY2tpbmcABQAAAEwBAAAAAF4PAQAAAAAAnA4BAAAAAADkEAEAAAAAAAAABQDQ+6wIAgBjAAAAAAAFAACASOkZAAEAAABcAB/e7L0BAAUAkekZAANS4wuRj84RneMAqgBLuFEBAAAAkAGQXwEABlRhaG9tYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
 
 	ADD OBJECT 'SplitterH' AS peme_sfsplitterh WITH ;
 		cobject1name = oTree, ;
@@ -12252,8 +12252,8 @@ DEFINE CLASS frmidlist AS frmpeme_base OF "editproperty.vcx" 		&& Description go
 		DoDefault()
 		
 		Create Cursor crsr_Grid (	;
-			  Name  		C(60),	;
-			  ProcName		C(60),	;
+			  Name  		C(128),	;
+			  ProcName		C(128),	;
 			  StartLine		N(6),	;
 			  Lineno		N(6),	;
 			  SourceLine	C(250)	;
@@ -16486,7 +16486,7 @@ DEFINE CLASS frmpeme_base AS baseformnew OF "peme_basecontrols.vcx"
 		If tlPasteMode
 			* note that leading fields here must match normal case, but can't have a Memo field
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;  && ccNameCol
+				cName 		C (128)		, 	;  && ccNameCol
 				cType 		C (1)		, 	;  && ccTypeCol
 				lAccess 	L			, 	;  && ccAccessCol
 				lAssign 	L			, 	;  && ccAssignCol
@@ -16515,7 +16515,7 @@ DEFINE CLASS frmpeme_base AS baseformnew OF "peme_basecontrols.vcx"
 		Else
 		
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;
+				cName 		C (128)		, 	;
 				cType 		C (1)		, 	;
 				lAccess 	L			, 	;
 				lAssign 	L			, 	;
@@ -17812,7 +17812,7 @@ DEFINE CLASS frmpeme_base AS baseformnew OF "peme_basecontrols.vcx"
 		
 				If Thisform.lTreeViewShowMethods
 					loResult = Thisform.oServer.GetMethodList(loParent, Thisform.lClass, Thisform.lIsTopOfForm And Thisform.lClass)
-					Create Cursor cMyMembers (cName C(60), cType C(1), SortKey C(60))
+					Create Cursor cMyMembers (cName C(128), cType C(1), SortKey C(128))
 					Append From Array loResult.MethodList
 				Endif
 			Endif
@@ -19849,7 +19849,7 @@ DEFINE CLASS frmpemeditorbase AS editpropertyform OF "editproperty.vcx"
 		
 							Select  *										;
 								  , 0001				 As	 nObjCount		;
-								  , Padr (lcName, 60)	 As	 cObjName		;
+								  , Padr (lcName, 128)	 As	 cObjName		;
 								From csrMembers								;
 								Into Cursor csrMultMembers Readwrite
 		
@@ -21522,7 +21522,7 @@ DEFINE CLASS frmpemeditorbase AS editpropertyform OF "editproperty.vcx"
 		Local lcName, lcText, lnCount, lnI, laControls(1)
 		
 		loResult = Thisform.oServer.GetMethodList(loParent, Thisform.lClass, Thisform.lIsTopOfForm And Thisform.lClass)
-		Create Cursor cMyMembers (cName C(60), cType C(1), SortKey C(60))
+		Create Cursor cMyMembers (cName C(128), cType C(1), SortKey C(128))
 		Append From Array loResult.MethodList
 		
 		Select cMyMembers
@@ -25392,13 +25392,13 @@ DEFINE CLASS frmsearchresults AS frmpeme_base OF "editproperty.vcx"
 			nObjNumber 		N(4)	,;
 			cObjName 		C(250)  ,;
 			cDescript		C(250)	,;
-			cName			C(60)   ,;
+			cName			C(128)   ,;
 			cScript         C(1)    ,;
 			cType			C(1)    ,;
 			lNative			L		 ;
 			)
 		
-		Index On Upper (Left (cObjName, 60)) Tag CharOrder For nObjNumber > 0
+		Index On Upper (Left (cObjName, 128)) Tag CharOrder For nObjNumber > 0
 		Index On nObjNumber Tag NumOrder For nObjNumber > 0
 		
 	ENDPROC

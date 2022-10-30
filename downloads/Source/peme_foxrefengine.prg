@@ -234,10 +234,10 @@ Define Class FoxRef As Session
 		Create Table (This.cResultsTable) Free (	;
 			SearchType		C(10),					;
 			FullName		M,						;
-			Class			C(60),					;
+			Class			C(128),					;
 			Folder			C(120),					;
 			Filename		C(120),					;
-			Parent			C(60),					;
+			Parent			C(128),					;
 			ClassLoc		C(120),					;
 			BaseClass		C(15),					;
 			TimeStamp		T						;

@@ -33,7 +33,7 @@ _AutoIncrement = "0"
 
 
 *<BuildProj>
-*<.HomeDir = 'e:\se\vfpx\pemeditor\downloads\source' />
+*<.HomeDir = 'c:\users\dhenn\desktop\pemeditor\downloads\source' />
 
 FOR EACH loProject IN _VFP.Projects FOXOBJECT
 	loProject.Close()
@@ -50,8 +50,8 @@ MODIFY PROJECT 'pemeditor.pjx' NOWAIT NOSHOW NOPROJECTHOOK
 loProject = _VFP.Projects('pemeditor.pjx')
 
 WITH loProject.FILES
-	.ADD('..\..\..\..\foxpro\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
-	.ADD('..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_bottom.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_horizontal_centers.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_left.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
@@ -111,7 +111,6 @@ WITH loProject.FILES
 	.ADD('askaddpemnewgotodef.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('askaddpemnewstayopen.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('buildpemeditor.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
-	.ADD('c:\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('changefontsize.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
@@ -142,6 +141,7 @@ WITH loProject.FILES
 	.ADD('peme_foxrefengine.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('peme_foxresource.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('peme_foxresource.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
+	.ADD('peme_foxtabs.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('peme_foxtabsmanager.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('peme_help_internal.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('peme_idex.vcx')		&& *< FileMetadata: Type="V" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
@@ -192,20 +192,20 @@ WITH loProject.FILES
 	*</FileComments>
 
 	*<ExcludedFiles>
-	.ITEM(lcCurdir + '..\..\..\..\foxpro\foxtools.fll').Exclude = .T.
-	.ITEM(lcCurdir + '..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h').Exclude = .T.
+	.ITEM(lcCurdir + '..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app').Exclude = .T.
+	.ITEM(lcCurdir + '..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll').Exclude = .T.
 	.ITEM(lcCurdir + 'buildpemeditor.prg').Exclude = .T.
-	.ITEM(lcCurdir + 'c:\program files (x86)\microsoft visual foxpro 9\beautify.app').Exclude = .T.
+	.ITEM(lcCurdir + 'peme_foxtabs.h').Exclude = .T.
 	.ITEM(lcCurdir + 'peme_opentable.prg').Exclude = .T.
 	.ITEM(lcCurdir + 'pemeditorversion.h').Exclude = .T.
 	*</ExcludedFiles>
 
 	*<TextFiles>
-	.ITEM(lcCurdir + '..\..\..\..\thor\thor\thor\tools\apps\pem editor\source\peme_foxtabs.h').Type = 'T'
 	.ITEM(lcCurdir + 'editpropertydialog.h').Type = 'T'
 	.ITEM(lcCurdir + 'editpropertydialogenglish.h').Type = 'T'
 	.ITEM(lcCurdir + 'memberdataeditor.h').Type = 'T'
 	.ITEM(lcCurdir + 'memberdataeditorenglish.h').Type = 'T'
+	.ITEM(lcCurdir + 'peme_foxtabs.h').Type = 'T'
 	.ITEM(lcCurdir + 'pemeditorversion.h').Type = 'T'
 	*</TextFiles>
 ENDWITH

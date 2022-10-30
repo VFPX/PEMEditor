@@ -1418,19 +1418,34 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 	ENDPROC
 
 	PROCEDURE getcurrenthighlightedtext
-		Lparameters llFullObjectName
+		Lparameters llFullObjectName, llSavePositions
 		
 		*** JRN 10/16/2010 : llFullObjectName captures full reference,
 		*   meaning including dots and handling of WITH/ENDWITH
 		
-		Local lcChar, lcEnds, lcPreviousCode, lcResult, lnPosition, lnSelEnd, lnSelStart
+		Local lcChar, lcEnds, lcPreviousCode, lcResult, lnPosition, lnSelEnd, lnSelStart, lnWindowType
 		Local cContainer, nLineCount
-		If 0 > This.oEditorWin.FindWindow()
+		lnWindowType = This.oEditorWin.FindWindow()
+		If 0 > m.lnWindowType
 			Return ''
 		Endif
 		
 		lnSelStart = This.oEditorWin.GetSelStart()
 		lnSelEnd   = This.oEditorWin.GetSelEnd()
+				
+		If m.llSavePositions and InList(m.lnWindowType, 1, 8, 10) 
+			If PemStatus(_Screen, 'aGoToDefinitionHistory', 5) = .F.
+				_Screen.AddProperty('aGoToDefinitionHistory[1, 4]')
+			EndIf 
+			lnNewRow = Alen(_Screen.aGoToDefinitionHistory, 1) + 1
+			Dimension _Screen.aGoToDefinitionHistory[lnNewRow, 4]
+			_Screen.aGoToDefinitionHistory[lnNewRow, 1] = This.oEditorWin.GetTitle()
+			_Screen.aGoToDefinitionHistory[lnNewRow, 2] = This.oEditorWin.GetWindowHandle()
+			_Screen.aGoToDefinitionHistory[lnNewRow, 3] = lnSelStart
+			_Screen.aGoToDefinitionHistory[lnNewRow, 4] = lnSelEnd
+		Else 
+			lnNewRow = 1 && A LIE!  but simplifies capture of Start/end text later  
+		EndIf 
 		
 		****************************************************************
 		*** JRN 2010-04-04 : remainder of this code specific to extracting the full object path,
@@ -1442,6 +1457,8 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 			If Not Empty(This.RemoveQuotes(lcResult))
 				This.nLeftHighlightPos	= lnSelStart
 				This.nRightHighlightPos	= lnSelEnd
+				_Screen.aGoToDefinitionHistory[lnNewRow, 3] = lnSelStart
+				_Screen.aGoToDefinitionHistory[lnNewRow, 4] = lnSelEnd 
 				Return ['] + Substr(lcResult, 2, Len(lcResult) - 2) + [']
 			Endif
 		
@@ -1462,7 +1479,7 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 			*!* 	Endif
 			*!* Enddo
 		
-			*!* This.nRightHighlightPos	= lnSelEnd - 1
+			This.nRightHighlightPos	= lnSelEnd - 1
 			*!* lcResult = '' && because we march to the left from here ...
 		
 		Else &&  JRN 2010-04-02  no highlighted text ... add characters to right
@@ -1516,6 +1533,9 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 				Endif
 			Endif
 		Endif
+		
+		_Screen.aGoToDefinitionHistory[lnNewRow, 3] = This.nLeftHighlightPos
+		_Screen.aGoToDefinitionHistory[lnNewRow, 4] = Max(This.nRightHighlightPos + 1, This.nLeftHighlightPos + 3)
 		
 		Return lcResult
 		
@@ -2152,7 +2172,7 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 		Endif
 		llFormOrClass = m.lnWindowType = 10
 		
-		lcMethodName	 = This.GetCurrentHighlightedText (.T.)
+		lcMethodName	 = This.GetCurrentHighlightedText (.T., .T.)
 		lcFullMethodName = m.lcMethodName
 		
 		lcWonTop	= This.oEditorWin.GetTitle()
@@ -2312,6 +2332,8 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 		
 		Do Case
 			Case m.llFound
+		
+			Case m.llFormOrClass and Upper(m.lcFullMethodName) = 'THISFORM' and Upper(m.loTopOfForm.BaseClass) # 'FORM'
 		
 			Case m.llFormOrClass And 1 = Occurs('.', m.lcMethodName) and InList(Upper(JustStem(m.lcFullMethodName)) + '.', 'THIS.', 'THISFORM.')
 		

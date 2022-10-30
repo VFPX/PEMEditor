@@ -1318,7 +1318,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		If tlPasteMode
 			* note that leading fields here must match normal case, but can't have a Memo field
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;  && ccNameCol
+				cName 		C (128)		, 	;  && ccNameCol
 				cType 		C (1)		, 	;  && ccTypeCol
 				lAccess 	L			, 	;  && ccAccessCol
 				lAssign 	L			, 	;  && ccAssignCol
@@ -1347,7 +1347,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		Else
 		
 			Create Cursor (lcCursorName) (	;
-				cName 		C (60)		, 	;
+				cName 		C (128)		, 	;
 				cType 		C (1)		, 	;
 				lAccess 	L			, 	;
 				lAssign 	L			, 	;
@@ -2094,7 +2094,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		Local laControls(1), lcCode, lcInheritedCode, lcName, lcText, lnCount, lnI
 		
 		loResult = This.oServer.GetMethodList (loParent, This.lClass, llIsTopOfForm And This.lClass)
-		Create Cursor cMyMembers (cName C(60), cType C(1), SortKey C(60))
+		Create Cursor cMyMembers (cName C(128), cType C(1), SortKey C(128))
 		Append From Array loResult.MethodList
 		
 		Select cMyMembers

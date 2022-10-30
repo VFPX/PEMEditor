@@ -36,7 +36,7 @@ Please note, there are some tasks to set up a new version.
 Stuff is a bit scattered, so this is where to look up.
 1. Please create a fork at github
    - See this [guide](https://www.dataschool.io/how-to-contribute-on-github/) for setting up and using a fork
-1. Make whatever changes are necessary.
+1. Make whatever changes are necessary. **Note:** please make the changes and build the APP using VFP 9 SP 2, not VFP Advanced, because the structure of the APP file is different.
 2. Run FoxBin2Prg to create the text files.
    - `DO foxbin2prg.prg WITH 'BIN2PRG','downloads\source'`
 2. In _downloads\source\pemeditorversion.h_ set up the version number as well as the date of version. Please change all three DEFINES.   

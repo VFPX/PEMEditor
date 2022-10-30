@@ -65,7 +65,7 @@ Define Class PEMEditor_Server As Session
 
 		Create Cursor csrMembersList (	 ;
 			PK		 	 I       	    ,;
-			cName	     C(60)			,;
+			cName	     C(128)			,;
 			cType        C(1)			,;
 			lAccess      L				,;
 			lAssign      L				,;
@@ -197,7 +197,7 @@ Define Class PEMEditor_Server As Session
 
 		Create Cursor cMethodList (	 	 ;
 			PK		 	 I       	    ,;
-			cName	     C(60)			,;
+			cName	     C(128)			,;
 			cType        C(1)			,;
 			lAccess      L				,;
 			lAssign      L				,;
