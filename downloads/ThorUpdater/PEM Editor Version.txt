@@ -1,1 +1,1 @@
-PEM Editor - 7.41.05 - October 30, 2022 - 20221030
+PEM Editor - 7.41.06 - November 2, 2022 - 20221102
