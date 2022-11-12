@@ -5,7 +5,7 @@ AddProperty(toUpdateInfo, 'SourceFileUrl', 		'https://raw.githubusercontent.com/
 AddProperty(toUpdateInfo, 'LinkPrompt', 		'PEM Editor Home Page')
 AddProperty(toUpdateInfo, 'Link', 				'https://github.com/VFPX/PEMEditor')
 
-Execscript (_Screen.cThorDispatcher, 'Result=', toUpdateInfo)
+Execscript (_Screen.cThorDispatcher, 'Result=', toUpdateInfo) 
 Return toUpdateInfo
 
 procedure GetNotes
