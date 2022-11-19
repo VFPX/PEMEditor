@@ -1457,8 +1457,10 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 			If Not Empty(This.RemoveQuotes(lcResult))
 				This.nLeftHighlightPos	= lnSelStart
 				This.nRightHighlightPos	= lnSelEnd
-				_Screen.aGoToDefinitionHistory[lnNewRow, 3] = lnSelStart
-				_Screen.aGoToDefinitionHistory[lnNewRow, 4] = lnSelEnd 
+				If m.llSavePositions and InList(m.lnWindowType, 1, 8, 10) 
+					_Screen.aGoToDefinitionHistory[lnNewRow, 3] = lnSelStart
+					_Screen.aGoToDefinitionHistory[lnNewRow, 4] = lnSelEnd 
+				EndIf
 				Return ['] + Substr(lcResult, 2, Len(lcResult) - 2) + [']
 			Endif
 		
@@ -1534,9 +1536,10 @@ DEFINE CLASS pemeditor_idex AS basecustom OF "peme_basecontrols.vcx"
 			Endif
 		Endif
 		
-		_Screen.aGoToDefinitionHistory[lnNewRow, 3] = This.nLeftHighlightPos
-		_Screen.aGoToDefinitionHistory[lnNewRow, 4] = Max(This.nRightHighlightPos + 1, This.nLeftHighlightPos + 3)
-		
+		If m.llSavePositions and InList(m.lnWindowType, 1, 8, 10) 
+			_Screen.aGoToDefinitionHistory[lnNewRow, 3] = This.nLeftHighlightPos
+			_Screen.aGoToDefinitionHistory[lnNewRow, 4] = Max(This.nRightHighlightPos + 1, This.nLeftHighlightPos + 3)
+		EndIf
 		Return lcResult
 		
 	ENDPROC
