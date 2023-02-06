@@ -1,4 +1,4 @@
-# Changes do PEMEditor (version for Thor)
+# Changes to PEMEditor (version for Thor)
 ## general
 To allow work with git on bash, all filenames are converted to lower case.
 There was a mixup of cases, so on bash it was impossible to numerate files with *?.
@@ -182,4 +182,4 @@ TabIndex and alignment of options form reworked. Was a bit wobbly while switchin
 *
    - pemeditor\downloads\source\pemeditorversion.h
 
-Last changed: _2022/03/31_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2023/02/06_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)

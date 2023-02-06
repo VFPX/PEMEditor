@@ -5,7 +5,7 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.41.05 Released 2022-10-30
+Version 7.41.07 Released 2023-02-06
 
 ## Introduction
 
@@ -34,6 +34,10 @@ This will not only install PEM Editor, but will also register it so that all of 
 *   PEMEditor.chm in the Documentation folder
 
 ## Changes
+### Version 7.41.07, released 2023-02-06
+
+* Removed GoToDefinition V1 from PEMEditor (actually, just the creation of the Thor tool) since V2 is now a separate VFPX project.
+
 ### Version 7.41.05, released 2022-10-30
 
 * PEM Editor now supports member names up to 128 characters (previously, it cut off names at 60 characters).
@@ -114,9 +118,10 @@ PEM Editor also publishes two objects that can be accessed by using Thor, to ass
 [Tools Object](Documentation/pemeditor_tools_object.md) -- A collection of miscellaneous tools  
 
 ***********************************************************  
-
 Version 7.1  Production - Released 2011-10-23  
+
 Version 7.1 Released 2011-10-23  
+
 Version 7 Production - Released 2011-09-03 (356 downloads)  
 
 Version 7 Beta 5 - Released 2011-08-22 (93 downloads)  
@@ -152,7 +157,7 @@ Version 2.0 - Released 2008-11-10 By Jim Nelson and Doug Hennig.
 Version 1.0 by Marcia Akins
 
 ----
-## Contribution
-See [contribution](./.github/CONTRIBUTING.md)
+## Helping with this project
+See [How to contribute to PEM Editor](./.github/CONTRIBUTING.md) for details on how to help with this project.
 
-Last changed: _2022/10/30_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2023/02/06_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
