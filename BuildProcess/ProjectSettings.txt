@@ -1,0 +1,9 @@
+AppName   = PEM Editor
+AppID     = PEMEditor
+Version   = 7.41.08
+Component = No
+ChangeLog = ChangeLog.md
+PJXFile   = downloads\Source\PEMEditor.pjx
+Recompile = Yes
+AppFile   = downloads\PEMEditor.app
+InstalledFilesFolder = downloads

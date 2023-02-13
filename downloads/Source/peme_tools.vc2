@@ -374,17 +374,21 @@ DEFINE CLASS pemeditor_tools AS basecustom OF "peme_basecontrols.vcx"
 		* Result:
 		*     Collection of all PEMs for the indicated object
 		
+		*** DH 2023-02-11: add lnPos to LOCAL
 		Local  ;
 			loObject AS Object	,;
 			loPEM AS Object	,;
 			loPEMCollection AS 'Collection'	,;
-			loTopOfForm AS Object
+			loTopOfForm AS Object, ;
+			lnPos
 		
 		loPEMCollection = Createobject ('Collection')
 		
 		loObject = This.oUtils.GetOneSelectedObject()
 		
-		If 'O' # Vartype (loObject)
+		*** DH 2023-02-11: check if object passed
+		*If 'O' # Vartype (loObject)
+		If 'O' # Vartype (loObject) and vartype(toObject) <> 'O'
 			Return loPEMCollection
 		Endif
 		
@@ -404,6 +408,12 @@ DEFINE CLASS pemeditor_tools AS basecustom OF "peme_basecontrols.vcx"
 		Scan
 			If Empty (tcTypes) Or cType $ tcTypes
 				Scatter name loPEM
+		*** DH 2023-02-11: remove dimensions from arrays
+				lnPos = at('[', loPEM.cName)
+				if lnPos > 0
+					loPEM.cName = left(loPEM.cName, lnPos - 1)
+				endif lnPos > 0
+		*** DH 2023-02-11: end of new code
 				Try
 					loPEMCollection.Add (loPem, Trim(Upper(loPEM.cName)))
 				Catch
