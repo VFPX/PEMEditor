@@ -117,7 +117,7 @@ Procedure RegisterWithThor
 		.SaveValues()
 	EndWith 
 
-	lcFile = tcPath + 'PEM Editor Version.txt'
+	lcFile = tcPath + 'PEMEditorVersion.txt'
 	Erase (lcFile)
 	StrToFile(loPEMEditor.oUtils.oPrefs.cFullVersion, lcFile, 0)
 
