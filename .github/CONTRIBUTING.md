@@ -44,7 +44,7 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 
 - For major changes, you may wish to add a Markdown file documenting the new features to the _Documentation_ folder. See _Documentation/pemeditor_thor_changes_7_40.md_ as an example.
 
-- *** TODO: is this necessary: If a change to the configuration setting is made, update https://github.com/VFPX/ThorRepository and file _Thor_Update_Thor_Repository.prg_ of https://github.com/VFPX/Thor/blob/master/ThorUpdater/Updates.zip
+- If a change to the configuration setting is made, update https://github.com/VFPX/ThorRepository and _Thor_Update_Thor_Repository.prg_ of https://github.com/VFPX/Thor/blob/master/ThorUpdater/Updates.zip
    - see https://github.com/VFPX/ThorRepository for contribution.
    - see https://github.com/VFPX/Thor for contribution.
    - see that PEMEDitor, ThorRepository and Thor are pushed as close as possible. The order how to publish is on the maintainers of Thor.
@@ -62,4 +62,4 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 - Create a pull request; ensure the description clearly describes the problem and solution or the enhancement.
 
 ----
-Last changed: _2023/02/13_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2023/02/16_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)

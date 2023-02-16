@@ -4,7 +4,7 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
-### Version 7.41.08, released 2023-02-13
+### Version 7.41.08, released 2023-02-16
 
 * Fixed some minor bugs that allow it to work better with [IntelliSenseX](https://github.com/VFPX/IntelliSenseX).
 

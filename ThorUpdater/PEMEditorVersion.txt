@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '7.41.08 - 20230213'
-	.AvailableVersion = 'PEM Editor-7.41.08-update-20230213'
+	.VersionNumber    = '7.41.08 - 20230216'
+	.AvailableVersion = 'PEM Editor-7.41.08-update-20230216'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
 endwith
@@ -21,7 +21,7 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
-### Version 7.41.08, released 2023-02-13
+### Version 7.41.08, released 2023-02-16
 
 * Fixed some minor bugs that allow it to work better with [IntelliSenseX](https://github.com/VFPX/IntelliSenseX).
 

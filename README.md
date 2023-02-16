@@ -5,7 +5,7 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version 7.41.08 Released 2023-02-13
+Version 7.41.08 Released 2023-02-16
 
 ## Introduction
 
