@@ -2,9 +2,9 @@ lparameters toUpdateObject
 
 * Set the properties of the passed updater object.
 
-set step on
 with toUpdateObject
 	.VersionNumber    = '7.41.08 - 20230216'
+.VersionLocalFilename = 'PEMEditorVersion.txt'
 	.AvailableVersion = 'PEM Editor-7.41.08-update-20230216'
 	.Notes            = GetNotes()
 	.RegisterWithThor = GetRegisterWithThor()
