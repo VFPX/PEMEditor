@@ -173,7 +173,7 @@ Define Class PEMEditor_Server As Session
 	Function FetchPEMList (toObject, tlClassDesigner, tlTopOfClass)
 		lcClass   	= Lower (IIf(tlTopOfClass and tlClassDesigner, toObject.ParentClass, toObject.Class))
 		lcLibrary 	= Lower (toObject.ClassLibrary)
-		lcOLEName	= Lower (IIf(Upper(toObject.BaseClass) = 'OLECONTROL', toObject.OleClass, ''))
+		lcOLEName	= Lower (IIf(pemstatus(toObject, 'BaseClass', 5) and Upper(toObject.BaseClass) = 'OLECONTROL', toObject.OleClass, ''))
 		Select PK From csrClassList 				;
 			where cClassName = Lower(toObject.Class);
 			and cOLEClassName = lcOLEName			;
@@ -211,7 +211,7 @@ Define Class PEMEditor_Server As Session
 			)
 
 		Amembers(laObjectMembers, toObject, 1, 'PHG#')
-		llActiveX = Lower(toObject.BaseClass) = 'olecontrol'
+		llActiveX = pemstatus(toObject, 'BaseClass', 5) and Lower(toObject.BaseClass) = 'olecontrol'
 		If llActiveX
 			Amembers(laActiveXMembers, toObject, 3)
 		Endif llActiveX
@@ -299,7 +299,7 @@ Define Class PEMEditor_Server As Session
 		Insert Into csrClassList 					;
 			(cClassName, cClassLoc,	cOLEClassName)	;
 			Values									;
-			(Lower(toObject.Class), Lower(lcLibrary), Lower(IIf(Upper(toObject.BaseClass) = 'OLECONTROL', toObject.OleClass, '')))
+			(Lower(toObject.Class), Lower(lcLibrary), Lower(IIf(pemstatus(toObject, 'BaseClass', 5) and Upper(toObject.BaseClass) = 'OLECONTROL', toObject.OleClass, '')))
 		lnPK = csrClassList.PK
 
 		Do While Not Empty(lcLibrary)

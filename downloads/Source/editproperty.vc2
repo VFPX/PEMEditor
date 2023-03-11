@@ -8354,7 +8354,7 @@ DEFINE CLASS editpropertyform AS baseform OF "peme_basecontrols.vcx"
 			Fields cName, cType, lAccess, lAssign, nVisibility, lNative, lInherited, nFavorites, lReadonly, cScript
 		Index On Upper(cName) Tag Order
 		
-		llActiveX = Lower(toObject.BaseClass) = 'olecontrol'
+		llActiveX = pemstatus(toObject, 'BaseClass', 5) and Lower(toObject.BaseClass) = 'olecontrol'
 		If llActiveX
 			Amembers(laObjectMembers, toObject, 1, 'PHG#')
 		Endif
@@ -16133,7 +16133,7 @@ DEFINE CLASS frmpeme_base AS baseformnew OF "peme_basecontrols.vcx"
 			Fields cName, cType, lAccess, lAssign, nVisibility, lNative, lInherited, nFavorites, lReadonly, cScript
 		Index On Upper(cName) Tag Order
 		
-		llActiveX = Lower(toObject.BaseClass) = 'olecontrol'
+		llActiveX = pemstatus(toObject, 'BaseClass', 5) and Lower(toObject.BaseClass) = 'olecontrol'
 		If llActiveX
 			Amembers(laObjectMembers, toObject, 1, 'PHG#')
 		Endif

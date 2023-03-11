@@ -316,7 +316,7 @@ Define Class MemberDataEngine As Custom
 				llMemberDataInherited = 'I' $ .aObjectMembers[lnMember, 3]
 				llMemberDataChanged   = 'C' $ .aObjectMembers[lnMember, 3]
 			Endif lnMember > 0
-			llActiveX = Lower(.oObject.BaseClass) = 'olecontrol'
+			llActiveX = pemstatus(.oObject, 'BaseClass', 5) and Lower(.oObject.BaseClass) = 'olecontrol'
 			If llActiveX
 				Amembers(laMembers, .oObject, 3)
 			Endif llActiveX
@@ -550,10 +550,14 @@ Define Class MemberDataEngine As Custom
 			***				*** DougHennig 05/23/2007: set lClassDesigner. If we're modifying a form, Parent.BaseClass
 			***				***		is "Formset", while it's "Form" for a class
 			***				.lClassDesigner = .oObject.Parent.BaseClass <> 'Formset'
-			lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
-				lower(.oObject.Class))
-			lcLibrary = .oObject.ClassLibrary
-
+			try
+				lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
+					lower(.oObject.Class))
+				lcLibrary = .oObject.ClassLibrary
+			catch
+				lcLibrary = ''
+			endtry
+			
 			lcPrevClass = lcClass
 			lcPrevLibrary = lcLibrary
 
@@ -1219,7 +1223,7 @@ return loObject2
 				llMemberDataInherited = 'I' $ .aObjectMembers[lnMember, 3]
 				llMemberDataChanged   = 'C' $ .aObjectMembers[lnMember, 3]
 			Endif lnMember > 0
-			llActiveX = Lower(.oObject.BaseClass) = 'olecontrol'
+			llActiveX = pemstatus(.oObject, 'BaseClass', 5) and Lower(.oObject.BaseClass) = 'olecontrol'
 			If llActiveX
 				Amembers(laMembers, .oObject, 3)
 			Endif llActiveX
@@ -1453,9 +1457,13 @@ return loObject2
 			***				*** DougHennig 05/23/2007: set lClassDesigner. If we're modifying a form, Parent.BaseClass
 			***				***		is "Formset", while it's "Form" for a class
 			***				.lClassDesigner = .oObject.Parent.BaseClass <> 'Formset'
-			lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
-				lower(.oObject.Class))
-			lcLibrary = .oObject.ClassLibrary
+			try
+				lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
+					lower(.oObject.Class))
+				lcLibrary = .oObject.ClassLibrary
+			catch
+				lcLibrary = ''
+			endtry
 
 			Do While Not Empty(lcLibrary)
 				If Not File (lcLibrary)
@@ -1703,7 +1711,7 @@ return loObject2
 				llMemberDataInherited = 'I' $ .aObjectMembers[lnMember, 3]
 				llMemberDataChanged   = 'C' $ .aObjectMembers[lnMember, 3]
 			Endif lnMember > 0
-			llActiveX = Lower(.oObject.BaseClass) = 'olecontrol'
+			llActiveX = pemstatus(.oObject, 'BaseClass', 5) and Lower(.oObject.BaseClass) = 'olecontrol'
 			If llActiveX
 				Amembers(laMembers, .oObject, 3)
 			Endif llActiveX
@@ -1937,9 +1945,13 @@ return loObject2
 			***				*** DougHennig 05/23/2007: set lClassDesigner. If we're modifying a form, Parent.BaseClass
 			***				***		is "Formset", while it's "Form" for a class
 			***				.lClassDesigner = .oObject.Parent.BaseClass <> 'Formset'
-			lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
-				lower(.oObject.Class))
-			lcLibrary = .oObject.ClassLibrary
+			try
+				lcClass   = IIf(tlTopOfClass and .lClassDesigner, Lower(.oObject.ParentClass), ;
+					lower(.oObject.Class))
+				lcLibrary = .oObject.ClassLibrary
+			catch
+				lcLibrary = ''
+			endtry
 
 			lcPrevClass = lcClass
 			lcPrevLibrary = lcLibrary
