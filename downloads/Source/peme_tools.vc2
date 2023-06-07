@@ -41,53 +41,55 @@ DEFINE CLASS pemeditor_tools AS basecustom OF "peme_basecontrols.vcx"
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID,Init
-	capplicationpath = 
-	cpluginpath = 
-	Name = "pemeditor_tools"
-	oeditorwin = .NULL.
-	outils = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="showform" display="ShowForm"/>
-		<memberdata name="createsystemmenu" display="CreateSystemMenu"/>
-		<memberdata name="aboutpemeditor" display="AboutPEMEditor"/>
-		<memberdata name="addmrufile" display="AddMRUFile"/>
-		<memberdata name="showhelp" display="ShowHelp"/>
-		<memberdata name="transferoldpreferences" display="TransferOldPreferences"/>
-		<memberdata name="getmrulist" display="GetMRUList"/>
-		<memberdata name="diskfilename" display="DiskFileName"/>
-		<memberdata name="getrelativepath" display="GetRelativePath"/>
-		<memberdata name="showerrormsg" display="ShowErrorMsg"/>
-		<memberdata name="findtopmostparent" display="FindTopMostParent"/>
-		<memberdata name="striptabs" display="StripTabs"/>
-		<memberdata name="isnamechar" display="IsNameChar"/>
-		<memberdata name="getcontrolcount" display="GetControlCount"/>
-		<memberdata name="getpemstatus" display="GetPEMStatus"/>
-		<memberdata name="createnewpem" display="CreateNewPEM"/>
-		<memberdata name="editsourcex" display="EditSourceX"/>
-		<memberdata name="editlocalmethodcode" display="EditLocalMethodCode"/>
-		<memberdata name="openurl" display="OpenURL"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="oeditorwin" display="oEditorWin"/>
-		<memberdata name="findclass" display="FindClass"/>
-		<memberdata name="findprocedure" display="FindProcedure"/>
-		<memberdata name="gethtmlheader" display="GetHTMLHeader"/>
-		<memberdata name="closeforms" display="CloseForms"/>
-		<memberdata name="findobjects" display="FindObjects"/>
-		<memberdata name="getpemlist" display="GetPEMList"/>
-		<memberdata name="editmethod" display="EditMethod"/>
-		<memberdata name="getcurrentobject" display="GetCurrentObject"/>
-		<memberdata name="getthis" display="GetThis"/>
-		<memberdata name="selectobject" display="SelectObject"/>
-		<memberdata name="getfullobjectname" display="GetFullObjectName"/>
-		<memberdata name="beautifyselectstatement" type="method" display="BeautifySelectStatement"/>
-		<memberdata name="beautifycode" type="method" display="BeautifyCode"/>
-		<memberdata name="createlocals" type="method" display="CreateLocals"/>
-		<memberdata name="getbeautifyxoptions" type="method" display="GetBeautifyXOptions"/>
-		<memberdata name="getvariableslist" type="method" display="GetVariablesList"/>
-		<memberdata name="getcurrentfilename" display="GetCurrentFileName"/>
-		<memberdata name="cpluginpath" display="cPlugInPath"/>
-		<memberdata name="capplicationpath" display="cApplicationPath"/>
+	*<PropValue>
+		capplicationpath = 
+		cpluginpath = 
+		Name = "pemeditor_tools"
+		oeditorwin = .NULL.
+		outils = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="showform" display="ShowForm"/>
+			<memberdata name="createsystemmenu" display="CreateSystemMenu"/>
+			<memberdata name="aboutpemeditor" display="AboutPEMEditor"/>
+			<memberdata name="addmrufile" display="AddMRUFile"/>
+			<memberdata name="showhelp" display="ShowHelp"/>
+			<memberdata name="transferoldpreferences" display="TransferOldPreferences"/>
+			<memberdata name="getmrulist" display="GetMRUList"/>
+			<memberdata name="diskfilename" display="DiskFileName"/>
+			<memberdata name="getrelativepath" display="GetRelativePath"/>
+			<memberdata name="showerrormsg" display="ShowErrorMsg"/>
+			<memberdata name="findtopmostparent" display="FindTopMostParent"/>
+			<memberdata name="striptabs" display="StripTabs"/>
+			<memberdata name="isnamechar" display="IsNameChar"/>
+			<memberdata name="getcontrolcount" display="GetControlCount"/>
+			<memberdata name="getpemstatus" display="GetPEMStatus"/>
+			<memberdata name="createnewpem" display="CreateNewPEM"/>
+			<memberdata name="editsourcex" display="EditSourceX"/>
+			<memberdata name="editlocalmethodcode" display="EditLocalMethodCode"/>
+			<memberdata name="openurl" display="OpenURL"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="oeditorwin" display="oEditorWin"/>
+			<memberdata name="findclass" display="FindClass"/>
+			<memberdata name="findprocedure" display="FindProcedure"/>
+			<memberdata name="gethtmlheader" display="GetHTMLHeader"/>
+			<memberdata name="closeforms" display="CloseForms"/>
+			<memberdata name="findobjects" display="FindObjects"/>
+			<memberdata name="getpemlist" display="GetPEMList"/>
+			<memberdata name="editmethod" display="EditMethod"/>
+			<memberdata name="getcurrentobject" display="GetCurrentObject"/>
+			<memberdata name="getthis" display="GetThis"/>
+			<memberdata name="selectobject" display="SelectObject"/>
+			<memberdata name="getfullobjectname" display="GetFullObjectName"/>
+			<memberdata name="beautifyselectstatement" type="method" display="BeautifySelectStatement"/>
+			<memberdata name="beautifycode" type="method" display="BeautifyCode"/>
+			<memberdata name="createlocals" type="method" display="CreateLocals"/>
+			<memberdata name="getbeautifyxoptions" type="method" display="GetBeautifyXOptions"/>
+			<memberdata name="getvariableslist" type="method" display="GetVariablesList"/>
+			<memberdata name="getcurrentfilename" display="GetCurrentFileName"/>
+			<memberdata name="cpluginpath" display="cPlugInPath"/>
+			<memberdata name="capplicationpath" display="cApplicationPath"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE beautifycode
 		Lparameters tcSelectText

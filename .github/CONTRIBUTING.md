@@ -36,9 +36,7 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 
 - Make whatever changes are necessary. The source code is in Downloads\Source, including PEMEditor.pjx.
 
-- Edit the Version setting in *BuildProcess\ProjectSettings.txt*.
-
-- Update the version at the top of _README.md_.
+- Edit the **Version** setting in *BuildProcess\ProjectSettings.txt*.
 
 - Describe the changes at the top of _ChangeLog.md_.
 
@@ -51,7 +49,7 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 
 - If you haven't already done so, install VFPX Deployment: choose Check for Updates from the Thor menu, turn on the checkbox for VFPX Deployment, and click Install.
 
-- Start VFP 9 (not VFP Advanced) and CD to the PEMEditor root folder (not the Downloads folder).
+- Start VFP 9 (not VFP Advanced) and CD to the PEMEditor root folder (not the Downloads folder). **Do not run with PJX open, it needs at least a CLOSE ALL**
 
 - Run the VFPX Deployment tool to create the installation files: choose VFPX Project Deployment from the Thor Tools, Application menu. Alternately, execute ```EXECSCRIPT(_screen.cThorDispatcher, 'Thor_Tool_DeployVFPXProject')```.
 
@@ -62,4 +60,4 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 - Create a pull request; ensure the description clearly describes the problem and solution or the enhancement.
 
 ----
-Last changed: _2023/02/16_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2023/06/07_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)

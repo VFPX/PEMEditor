@@ -4,6 +4,16 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.10, released 2023-06-07
+
+- BeautifyX
+  * For BeautifyX / Select statements, do not always separate Group By and Order By into new lines, fixed #40
+- Create Locals
+  * BeautyfyX calling locals code takes out comment block; fixed [Thor issue on \#106](https://github.com/VFPX/Thor/issues/106)
+  * Have Locals code add locals below header block and below lParameter statements; fixed [Thor issue \#104](https://github.com/VFPX/Thor/issues/104)
+  * Closing [Thor issue \#107](https://github.com/VFPX/Thor/issues/107)
+- Automatic version and release date substitution in Readme.md for VFPX Deployment.
+
 ### Version 7.41.09, released 2023-03-11
 
 * Fixed a bug that causes an error in [IntelliSenseX](https://github.com/VFPX/IntelliSenseX) when used with an empty object ([issue 37](https://github.com/VFPX/PEMEditor/issues/37)).
@@ -123,3 +133,6 @@ Version 3.0 - Released 2009-01-11 (1,252 downloads) By Jim Nelson, with help fro
 Version 2.0 - Released 2008-11-10 By Jim Nelson and Doug Hennig.  
 
 Version 1.0 by Marcia Akins
+
+----
+Last changed: _2023/06/07_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)

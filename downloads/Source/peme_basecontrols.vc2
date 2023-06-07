@@ -16,15 +16,17 @@ DEFINE CLASS basecheckbox AS checkbox
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	Alignment = 0
-	AutoSize = .T.
-	BackStyle = 0
-	Caption = "Check1"
-	FontSize = 8
-	lupdatecontrolsourceonchange = .F.		&& .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
-	Name = "basecheckbox"
-	nanchor = 0
-	Value = .F.
+	*<PropValue>
+		Alignment = 0
+		AutoSize = .T.
+		BackStyle = 0
+		Caption = "Check1"
+		FontSize = 8
+		lupdatecontrolsourceonchange = .F.
+		Name = "basecheckbox"
+		nanchor = 0
+		Value = .F.
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method
@@ -97,9 +99,11 @@ DEFINE CLASS basecollection AS collection
  	*< CLASSDATA: Baseclass="collection" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "editpropertydialog.h"
-	Height = 23
-	Name = "basecollection"
-	Width = 23
+	*<PropValue>
+		Height = 23
+		Name = "basecollection"
+		Width = 23
+	*</PropValue>
 
 ENDDEFINE
 
@@ -121,19 +125,21 @@ DEFINE CLASS basecombobox AS combobox
 		*a: aitems[1,0]		&& An array of items for the RowSource if RowSourceType is set to 5-Array
 	*</DefinedPropArrayMethod>
 
-	conkeylabeldot = .F.
-	FontSize = 8
-	Height = 22
-	ItemTips = .T.
-	lgotdot = .F.
-	lsaveanchor = .F.
-	lupdatecontrolsourceonchange = .F.		&& .T. if UpdateControlSource should be called from InteractiveChange
-	luseintellisensex = .F.
-	Name = "basecombobox"
-	nanchor = 0
-	nsavedanchor = 0
-	SelectOnEntry = .T.
-	Style = 2
+	*<PropValue>
+		conkeylabeldot = .F.
+		FontSize = 8
+		Height = 22
+		ItemTips = .T.
+		lgotdot = .F.
+		lsaveanchor = .F.
+		lupdatecontrolsourceonchange = .F.
+		luseintellisensex = .F.
+		Name = "basecombobox"
+		nanchor = 0
+		nsavedanchor = 0
+		SelectOnEntry = .T.
+		Style = 2
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.
@@ -234,12 +240,14 @@ DEFINE CLASS basecommandbutton AS commandbutton
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	Caption = "Command1"
-	FontSize = 8
-	Height = 23
-	Name = "basecommandbutton"
-	nanchor = 0
-	Width = 75
+	*<PropValue>
+		Caption = "Command1"
+		FontSize = 8
+		Height = 23
+		Name = "basecommandbutton"
+		nanchor = 0
+		Width = 75
+	*</PropValue>
 	
 	PROCEDURE Init
 		With This
@@ -267,14 +275,16 @@ DEFINE CLASS basecontainer AS container
 		*p: nsavedanchor
 	*</DefinedPropArrayMethod>
 
-	BackStyle = 0
-	BorderWidth = 0
-	Enabled = .T.
-	lsaveanchor = .F.
-	Name = "basecontainer"
-	nanchor = 0
-	nsavedanchor = 0
-	Style = 3
+	*<PropValue>
+		BackStyle = 0
+		BorderWidth = 0
+		Enabled = .T.
+		lsaveanchor = .F.
+		Name = "basecontainer"
+		nanchor = 0
+		nsavedanchor = 0
+		Style = 3
+	*</PropValue>
 	
 	PROCEDURE enabled_assign
 		lparameters tlEnabled
@@ -337,29 +347,31 @@ DEFINE CLASS basecustom AS custom
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID
-	lreleaseondestroy = .F.
-	Name = "basecustom"
-	_memberdata = <VFPData>
-		<memberdata name="release" display="Release"/>
-		<memberdata name="addmrufile" display="AddMRUFile"/>
-		<memberdata name="diskfilename" display="DiskFileName"/>
-		<memberdata name="getcontrolcount" display="GetControlCount"/>
-		<memberdata name="getpemstatus" display="GetPEMStatus"/>
-		<memberdata name="getrelativepath" display="GetRelativePath"/>
-		<memberdata name="isnamechar" display="IsNameChar"/>
-		<memberdata name="openurl" display="OpenURL"/>
-		<memberdata name="showerrormsg" display="ShowErrorMsg"/>
-		<memberdata name="showhelp" display="ShowHelp"/>
-		<memberdata name="striptabs" display="StripTabs"/>
-		<memberdata name="getmrulist" display="GetMRUList"/>
-		<memberdata name="editsourcex" display="EditSourceX"/>
-		<memberdata name="getmruid" display="GetMRUID"/>
-		<memberdata name="checkoutscc" display="CheckOutSCC"/>
-		<memberdata name="atspecial" type="method" display="AtSpecial"/>
-		<memberdata name="getpluginpath" display="GetPlugInPath"/>
-		<memberdata name="browsefile" display="BrowseFile"/>
-		<memberdata name="getthoroption" type="method" display="GetThorOption"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		lreleaseondestroy = .F.
+		Name = "basecustom"
+		_memberdata = <VFPData>
+			<memberdata name="release" display="Release"/>
+			<memberdata name="addmrufile" display="AddMRUFile"/>
+			<memberdata name="diskfilename" display="DiskFileName"/>
+			<memberdata name="getcontrolcount" display="GetControlCount"/>
+			<memberdata name="getpemstatus" display="GetPEMStatus"/>
+			<memberdata name="getrelativepath" display="GetRelativePath"/>
+			<memberdata name="isnamechar" display="IsNameChar"/>
+			<memberdata name="openurl" display="OpenURL"/>
+			<memberdata name="showerrormsg" display="ShowErrorMsg"/>
+			<memberdata name="showhelp" display="ShowHelp"/>
+			<memberdata name="striptabs" display="StripTabs"/>
+			<memberdata name="getmrulist" display="GetMRUList"/>
+			<memberdata name="editsourcex" display="EditSourceX"/>
+			<memberdata name="getmruid" display="GetMRUID"/>
+			<memberdata name="checkoutscc" display="CheckOutSCC"/>
+			<memberdata name="atspecial" type="method" display="AtSpecial"/>
+			<memberdata name="getpluginpath" display="GetPlugInPath"/>
+			<memberdata name="browsefile" display="BrowseFile"/>
+			<memberdata name="getthoroption" type="method" display="GetThorOption"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE addmrufile		&& Adds a file (or class within a file) to its appropriate VFP MRU list.  The last parameter is optional (can be inferred from the filename, after all)
 		Lparameters lcFileName, lcClassName, lcMRU_ID
@@ -1060,20 +1072,22 @@ DEFINE CLASS baseeditbox AS editbox
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	conkeylabeldot = .F.
-	FontSize = 8
-	IntegralHeight = .T.
-	lgotdot = .F.
-	lsaveanchor = .F.
-	lupdatecontrolsourceonchange = .F.		&& .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
-	luseintellisensex = .F.
-	Name = "baseeditbox"
-	nanchor = 0
-	nsavedanchor = 0
-	SelectOnEntry = .T.
-	_memberdata = <VFPData>
-		<memberdata name="luseintellisensex" type="property" display="lUseIntellisenseX"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		conkeylabeldot = .F.
+		FontSize = 8
+		IntegralHeight = .T.
+		lgotdot = .F.
+		lsaveanchor = .F.
+		lupdatecontrolsourceonchange = .F.
+		luseintellisensex = .F.
+		Name = "baseeditbox"
+		nanchor = 0
+		nsavedanchor = 0
+		SelectOnEntry = .T.
+		_memberdata = <VFPData>
+			<memberdata name="luseintellisensex" type="property" display="lUseIntellisenseX"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.
@@ -1260,24 +1274,26 @@ DEFINE CLASS baseform AS form
 		*p: opersist		&& A reference to a FoxResource object
 	*</DefinedPropArrayMethod>
 
-	AllowOutput = .F.
-	AutoCenter = .T.
-	Caption = "Form"
-	cfoxuserid = 		&& The FOXUSER ID to save/restore settings to
-	cfoxusername = 		&& The FOXUSER NAME to save/restore settings to
-	cpreferencesfile = (Home(7) + "PEMEditor_Preferences.DBF")
-	DataSession = 2
-	DoCreate = .T.
-	FontSize = 8
-	lpemeditorform = .T.		&& Indicates that this is a PEM Editor form
-	lpersistsizeposition = .T.		&& .T. to persist the size and position of the form
-	lsavesettings = .T.		&& .T. to save and restore settings
-	Name = "baseform"
-	nfontsize = 8
-	nhighlightbackcolor = 0
-	nhighlightforecolor = 0
-	opersist = .NULL.		&& A reference to a FoxResource object
-	ShowTips = .T.
+	*<PropValue>
+		AllowOutput = .F.
+		AutoCenter = .T.
+		Caption = "Form"
+		cfoxuserid = 
+		cfoxusername = 
+		cpreferencesfile = (Home(7) + "PEMEditor_Preferences.DBF")
+		DataSession = 2
+		DoCreate = .T.
+		FontSize = 8
+		lpemeditorform = .T.
+		lpersistsizeposition = .T.
+		lsavesettings = .T.
+		Name = "baseform"
+		nfontsize = 8
+		nhighlightbackcolor = 0
+		nhighlightforecolor = 0
+		opersist = .NULL.
+		ShowTips = .T.
+	*</PropValue>
 
 	ADD OBJECT 'ChangeFontSize' AS changefontsize WITH ;
 		Height = 17, ;
@@ -2057,40 +2073,42 @@ DEFINE CLASS baseformnew AS form
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	AllowOutput = .F.
-	AutoCenter = .T.
-	BindControls = .F.
-	Caption = "Form"
-	cfoxuserid = 		&& The FOXUSER ID to save/restore settings to
-	cfoxusername = 		&& The FOXUSER NAME to save/restore settings to
-	DataSession = 2
-	DoCreate = .T.
-	FontSize = 8
-	lbindcontrols = .T.
-	lpemeditorform = .T.		&& Indicates that this is a PEM Editor form
-	lpersistsizeposition = .T.		&& .T. to persist the size and position of the form
-	lsavesettings = .T.		&& .T. to save and restore settings
-	Name = "baseformnew"
-	nfontsize = 8
-	nhighlightbackcolor = 0
-	nhighlightforecolor = 0
-	omysettings = .NULL.
-	ShowTips = .T.
-	_memberdata = <VFPData>
-		<memberdata name="omysettings" display="oMySettings"/>
-		<memberdata name="lpersistsizeposition" display="lPersistSizePosition"/>
-		<memberdata name="setdefaults" display="SetDefaults"/>
-		<memberdata name="changefont" display="ChangeFont"/>
-		<memberdata name="restorefont" display="RestoreFont"/>
-		<memberdata name="loadsettings" display="LoadSettings"/>
-		<memberdata name="cfoxuserid" display="cFoxUserID"/>
-		<memberdata name="savecolumninfo" display="SaveColumnInfo"/>
-		<memberdata name="loadcolumninfo" display="LoadColumnInfo"/>
-		<memberdata name="savesettings" display="SaveSettings"/>
-		<memberdata name="lbindcontrols" display="lBindControls"/>
-		<memberdata name="savedockinginfo" display="SaveDockingInfo"/>
-		<memberdata name="insurevisible" display="InsureVisible"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		AllowOutput = .F.
+		AutoCenter = .T.
+		BindControls = .F.
+		Caption = "Form"
+		cfoxuserid = 
+		cfoxusername = 
+		DataSession = 2
+		DoCreate = .T.
+		FontSize = 8
+		lbindcontrols = .T.
+		lpemeditorform = .T.
+		lpersistsizeposition = .T.
+		lsavesettings = .T.
+		Name = "baseformnew"
+		nfontsize = 8
+		nhighlightbackcolor = 0
+		nhighlightforecolor = 0
+		omysettings = .NULL.
+		ShowTips = .T.
+		_memberdata = <VFPData>
+			<memberdata name="omysettings" display="oMySettings"/>
+			<memberdata name="lpersistsizeposition" display="lPersistSizePosition"/>
+			<memberdata name="setdefaults" display="SetDefaults"/>
+			<memberdata name="changefont" display="ChangeFont"/>
+			<memberdata name="restorefont" display="RestoreFont"/>
+			<memberdata name="loadsettings" display="LoadSettings"/>
+			<memberdata name="cfoxuserid" display="cFoxUserID"/>
+			<memberdata name="savecolumninfo" display="SaveColumnInfo"/>
+			<memberdata name="loadcolumninfo" display="LoadColumnInfo"/>
+			<memberdata name="savesettings" display="SaveSettings"/>
+			<memberdata name="lbindcontrols" display="lBindControls"/>
+			<memberdata name="savedockinginfo" display="SaveDockingInfo"/>
+			<memberdata name="insurevisible" display="InsureVisible"/>
+		</VFPData>
+	*</PropValue>
 
 	ADD OBJECT 'ChangeFontSize' AS changefontsize WITH ;
 		Height = 17, ;
@@ -3057,19 +3075,21 @@ DEFINE CLASS basegrid AS grid
 		*p: nsavedanchor
 	*</DefinedPropArrayMethod>
 
-	AllowCellSelection = .F.
-	ColumnCount = 0
-	DeleteMark = .F.
-	GridLines = 0
-	lsaveanchor = .F.
-	Name = "basegrid"
-	nanchor = 0
-	nsavedanchor = 0
-	Panel = 1
-	RecordMark = .F.
-	SplitBar = .F.
-	TabIndex = 1
-	ZOrderSet = 0
+	*<PropValue>
+		AllowCellSelection = .F.
+		ColumnCount = 0
+		DeleteMark = .F.
+		GridLines = 0
+		lsaveanchor = .F.
+		Name = "basegrid"
+		nanchor = 0
+		nsavedanchor = 0
+		Panel = 1
+		RecordMark = .F.
+		SplitBar = .F.
+		TabIndex = 1
+		ZOrderSet = 0
+	*</PropValue>
 	
 	PROCEDURE Init
 		* Setup grid highlighting.
@@ -3130,10 +3150,12 @@ DEFINE CLASS baseimage AS image
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	Height = 17
-	Name = "baseimage"
-	nanchor = 0
-	Width = 100
+	*<PropValue>
+		Height = 17
+		Name = "baseimage"
+		nanchor = 0
+		Width = 100
+	*</PropValue>
 	
 	PROCEDURE Init
 		If PEME_IsVersion9()
@@ -3152,12 +3174,14 @@ DEFINE CLASS baselabel AS label
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	AutoSize = .T.
-	BackStyle = 0
-	Caption = "Label1"
-	FontSize = 8
-	Name = "baselabel"
-	nanchor = 0
+	*<PropValue>
+		AutoSize = .T.
+		BackStyle = 0
+		Caption = "Label1"
+		FontSize = 8
+		Name = "baselabel"
+		nanchor = 0
+	*</PropValue>
 	
 	PROCEDURE Init
 		With This
@@ -3187,13 +3211,15 @@ DEFINE CLASS baselabelledbox AS container
 		*p: builder		&& Specifies the builder for this object
 	*</DefinedPropArrayMethod>
 
-	BackStyle = 0
-	BorderWidth = 0
-	builder = BaseLabelledBoxBuilder.PRG		&& Specifies the builder for this object
-	Height = 133
-	Name = "baselabelledbox"
-	Style = 3
-	Width = 168
+	*<PropValue>
+		BackStyle = 0
+		BorderWidth = 0
+		builder = BaseLabelledBoxBuilder.PRG
+		Height = 133
+		Name = "baselabelledbox"
+		Style = 3
+		Width = 168
+	*</PropValue>
 
 	ADD OBJECT 'lblBox' AS baselabel WITH ;
 		BackStyle = 1, ;
@@ -3235,10 +3261,12 @@ DEFINE CLASS baseline AS line
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	Height = 17
-	Name = "baseline"
-	nanchor = 0
-	Width = 100
+	*<PropValue>
+		Height = 17
+		Name = "baseline"
+		nanchor = 0
+		Width = 100
+	*</PropValue>
 	
 	PROCEDURE Init
 		With This
@@ -3260,13 +3288,15 @@ DEFINE CLASS baseline3d AS shape
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	BackStyle = 0
-	Height = 1
-	Name = "baseline3d"
-	nanchor = 0
-	SpecialEffect = 0
-	Style = 3
-	Width = 100
+	*<PropValue>
+		BackStyle = 0
+		Height = 1
+		Name = "baseline3d"
+		nanchor = 0
+		SpecialEffect = 0
+		Style = 3
+		Width = 100
+	*</PropValue>
 	
 	PROCEDURE Init
 		If PEME_IsVersion9()
@@ -3288,12 +3318,14 @@ DEFINE CLASS baselistbox AS listbox
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	FontSize = 8
-	IntegralHeight = .T.
-	ItemTips = .T.
-	lupdatecontrolsourceonchange = .F.		&& .T. if UpdateControlSource should be called from InteractiveChange
-	Name = "baselistbox"
-	nanchor = 0
+	*<PropValue>
+		FontSize = 8
+		IntegralHeight = .T.
+		ItemTips = .T.
+		lupdatecontrolsourceonchange = .F.
+		Name = "baselistbox"
+		nanchor = 0
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.
@@ -3364,19 +3396,21 @@ DEFINE CLASS baseoletreeview AS olecontrol
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	Height = 100
-	lsaveanchor = .F.
-	Name = "baseoletreeview"
-	nanchor = 0
-	nmousebutton = 0
-	nmouseshift = 0
-	nsavedanchor = 0
-	Width = 100
-	_memberdata = <VFPData>
-		<memberdata name="lsaveanchor_assign" display="lsaveanchor_Assign"/>
-		<memberdata name="nmousebutton" display="nMouseButton"/>
-		<memberdata name="nmouseshift" display="nMouseShift"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		Height = 100
+		lsaveanchor = .F.
+		Name = "baseoletreeview"
+		nanchor = 0
+		nmousebutton = 0
+		nmouseshift = 0
+		nsavedanchor = 0
+		Width = 100
+		_memberdata = <VFPData>
+			<memberdata name="lsaveanchor_assign" display="lsaveanchor_Assign"/>
+			<memberdata name="nmousebutton" display="nMouseButton"/>
+			<memberdata name="nmouseshift" display="nMouseShift"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE Init
 		If PEME_IsVersion9()
@@ -3422,12 +3456,14 @@ DEFINE CLASS baseoptionbutton AS optionbutton
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	AutoSize = .T.
-	BackStyle = 0
-	Caption = "Option1"
-	FontSize = 8
-	Name = "baseoptionbutton"
-	nanchor = 0
+	*<PropValue>
+		AutoSize = .T.
+		BackStyle = 0
+		Caption = "Option1"
+		FontSize = 8
+		Name = "baseoptionbutton"
+		nanchor = 0
+	*</PropValue>
 	
 	PROCEDURE Init
 		With This
@@ -3466,17 +3502,19 @@ DEFINE CLASS baseoptiongroup AS optiongroup
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	BackStyle = 0
-	BorderStyle = 0
-	ButtonCount = 0
-	Height = 46
-	lupdatecontrolsourceonchange = .F.		&& .T. if UpdateControlSource should be called from InteractiveChange
-	MemberClass = "baseoptionbutton"
-	MemberClassLibrary = peme_basecontrols.vcx
-	Name = "baseoptiongroup"
-	nanchor = 0
-	Value = 0
-	Width = 71
+	*<PropValue>
+		BackStyle = 0
+		BorderStyle = 0
+		ButtonCount = 0
+		Height = 46
+		lupdatecontrolsourceonchange = .F.
+		MemberClass = "baseoptionbutton"
+		MemberClassLibrary = peme_basecontrols.vcx
+		Name = "baseoptiongroup"
+		nanchor = 0
+		Value = 0
+		Width = 71
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.
@@ -3547,12 +3585,14 @@ DEFINE CLASS basepage AS page
 		*p: nhelpid
 	*</DefinedPropArrayMethod>
 
-	Caption = "Page1"
-	FontSize = 8
-	Height = 135
-	Name = "basepage"
-	nhelpid = 0
-	Width = 135
+	*<PropValue>
+		Caption = "Page1"
+		FontSize = 8
+		Height = 135
+		Name = "basepage"
+		nhelpid = 0
+		Width = 135
+	*</PropValue>
 	
 	PROCEDURE Activate
 		* Refresh all controls.
@@ -3601,15 +3641,17 @@ DEFINE CLASS basepageframe AS pageframe
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	ActivePage = 0
-	ErasePage = .T.
-	Height = 248
-	MemberClass = "basepage"
-	MemberClassLibrary = peme_basecontrols.vcx
-	Name = "basepageframe"
-	nanchor = 0
-	PageCount = 0
-	TabStyle = 1
+	*<PropValue>
+		ActivePage = 0
+		ErasePage = .T.
+		Height = 248
+		MemberClass = "basepage"
+		MemberClassLibrary = peme_basecontrols.vcx
+		Name = "basepageframe"
+		nanchor = 0
+		PageCount = 0
+		TabStyle = 1
+	*</PropValue>
 	
 	PROCEDURE activepage_assign
 		lparameters tActivePage
@@ -3637,13 +3679,15 @@ DEFINE CLASS baseshape AS shape
 		*p: nsavedanchor
 	*</DefinedPropArrayMethod>
 
-	BackStyle = 0
-	Height = 17
-	lsaveanchor = .F.
-	Name = "baseshape"
-	nanchor = 0
-	nsavedanchor = 0
-	Width = 100
+	*<PropValue>
+		BackStyle = 0
+		Height = 17
+		lsaveanchor = .F.
+		Name = "baseshape"
+		nanchor = 0
+		nsavedanchor = 0
+		Width = 100
+	*</PropValue>
 	
 	PROCEDURE Init
 		If PEME_IsVersion9()
@@ -3678,11 +3722,13 @@ DEFINE CLASS basespinner AS spinner
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	FontSize = 8
-	Height = 22
-	Name = "basespinner"
-	nanchor = 0
-	SelectOnEntry = .T.
+	*<PropValue>
+		FontSize = 8
+		Height = 22
+		Name = "basespinner"
+		nanchor = 0
+		SelectOnEntry = .T.
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.
@@ -3816,14 +3862,16 @@ DEFINE CLASS basetextbox AS textbox
 		*p: nanchor
 	*</DefinedPropArrayMethod>
 
-	conkeylabeldot = .F.
-	FontSize = 8
-	Format = "T"
-	Height = 22
-	lupdatecontrolsourceonchange = .F.		&& .T. to update the control source in InteractiveChange (needed if AnyChange calls Refresh)
-	Name = "basetextbox"
-	nanchor = 0
-	SelectOnEntry = .T.
+	*<PropValue>
+		conkeylabeldot = .F.
+		FontSize = 8
+		Format = "T"
+		Height = 22
+		lupdatecontrolsourceonchange = .F.
+		Name = "basetextbox"
+		nanchor = 0
+		SelectOnEntry = .T.
+	*</PropValue>
 	
 	PROCEDURE anychange		&& Called from both InteractiveChange and ProgrammaticChange to consolidate handling any changes
 		* Abstract method.

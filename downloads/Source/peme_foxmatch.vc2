@@ -12,11 +12,13 @@ DEFINE CLASS matchclass AS matchengine OF "peme_foxmatch.vcx"
 		*p: oregexp
 	*</DefinedPropArrayMethod>
 
-	Name = "matchclass"
-	oregexp = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="oregexp" display="oRegExp"/>
+	*<PropValue>
+		Name = "matchclass"
+		oregexp = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="oregexp" display="oRegExp"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE Init
 		Local loRegExp As 'VBScript.RegExp'
@@ -98,7 +100,9 @@ ENDDEFINE
 DEFINE CLASS matchdefault AS matchengine OF "peme_foxmatch.vcx" 
  	*< CLASSDATA: Baseclass="custom" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Name = "matchdefault"
+	*<PropValue>
+		Name = "matchdefault"
+	*</PropValue>
 	
 	PROCEDURE searchfor
 		This.AddMatch()
@@ -124,26 +128,28 @@ DEFINE CLASS matchengine AS custom
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	classexactmatch = .F.
-	classsearch = 
-	filename = 
-	Name = "matchengine"
-	searchbaseclass = 
-	searchtype = 
-	_memberdata = <VFPData>
-		<memberdata name="addmatch" display="AddMatch"/>
-		<memberdata name="classsearch_assign" display="ClassSearch_Assign"/>
-		<memberdata name="decodetimestamp" display="DecodeTimeStamp"/>
-		<memberdata name="getclassfilename" display="GetClassFileName"/>
-		<memberdata name="searchbaseclass_assign" display="SearchBaseClass_Assign"/>
-		<memberdata name="searchfor" display="SearchFor"/>
-		<memberdata name="classexactmatch" display="ClassExactMatch"/>
-		<memberdata name="classsearch" display="ClassSearch"/>
-		<memberdata name="filename" display="FileName"/>
-		<memberdata name="name" display="Name"/>
-		<memberdata name="searchbaseclass" display="SearchBaseClass"/>
-		<memberdata name="searchtype" display="SearchType"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		classexactmatch = .F.
+		classsearch = 
+		filename = 
+		Name = "matchengine"
+		searchbaseclass = 
+		searchtype = 
+		_memberdata = <VFPData>
+			<memberdata name="addmatch" display="AddMatch"/>
+			<memberdata name="classsearch_assign" display="ClassSearch_Assign"/>
+			<memberdata name="decodetimestamp" display="DecodeTimeStamp"/>
+			<memberdata name="getclassfilename" display="GetClassFileName"/>
+			<memberdata name="searchbaseclass_assign" display="SearchBaseClass_Assign"/>
+			<memberdata name="searchfor" display="SearchFor"/>
+			<memberdata name="classexactmatch" display="ClassExactMatch"/>
+			<memberdata name="classsearch" display="ClassSearch"/>
+			<memberdata name="filename" display="FileName"/>
+			<memberdata name="name" display="Name"/>
+			<memberdata name="searchbaseclass" display="SearchBaseClass"/>
+			<memberdata name="searchtype" display="SearchType"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE addmatch
 		LPARAMETERS ttTimeStamp, tcClass, tcParentClass, tcClassLoc, tcBaseClass, tnStartRange, tnEndRange

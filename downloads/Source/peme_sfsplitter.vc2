@@ -48,29 +48,31 @@ DEFINE CLASS peme_sfsplitter AS control
 		*p: nsavedanchor
 	*</DefinedPropArrayMethod>
 
-	BackColor = 192,192,192
-	BackStyle = 1
-	BorderColor = 255,0,0
-	BorderWidth = 2
-	cobject1name = 		&& The name of the object above (for a vertical splitter) or to the left of (for a horizontal splitter) the splitter
-	cobject2name = 		&& The name of the object below (for a vertical splitter) or to the right of (for a horizontal splitter) the splitter
-	ctooltiptextdownarrow = 
-	ctooltiptextleftarrow = 
-	ctooltiptextrightarrow = 
-	ctooltiptextuparrow = 
-	Height = 248
-	lcollapsed = .F.
-	lcollapsible = .F.
-	linitialized = .F.		&& .T. after the control has been initialized
-	lsaveanchor = .F.
-	lshowgripper = .T.		&& A flag to indicate if you want the Gripiper graphic image to be shown.
-	Name = "peme_sfsplitter"
-	nanchor = 0
-	nobject1minsize = 0		&& The minimum height (for a vertical splitter) or width (for a horizontal splitter) of Object 1
-	nobject2minsize = 0		&& The minimum height (for a vertical splitter) or width (for a horizontal splitter) of Object 2
-	noriginalminimum = X
-	nsavedanchor = 0
-	Width = 25
+	*<PropValue>
+		BackColor = 192,192,192
+		BackStyle = 1
+		BorderColor = 255,0,0
+		BorderWidth = 2
+		cobject1name = 
+		cobject2name = 
+		ctooltiptextdownarrow = 
+		ctooltiptextleftarrow = 
+		ctooltiptextrightarrow = 
+		ctooltiptextuparrow = 
+		Height = 248
+		lcollapsed = .F.
+		lcollapsible = .F.
+		linitialized = .F.
+		lsaveanchor = .F.
+		lshowgripper = .T.
+		Name = "peme_sfsplitter"
+		nanchor = 0
+		nobject1minsize = 0
+		nobject2minsize = 0
+		noriginalminimum = X
+		nsavedanchor = 0
+		Width = 25
+	*</PropValue>
 
 	ADD OBJECT 'gripperhor' AS image WITH ;
 		Height = 5, ;
@@ -567,27 +569,29 @@ ENDDEFINE
 DEFINE CLASS peme_sfsplitterh AS peme_sfsplitter OF "peme_sfsplitter.vcx" 
  	*< CLASSDATA: Baseclass="control" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	MousePointer = 9
-	Name = "peme_sfsplitterh"
-	nanchor = 13
-	gripperhor.Height = 5
-	gripperhor.Name = "gripperhor"
-	gripperhor.Width = 21
-	gripperver.Height = 21
-	gripperver.Name = "gripperver"
-	gripperver.Width = 5
-	imgDownArrow.Height = 21
-	imgDownArrow.Name = "imgDownArrow"
-	imgDownArrow.Width = 21
-	imgUpArrow.Height = 21
-	imgUpArrow.Name = "imgUpArrow"
-	imgUpArrow.Width = 21
-	ImgRightArrow.Height = 17
-	ImgRightArrow.Name = "ImgRightArrow"
-	ImgRightArrow.Width = 17
-	ImgLeftArrow.Height = 17
-	ImgLeftArrow.Name = "ImgLeftArrow"
-	ImgLeftArrow.Width = 17
+	*<PropValue>
+		MousePointer = 9
+		Name = "peme_sfsplitterh"
+		nanchor = 13
+		gripperhor.Height = 5
+		gripperhor.Name = "gripperhor"
+		gripperhor.Width = 21
+		gripperver.Height = 21
+		gripperver.Name = "gripperver"
+		gripperver.Width = 5
+		imgDownArrow.Height = 21
+		imgDownArrow.Name = "imgDownArrow"
+		imgDownArrow.Width = 21
+		imgUpArrow.Height = 21
+		imgUpArrow.Name = "imgUpArrow"
+		imgUpArrow.Width = 21
+		ImgRightArrow.Height = 17
+		ImgRightArrow.Name = "ImgRightArrow"
+		ImgRightArrow.Width = 17
+		ImgLeftArrow.Height = 17
+		ImgLeftArrow.Name = "ImgLeftArrow"
+		ImgLeftArrow.Width = 17
+	*</PropValue>
 	
 	PROCEDURE adjustminimum
 		* Don't allow the form to be sized smaller than the left object should be.
@@ -660,29 +664,31 @@ ENDDEFINE
 DEFINE CLASS peme_sfsplitterv AS peme_sfsplitter OF "peme_sfsplitter.vcx" 
  	*< CLASSDATA: Baseclass="control" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Height = 10
-	MousePointer = 7
-	Name = "peme_sfsplitterv"
-	nanchor = 14
-	Width = 200
-	gripperhor.Height = 5
-	gripperhor.Name = "gripperhor"
-	gripperhor.Width = 21
-	gripperver.Height = 21
-	gripperver.Name = "gripperver"
-	gripperver.Width = 5
-	imgDownArrow.Height = 21
-	imgDownArrow.Name = "imgDownArrow"
-	imgDownArrow.Width = 21
-	imgUpArrow.Height = 21
-	imgUpArrow.Name = "imgUpArrow"
-	imgUpArrow.Width = 21
-	ImgRightArrow.Height = 17
-	ImgRightArrow.Name = "ImgRightArrow"
-	ImgRightArrow.Width = 17
-	ImgLeftArrow.Height = 17
-	ImgLeftArrow.Name = "ImgLeftArrow"
-	ImgLeftArrow.Width = 17
+	*<PropValue>
+		Height = 10
+		MousePointer = 7
+		Name = "peme_sfsplitterv"
+		nanchor = 14
+		Width = 200
+		gripperhor.Height = 5
+		gripperhor.Name = "gripperhor"
+		gripperhor.Width = 21
+		gripperver.Height = 21
+		gripperver.Name = "gripperver"
+		gripperver.Width = 5
+		imgDownArrow.Height = 21
+		imgDownArrow.Name = "imgDownArrow"
+		imgDownArrow.Width = 21
+		imgUpArrow.Height = 21
+		imgUpArrow.Name = "imgUpArrow"
+		imgUpArrow.Width = 21
+		ImgRightArrow.Height = 17
+		ImgRightArrow.Name = "ImgRightArrow"
+		ImgRightArrow.Width = 17
+		ImgLeftArrow.Height = 17
+		ImgLeftArrow.Name = "ImgLeftArrow"
+		ImgLeftArrow.Width = 17
+	*</PropValue>
 	
 	PROCEDURE adjustminimum
 		* Don't allow the form to be sized smaller than the top object should be.

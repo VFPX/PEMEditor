@@ -29,32 +29,34 @@ DEFINE CLASS contextmenu AS custom
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	keyword = .F.
-	Name = "contextmenu"
-	nchoice = 0
-	nchoices = 0
-	ncurrentlevel = 1
-	parameters = .F.
-	_memberdata = <VFPData>
-		<memberdata name="ncurrentlevel" display="nCurrentLevel"/>
-		<memberdata name="abarcounts" display="aBarCounts"/>
-		<memberdata name="amenunames" display="aMenuNames"/>
-		<memberdata name="aallmenunames" display="aAllMenuNames"/>
-		<memberdata name="achoices" display="aChoices"/>
-		<memberdata name="nchoices" display="nChoices"/>
-		<memberdata name="activate" display="Activate"/>
-		<memberdata name="nchoice" display="nChoice"/>
-		<memberdata name="keyword" display="Keyword"/>
-		<memberdata name="parameters" display="Parameters"/>
-		<memberdata name="createcontextmenu" display="CreateContextMenu"/>
-		<memberdata name="calculateshortcutmenuposition" display="CalculateShortcutMenuPosition"/>
-		<memberdata name="pix2fox" display="Pix2Fox"/>
-		<memberdata name="addmenuitem" display="AddMenuItem"/>
-		<memberdata name="addsubmenu" display="AddSubMenu"/>
-		<memberdata name="endsubmenu" display="EndSubMenu"/>
-		<memberdata name="addmenuitemx" display="AddMenuItemX"/>
-		<memberdata name="addmenuitemexec" display="AddMenuItemExec"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		keyword = .F.
+		Name = "contextmenu"
+		nchoice = 0
+		nchoices = 0
+		ncurrentlevel = 1
+		parameters = .F.
+		_memberdata = <VFPData>
+			<memberdata name="ncurrentlevel" display="nCurrentLevel"/>
+			<memberdata name="abarcounts" display="aBarCounts"/>
+			<memberdata name="amenunames" display="aMenuNames"/>
+			<memberdata name="aallmenunames" display="aAllMenuNames"/>
+			<memberdata name="achoices" display="aChoices"/>
+			<memberdata name="nchoices" display="nChoices"/>
+			<memberdata name="activate" display="Activate"/>
+			<memberdata name="nchoice" display="nChoice"/>
+			<memberdata name="keyword" display="Keyword"/>
+			<memberdata name="parameters" display="Parameters"/>
+			<memberdata name="createcontextmenu" display="CreateContextMenu"/>
+			<memberdata name="calculateshortcutmenuposition" display="CalculateShortcutMenuPosition"/>
+			<memberdata name="pix2fox" display="Pix2Fox"/>
+			<memberdata name="addmenuitem" display="AddMenuItem"/>
+			<memberdata name="addsubmenu" display="AddSubMenu"/>
+			<memberdata name="endsubmenu" display="EndSubMenu"/>
+			<memberdata name="addmenuitemx" display="AddMenuItemX"/>
+			<memberdata name="addmenuitemexec" display="AddMenuItemExec"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE activate		&& Occurs when a FormSet, Form, or Page object becomes active or when a ToolBar object is shown.
 		Local lcMenu, lnChoice, lnI

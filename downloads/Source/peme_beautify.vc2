@@ -23,7 +23,9 @@ DEFINE CLASS basebeautify AS basecustom OF "peme_basecontrols.vcx"
 		*m: trimtrailingwhitespace
 	*</DefinedPropArrayMethod>
 
-	Name = "basebeautify"
+	*<PropValue>
+		Name = "basebeautify"
+	*</PropValue>
 	
 	PROCEDURE addwhitespace
 		Lparameters lcLine, lnDestColumn
@@ -377,74 +379,76 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID,Init
-	cbeautifyoptions = 
-	ccurrentlocals = 
-	ccurrentwithendwith = .F.
-	clocalsplugin = 
-	clocalstatement = 
-	cpluginbeautifyselect = 
-	cpluginisoperator = 
-	csystemmemoryvariables = 
-	laddmdots = .F.
-	laddtockl = .F.
-	lapplyckl = .F.
-	lautoaddtockl = .F.
-	lfieldreference = .F.
-	lnodotsinassignments = .F.
-	lreturns = .F.
-	ltestselect = .F.
-	nafterwithcolumn = 0
-	Name = "beautify"
-	nbeautifyselectiontype = 2
-	ncharsafterset = .F.
-	nlocalslist = 
-	nmdotsusage = 0
-	nnewlocalscount = 0
-	nselend = 0
-	nselstart = 0
-	ntabwidth = 1
-	nwithendwithlevel = 0
-	oeditorwin = .NULL.
-	onativebeautify = .NULL.
-	oprefs = .NULL.
-	oregexp = .F.
-	outils = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="onativebeautify" display="oNativeBeautify"/>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="oeditorwin" display="oEditorWin"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="geteditorwindowtext" display="GetEditorWindowText"/>
-		<memberdata name="nselstart" display="nSelStart"/>
-		<memberdata name="nselend" display="nSelEnd"/>
-		<memberdata name="getparameterslist" display="GetParametersList"/>
-		<memberdata name="getidlist" display="GetIDList"/>
-		<memberdata name="idlistsetup" display="IDListSetup"/>
-		<memberdata name="parselineforidlist" display="ParseLineForIDList"/>
-		<memberdata name="insertidothers" display="InsertIDOthers"/>
-		<memberdata name="createidlistsummary" display="CreateIDListSummary"/>
-		<memberdata name="createidlistcursors" display="CreateIDListCursors"/>
-		<memberdata name="insertid" display="InsertID"/>
-		<memberdata name="peme_createidlist" display="PEME_CreateIDList"/>
-		<memberdata name="createidlist" display="CreateIDList"/>
-		<memberdata name="lfieldreference" display="lFieldReference"/>
-		<memberdata name="insertconstants" display="InsertConstants"/>
-		<memberdata name="getconstants" display="GetConstants"/>
-		<memberdata name="peme_createobjectidlist" display="PEME_CreateObjectIDList"/>
-		<memberdata name="doformidlist" display="DoFormIDList"/>
-		<memberdata name="addobjectidlist" display="AddObjectIDList"/>
-		<memberdata name="insertlocalids" display="InsertLocalIDs"/>
-		<memberdata name="getprocedurestartpositions" display="GetProcedureStartPositions"/>
-		<memberdata name="converttabsforindent" display="ConvertTabsForIndent"/>
-		<memberdata name="doidlisttext" display="DoIDListText"/>
-		<memberdata name="laddmdots" display="lAddMDots"/>
-		<memberdata name="nmdotsusage" display="nMDotsUsage"/>
-		<memberdata name="lreturns" display="lRETURNS"/>
-		<memberdata name="beautifyword" display="BeautifyWord"/>
-		<memberdata name="lapplyckl" display="lApplyCKL"/>
-		<memberdata name="laddtockl" display="lAddtoCKL"/>
-		<memberdata name="lautoaddtockl" display="lAutoAddtoCKL"/>
+	*<PropValue>
+		cbeautifyoptions = 
+		ccurrentlocals = 
+		ccurrentwithendwith = .F.
+		clocalsplugin = 
+		clocalstatement = 
+		cpluginbeautifyselect = 
+		cpluginisoperator = 
+		csystemmemoryvariables = 
+		laddmdots = .F.
+		laddtockl = .F.
+		lapplyckl = .F.
+		lautoaddtockl = .F.
+		lfieldreference = .F.
+		lnodotsinassignments = .F.
+		lreturns = .F.
+		ltestselect = .F.
+		nafterwithcolumn = 0
+		Name = "beautify"
+		nbeautifyselectiontype = 2
+		ncharsafterset = .F.
+		nlocalslist = 
+		nmdotsusage = 0
+		nnewlocalscount = 0
+		nselend = 0
+		nselstart = 0
+		ntabwidth = 1
+		nwithendwithlevel = 0
+		oeditorwin = .NULL.
+		onativebeautify = .NULL.
+		oprefs = .NULL.
+		oregexp = .F.
+		outils = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="onativebeautify" display="oNativeBeautify"/>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="oeditorwin" display="oEditorWin"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="geteditorwindowtext" display="GetEditorWindowText"/>
+			<memberdata name="nselstart" display="nSelStart"/>
+			<memberdata name="nselend" display="nSelEnd"/>
+			<memberdata name="getparameterslist" display="GetParametersList"/>
+			<memberdata name="getidlist" display="GetIDList"/>
+			<memberdata name="idlistsetup" display="IDListSetup"/>
+			<memberdata name="parselineforidlist" display="ParseLineForIDList"/>
+			<memberdata name="insertidothers" display="InsertIDOthers"/>
+			<memberdata name="createidlistsummary" display="CreateIDListSummary"/>
+			<memberdata name="createidlistcursors" display="CreateIDListCursors"/>
+			<memberdata name="insertid" display="InsertID"/>
+			<memberdata name="peme_createidlist" display="PEME_CreateIDList"/>
+			<memberdata name="createidlist" display="CreateIDList"/>
+			<memberdata name="lfieldreference" display="lFieldReference"/>
+			<memberdata name="insertconstants" display="InsertConstants"/>
+			<memberdata name="getconstants" display="GetConstants"/>
+			<memberdata name="peme_createobjectidlist" display="PEME_CreateObjectIDList"/>
+			<memberdata name="doformidlist" display="DoFormIDList"/>
+			<memberdata name="addobjectidlist" display="AddObjectIDList"/>
+			<memberdata name="insertlocalids" display="InsertLocalIDs"/>
+			<memberdata name="getprocedurestartpositions" display="GetProcedureStartPositions"/>
+			<memberdata name="converttabsforindent" display="ConvertTabsForIndent"/>
+			<memberdata name="doidlisttext" display="DoIDListText"/>
+			<memberdata name="laddmdots" display="lAddMDots"/>
+			<memberdata name="nmdotsusage" display="nMDotsUsage"/>
+			<memberdata name="lreturns" display="lRETURNS"/>
+			<memberdata name="beautifyword" display="BeautifyWord"/>
+			<memberdata name="lapplyckl" display="lApplyCKL"/>
+			<memberdata name="laddtockl" display="lAddtoCKL"/>
+			<memberdata name="lautoaddtockl" display="lAutoAddtoCKL"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE addalignasblock
 		Lparameters;
@@ -1248,24 +1252,23 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 						Case lcFirstWord=='GROUP' AND lcSecondWord=='BY'
 		*if GROUP BY, and expand fields in GROUP BY
-							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandGroupBy)
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandGroupBy   , .T.)
 							
 						Case lcFirstWord=='ORDER' AND lcSecondWord=='BY'
-							
 		*if ORDER BY, and expand fields in ORDER BY
-							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandOrderBy)
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandOrderBy    , .T.)
 		
 						Case lcFirstWord=='FROM'
 		*if FROM clause, and expand cursors in FROM clause
-							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandFrom)
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandFrom       , .F.)
 		
 						Case Inlist(' '+lcFirstWord+' ',' SELECT ',' UPDATE ',' DELETE ')
 		*if Select-item-list, and expand Select-item-list
-							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandSelectItem)
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, llSelectExpandSelectItem , .F.)
 		
 						CASE lSelectExpandFields
 		*whatever else ist expandable
-							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, .T.)
+							lcResultText = This.BeautifySelectMain_SplitFields(lcResultText, lnFirstIndex, lnLastIndex, lcAlias, llSemiColons, llCommasBeginLine, .T.                      , .F.)
 						
 						OTHERWISE
 		*nothing to expand
@@ -1317,7 +1320,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		 tcAlias,;
 		 tlSemiColons,;
 		 tlCommasBeginLine,;
-		 tlBreakOnComma
+		 tlBreakOnComma,;
+		 tlKeepIntegers
 		
 		*SF 2022/03/19
 		*new method to split snippets into fields
@@ -1326,6 +1330,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		Local lcEndThisLine, lcNewLine, lcStartLine, lcSnippet
 		Local lcThisLine, lnEndChars, lnFirstIndex, lnI, lnOffset
 		Local loMatch, loMatches, lnLeadingBlanks
+		LOCAL llIntegersLine, lnNext_FirstIndex
 		
 		lcSnippet   = Substr (tcText, tnFirstIndex + 1, tnLastIndex - tnFirstIndex)
 		
@@ -1353,7 +1358,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					tcText      = TRIM(LEFT(tcText, tnFirstIndex),' ','	') + lcNewLine + RIGHT(tcText, LEN(tcText) - tnFirstIndex) 
 				Endif
 			Endif
-		ELSE  &&loMatches.Count = 0OR !m.tlBreakOnComma
+		ELSE  &&loMatches.Count = 0 OR !m.tlBreakOnComma
+		    lnNext_FirstIndex = 0
 			For lnI =  loMatches.Count To 1 STEP -1
 				loMatch		 = loMatches.Item (lnI - 1)
 				lnFirstIndex = loMatch.FirstIndex
@@ -1373,7 +1379,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 							Case tlCommasBeginLine
 								lcEndThisLine = Substr (lcSnippet, lnFirstIndex + 1)
 								lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
+		*SF 2023/05/27
+		*will not work if a inline comment is set, and the comma is before ;:
+		* group by abcd, ; && xyz
+		*  cde
+		*nobody seems to run into this for ages, so it's to much work to figure this out
 								If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
+									* at end of line
 									* lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 1 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)))
 									lcSnippet = Stuff (lcSnippet, lnFirstIndex, 2 + Len (lcEndThisLine), Space(1 + Len (lcEndThisLine)) + ',')
 								Else
@@ -1386,17 +1398,69 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 								lcBeforeThisLine = Left (lcSnippet, lnFirstIndex - 1)
 								lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
 								If Not Empty (lcBeforeThisLine)
-									lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
+									IF m.tlKeepIntegers THEN 
+										IF ISDIGIT(lcEndThisLine) THEN
+											IF !m.llIntegersLine THEN
+											* last Integer in Line
+												m.llIntegersLine = .T.
+											ENDIF &&!m.llIntegersLine 
+									    	lnNext_FirstIndex = m.lnFirstIndex
+								 
+										ELSE  &&ISDIGIT(lcEndThisLine) 
+											IF m.llIntegersLine THEN
+												* first Integer in Line
+												lnNext_FirstIndex = AT(',', stuff(lcSnippet, 1, lnFirstIndex, '')) + lnFirstIndex
+												lcSnippet = Stuff (lcSnippet, lnNext_FirstIndex, 0, lcNewLine)
+												m.llIntegersLine = .F.
+								 
+											ENDIF &&m.tlKeepIntegers AND m.llIntegersLine AND !ISDIGIT(lcEndThisLine) 
+											lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
+										ENDIF &&ISDIGIT(lcEndThisLine) 
+									ELSE  &&m.tlKeepIntegers
+										lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
+									ENDIF &&m.tlKeepIntegers
+		
+		
+		
+		**********************
+		*							lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
 		*							lnOffset	 = lnOffset + 2
 								Endif
 		
 							Otherwise
+		*comma on end of line
 								lcEndThisLine = Substr (lcSnippet, lnFirstIndex + 1)
 								lcEndThisLine = Left (lcEndThisLine, This.AtNew (CR, lcEndThisLine) - 1)
+		*SF 2023/05/27
+		*will not work if a inline comment is set, and the comma is on the next line:
+		* group by abcd ; && xyz
+		* , cde
+		*nobody seems to run into this for ages, so it's to much work to figure this out
 								If Empty (lcEndThisLine) Or Left (Getwordnum (lcEndThisLine, 1), 1) $ ';*' Or Left (Getwordnum (lcEndThisLine, 1), 2) = '&' + '&'
 									* already at end of line
 								Else
-									lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
+									IF m.tlKeepIntegers THEN 
+										IF ISDIGIT(lcEndThisLine) THEN
+											IF !m.llIntegersLine THEN
+											* last Integer in Line
+												m.llIntegersLine = .T.
+											ENDIF &&!m.llIntegersLine 
+									    	lnNext_FirstIndex = m.lnFirstIndex
+								 
+										ELSE  &&ISDIGIT(lcEndThisLine) 
+											IF m.llIntegersLine THEN
+												* first Integer in Line
+												lcSnippet = Stuff (lcSnippet, m.lnNext_FirstIndex + 1, 0, lcNewLine)
+												m.llIntegersLine = .F.
+								 
+											ENDIF &&m.tlKeepIntegers AND m.llIntegersLine AND !ISDIGIT(lcEndThisLine) 
+											lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
+										ENDIF &&ISDIGIT(lcEndThisLine) 
+		
+									ELSE  &&m.tlKeepIntegers
+											lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
+									ENDIF &&m.tlKeepIntegers
+		
 		*							lnOffset	 = lnOffset + 2
 								Endif
 		
@@ -3021,12 +3085,13 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 	ENDPROC
 
 	PROCEDURE dolocals
-		Lparameters lnStartLine, lnEndLine
-		Local lcLocalStatements, lcNewCode, lcSourceLine, lcWord1, llAddTheseLines, llInsertLocalsLater
-		Local llLocalRun
+		LPARAMETERS lnStartLine, lnEndLine
+		LOCAL lcLocalStatements, lcNewCode, lcSourceLine, lcWord1, llAddTheseLines, llInsertLocalsLater
+		LOCAL llLocalRun
+		LOCAL lnFirstLocalPos
 		
-		This.nNewLocalsCount = 0
-		Dimension This.aNewlocals(1,10)
+		THIS.nNewLocalsCount = 0
+		DIMENSION THIS.aNewlocals(1,10)
 		* This.aNewLocals:
 		*    Col 1 = Local Name
 		*    Col 2 = AS blabla
@@ -3039,73 +3104,103 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		*    Col 9 = <Unused>
 		*    Col 10 = <Unused>
 		
-		This.cCurrentLocals = This.FindCurrentLocals (lnStartLine, lnEndLine, this.oPrefs.lMovelocals)
-		This.lNoDotsInAssignments = .T.
-		This.CreateNewLocals (lnStartLine, lnEndLine)
-		lcLocalStatements = This.CreateLocalStatements()
+		*SF 2023/05/26
+		*changed the insertion of LOCALS below [L]PARA, wherever it is located, while keeping old behaviour if no parameters
+		*issue #104
+		THIS.cCurrentLocals = THIS.FindCurrentLocals (lnStartLine, lnEndLine, THIS.oPrefs.lMovelocals)
+		THIS.lNoDotsInAssignments = .T.
+		THIS.CreateNewLocals (lnStartLine, lnEndLine)
+		lcLocalStatements = THIS.CreateLocalStatements()
+		lnFirstLocalPos = 0
 		
 		lcNewCode = ''
-		For lnLoop = lnStartLine To lnEndLine
-			lnLoopValueBefore = lnLoop
-			lcSourceLine = This.GetSourceCodeLine (@lnLoop, , .T.)
-			lcWord1 = Lower (THIS.GetWordNumX (lcSourceLine,1))
-			llAddTheseLines = .T.
-			llInsertNewLocals = .F.
+		FOR lnLoop = lnStartLine TO lnEndLine
+		 lnLoopValueBefore = lnLoop
+		 lcSourceLine = THIS.GetSourceCodeLine (@lnLoop, , .T.)	&&lnloop is now increasd by lines continued
+		 lcWord1 = LOWER (THIS.GetWordNumX (lcSourceLine,1))
+		 llAddTheseLines = .T.
+		*	llInsertNewLocals = .F.
 		
-			Do Case
-				Case Len (lcWord1) >= 4 And 'local ' = (lcWord1 + ' ')
-					If This.oPrefs.lMoveLocals
-						llAddTheseLines = .F.
-						llInsertNewLocals = .T.
-						llLocalRun = .T.
-					Else
-						llInsertLocalsLater = .T.
-					Endif
+		 DO CASE
+		  CASE LEN (lcWord1) >= 4 AND 'local ' = (lcWord1 + ' ')
+		   IF THIS.oPrefs.lMovelocals
+		    llAddTheseLines = .F.
+		*				llInsertNewLocals = .T.
+		    llLocalRun = .T.
+		    lnFirstLocalPos = IIF(EMPTY(m.lnFirstLocalPos), LEN(m.lcNewCode) + 1, m.lnFirstLocalPos)
+		   ELSE
+		    llInsertLocalsLater = .T.
+		   ENDIF
 		
-				Case llInsertLocalsLater
-					llInsertNewLocals = .T.
+		  CASE llInsertLocalsLater
+		   lnFirstLocalPos = IIF(EMPTY(m.lnFirstLocalPos), LEN(m.lcNewCode) + 1, m.lnFirstLocalPos)
+		   llInsertLocalsLater = .F.
 		
-				Case Empty (lcSourceLine)
+		  CASE EMPTY (lcSourceLine)
 		
-				Case lcWord1 = '#if'
-					llInsertNewLocals = .T.
+		  CASE lcWord1 = '#if'
+		   IF '{PEME:LOCALSAFTER}' $ UPPER (lcSourceLine) THEN
+		    lnFirstLocalPos = 0
+		   ELSE &&'{PEME:LOCALAFTER}' $ Upper (lcSourceLine)
+		    llInsertNewLocals = .T.
+		    lnFirstLocalPos = IIF(EMPTY(m.lnFirstLocalPos), LEN(m.lcNewCode) + 1, m.lnFirstLocalPos)
+		   ENDIF &&'{PEME:LOCALAFTER}' $ Upper (lcSourceLine)
 		
-				Case Inlist (lcWord1, '*', '#', INLINECOMMENTS)
-					llLocalRun = .F.
+		  CASE INLIST (lcWord1, '*', INLINECOMMENTS) OR (LEN (lcWord1) >= 4 AND 'note ' = lcWord1)
+		   IF '{PEME:LOCALSAFTER}' $ UPPER (lcSourceLine) THEN
+		    lnFirstLocalPos = 0
+		   ENDIF &&'{PEME:LOCALAFTER}' $ Upper (lcSourceLine)
+		   llLocalRun = .F.
 		
-				Case Len (lcWord1) >= 4 And 			;
-						('procedure ' 		= lcWord1 	;
-						or 'function ' 		= lcWord1 	;
-						or 'hidden ' 		= lcWord1 	;
-						or 'protected ' 	= lcWord1 	;
-						or 'lparameters ' 	= lcWord1 	;
-						or 'parameters ' 	= lcWord1 	;
-						or 'public ' 		= lcWord1 	;
-						or 'private ' 		= lcWord1 	;
-						or '*:global ' 		= lcWord1 	;
-						)
-					llLocalRun = .F.
+		  CASE INLIST (lcWord1, '#')
+		   llLocalRun = .F.
 		
-				Otherwise
-					llLocalRun = .F.
-					llInsertNewLocals = .T.
+		  CASE LEN (lcWord1) >= 4 AND 			;
+		    ('procedure ' 		= lcWord1 	;
+		    OR 'function ' 		= lcWord1 	;
+		    OR 'hidden ' 		= lcWord1 	;
+		    OR 'protected ' 	= lcWord1 	;
+		    OR 'public ' 		= lcWord1 	;
+		    OR 'private ' 		= lcWord1 	;
+		    OR '*:global ' 		= lcWord1 	;
+		    )
+		   llLocalRun = .F.
 		
-			Endcase
+		  CASE LEN (lcWord1) >= 4 AND 			;
+		    ('lparameters ' 	= lcWord1 	;
+		    OR 'parameters ' 	= lcWord1 	;
+		    )
+		   llLocalRun = .F.
+		   lnFirstLocalPos = 0
 		
-			If llInsertNewLocals And Not Empty (lcLocalStatements)
-				lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + LINEEND) + lcLocalStatements
-				lcLocalStatements = ''
-			Endif
+		  OTHERWISE
+		   llLocalRun = .F.
+		   lnFirstLocalPos = IIF(EMPTY(m.lnFirstLocalPos), LEN(m.lcNewCode) + 1, m.lnFirstLocalPos)
 		
-			If llAddTheseLines And Not llLocalRun
-				For lnI = lnLoopValueBefore To lnLoop
+		 ENDCASE
+		
+		*!*		If llInsertNewLocals And Not Empty (lcLocalStatements)
+		*!*			lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + LINEEND) + lcLocalStatements
+		*!*			lcLocalStatements = ''
+		*!*		Endif
+		
+		 IF llAddTheseLines AND NOT llLocalRun
+		  FOR lnI = lnLoopValueBefore TO lnLoop
 		*			lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + Replicate (LINEEND, lnLocalRun + 1)) + This.aCodeLines (lnI)
-					lcNewCode = Iif (Empty (lcNewCode), '', lcNewCode + LINEEND ) + This.aCodeLines (lnI)
-				Endfor
-			Endif
-		Endfor
+		   lcNewCode = IIF (EMPTY (lcNewCode), '', lcNewCode + LINEEND ) + THIS.aCodeLines (lnI)
+		  ENDFOR
+		 ENDIF
+		ENDFOR
 		
-		Return lcNewCode
+		IF !EMPTY(m.lnFirstLocalPos) AND !EMPTY (lcLocalStatements) THEN
+		 IF m.lnFirstLocalPos<=1 THEN 
+		  lcNewCode = STUFF(m.lcNewCode, m.lnFirstLocalPos, 0, m.lcLocalStatements + LINEEND)
+		 ELSE  &&m.lnFirstLocalPos<=1
+		  lcNewCode = STUFF(m.lcNewCode, m.lnFirstLocalPos, 0, LINEEND + m.lcLocalStatements)
+		 ENDIF &&EMPTY(m.lnFirstLocalPos)
+		ENDIF &&m.lnFirstLocalPos<=1
+		
+		RETURN lcNewCode
 		
 	ENDPROC
 
@@ -3535,7 +3630,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			Do Case
 				Case llTextBlock And Upper (This.GetWordNumX (lcLine, 1)) == 'ENDTEXT'
 		*SF changed 2022/06/10 (see below)
-					llTextBlock = .F.
+		*SF changed 2022/05/27 we need to force this
+		*			llTextBlock = .F.
 					Exit
 				Case llTextBlock
 					Loop
@@ -3550,7 +3646,8 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 				Case llHashIFBlock And Upper (This.GetWordNumX (lcLine, 1)) == '#ENDIF'
 		*SF changed 2022/06/10 (see below)
-					llHashIFBlock = .F.
+		*SF changed 2022/05/27 we need to force this
+		*			llHashIFBlock = .F.
 					Exit
 				Case llHashIFBlock
 					Loop
@@ -3558,13 +3655,15 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 					llHashIFBlock = .T.
 					Loop
 		
-				Case ';' == Right (lcSourceLine, 1)
-					Loop
+		*2023/05/27 moved before ";" because a line can end like "&& ;"
 				Case INLINECOMMENTS $ lcSourceLine
 					lcSourceLine = Alltrim (Left (lcSourceLine, At (INLINECOMMENTS, lcSourceLine) - 1))
 					If ';' = Right (lcSourceLine, 1)
 						Loop
 					Endif
+		
+				Case ';' == Right (lcSourceLine, 1)
+					Loop
 			Endcase
 		
 			lnCounter = lnCounter - 1

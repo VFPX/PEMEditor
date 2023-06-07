@@ -15,11 +15,13 @@ DEFINE CLASS peme_frmbrowser AS form
 		*m: writehtml
 	*</DefinedPropArrayMethod>
 
-	Caption = "Form"
-	Desktop = .T.
-	DoCreate = .T.
-	Name = "peme_frmbrowser"
-	Visible = .T.
+	*<PropValue>
+		Caption = "Form"
+		Desktop = .T.
+		DoCreate = .T.
+		Name = "peme_frmbrowser"
+		Visible = .T.
+	*</PropValue>
 
 	ADD OBJECT 'Mxbrowser1' AS peme_mxbrowser WITH ;
 		Height = 250, ;
@@ -51,9 +53,11 @@ DEFINE CLASS peme_mxbrowser AS olecontrol
 		*m: write
 	*</DefinedPropArrayMethod>
 
-	Height = 100
-	Name = "peme_mxbrowser"
-	Width = 100
+	*<PropValue>
+		Height = 100
+		Name = "peme_mxbrowser"
+		Width = 100
+	*</PropValue>
 	
 	PROCEDURE BeforeNavigate2
 		*** ActiveX Control Event ***

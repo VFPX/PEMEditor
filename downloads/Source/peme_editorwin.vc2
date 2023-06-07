@@ -56,46 +56,48 @@ DEFINE CLASS editorwin AS basecustom OF "peme_basecontrols.vcx"
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID
-	Name = "editorwin"
-	nhandle = 0
-	nsessiontype = 0
-	ofoxtabs = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="nhandle" display="nHandle"/>
-		<memberdata name="nsessiontype" display="nSessionType"/>
-		<memberdata name="cut" display="Cut"/>
-		<memberdata name="findlastwindow" display="FindLastWindow"/>
-		<memberdata name="findwindow" display="FindWindow"/>
-		<memberdata name="getcharacter" display="GetCharacter"/>
-		<memberdata name="getopenwindows" display="GetOpenWindows"/>
-		<memberdata name="getselend" display="GetSelEnd"/>
-		<memberdata name="getselstart" display="GetSelStart"/>
-		<memberdata name="getstring" display="GetString"/>
-		<memberdata name="gettitle" display="GetTitle"/>
-		<memberdata name="getwindowhandle" display="GetWindowHandle"/>
-		<memberdata name="movewindow" display="MoveWindow"/>
-		<memberdata name="paste" display="Paste"/>
-		<memberdata name="resizewindow" display="ResizeWindow"/>
-		<memberdata name="settitle" display="SetTitle"/>
-		<memberdata name="skipline" display="SkipLine"/>
-		<memberdata name="winshow" display="WinShow"/>
-		<memberdata name="getenvironment" display="GetEnvironment"/>
-		<memberdata name="ofoxtabs" display="oFoxTabs"/>
-		<memberdata name="selectwindow" display="SelectWindow"/>
-		<memberdata name="closewindow" display="CloseWindow"/>
-		<memberdata name="getleft" display="GetLeft"/>
-		<memberdata name="gettop" display="GetTop"/>
-		<memberdata name="getwidth" display="GetWidth"/>
-		<memberdata name="getheight" display="GetHeight"/>
-		<memberdata name="setinsertionpoint" display="SetInsertionPoint"/>
-		<memberdata name="showposition" display="ShowPosition"/>
-		<memberdata name="getfilesize" display="GetFileSize"/>
-		<memberdata name="getlinenumber" display="GetLineNumber"/>
-		<memberdata name="getlinestart" display="GetLineStart"/>
-		<memberdata name="getbyteoffset" display="GetByteOffset"/>
-		<memberdata name="ensurevisible" display="EnsureVisible"/>
-		<memberdata name="sethandle" display="SetHandle"/>
+	*<PropValue>
+		Name = "editorwin"
+		nhandle = 0
+		nsessiontype = 0
+		ofoxtabs = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="nhandle" display="nHandle"/>
+			<memberdata name="nsessiontype" display="nSessionType"/>
+			<memberdata name="cut" display="Cut"/>
+			<memberdata name="findlastwindow" display="FindLastWindow"/>
+			<memberdata name="findwindow" display="FindWindow"/>
+			<memberdata name="getcharacter" display="GetCharacter"/>
+			<memberdata name="getopenwindows" display="GetOpenWindows"/>
+			<memberdata name="getselend" display="GetSelEnd"/>
+			<memberdata name="getselstart" display="GetSelStart"/>
+			<memberdata name="getstring" display="GetString"/>
+			<memberdata name="gettitle" display="GetTitle"/>
+			<memberdata name="getwindowhandle" display="GetWindowHandle"/>
+			<memberdata name="movewindow" display="MoveWindow"/>
+			<memberdata name="paste" display="Paste"/>
+			<memberdata name="resizewindow" display="ResizeWindow"/>
+			<memberdata name="settitle" display="SetTitle"/>
+			<memberdata name="skipline" display="SkipLine"/>
+			<memberdata name="winshow" display="WinShow"/>
+			<memberdata name="getenvironment" display="GetEnvironment"/>
+			<memberdata name="ofoxtabs" display="oFoxTabs"/>
+			<memberdata name="selectwindow" display="SelectWindow"/>
+			<memberdata name="closewindow" display="CloseWindow"/>
+			<memberdata name="getleft" display="GetLeft"/>
+			<memberdata name="gettop" display="GetTop"/>
+			<memberdata name="getwidth" display="GetWidth"/>
+			<memberdata name="getheight" display="GetHeight"/>
+			<memberdata name="setinsertionpoint" display="SetInsertionPoint"/>
+			<memberdata name="showposition" display="ShowPosition"/>
+			<memberdata name="getfilesize" display="GetFileSize"/>
+			<memberdata name="getlinenumber" display="GetLineNumber"/>
+			<memberdata name="getlinestart" display="GetLineStart"/>
+			<memberdata name="getbyteoffset" display="GetByteOffset"/>
+			<memberdata name="ensurevisible" display="EnsureVisible"/>
+			<memberdata name="sethandle" display="SetHandle"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE closewindow
 		Lparameters lnHandle
