@@ -10,12 +10,14 @@
 DEFINE CLASS dataenvironment AS dataenvironment 
  	*< CLASSDATA: Baseclass="dataenvironment" Timestamp="" Scale="" Uniqueid="" ClassIcon="2" />
 
-	DataSource = .NULL.
-	Height = 0
-	Left = 0
-	Name = "Dataenvironment"
-	Top = 0
-	Width = 0
+	*<PropValue>
+		DataSource = .NULL.
+		Height = 0
+		Left = 0
+		Name = "Dataenvironment"
+		Top = 0
+		Width = 0
+	*</PropValue>
 
 ENDDEFINE
 
@@ -118,36 +120,38 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 		*p: oprefs
 	*</DefinedPropArrayMethod>
 
-	BorderStyle = 2
-	Caption = "Preferences"
-	cfoxuserid = Preferences
-	cfoxusername = EditPMPreferences
-	chelpfile = 
-	Closable = .F.
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 420
-	lpersistsizeposition = .F.
-	lreturnvalue = .F.
-	lsavesettings = .T.
-	MaxButton = .F.
-	MinButton = .F.
-	Name = "PREFS"
-	nhelpid = 0
-	noriginaltooltiptimeout = 0
-	npage = 0
-	ntop = 0
-	oprefs = .NULL.
-	Visible = .T.
-	Width = 380
-	WindowType = 1
-	_memberdata = <VFPData>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="nhelpid" display="nHelpID"/>
-		<memberdata name="setgridhighlighting" display="SetGridHighlighting"/>
-		<memberdata name="lreturnvalue" display="lReturnValue"/>
+	*<PropValue>
+		BorderStyle = 2
+		Caption = "Preferences"
+		cfoxuserid = Preferences
+		cfoxusername = EditPMPreferences
+		chelpfile = 
+		Closable = .F.
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 420
+		lpersistsizeposition = .F.
+		lreturnvalue = .F.
+		lsavesettings = .T.
+		MaxButton = .F.
+		MinButton = .F.
+		Name = "PREFS"
+		nhelpid = 0
+		noriginaltooltiptimeout = 0
+		npage = 0
+		ntop = 0
+		oprefs = .NULL.
+		Visible = .T.
+		Width = 380
+		WindowType = 1
+		_memberdata = <VFPData>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="nhelpid" display="nHelpID"/>
+			<memberdata name="setgridhighlighting" display="SetGridHighlighting"/>
+			<memberdata name="lreturnvalue" display="lReturnValue"/>
 		</VFPData>
-	changefontsize.Name = "changefontsize"
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'cmdResetAllDefaults' AS editpropertycommandbutton WITH ;
 		Caption = "Reset all Defaults", ;
@@ -544,13 +548,13 @@ DEFINE CLASS prefs AS baseformnew OF "peme_basecontrols.vcx"
 	ADD OBJECT 'Frame.PageGeneral.Frame.PageHighlighting.spnnFontSize' AS basespinner WITH ;
 		ControlSource = "ThisForm.oPrefs.nFontSize", ;
 		Height = 22, ;
-		Increment = 1.00, ;
+		Increment =   1.00, ;
 		KeyboardHighValue = 16, ;
 		KeyboardLowValue = 6, ;
 		Left = 152, ;
 		Name = "spnnFontSize", ;
-		SpinnerHighValue = 16.00, ;
-		SpinnerLowValue = 6.00, ;
+		SpinnerHighValue =  16.00, ;
+		SpinnerLowValue =   6.00, ;
 		TabIndex = 3, ;
 		Top = 68, ;
 		Width = 55

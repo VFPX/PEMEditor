@@ -14,10 +14,12 @@ DEFINE CLASS apirefreshtimer AS apitimer OF "editproperty.vcx"
 		*p: itraceinterval
 	*</DefinedPropArrayMethod>
 
-	iregularinterval = 1000
-	itraceinterval = 15000
-	Name = "apirefreshtimer"
-	Width = 51
+	*<PropValue>
+		iregularinterval = 1000
+		itraceinterval = 15000
+		Name = "apirefreshtimer"
+		Width = 51
+	*</PropValue>
 	
 	PROCEDURE resetinterval
 		If Wvisible(ccLOC_WINDOW_TRACE) Or  ;
@@ -68,30 +70,32 @@ DEFINE CLASS apitimer AS label
 	*</DefinedPropArrayMethod>
 
 	PROTECTED Destroy,Init
-	active = .F.		&& -- Indicates that the timer is active
-	AutoSize = .T.
-	BackStyle = 0
-	Caption = "apiTimer"
-	Enabled = .T.
-	Height = 17
-	hwnd = 0		&& -- Handle to Timer
-	interval = 180000		&& -- Interval of timer; value assigned in seconds and displayed in milliseconds; default is 30min
-	Name = "apitimer"
-	timerid = 0		&& -- Numeric Timer ID
-	Visible = .F.
-	Width = 51
-	_memberdata = <VFPData>
-		<memberdata name="active" display="Active"/>
-		<memberdata name="active_assign" display="Active_Assign"/>
-		<memberdata name="timerid" display="TimerID"/>
-		<memberdata name="cleartimer" display="ClearTimer"/>
-		<memberdata name="initializetimer" display="InitializeTimer"/>
-		<memberdata name="interval_assign" display="Interval_Assign"/>
-		<memberdata name="ontimerinterval" display="OnTimerInterval"/>
-		<memberdata name="timer" display="Timer"/>
-		<memberdata name="enabled" display="Enabled"/>
-		<memberdata name="enabled_assign" display="Enabled_Assign"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		active = .F.
+		AutoSize = .T.
+		BackStyle = 0
+		Caption = "apiTimer"
+		Enabled = .T.
+		Height = 17
+		hwnd = 0
+		interval = 180000
+		Name = "apitimer"
+		timerid = 0
+		Visible = .F.
+		Width = 51
+		_memberdata = <VFPData>
+			<memberdata name="active" display="Active"/>
+			<memberdata name="active_assign" display="Active_Assign"/>
+			<memberdata name="timerid" display="TimerID"/>
+			<memberdata name="cleartimer" display="ClearTimer"/>
+			<memberdata name="initializetimer" display="InitializeTimer"/>
+			<memberdata name="interval_assign" display="Interval_Assign"/>
+			<memberdata name="ontimerinterval" display="OnTimerInterval"/>
+			<memberdata name="timer" display="Timer"/>
+			<memberdata name="enabled" display="Enabled"/>
+			<memberdata name="enabled_assign" display="Enabled_Assign"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE active_assign
 		LPARAMETERS tlActive
@@ -255,57 +259,59 @@ DEFINE CLASS askaddpemnew AS baseform OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	BindControls = .F.
-	BorderStyle = 3
-	Caption = "Add New PEM?"
-	cdescription = 
-	cfoxuserid = AddNew2
-	cfoxusername = AddNew2
-	cmethodtext = 
-	cnewname = 
-	cpemtype = 
-	cvalue = 
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 215
-	laccess = .F.
-	laskaddpem = .T.
-	lassign = .F.
-	lrefreshgrid = .F.
-	lreturnvalue = .F.
-	lstayopen = .F.
-	MaxHeight = 350
-	MaxWidth = 350
-	MinHeight = 215
-	MinWidth = 246
-	Name = "askaddpemnew"
-	nresult = 0
-	oprefs = .F.
-	otopofform = .F.
-	otopoffrom = .NULL.
-	outils = .NULL.
-	Width = 246
-	WindowType = 1
-	_memberdata = <VFPData>
-		<memberdata name="cdescription" display="cDescription"/>
-		<memberdata name="cvalue" display="cValue"/>
-		<memberdata name="laskaddpem" display="lAskAddPEM"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="otopoffrom" display="oTopOfFrom"/>
-		<memberdata name="lreturnvalue" display="lReturnValue"/>
-		<memberdata name="cleanup" display="Cleanup"/>
-		<memberdata name="lrefreshgrid" display="lRefreshGrid"/>
-		<memberdata name="lstayopen" display="lStayOpen"/>
-		<memberdata name="laccess" display="lAccess"/>
-		<memberdata name="lassign" display="lAssign"/>
-		<memberdata name="cpemtype" display="cPEMType"/>
-		<memberdata name="cmethodtext" display="cMethodText"/>
-		<memberdata name="minwidth" display="MinWidth"/>
-		<memberdata name="addtockl" display="AddtoCKL"/>
-		</VFPData>		&& XML Metadata for customizable properties
-	changefontsize.Left = 200
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 24
+	*<PropValue>
+		BindControls = .F.
+		BorderStyle = 3
+		Caption = "Add New PEM?"
+		cdescription = 
+		cfoxuserid = AddNew2
+		cfoxusername = AddNew2
+		cmethodtext = 
+		cnewname = 
+		cpemtype = 
+		cvalue = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 215
+		laccess = .F.
+		laskaddpem = .T.
+		lassign = .F.
+		lrefreshgrid = .F.
+		lreturnvalue = .F.
+		lstayopen = .F.
+		MaxHeight = 350
+		MaxWidth = 350
+		MinHeight = 215
+		MinWidth = 246
+		Name = "askaddpemnew"
+		nresult = 0
+		oprefs = .F.
+		otopofform = .F.
+		otopoffrom = .NULL.
+		outils = .NULL.
+		Width = 246
+		WindowType = 1
+		_memberdata = <VFPData>
+			<memberdata name="cdescription" display="cDescription"/>
+			<memberdata name="cvalue" display="cValue"/>
+			<memberdata name="laskaddpem" display="lAskAddPEM"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="otopoffrom" display="oTopOfFrom"/>
+			<memberdata name="lreturnvalue" display="lReturnValue"/>
+			<memberdata name="cleanup" display="Cleanup"/>
+			<memberdata name="lrefreshgrid" display="lRefreshGrid"/>
+			<memberdata name="lstayopen" display="lStayOpen"/>
+			<memberdata name="laccess" display="lAccess"/>
+			<memberdata name="lassign" display="lAssign"/>
+			<memberdata name="cpemtype" display="cPEMType"/>
+			<memberdata name="cmethodtext" display="cMethodText"/>
+			<memberdata name="minwidth" display="MinWidth"/>
+			<memberdata name="addtockl" display="AddtoCKL"/>
+		</VFPData>
+		changefontsize.Left = 200
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 24
+	*</PropValue>
 
 	ADD OBJECT 'Baselabel1' AS baselabel WITH ;
 		Alignment = 1, ;
@@ -764,25 +770,27 @@ DEFINE CLASS askaddpemnewstayopen AS askaddpemnew OF "editproperty.vcx"
  	*< CLASSDATA: Baseclass="form" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "editpropertydialog.h"
-	cfoxuserid = AddNew40
-	cfoxusername = AddNew40
-	Desktop = .F.
-	DoCreate = .T.
-	Name = "askaddpemnewstayopen"
-	WindowType = 0
-	changefontsize.Name = "changefontsize"
-	lblTitle.Name = "lblTitle"
-	cmdAddasProperty.Name = "cmdAddasProperty"
-	cmdAddasMethod.Name = "cmdAddasMethod"
-	cmdAddasMethod2.Name = "cmdAddasMethod2"
-	txtNewName.Name = "txtNewName"
-	Baseline1.Name = "Baseline1"
-	Baselabel1.Name = "Baselabel1"
-	txtValue.Name = "txtValue"
-	cntDescription.edtDescription.Name = "edtDescription"
-	cntDescription.lblDescription.Name = "lblDescription"
-	cntDescription.lblnnn255.Name = "lblnnn255"
-	cntDescription.Name = "cntDescription"
+	*<PropValue>
+		cfoxuserid = AddNew40
+		cfoxusername = AddNew40
+		Desktop = .F.
+		DoCreate = .T.
+		Name = "askaddpemnewstayopen"
+		WindowType = 0
+		changefontsize.Name = "changefontsize"
+		lblTitle.Name = "lblTitle"
+		cmdAddasProperty.Name = "cmdAddasProperty"
+		cmdAddasMethod.Name = "cmdAddasMethod"
+		cmdAddasMethod2.Name = "cmdAddasMethod2"
+		txtNewName.Name = "txtNewName"
+		Baseline1.Name = "Baseline1"
+		Baselabel1.Name = "Baselabel1"
+		txtValue.Name = "txtValue"
+		cntDescription.edtDescription.Name = "edtDescription"
+		cntDescription.lblDescription.Name = "lblDescription"
+		cntDescription.lblnnn255.Name = "lblnnn255"
+		cntDescription.Name = "cntDescription"
+	*</PropValue>
 
 ENDDEFINE
 
@@ -817,18 +825,20 @@ DEFINE CLASS basegridmembers AS basegrid OF "peme_basecontrols.vcx"
 		*p: ncurrentrecno
 	*</DefinedPropArrayMethod>
 
-	Height = 276
-	HighlightStyle = 2
-	lfirsttime = .T.
-	Name = "basegridmembers"
-	nanchor = 15
-	ncurrentrecno = 0
-	RecordSource = "csrMembers"
-	RecordSourceType = 1
-	RowHeight = 18
-	TabIndex = 1
-	Width = 873
-	ZOrderSet = 0
+	*<PropValue>
+		Height = 276
+		HighlightStyle = 2
+		lfirsttime = .T.
+		Name = "basegridmembers"
+		nanchor = 15
+		ncurrentrecno = 0
+		RecordSource = "csrMembers"
+		RecordSourceType = 1
+		RowHeight = 18
+		TabIndex = 1
+		Width = 873
+		ZOrderSet = 0
+	*</PropValue>
 	
 	PROCEDURE colorpicker
 		Lparameters lcPEM, lcAssignPem, loValue
@@ -2485,8 +2495,10 @@ ENDDEFINE
 DEFINE CLASS chkfiletype AS basecheckbox OF "peme_basecontrols.vcx" 
  	*< CLASSDATA: Baseclass="checkbox" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Alignment = 0
-	Name = "chkfiletype"
+	*<PropValue>
+		Alignment = 0
+		Name = "chkfiletype"
+	*</PropValue>
 	
 	PROCEDURE Refresh
 		DoDefault()
@@ -2510,10 +2522,12 @@ DEFINE CLASS cmdaddnewpem AS basecommandbutton OF "peme_basecontrols.vcx"
 		*p: nresult
 	*</DefinedPropArrayMethod>
 
-	Height = 27
-	Name = "cmdaddnewpem"
-	nresult = 0
-	Width = 150
+	*<PropValue>
+		Height = 27
+		Name = "cmdaddnewpem"
+		nresult = 0
+		Width = 150
+	*</PropValue>
 	
 	PROCEDURE Click
 		Thisform.Return(This.nResult)
@@ -2529,11 +2543,13 @@ DEFINE CLASS cmdonkeylabel AS basecommandbutton OF "peme_basecontrols.vcx"
 		*m: setnondefaults
 	*</DefinedPropArrayMethod>
 
-	AutoSize = .F.
-	Caption = "Use Suggested HotKeys"
-	Height = 25
-	Name = "cmdonkeylabel"
-	Width = 134
+	*<PropValue>
+		AutoSize = .F.
+		Caption = "Use Suggested HotKeys"
+		Height = 25
+		Name = "cmdonkeylabel"
+		Width = 134
+	*</PropValue>
 	
 	PROCEDURE Click
 		This.SetNonDefaults(This.Parent)
@@ -2567,11 +2583,13 @@ DEFINE CLASS cmdpasteselection AS editpropertycommandbutton OF "editproperty.vcx
 		*p: lvalue
 	*</DefinedPropArrayMethod>
 
-	Caption = "Select  "
-	Height = 25
-	Name = "cmdpasteselection"
-	nanchor = 4
-	Width = 75
+	*<PropValue>
+		Caption = "Select  "
+		Height = 25
+		Name = "cmdpasteselection"
+		nanchor = 4
+		Width = 75
+	*</PropValue>
 	
 	PROCEDURE changeselections
 		Lparameters lcSelection
@@ -2683,12 +2701,14 @@ DEFINE CLASS cntfilters AS basecontainer OF "peme_basecontrols.vcx"
 	*< OBJECTDATA: ObjPath="Baselabel2" UniqueID="" Timestamp="" />
 
 	#INCLUDE "editpropertydialog.h"
-	BorderWidth = 1
-	Height = 201
-	Name = "cntfilters"
-	nanchor = 8
-	TabIndex = 9
-	Width = 124
+	*<PropValue>
+		BorderWidth = 1
+		Height = 201
+		Name = "cntfilters"
+		nanchor = 8
+		TabIndex = 9
+		Width = 124
+	*</PropValue>
 
 	ADD OBJECT 'Baselabel1' AS baselabel WITH ;
 		BackStyle = 1, ;
@@ -3425,11 +3445,13 @@ DEFINE CLASS cntonkeylabel AS basecontainer OF "peme_basecontrols.vcx"
 		*p: cpersistname
 	*</DefinedPropArrayMethod>
 
-	cdefaultvalue = 
-	cpersistname = 
-	Height = 22
-	Name = "cntonkeylabel"
-	Width = 150
+	*<PropValue>
+		cdefaultvalue = 
+		cpersistname = 
+		Height = 22
+		Name = "cntonkeylabel"
+		Width = 150
+	*</PropValue>
 
 	ADD OBJECT 'lblInactive' AS baselabel WITH ;
 		Caption = "(inactive)", ;
@@ -3518,11 +3540,13 @@ DEFINE CLASS cntpemcommands AS basecontainer OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	Name = "cntpemcommands"
-	npagenumber = 1
-	_memberdata = <VFPData>
-		<memberdata name="npagenumber" display="nPageNumber"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		Name = "cntpemcommands"
+		npagenumber = 1
+		_memberdata = <VFPData>
+			<memberdata name="npagenumber" display="nPageNumber"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE Refresh
 		Do Case
@@ -3590,13 +3614,15 @@ DEFINE CLASS cntpemcontrols AS basecontainer OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	Height = 260
-	Name = "cntpemcontrols"
-	nanchor = 14
-	Width = 347
-	_memberdata = <VFPData>
-		<memberdata name="validatepossiblechanges" display="ValidatePossibleChanges"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		Height = 260
+		Name = "cntpemcontrols"
+		nanchor = 14
+		Width = 347
+		_memberdata = <VFPData>
+			<memberdata name="validatepossiblechanges" display="ValidatePossibleChanges"/>
+		</VFPData>
+	*</PropValue>
 
 	ADD OBJECT 'Baselabel1' AS baselabel WITH ;
 		Alignment = 1, ;
@@ -5367,8 +5393,10 @@ DEFINE CLASS defaulteditbox AS editpropertyeditbox OF "editproperty.vcx"
 		*p: xvalue		&& Translated from .Value into correct data type
 	*</DefinedPropArrayMethod>
 
-	Name = "defaulteditbox"
-	xvalue = 		&& Translated from .Value into correct data type
+	*<PropValue>
+		Name = "defaulteditbox"
+		xvalue = 
+	*</PropValue>
 	
 	PROCEDURE isnumber
 		Lparameters tcString
@@ -5507,15 +5535,19 @@ ENDDEFINE
 DEFINE CLASS editpropertycheckbox AS basecheckbox OF "peme_basecontrols.vcx" 
  	*< CLASSDATA: Baseclass="checkbox" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Alignment = 0
-	Name = "editpropertycheckbox"
+	*<PropValue>
+		Alignment = 0
+		Name = "editpropertycheckbox"
+	*</PropValue>
 
 ENDDEFINE
 
 DEFINE CLASS editpropertycommandbutton AS basecommandbutton OF "peme_basecontrols.vcx" 
  	*< CLASSDATA: Baseclass="commandbutton" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Name = "editpropertycommandbutton"
+	*<PropValue>
+		Name = "editpropertycommandbutton"
+	*</PropValue>
 
 ENDDEFINE
 
@@ -5581,13 +5613,15 @@ DEFINE CLASS editpropertycontrols AS basecontainer OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	Height = 260
-	Name = "editpropertycontrols"
-	nanchor = 14
-	Width = 347
-	_memberdata = <VFPData>
-		<memberdata name="validatepossiblechanges" display="ValidatePossibleChanges"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		Height = 260
+		Name = "editpropertycontrols"
+		nanchor = 14
+		Width = 347
+		_memberdata = <VFPData>
+			<memberdata name="validatepossiblechanges" display="ValidatePossibleChanges"/>
+		</VFPData>
+	*</PropValue>
 
 	ADD OBJECT 'Baseimage1' AS baseimage WITH ;
 		Height = 16, ;
@@ -8051,8 +8085,10 @@ DEFINE CLASS editpropertyeditbox AS baseeditbox OF "peme_basecontrols.vcx"
 		*p: lfirsttime
 	*</DefinedPropArrayMethod>
 
-	lfirsttime = .T.
-	Name = "editpropertyeditbox"
+	*<PropValue>
+		lfirsttime = .T.
+		Name = "editpropertyeditbox"
+	*</PropValue>
 
 ENDDEFINE
 
@@ -8119,28 +8155,30 @@ DEFINE CLASS editpropertyform AS baseform OF "peme_basecontrols.vcx"
 		*a: aselectedobjects[1,0]
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	cdodefaulttext = .F.
-	cpluginpath = 
-	csnippetpath = <fb2p_value>&#13;</fb2p_value>
-	csourcefilename = 
-	cthisformcaption = 
-	DoCreate = .T.
-	lavoidbufferoverrun = .F.
-	lclass = .F.
-	ldataenvironment = .F.
-	ldebugmode = .F.
-	ldontdisableme = .F.
-	leditingoneproperty = .F.
-	lpemeditor = .F.
-	luseabbreviations = .F.
-	Name = "editpropertyform"
-	nhelpid = 0
-	nobjnumber = 0
-	nselectedobjects = 0
-	oserver = .NULL.
-	otopofform = .NULL.
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		capplicationpath = 
+		cdodefaulttext = .F.
+		cpluginpath = 
+		csnippetpath = <fb2p_value>&#13;</fb2p_value>
+		csourcefilename = 
+		cthisformcaption = 
+		DoCreate = .T.
+		lavoidbufferoverrun = .F.
+		lclass = .F.
+		ldataenvironment = .F.
+		ldebugmode = .F.
+		ldontdisableme = .F.
+		leditingoneproperty = .F.
+		lpemeditor = .F.
+		luseabbreviations = .F.
+		Name = "editpropertyform"
+		nhelpid = 0
+		nobjnumber = 0
+		nselectedobjects = 0
+		oserver = .NULL.
+		otopofform = .NULL.
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 	
 	PROCEDURE addclassinfo
 		Lparameters loControl, lcText
@@ -10092,16 +10130,20 @@ ENDDEFINE
 DEFINE CLASS editpropertyoptionbutton AS baseoptionbutton OF "peme_basecontrols.vcx" 
  	*< CLASSDATA: Baseclass="optionbutton" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Name = "editpropertyoptionbutton"
+	*<PropValue>
+		Name = "editpropertyoptionbutton"
+	*</PropValue>
 
 ENDDEFINE
 
 DEFINE CLASS editpropertyoptiongroup AS baseoptiongroup OF "peme_basecontrols.vcx" 
  	*< CLASSDATA: Baseclass="optiongroup" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	MemberClass = "editpropertyoptionbutton"
-	MemberClassLibrary = editproperty.vcx
-	Name = "editpropertyoptiongroup"
+	*<PropValue>
+		MemberClass = "editpropertyoptionbutton"
+		MemberClassLibrary = editproperty.vcx
+		Name = "editpropertyoptiongroup"
+	*</PropValue>
 
 ENDDEFINE
 
@@ -10113,12 +10155,14 @@ DEFINE CLASS filtercheckbox AS basecheckbox OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	Alignment = 0
-	ccontrolsource = 
-	Name = "filtercheckbox"
-	_memberdata = <VFPData>
-		<memberdata name="ccontrolsource" display="cControlSource"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		Alignment = 0
+		ccontrolsource = 
+		Name = "filtercheckbox"
+		_memberdata = <VFPData>
+			<memberdata name="ccontrolsource" display="cControlSource"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE Refresh
 		Local lcControlSource, lxValue
@@ -10151,17 +10195,19 @@ DEFINE CLASS frmaddproperty AS frmpemeditorbase OF "editproperty.vcx"
 	*< OBJECTDATA: ObjPath="cntControls" UniqueID="" Timestamp="" />
 
 	#INCLUDE "memberdataeditorenglish.h"
-	Caption = "Add Property / Method"
-	cfoxuserid = FULLADDFORM
-	cfoxusername = FULLADDFORM
-	DoCreate = .T.
-	Height = 260
-	laddpropertyform = .T.
-	Name = "frmaddproperty"
-	Visible = .T.
-	Width = 275
-	WindowType = 1
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		Caption = "Add Property / Method"
+		cfoxuserid = FULLADDFORM
+		cfoxusername = FULLADDFORM
+		DoCreate = .T.
+		Height = 260
+		laddpropertyform = .T.
+		Name = "frmaddproperty"
+		Visible = .T.
+		Width = 275
+		WindowType = 1
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'cntControls' AS cntpemcontrols WITH ;
 		Left = 0, ;
@@ -10326,26 +10372,28 @@ DEFINE CLASS frmcompareclass AS frmpeme_base OF "editproperty.vcx"
 		*p: ntop
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	Caption = "Compare with Parent Class"
-	cfoxuserid = compareclass
-	cfoxusername = COMPARECLASS
-	cmemberssortorder = +CName
-	DataSession = 1
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 237
-	lanynew = .F.
-	lclass = .F.
-	lincludenew = .F.
-	lnewallowed = .F.
-	lpasteit = .F.
-	luseabbreviations = .T.
-	Name = "frmcompareclass"
-	ntop = 0
-	Width = 539
-	WindowType = 1
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		capplicationpath = 
+		Caption = "Compare with Parent Class"
+		cfoxuserid = compareclass
+		cfoxusername = COMPARECLASS
+		cmemberssortorder = +CName
+		DataSession = 1
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 237
+		lanynew = .F.
+		lclass = .F.
+		lincludenew = .F.
+		lnewallowed = .F.
+		lpasteit = .F.
+		luseabbreviations = .T.
+		Name = "frmcompareclass"
+		ntop = 0
+		Width = 539
+		WindowType = 1
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'cmdCancel' AS basecommandbutton WITH ;
 		Cancel = .T., ;
@@ -10678,24 +10726,26 @@ DEFINE CLASS frmcompareproperties AS frmpeme_base OF "editproperty.vcx"
 		*p: ntop
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	Caption = "Compare Properties and Method Code"
-	cfoxuserid = compareproperties
-	cfoxusername = COMPAREPROPERTIES
-	cmemberssortorder = +CName
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 286
-	lanynew = .F.
-	lnewallowed = .F.
-	luseabbreviations = .T.
-	Name = "frmcompareproperties"
-	ntop = 0
-	Width = 454
-	WindowType = 1
-	changefontsize.Left = 16
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 68
+	*<PropValue>
+		capplicationpath = 
+		Caption = "Compare Properties and Method Code"
+		cfoxuserid = compareproperties
+		cfoxusername = COMPAREPROPERTIES
+		cmemberssortorder = +CName
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 286
+		lanynew = .F.
+		lnewallowed = .F.
+		luseabbreviations = .T.
+		Name = "frmcompareproperties"
+		ntop = 0
+		Width = 454
+		WindowType = 1
+		changefontsize.Left = 16
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 68
+	*</PropValue>
 
 	ADD OBJECT 'gridCompare' AS gridcompareproperties WITH ;
 		Height = 276, ;
@@ -10976,24 +11026,26 @@ DEFINE CLASS frmeditparentclass AS frmpeme_base OF "editproperty.vcx"
 		*p: cclassname
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	Caption = "Edit Parent Class and Containing Classes"
-	cclassname = 
-	cfoxuserid = editparentclass
-	cfoxusername = EDITPARENTCLASS
-	DataSession = 2
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 226
-	lbindcontrols = .F.
-	Name = "frmeditparentclass"
-	Width = 488
-	_memberdata = <VFPData>
-		<memberdata name="cclassname" display="cClassName"/>
+	*<PropValue>
+		capplicationpath = 
+		Caption = "Edit Parent Class and Containing Classes"
+		cclassname = 
+		cfoxuserid = editparentclass
+		cfoxusername = EDITPARENTCLASS
+		DataSession = 2
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 226
+		lbindcontrols = .F.
+		Name = "frmeditparentclass"
+		Width = 488
+		_memberdata = <VFPData>
+			<memberdata name="cclassname" display="cClassName"/>
 		</VFPData>
-	CHANGEFONTSIZE.Left = 18
-	CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
-	CHANGEFONTSIZE.Top = -36
+		CHANGEFONTSIZE.Left = 18
+		CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
+		CHANGEFONTSIZE.Top = -36
+	*</PropValue>
 
 	ADD OBJECT 'Basecommandbutton1' AS basecommandbutton WITH ;
 		Caption = "Return to Original", ;
@@ -11241,23 +11293,25 @@ DEFINE CLASS frmfindobjects AS baseformnew OF "peme_basecontrols.vcx"
 		*p: lresult
 	*</DefinedPropArrayMethod>
 
-	Caption = "Find Object(s)"
-	cdescription = 
-	cfoxuserid = SEARCHFORM
-	csearchfor = 
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 145
-	KeyPreview = .T.
-	lresult = .F.
-	MinHeight = 90
-	MinWidth = 260
-	Name = "frmfindobjects"
-	Width = 460
-	WindowType = 1
-	changefontsize.Left = 225
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 10
+	*<PropValue>
+		Caption = "Find Object(s)"
+		cdescription = 
+		cfoxuserid = SEARCHFORM
+		csearchfor = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 145
+		KeyPreview = .T.
+		lresult = .F.
+		MinHeight = 90
+		MinWidth = 260
+		Name = "frmfindobjects"
+		Width = 460
+		WindowType = 1
+		changefontsize.Left = 225
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 10
+	*</PropValue>
 
 	ADD OBJECT 'Baseeditbox1' AS baseeditbox WITH ;
 		ControlSource = "Thisform.cDescription", ;
@@ -11490,33 +11544,35 @@ DEFINE CLASS frmidlist AS frmpeme_base OF "editproperty.vcx" 		&& Description go
 		*p: nhandle
 	*</DefinedPropArrayMethod>
 
-	Caption = "Cross References"
-	cclassname = 
-	cfoxuserid = IDList
-	csourcefile = 
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 258
-	Name = "frmidlist"
-	nhandle = 0
-	Visible = .T.
-	Width = 700
-	_memberdata = <VFPData>
-		<memberdata name="createsummarycursor" display="CreateSummaryCursor"/>
-		<memberdata name="addtopnode" display="AddTopNode"/>
-		<memberdata name="expandtopnode" display="ExpandTopNode"/>
-		<memberdata name="expandlevel2" display="ExpandLevel2"/>
-		<memberdata name="createtagobject" display="CreateTagObject"/>
-		<memberdata name="nodeselected" display="NodeSelected"/>
-		<memberdata name="handledoubleclick" display="HandleDoubleClick"/>
-		<memberdata name="nhandle" display="nHandle"/>
-		<memberdata name="expandlevel3procs" display="ExpandLevel3Procs"/>
-		<memberdata name="expandlevel3names" display="ExpandLevel3Names"/>
-		<memberdata name="csourcefile" display="cSourceFile"/>
-		<memberdata name="cclassname" display="cClassName"/>
-		<memberdata name="nodeexpanded" display="NodeExpanded"/>
+	*<PropValue>
+		Caption = "Cross References"
+		cclassname = 
+		cfoxuserid = IDList
+		csourcefile = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 258
+		Name = "frmidlist"
+		nhandle = 0
+		Visible = .T.
+		Width = 700
+		_memberdata = <VFPData>
+			<memberdata name="createsummarycursor" display="CreateSummaryCursor"/>
+			<memberdata name="addtopnode" display="AddTopNode"/>
+			<memberdata name="expandtopnode" display="ExpandTopNode"/>
+			<memberdata name="expandlevel2" display="ExpandLevel2"/>
+			<memberdata name="createtagobject" display="CreateTagObject"/>
+			<memberdata name="nodeselected" display="NodeSelected"/>
+			<memberdata name="handledoubleclick" display="HandleDoubleClick"/>
+			<memberdata name="nhandle" display="nHandle"/>
+			<memberdata name="expandlevel3procs" display="ExpandLevel3Procs"/>
+			<memberdata name="expandlevel3names" display="ExpandLevel3Names"/>
+			<memberdata name="csourcefile" display="cSourceFile"/>
+			<memberdata name="cclassname" display="cClassName"/>
+			<memberdata name="nodeexpanded" display="NodeExpanded"/>
 		</VFPData>
-	CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
+		CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
+	*</PropValue>
 
 	ADD OBJECT 'grdGrid' AS basegrid WITH ;
 		AllowCellSelection = .T., ;
@@ -12350,101 +12406,103 @@ DEFINE CLASS frmopenclass AS frmopenfile OF "editproperty.vcx"
 		*p: lmodal
 	*</DefinedPropArrayMethod>
 
-	cclasslib = 
-	cclassname = 
-	cfoxuserid = OPENCLASS
-	cfoxusername = OpenClass
-	DoCreate = .T.
-	lmodal = .F.
-	Name = "frmopenclass"
-	changefontsize.Name = "changefontsize"
-	cmdSearch.Name = "cmdSearch"
-	cntClass.cbobaseclass.Name = "cbobaseclass"
-	cntClass.chkExactMatch1.Alignment = 0
-	cntClass.chkExactMatch1.Name = "chkExactMatch1"
-	cntClass.cmdMarkAll.Name = "cmdMarkAll"
-	cntClass.lblBaseClass.Name = "lblBaseClass"
-	cntClass.lblClass.Name = "lblClass"
-	cntClass.Name = "cntClass"
-	cntClass.txtclasslookfor.Name = "txtclasslookfor"
-	cntSearch.cboFolder.Name = "cboFolder"
-	cntSearch.cboLookFor.Name = "cboLookFor"
-	cntSearch.cboScope.Name = "cboScope"
-	cntSearch.chkExactMatch2.Alignment = 0
-	cntSearch.chkExactMatch2.Name = "chkExactMatch2"
-	cntSearch.chkProjectHomeDir.Alignment = 0
-	cntSearch.chkProjectHomeDir.Name = "chkProjectHomeDir"
-	cntSearch.chkSubFolders.Alignment = 0
-	cntSearch.chkSubFolders.Name = "chkSubFolders"
-	cntSearch.cmdCurrent.Name = "cmdCurrent"
-	cntSearch.cmdGetFolder.Name = "cmdGetFolder"
-	cntSearch.IMGPARENT.Height = 16
-	cntSearch.IMGPARENT.Name = "IMGPARENT"
-	cntSearch.IMGPARENT.Width = 16
-	cntSearch.lblLookFor.Name = "lblLookFor"
-	cntSearch.lblLookIn.Name = "lblLookIn"
-	cntSearch.lblScope.Name = "lblScope"
-	cntSearch.Name = "cntSearch"
-	cntTypes.Chkfiletype1.Alignment = 0
-	cntTypes.Chkfiletype1.Name = "Chkfiletype1"
-	cntTypes.Chkfiletype10.Alignment = 0
-	cntTypes.Chkfiletype10.Name = "Chkfiletype10"
-	cntTypes.Chkfiletype11.Alignment = 0
-	cntTypes.Chkfiletype11.Name = "Chkfiletype11"
-	cntTypes.Chkfiletype12.Alignment = 0
-	cntTypes.Chkfiletype12.Name = "Chkfiletype12"
-	cntTypes.Chkfiletype13.Alignment = 0
-	cntTypes.Chkfiletype13.Name = "Chkfiletype13"
-	cntTypes.Chkfiletype14.Alignment = 0
-	cntTypes.Chkfiletype14.Name = "Chkfiletype14"
-	cntTypes.Chkfiletype2.Alignment = 0
-	cntTypes.Chkfiletype2.Name = "Chkfiletype2"
-	cntTypes.Chkfiletype3.Alignment = 0
-	cntTypes.Chkfiletype3.Name = "Chkfiletype3"
-	cntTypes.Chkfiletype4.Alignment = 0
-	cntTypes.Chkfiletype4.Name = "Chkfiletype4"
-	cntTypes.Chkfiletype5.Alignment = 0
-	cntTypes.Chkfiletype5.Name = "Chkfiletype5"
-	cntTypes.Chkfiletype6.Alignment = 0
-	cntTypes.Chkfiletype6.Name = "Chkfiletype6"
-	cntTypes.Chkfiletype7.Alignment = 0
-	cntTypes.Chkfiletype7.Name = "Chkfiletype7"
-	cntTypes.Chkfiletype8.Alignment = 0
-	cntTypes.Chkfiletype8.Name = "Chkfiletype8"
-	cntTypes.Chkfiletype9.Alignment = 0
-	cntTypes.Chkfiletype9.Name = "Chkfiletype9"
-	cntTypes.cmdClearAll.Name = "cmdClearAll"
-	cntTypes.cmdMarkAll.Name = "cmdMarkAll"
-	cntTypes.lblFileTypes.Name = "lblFileTypes"
-	cntTypes.Name = "cntTypes"
-	grdResults.colBaseClass.Header1.Name = "Header1"
-	grdResults.colBaseClass.Name = "colBaseClass"
-	grdResults.colBaseClass.Text1.Name = "Text1"
-	grdResults.colClass.Header1.Name = "Header1"
-	grdResults.colClass.Name = "colClass"
-	grdResults.colClass.Text1.Name = "Text1"
-	grdResults.colClassLoc.Header1.Name = "Header1"
-	grdResults.colClassLoc.Name = "colClassLoc"
-	grdResults.colClassLoc.Text1.Name = "Text1"
-	grdResults.colFilename.Header1.Name = "Header1"
-	grdResults.colFilename.Name = "colFilename"
-	grdResults.colFilename.Text1.Name = "Text1"
-	grdResults.colFolder.Header1.Name = "Header1"
-	grdResults.colFolder.Name = "colFolder"
-	grdResults.colFolder.Text1.Name = "Text1"
-	grdResults.colParentClass.Header1.Name = "Header1"
-	grdResults.colParentClass.Name = "colParentClass"
-	grdResults.colParentClass.Text1.Name = "Text1"
-	grdResults.ColTimeStamp.Header1.Name = "Header1"
-	grdResults.ColTimeStamp.Name = "ColTimeStamp"
-	grdResults.ColTimeStamp.Text1.Name = "Text1"
-	grdResults.Name = "grdResults"
-	imgClassIcon.Name = "imgClassIcon"
-	cmdClassIcon.Name = "cmdClassIcon"
-	cmdSelect.Name = "cmdSelect"
-	chkStayOpen.Alignment = 0
-	chkStayOpen.Name = "chkStayOpen"
-	cmdRun.Name = "cmdRun"
+	*<PropValue>
+		cclasslib = 
+		cclassname = 
+		cfoxuserid = OPENCLASS
+		cfoxusername = OpenClass
+		DoCreate = .T.
+		lmodal = .F.
+		Name = "frmopenclass"
+		changefontsize.Name = "changefontsize"
+		cmdSearch.Name = "cmdSearch"
+		cntClass.cbobaseclass.Name = "cbobaseclass"
+		cntClass.chkExactMatch1.Alignment = 0
+		cntClass.chkExactMatch1.Name = "chkExactMatch1"
+		cntClass.cmdMarkAll.Name = "cmdMarkAll"
+		cntClass.lblBaseClass.Name = "lblBaseClass"
+		cntClass.lblClass.Name = "lblClass"
+		cntClass.Name = "cntClass"
+		cntClass.txtclasslookfor.Name = "txtclasslookfor"
+		cntSearch.cboFolder.Name = "cboFolder"
+		cntSearch.cboLookFor.Name = "cboLookFor"
+		cntSearch.cboScope.Name = "cboScope"
+		cntSearch.chkExactMatch2.Alignment = 0
+		cntSearch.chkExactMatch2.Name = "chkExactMatch2"
+		cntSearch.chkProjectHomeDir.Alignment = 0
+		cntSearch.chkProjectHomeDir.Name = "chkProjectHomeDir"
+		cntSearch.chkSubFolders.Alignment = 0
+		cntSearch.chkSubFolders.Name = "chkSubFolders"
+		cntSearch.cmdCurrent.Name = "cmdCurrent"
+		cntSearch.cmdGetFolder.Name = "cmdGetFolder"
+		cntSearch.IMGPARENT.Height = 16
+		cntSearch.IMGPARENT.Name = "IMGPARENT"
+		cntSearch.IMGPARENT.Width = 16
+		cntSearch.lblLookFor.Name = "lblLookFor"
+		cntSearch.lblLookIn.Name = "lblLookIn"
+		cntSearch.lblScope.Name = "lblScope"
+		cntSearch.Name = "cntSearch"
+		cntTypes.Chkfiletype1.Alignment = 0
+		cntTypes.Chkfiletype1.Name = "Chkfiletype1"
+		cntTypes.Chkfiletype10.Alignment = 0
+		cntTypes.Chkfiletype10.Name = "Chkfiletype10"
+		cntTypes.Chkfiletype11.Alignment = 0
+		cntTypes.Chkfiletype11.Name = "Chkfiletype11"
+		cntTypes.Chkfiletype12.Alignment = 0
+		cntTypes.Chkfiletype12.Name = "Chkfiletype12"
+		cntTypes.Chkfiletype13.Alignment = 0
+		cntTypes.Chkfiletype13.Name = "Chkfiletype13"
+		cntTypes.Chkfiletype14.Alignment = 0
+		cntTypes.Chkfiletype14.Name = "Chkfiletype14"
+		cntTypes.Chkfiletype2.Alignment = 0
+		cntTypes.Chkfiletype2.Name = "Chkfiletype2"
+		cntTypes.Chkfiletype3.Alignment = 0
+		cntTypes.Chkfiletype3.Name = "Chkfiletype3"
+		cntTypes.Chkfiletype4.Alignment = 0
+		cntTypes.Chkfiletype4.Name = "Chkfiletype4"
+		cntTypes.Chkfiletype5.Alignment = 0
+		cntTypes.Chkfiletype5.Name = "Chkfiletype5"
+		cntTypes.Chkfiletype6.Alignment = 0
+		cntTypes.Chkfiletype6.Name = "Chkfiletype6"
+		cntTypes.Chkfiletype7.Alignment = 0
+		cntTypes.Chkfiletype7.Name = "Chkfiletype7"
+		cntTypes.Chkfiletype8.Alignment = 0
+		cntTypes.Chkfiletype8.Name = "Chkfiletype8"
+		cntTypes.Chkfiletype9.Alignment = 0
+		cntTypes.Chkfiletype9.Name = "Chkfiletype9"
+		cntTypes.cmdClearAll.Name = "cmdClearAll"
+		cntTypes.cmdMarkAll.Name = "cmdMarkAll"
+		cntTypes.lblFileTypes.Name = "lblFileTypes"
+		cntTypes.Name = "cntTypes"
+		grdResults.colBaseClass.Header1.Name = "Header1"
+		grdResults.colBaseClass.Name = "colBaseClass"
+		grdResults.colBaseClass.Text1.Name = "Text1"
+		grdResults.colClass.Header1.Name = "Header1"
+		grdResults.colClass.Name = "colClass"
+		grdResults.colClass.Text1.Name = "Text1"
+		grdResults.colClassLoc.Header1.Name = "Header1"
+		grdResults.colClassLoc.Name = "colClassLoc"
+		grdResults.colClassLoc.Text1.Name = "Text1"
+		grdResults.colFilename.Header1.Name = "Header1"
+		grdResults.colFilename.Name = "colFilename"
+		grdResults.colFilename.Text1.Name = "Text1"
+		grdResults.colFolder.Header1.Name = "Header1"
+		grdResults.colFolder.Name = "colFolder"
+		grdResults.colFolder.Text1.Name = "Text1"
+		grdResults.colParentClass.Header1.Name = "Header1"
+		grdResults.colParentClass.Name = "colParentClass"
+		grdResults.colParentClass.Text1.Name = "Text1"
+		grdResults.ColTimeStamp.Header1.Name = "Header1"
+		grdResults.ColTimeStamp.Name = "ColTimeStamp"
+		grdResults.ColTimeStamp.Text1.Name = "Text1"
+		grdResults.Name = "grdResults"
+		imgClassIcon.Name = "imgClassIcon"
+		cmdClassIcon.Name = "cmdClassIcon"
+		cmdSelect.Name = "cmdSelect"
+		chkStayOpen.Alignment = 0
+		chkStayOpen.Name = "chkStayOpen"
+		cmdRun.Name = "cmdRun"
+	*</PropValue>
 	
 	PROCEDURE editsourcefile
 		Lparameters lcFileName, lcClass, lcMethod, lnStartRange, lnEndRange
@@ -12627,58 +12685,60 @@ DEFINE CLASS frmopenfile AS frmpeme_base OF "editproperty.vcx"
 		*p: txtclasslookfor
 	*</DefinedPropArrayMethod>
 
-	AlwaysOnTop = .T.
-	AutoCenter = .T.
-	BindControls = .F.
-	Caption = "PEM Editor - Open"
-	cbaseclass = 
-	cbobaseclass = .NULL.
-	cbofolder = .NULL.
-	cbolookfor = .NULL.
-	cboscope = .NULL.
-	cclass = 
-	cfilename = 
-	cfiletypes = |
-	chkprojecthomedir = .NULL.
-	chksubfolders = .NULL.
-	chomedir = 
-	csearchtype = 
-	csortorder = |COLCLASS|COLFILENAME|
-	ctype = 
-	DataSession = 2
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 292
-	HelpContextID = 1231101
-	lbindcontrols = .F.
-	lbrowser = .T.
-	lclassexactmatch = .F.
-	ldragdrop = .F.
-	lerror = .F.
-	lfilenameexactmatch = .F.
-	lformaddobject = .F.
-	lignoreerrors = .F.
-	lkeepopen = .F.
-	lrequeryscope = .T.
-	lvcxscxmode = .T.
-	MaxButton = .T.
-	MinButton = .T.
-	Name = "frmopenfile"
-	natpos = 0
-	nmousebutton = 0
-	nshift = 0
-	ofoxref = .NULL.
-	oresultsform = .NULL.
-	osource = .NULL.
-	ShowTips = .T.
-	txtclasslookfor = .NULL.
-	Width = 429
-	_memberdata = <VFPData>
-		<memberdata name="runfile" display="RunFile"/>
+	*<PropValue>
+		AlwaysOnTop = .T.
+		AutoCenter = .T.
+		BindControls = .F.
+		Caption = "PEM Editor - Open"
+		cbaseclass = 
+		cbobaseclass = .NULL.
+		cbofolder = .NULL.
+		cbolookfor = .NULL.
+		cboscope = .NULL.
+		cclass = 
+		cfilename = 
+		cfiletypes = |
+		chkprojecthomedir = .NULL.
+		chksubfolders = .NULL.
+		chomedir = 
+		csearchtype = 
+		csortorder = |COLCLASS|COLFILENAME|
+		ctype = 
+		DataSession = 2
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 292
+		HelpContextID = 1231101
+		lbindcontrols = .F.
+		lbrowser = .T.
+		lclassexactmatch = .F.
+		ldragdrop = .F.
+		lerror = .F.
+		lfilenameexactmatch = .F.
+		lformaddobject = .F.
+		lignoreerrors = .F.
+		lkeepopen = .F.
+		lrequeryscope = .T.
+		lvcxscxmode = .T.
+		MaxButton = .T.
+		MinButton = .T.
+		Name = "frmopenfile"
+		natpos = 0
+		nmousebutton = 0
+		nshift = 0
+		ofoxref = .NULL.
+		oresultsform = .NULL.
+		osource = .NULL.
+		ShowTips = .T.
+		txtclasslookfor = .NULL.
+		Width = 429
+		_memberdata = <VFPData>
+			<memberdata name="runfile" display="RunFile"/>
 		</VFPData>
-	changefontsize.Left = -24
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 114
+		changefontsize.Left = -24
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 114
+	*</PropValue>
 
 	ADD OBJECT 'chkStayOpen' AS basecheckbox WITH ;
 		Alignment = 0, ;
@@ -15255,23 +15315,25 @@ DEFINE CLASS frmpasteproperties AS frmpeme_base OF "editproperty.vcx"
 		*p: ntop
 	*</DefinedPropArrayMethod>
 
-	AllowOutput = .T.
-	capplicationpath = 
-	Caption = "Paste Properties and Method Code"
-	cfoxuserid = pasteproperties
-	cfoxusername = PASTEPROPERTIES
-	cmemberssortorder = +CName
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 235
-	lanynew = .F.
-	lnewallowed = .F.
-	luseabbreviations = .T.
-	Name = "frmpasteproperties"
-	ntop = 0
-	Width = 375
-	WindowType = 1
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		AllowOutput = .T.
+		capplicationpath = 
+		Caption = "Paste Properties and Method Code"
+		cfoxuserid = pasteproperties
+		cfoxusername = PASTEPROPERTIES
+		cmemberssortorder = +CName
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 235
+		lanynew = .F.
+		lnewallowed = .F.
+		luseabbreviations = .T.
+		Name = "frmpasteproperties"
+		ntop = 0
+		Width = 375
+		WindowType = 1
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'BASECHECKBOX1' AS basecheckbox WITH ;
 		Alignment = 0, ;
@@ -15890,36 +15952,38 @@ DEFINE CLASS frmpeme_base AS baseformnew OF "peme_basecontrols.vcx"
 		*a: aselectedobjects[1,0]
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	cdodefaulttext = .F.
-	cpluginpath = 
-	csnippetpath = <fb2p_value>&#13;</fb2p_value>
-	csourcefilename = 
-	cthisformcaption = 
-	DoCreate = .T.
-	lavoidbufferoverrun = .F.
-	lclass = .F.
-	ldataenvironment = .F.
-	ldebugmode = .F.
-	ldontdisableme = .F.
-	leditingoneproperty = .F.
-	lpemeditor = .F.
-	luseabbreviations = .F.
-	Name = "frmpeme_base"
-	nhelpid = 0
-	nobjnumber = 0
-	nselectedobjects = 0
-	oprefs = .NULL.
-	oserver = .NULL.
-	otopofform = .NULL.
-	outils = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="setdefaults" display="SetDefaults" favorites="True"/>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="oserver" display="oServer"/>
+	*<PropValue>
+		capplicationpath = 
+		cdodefaulttext = .F.
+		cpluginpath = 
+		csnippetpath = <fb2p_value>&#13;</fb2p_value>
+		csourcefilename = 
+		cthisformcaption = 
+		DoCreate = .T.
+		lavoidbufferoverrun = .F.
+		lclass = .F.
+		ldataenvironment = .F.
+		ldebugmode = .F.
+		ldontdisableme = .F.
+		leditingoneproperty = .F.
+		lpemeditor = .F.
+		luseabbreviations = .F.
+		Name = "frmpeme_base"
+		nhelpid = 0
+		nobjnumber = 0
+		nselectedobjects = 0
+		oprefs = .NULL.
+		oserver = .NULL.
+		otopofform = .NULL.
+		outils = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="setdefaults" display="SetDefaults" favorites="True"/>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="oserver" display="oServer"/>
 		</VFPData>
-	changefontsize.Name = "changefontsize"
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 	
 	PROCEDURE addclassinfo
 		Lparameters loControl, lcText
@@ -17897,20 +17961,22 @@ DEFINE CLASS frmpemeditor AS frmpemeditorbase OF "editproperty.vcx"
 		*p: nwidthhidden
 	*</DefinedPropArrayMethod>
 
-	Caption = "PEM Editor 7"
-	DoCreate = .T.
-	Height = 260
-	Name = "frmpemeditor"
-	nheighthidden = -1
-	nlefthidden = -1
-	ntophidden = -1
-	nwidthhidden = -1
-	Visible = .T.
-	Width = 686
-	_memberdata = <VFPData>
-		<memberdata name="setformcaption" display="SetFormCaption"/>
+	*<PropValue>
+		Caption = "PEM Editor 7"
+		DoCreate = .T.
+		Height = 260
+		Name = "frmpemeditor"
+		nheighthidden = -1
+		nlefthidden = -1
+		ntophidden = -1
+		nwidthhidden = -1
+		Visible = .T.
+		Width = 686
+		_memberdata = <VFPData>
+			<memberdata name="setformcaption" display="SetFormCaption"/>
 		</VFPData>
-	changefontsize.Name = "changefontsize"
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'cntControls' AS cntpemcontrols WITH ;
 		Left = 338, ;
@@ -19190,138 +19256,140 @@ DEFINE CLASS frmpemeditorbase AS editpropertyform OF "editproperty.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	BindControls = .F.
-	caddtype = 
-	Caption = "PEM Editor 7"
-	ccurrentobjectname = 
-	ceditpropertyname = 
-	cexporttomethod = .F.
-	cformermember = 		&& The name of the formerly selected member when New is clicked
-	cfoxuserid = NEWEDITPROPDLG
-	cfoxusername = NewEditPropertyDialog
-	cfullobjectname = .F.
-	chelpfile = .F.
-	cmemberssortorder = +CName
-	cmemberssortordermethodview = +IIF(cType = 'P', '0', IIF(lNonDefault, '1', IIF(lHasCode, '2', IIF(Not lNative, '3', '4')))) + CName
-	cmyversion = 
-	cnewmembertype = P
-	coriginalcaption = .F.
-	coriginalname = 		&& Used to save the original name of the property or method so that if we edit it, we can find the one whose name we are editing
-	cpem = 		&& Name of the property or method that was selected in the property sheet
-	cquicktimeraction = 
-	csearchcolumns = .F.
-	csearchfor = .F.
-	csearchstring = 		&& The string to search for using incremental search
-	csession = .F.		&& Suffix to global _oPemEditor ; empty for primary session
-	csubstring = 
-	csubstringmv = 
-	ctreestartnode = .F.
-	ctreeviewkey = 
-	DoCreate = .T.
-	Enabled = .T.
-	Height = 260
-	KeyPreview = .T.
-	laddmode = .F.
-	laddpropertyform = .F.
-	lallowdescriptioncrs = .F.
-	lautomovewindow = .F.
-	lbeautifyparens = .F.
-	lcheckformattingform = .T.
-	lcheckoutscc = .F.
-	lcheckstartdoctreeview = .T.
-	lcollapsed = .F.
-	ldebuggerwasopen = .F.
-	ldoctreeview = .F.
-	ldontdisableme = .F.
-	lduringresizeevent = .F.
-	lexpandallnodes = .F.
-	lfilterineffect = .F.
-	lfirsttime = .T.
-	lfixsemicolons = .F.
-	lformisenabled = .T.		&& .T.
-	lfoundforall = .T.
-	listopofform = .F.
-	lmethod = .F.		&& .T. if we're adding methods
-	lmethodview = .F.
-	lnoerrormsgonmissingvcx = .F.
-	lrebuildtree = .T.		&& If .T. the object tree must be rebuild before display
-	lresetprevnexthistory = .T.
-	ltreemembersort = .F.
-	ltreeshowcaptions = .T.
-	ltreeviewallcontrols = .F.
-	ltreeviewshowmethods = .F.
-	lupdategroupnames = .T.
-	luseabbreviations = .F.
-	lusecso = .F.
-	lusememberdata = .F.
-	MinHeight = -1
-	MinWidth = -1
-	Name = "frmpemeditorbase"
-	ncurrenthandle = 0
-	ndebuggerwindows = 0
-	ndefinitionfornot = .F.
-	ndefinitionfornotequal = .F.
-	ndescsplittertop = .F.
-	ndesignerobjects = 0
-	nfoundobjects = 0
-	nhandingindent = 0
-	nkeytime = 0		&& The time between keypresses for incremental search
-	nmethodview = 1
-	nnotequalchoice = 1
-	noriginalheight = 0
-	noriginalvisibility = 		&& The original visiibility of the selected member
-	noriginalwidth = 0
-	npreviousselectobjects = 1
-	nselectedobjects = 1
-	nsplitterleft = 326
-	nsplittertop = 0		&& The Top position for oSplitter
-	nstartingtop = 0
-	nstringdelimiterchoice = 1
-	ntopofformheight = .F.
-	ntopofformwidth = .F.
-	ntreesort = .T.
-	ntreesortmethods = 1
-	ntreeviewbackcolor = .F.
-	ntreeviewclassinfo = 0
-	ntreeviewforecolor = 0
-	obeautify = .F.
-	ocntfilters = .NULL.
-	odoublehash = .NULL.
-	oeditorwin = .NULL.
-	oedtdefault = .NULL.
-	oedtdescription = .NULL.
-	oeventhandlerautosize = .NULL.
-	oeventhandlercaption = .NULL.
-	oeventhandlerheight = .NULL.
-	oeventhandlerwidth = .NULL.
-	ofoxref = .NULL.
-	ogrid = .NULL.		&& Main grid --
-	oidex = .NULL.
-	omember = .NULL.
-	omemberdataengine = .NULL.		&& Object reference to the member data engine
-	oobject = .NULL.		&& A reference to the object we're adding members for
-	oobjecttree = .NULL.
-	ooriginalmember = .NULL.
-	opositions = .NULL.		&& A collection of object positions
-	oprefs = .F.
-	osearchresults = .NULL.
-	oserver = .F.
-	otxtname = .NULL.
-	outils = .NULL.
-	oxml = .NULL.		&& Object refrence to the XML parser object
-	singlesetfieldindent = 0
-	Visible = .F.
-	Width = 686
-	WindowState = 0
-	xdefaultvalue = 
-	_memberdata = <VFPData>
-		<memberdata name="oidex" display="oIDEx"/>
-		<memberdata name="setcurrentobjectproperty" display="SetCurrentObjectProperty"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="findobjects" display="FindObjects"/>
-		<memberdata name="lfilterineffect" display="lFilterInEffect"/>
-		</VFPData>		&& XML Metadata for customizable properties
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		BindControls = .F.
+		caddtype = 
+		Caption = "PEM Editor 7"
+		ccurrentobjectname = 
+		ceditpropertyname = 
+		cexporttomethod = .F.
+		cformermember = 
+		cfoxuserid = NEWEDITPROPDLG
+		cfoxusername = NewEditPropertyDialog
+		cfullobjectname = .F.
+		chelpfile = .F.
+		cmemberssortorder = +CName
+		cmemberssortordermethodview = +IIF(cType = 'P', '0', IIF(lNonDefault, '1', IIF(lHasCode, '2', IIF(Not lNative, '3', '4')))) + CName
+		cmyversion = 
+		cnewmembertype = P
+		coriginalcaption = .F.
+		coriginalname = 
+		cpem = 
+		cquicktimeraction = 
+		csearchcolumns = .F.
+		csearchfor = .F.
+		csearchstring = 
+		csession = .F.
+		csubstring = 
+		csubstringmv = 
+		ctreestartnode = .F.
+		ctreeviewkey = 
+		DoCreate = .T.
+		Enabled = .T.
+		Height = 260
+		KeyPreview = .T.
+		laddmode = .F.
+		laddpropertyform = .F.
+		lallowdescriptioncrs = .F.
+		lautomovewindow = .F.
+		lbeautifyparens = .F.
+		lcheckformattingform = .T.
+		lcheckoutscc = .F.
+		lcheckstartdoctreeview = .T.
+		lcollapsed = .F.
+		ldebuggerwasopen = .F.
+		ldoctreeview = .F.
+		ldontdisableme = .F.
+		lduringresizeevent = .F.
+		lexpandallnodes = .F.
+		lfilterineffect = .F.
+		lfirsttime = .T.
+		lfixsemicolons = .F.
+		lformisenabled = .T.
+		lfoundforall = .T.
+		listopofform = .F.
+		lmethod = .F.
+		lmethodview = .F.
+		lnoerrormsgonmissingvcx = .F.
+		lrebuildtree = .T.
+		lresetprevnexthistory = .T.
+		ltreemembersort = .F.
+		ltreeshowcaptions = .T.
+		ltreeviewallcontrols = .F.
+		ltreeviewshowmethods = .F.
+		lupdategroupnames = .T.
+		luseabbreviations = .F.
+		lusecso = .F.
+		lusememberdata = .F.
+		MinHeight = -1
+		MinWidth = -1
+		Name = "frmpemeditorbase"
+		ncurrenthandle = 0
+		ndebuggerwindows = 0
+		ndefinitionfornot = .F.
+		ndefinitionfornotequal = .F.
+		ndescsplittertop = .F.
+		ndesignerobjects = 0
+		nfoundobjects = 0
+		nhandingindent = 0
+		nkeytime = 0
+		nmethodview = 1
+		nnotequalchoice = 1
+		noriginalheight = 0
+		noriginalvisibility = 
+		noriginalwidth = 0
+		npreviousselectobjects = 1
+		nselectedobjects = 1
+		nsplitterleft = 326
+		nsplittertop = 0
+		nstartingtop = 0
+		nstringdelimiterchoice = 1
+		ntopofformheight = .F.
+		ntopofformwidth = .F.
+		ntreesort = .T.
+		ntreesortmethods = 1
+		ntreeviewbackcolor = .F.
+		ntreeviewclassinfo = 0
+		ntreeviewforecolor = 0
+		obeautify = .F.
+		ocntfilters = .NULL.
+		odoublehash = .NULL.
+		oeditorwin = .NULL.
+		oedtdefault = .NULL.
+		oedtdescription = .NULL.
+		oeventhandlerautosize = .NULL.
+		oeventhandlercaption = .NULL.
+		oeventhandlerheight = .NULL.
+		oeventhandlerwidth = .NULL.
+		ofoxref = .NULL.
+		ogrid = .NULL.
+		oidex = .NULL.
+		omember = .NULL.
+		omemberdataengine = .NULL.
+		oobject = .NULL.
+		oobjecttree = .NULL.
+		ooriginalmember = .NULL.
+		opositions = .NULL.
+		oprefs = .F.
+		osearchresults = .NULL.
+		oserver = .F.
+		otxtname = .NULL.
+		outils = .NULL.
+		oxml = .NULL.
+		singlesetfieldindent = 0
+		Visible = .F.
+		Width = 686
+		WindowState = 0
+		xdefaultvalue = 
+		_memberdata = <VFPData>
+			<memberdata name="oidex" display="oIDEx"/>
+			<memberdata name="setcurrentobjectproperty" display="SetCurrentObjectProperty"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="findobjects" display="FindObjects"/>
+			<memberdata name="lfilterineffect" display="lFilterInEffect"/>
+		</VFPData>
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 	
 	PROCEDURE Activate
 		With This
@@ -24676,21 +24744,23 @@ DEFINE CLASS frmprogress AS baseformnew OF "peme_basecontrols.vcx"
 		*p: nseconds
 	*</DefinedPropArrayMethod>
 
-	AlwaysOnTop = .T.
-	AutoCenter = .F.
-	Caption = "Progress"
-	cfoxuserid = PROGRESS
-	cfoxusername = PROGRESS
-	ControlBox = .F.
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 58
-	MaxButton = .F.
-	MinButton = .F.
-	Name = "frmprogress"
-	nseconds = 0
-	Width = 378
-	changefontsize.Name = "changefontsize"
+	*<PropValue>
+		AlwaysOnTop = .T.
+		AutoCenter = .F.
+		Caption = "Progress"
+		cfoxuserid = PROGRESS
+		cfoxusername = PROGRESS
+		ControlBox = .F.
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 58
+		MaxButton = .F.
+		MinButton = .F.
+		Name = "frmprogress"
+		nseconds = 0
+		Width = 378
+		changefontsize.Name = "changefontsize"
+	*</PropValue>
 
 	ADD OBJECT 'imgAnimation' AS image WITH ;
 		Height = 45, ;
@@ -24770,29 +24840,31 @@ DEFINE CLASS frmsearchresults AS frmpeme_base OF "editproperty.vcx"
 		*a: aselectedobjectnames[1,0]
 	*</DefinedPropArrayMethod>
 
-	Caption = "Multiple Objects Detail"
-	ceditpropertyname = 
-	cfoxuserid = SEARCHRESULTS
-	cfoxusername = SEARCHRESULTS
-	cparentname = 
-	csearchcolumns = 
-	DataSession = 1
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 194
-	leditingoneproperty = .T.
-	llockcolumns = .F.
-	Name = "frmsearchresults"
-	opemeditor = .NULL.
-	Visible = .T.
-	Width = 480
-	_memberdata = <VFPData>
-		<memberdata name="getcurrentobject" display="GetCurrentObject"/>
-		<memberdata name="aselectedobjectnames" display="aSelectedObjectNames"/>
+	*<PropValue>
+		Caption = "Multiple Objects Detail"
+		ceditpropertyname = 
+		cfoxuserid = SEARCHRESULTS
+		cfoxusername = SEARCHRESULTS
+		cparentname = 
+		csearchcolumns = 
+		DataSession = 1
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 194
+		leditingoneproperty = .T.
+		llockcolumns = .F.
+		Name = "frmsearchresults"
+		opemeditor = .NULL.
+		Visible = .T.
+		Width = 480
+		_memberdata = <VFPData>
+			<memberdata name="getcurrentobject" display="GetCurrentObject"/>
+			<memberdata name="aselectedobjectnames" display="aSelectedObjectNames"/>
 		</VFPData>
-	changefontsize.Left = 32
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 71
+		changefontsize.Left = 32
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 71
+	*</PropValue>
 
 	ADD OBJECT 'Basecheckbox1' AS basecheckbox WITH ;
 		Alignment = 0, ;
@@ -25346,66 +25418,68 @@ DEFINE CLASS gridcompareclass AS grid
 		*p: ncurrentrecno
 	*</DefinedPropArrayMethod>
 
-	ColumnCount = 6
-	DeleteMark = .F.
-	FontSize = 8
-	GridLines = 0
-	Height = 276
-	HighlightRow = .F.
-	lfirsttime = .T.
-	Name = "gridcompareclass"
-	nanchor = 15
-	ncurrentrecno = 0
-	Panel = 1
-	RecordMark = .F.
-	RecordSource = "csrCompareClass"
-	RecordSourceType = 1
-	RowHeight = 17
-	SplitBar = .F.
-	TabIndex = 1
-	Width = 535
-	ZOrderSet = 0
-	Column1.ColumnOrder = 4
-	Column1.ControlSource = "csrCompareClass.cName"
-	Column1.FontSize = 8
-	Column1.Name = "ColName"
-	Column1.ReadOnly = .T.
-	Column1.Width = 120
-	Column2.ColumnOrder = 3
-	Column2.ControlSource = ""
-	Column2.CurrentControl = "imgHolder"
-	Column2.DynamicFontShadow = "This.SetBMP()"
-	Column2.FontSize = 8
-	Column2.Name = "ColTypeIcon"
-	Column2.ReadOnly = .T.
-	Column2.Sparse = .F.
-	Column2.Width = 16
-	Column3.ColumnOrder = 5
-	Column3.ControlSource = "csrCompareClass.cValueCol"
-	Column3.CurrentControl = "Text1"
-	Column3.FontSize = 8
-	Column3.Name = "ColValue"
-	Column3.ReadOnly = .T.
-	Column3.Width = 150
-	Column4.Alignment = 2
-	Column4.ColumnOrder = 1
-	Column4.ControlSource = "csrCompareClass.lSelect"
-	Column4.FontSize = 8
-	Column4.Name = "ColSelect"
-	Column4.Sparse = .F.
-	Column4.Width = 30
-	Column5.ColumnOrder = 6
-	Column5.ControlSource = "csrCompareClass.cInheritValueCol"
-	Column5.FontSize = 8
-	Column5.Name = "ColCurValue"
-	Column5.ReadOnly = .T.
-	Column5.Width = 150
-	Column6.Alignment = 2
-	Column6.ColumnOrder = 2
-	Column6.ControlSource = "IIF(csrCompareClass.lIdentical, 'Y', '')"
-	Column6.FontSize = 8
-	Column6.Name = "ColSame"
-	Column6.Width = 35
+	*<PropValue>
+		ColumnCount = 6
+		DeleteMark = .F.
+		FontSize = 8
+		GridLines = 0
+		Height = 276
+		HighlightRow = .F.
+		lfirsttime = .T.
+		Name = "gridcompareclass"
+		nanchor = 15
+		ncurrentrecno = 0
+		Panel = 1
+		RecordMark = .F.
+		RecordSource = "csrCompareClass"
+		RecordSourceType = 1
+		RowHeight = 17
+		SplitBar = .F.
+		TabIndex = 1
+		Width = 535
+		ZOrderSet = 0
+		Column1.ColumnOrder = 4
+		Column1.ControlSource = "csrCompareClass.cName"
+		Column1.FontSize = 8
+		Column1.Name = "ColName"
+		Column1.ReadOnly = .T.
+		Column1.Width = 120
+		Column2.ColumnOrder = 3
+		Column2.ControlSource = ""
+		Column2.CurrentControl = "imgHolder"
+		Column2.DynamicFontShadow = "This.SetBMP()"
+		Column2.FontSize = 8
+		Column2.Name = "ColTypeIcon"
+		Column2.ReadOnly = .T.
+		Column2.Sparse = .F.
+		Column2.Width = 16
+		Column3.ColumnOrder = 5
+		Column3.ControlSource = "csrCompareClass.cValueCol"
+		Column3.CurrentControl = "Text1"
+		Column3.FontSize = 8
+		Column3.Name = "ColValue"
+		Column3.ReadOnly = .T.
+		Column3.Width = 150
+		Column4.Alignment = 2
+		Column4.ColumnOrder = 1
+		Column4.ControlSource = "csrCompareClass.lSelect"
+		Column4.FontSize = 8
+		Column4.Name = "ColSelect"
+		Column4.Sparse = .F.
+		Column4.Width = 30
+		Column5.ColumnOrder = 6
+		Column5.ControlSource = "csrCompareClass.cInheritValueCol"
+		Column5.FontSize = 8
+		Column5.Name = "ColCurValue"
+		Column5.ReadOnly = .T.
+		Column5.Width = 150
+		Column6.Alignment = 2
+		Column6.ColumnOrder = 2
+		Column6.ControlSource = "IIF(csrCompareClass.lIdentical, 'Y', '')"
+		Column6.FontSize = 8
+		Column6.Name = "ColSame"
+		Column6.Width = 35
+	*</PropValue>
 
 	ADD OBJECT 'ColCurValue.Header1' AS header WITH ;
 		Caption = "Value in Parent Class", ;
@@ -25654,54 +25728,56 @@ DEFINE CLASS gridcompareproperties AS grid
 		*p: ncurrentrecno
 	*</DefinedPropArrayMethod>
 
-	ColumnCount = 4
-	DeleteMark = .F.
-	FontSize = 8
-	GridLines = 0
-	Height = 276
-	HighlightRow = .F.
-	lfirsttime = .T.
-	Name = "gridcompareproperties"
-	nanchor = 15
-	ncurrentrecno = 0
-	Panel = 1
-	ReadOnly = .T.
-	RecordMark = .F.
-	RecordSource = "csrCompareObject"
-	RecordSourceType = 1
-	RowHeight = 17
-	SplitBar = .F.
-	TabIndex = 1
-	Width = 535
-	ZOrderSet = 0
-	Column1.ColumnOrder = 2
-	Column1.ControlSource = "cName"
-	Column1.FontSize = 8
-	Column1.Name = "ColName"
-	Column1.ReadOnly = .T.
-	Column1.Width = 120
-	Column2.ColumnOrder = 1
-	Column2.ControlSource = ""
-	Column2.CurrentControl = "imgHolder"
-	Column2.DynamicFontShadow = "This.SetBMP()"
-	Column2.FontSize = 8
-	Column2.Name = "ColTypeIcon"
-	Column2.ReadOnly = .T.
-	Column2.Sparse = .F.
-	Column2.Width = 16
-	Column3.ColumnOrder = 3
-	Column3.ControlSource = "DisplayA"
-	Column3.CurrentControl = "Text1"
-	Column3.FontSize = 8
-	Column3.Name = "ColValue"
-	Column3.ReadOnly = .T.
-	Column3.Width = 150
-	Column4.ColumnOrder = 4
-	Column4.ControlSource = "DisplayB"
-	Column4.FontSize = 8
-	Column4.Name = "ColCurValue"
-	Column4.ReadOnly = .T.
-	Column4.Width = 150
+	*<PropValue>
+		ColumnCount = 4
+		DeleteMark = .F.
+		FontSize = 8
+		GridLines = 0
+		Height = 276
+		HighlightRow = .F.
+		lfirsttime = .T.
+		Name = "gridcompareproperties"
+		nanchor = 15
+		ncurrentrecno = 0
+		Panel = 1
+		ReadOnly = .T.
+		RecordMark = .F.
+		RecordSource = "csrCompareObject"
+		RecordSourceType = 1
+		RowHeight = 17
+		SplitBar = .F.
+		TabIndex = 1
+		Width = 535
+		ZOrderSet = 0
+		Column1.ColumnOrder = 2
+		Column1.ControlSource = "cName"
+		Column1.FontSize = 8
+		Column1.Name = "ColName"
+		Column1.ReadOnly = .T.
+		Column1.Width = 120
+		Column2.ColumnOrder = 1
+		Column2.ControlSource = ""
+		Column2.CurrentControl = "imgHolder"
+		Column2.DynamicFontShadow = "This.SetBMP()"
+		Column2.FontSize = 8
+		Column2.Name = "ColTypeIcon"
+		Column2.ReadOnly = .T.
+		Column2.Sparse = .F.
+		Column2.Width = 16
+		Column3.ColumnOrder = 3
+		Column3.ControlSource = "DisplayA"
+		Column3.CurrentControl = "Text1"
+		Column3.FontSize = 8
+		Column3.Name = "ColValue"
+		Column3.ReadOnly = .T.
+		Column3.Width = 150
+		Column4.ColumnOrder = 4
+		Column4.ControlSource = "DisplayB"
+		Column4.FontSize = 8
+		Column4.Name = "ColCurValue"
+		Column4.ReadOnly = .T.
+		Column4.Width = 150
+	*</PropValue>
 
 	ADD OBJECT 'ColCurValue.Header1' AS header WITH ;
 		Caption = "Value in Parent Class", ;
@@ -25895,11 +25971,13 @@ DEFINE CLASS gridcontrols AS basecontainer OF "peme_basecontrols.vcx"
 		*p: ltreeviewcurrent
 	*</DefinedPropArrayMethod>
 
-	Height = 260
-	ltreeviewcurrent = .F.
-	Name = "gridcontrols"
-	nanchor = 15
-	Width = 320
+	*<PropValue>
+		Height = 260
+		ltreeviewcurrent = .F.
+		Name = "gridcontrols"
+		nanchor = 15
+		Width = 320
+	*</PropValue>
 
 	ADD OBJECT 'chkAllControls' AS editpropertycheckbox WITH ;
 		Alignment = 0, ;
@@ -27643,97 +27721,99 @@ DEFINE CLASS gridmembers AS basegridmembers OF "editproperty.vcx"
 	*< OBJECTDATA: ObjPath="ColMultValue.Text1" UniqueID="" Timestamp="" />
 
 	#INCLUDE "editpropertydialog.h"
-	ColumnCount = 13
-	Height = 276
-	HighlightStyle = 2
-	lfirsttime = .T.
-	Name = "gridmembers"
-	nanchor = 15
-	ncurrentrecno = 0
-	RecordSource = "csrMembers"
-	RecordSourceType = 1
-	RowHeight = 18
-	TabIndex = 1
-	Width = 873
-	ZOrderSet = 0
-	Column1.ColumnOrder = 2
-	Column1.ControlSource = "csrMembers.cName"
-	Column1.Name = "ColName"
-	Column1.ReadOnly = .T.
-	Column1.Width = 120
-	Column2.Alignment = 2
-	Column2.ColumnOrder = 9
-	Column2.ControlSource = "(ThisForm.SpellType(csrMembers.cType))"
-	Column2.Name = "ColType"
-	Column2.ReadOnly = .T.
-	Column2.Width = 70
-	Column3.Alignment = 2
-	Column3.ColumnOrder = 10
-	Column3.ControlSource = "(ThisForm.SpellYes(csrMembers.lAccess))"
-	Column3.Name = "ColAccess"
-	Column3.ReadOnly = .T.
-	Column3.Width = 50
-	Column4.Alignment = 2
-	Column4.ColumnOrder = 11
-	Column4.ControlSource = "(ThisForm.SpellYes(csrMembers.lAssign))"
-	Column4.Name = "ColAssign"
-	Column4.ReadOnly = .T.
-	Column4.Width = 45
-	Column5.Alignment = 2
-	Column5.ColumnOrder = 12
-	Column5.ControlSource = "(Thisform.SpellVisibility (csrMembers.nVisibility))"
-	Column5.Name = "ColVisibility"
-	Column5.ReadOnly = .T.
-	Column5.Width = 60
-	Column6.Alignment = 2
-	Column6.ColumnOrder = 8
-	Column6.ControlSource = "(Thisform.SpellHierarchy(csrMembers.lNative, csrMembers.lInherited))"
-	Column6.Name = "ColHierarchy"
-	Column6.ReadOnly = .T.
-	Column6.Width = 60
-	Column7.Alignment = 2
-	Column7.ColumnOrder = 13
-	Column7.ControlSource = "(ThisForm.SpellFavorites(csrMembers.nFavorites))"
-	Column7.Name = "ColFavorite"
-	Column7.ReadOnly = .T.
-	Column7.Width = 55
-	Column8.Alignment = 2
-	Column8.ColumnOrder = 6
-	Column8.ControlSource = "(ThisForm.SpellYes(csrMembers.lNonDefault))"
-	Column8.Name = "ColNonDefault"
-	Column8.ReadOnly = .T.
-	Column8.Width = 59
-	Column9.ColumnOrder = 1
-	Column9.ControlSource = ""
-	Column9.CurrentControl = "imgHolder"
-	Column9.DynamicFontShadow = "This.SetBMP()"
-	Column9.Name = "ColTypeIcon"
-	Column9.ReadOnly = .T.
-	Column9.Sparse = .F.
-	Column9.Width = 16
-	Column10.ColumnOrder = 4
-	Column10.Comment = ""
-	Column10.ControlSource = "IIF (cType = 'P', Thisform.GetValue(cName, lNative, 'Display', nObjNumber, cDescript), ThisForm.GetMethodValue(lNonDefault, lHasCode))"
-	Column10.CurrentControl = "Text1"
-	Column10.Name = "ColValue"
-	Column10.ReadOnly = .T.
-	Column10.Width = 120
-	Column11.Alignment = 2
-	Column11.ColumnOrder = 7
-	Column11.ControlSource = "(Thisform.SpellYes(lHasCode and cType # 'P'))"
-	Column11.Name = "ColCode"
-	Column11.ReadOnly = .T.
-	Column11.Width = 50
-	Column12.ColumnOrder = 3
-	Column12.ControlSource = "csrMembers.cName"
-	Column12.Name = "ColMethodName"
-	Column12.ReadOnly = .T.
-	Column12.Width = 120
-	Column13.ColumnOrder = 5
-	Column13.ControlSource = "csrMembers.cValue"
-	Column13.Name = "ColMultValue"
-	Column13.ReadOnly = .T.
-	Column13.Width = 120
+	*<PropValue>
+		ColumnCount = 13
+		Height = 276
+		HighlightStyle = 2
+		lfirsttime = .T.
+		Name = "gridmembers"
+		nanchor = 15
+		ncurrentrecno = 0
+		RecordSource = "csrMembers"
+		RecordSourceType = 1
+		RowHeight = 18
+		TabIndex = 1
+		Width = 873
+		ZOrderSet = 0
+		Column1.ColumnOrder = 2
+		Column1.ControlSource = "csrMembers.cName"
+		Column1.Name = "ColName"
+		Column1.ReadOnly = .T.
+		Column1.Width = 120
+		Column2.Alignment = 2
+		Column2.ColumnOrder = 9
+		Column2.ControlSource = "(ThisForm.SpellType(csrMembers.cType))"
+		Column2.Name = "ColType"
+		Column2.ReadOnly = .T.
+		Column2.Width = 70
+		Column3.Alignment = 2
+		Column3.ColumnOrder = 10
+		Column3.ControlSource = "(ThisForm.SpellYes(csrMembers.lAccess))"
+		Column3.Name = "ColAccess"
+		Column3.ReadOnly = .T.
+		Column3.Width = 50
+		Column4.Alignment = 2
+		Column4.ColumnOrder = 11
+		Column4.ControlSource = "(ThisForm.SpellYes(csrMembers.lAssign))"
+		Column4.Name = "ColAssign"
+		Column4.ReadOnly = .T.
+		Column4.Width = 45
+		Column5.Alignment = 2
+		Column5.ColumnOrder = 12
+		Column5.ControlSource = "(Thisform.SpellVisibility (csrMembers.nVisibility))"
+		Column5.Name = "ColVisibility"
+		Column5.ReadOnly = .T.
+		Column5.Width = 60
+		Column6.Alignment = 2
+		Column6.ColumnOrder = 8
+		Column6.ControlSource = "(Thisform.SpellHierarchy(csrMembers.lNative, csrMembers.lInherited))"
+		Column6.Name = "ColHierarchy"
+		Column6.ReadOnly = .T.
+		Column6.Width = 60
+		Column7.Alignment = 2
+		Column7.ColumnOrder = 13
+		Column7.ControlSource = "(ThisForm.SpellFavorites(csrMembers.nFavorites))"
+		Column7.Name = "ColFavorite"
+		Column7.ReadOnly = .T.
+		Column7.Width = 55
+		Column8.Alignment = 2
+		Column8.ColumnOrder = 6
+		Column8.ControlSource = "(ThisForm.SpellYes(csrMembers.lNonDefault))"
+		Column8.Name = "ColNonDefault"
+		Column8.ReadOnly = .T.
+		Column8.Width = 59
+		Column9.ColumnOrder = 1
+		Column9.ControlSource = ""
+		Column9.CurrentControl = "imgHolder"
+		Column9.DynamicFontShadow = "This.SetBMP()"
+		Column9.Name = "ColTypeIcon"
+		Column9.ReadOnly = .T.
+		Column9.Sparse = .F.
+		Column9.Width = 16
+		Column10.ColumnOrder = 4
+		Column10.Comment = ""
+		Column10.ControlSource = "IIF (cType = 'P', Thisform.GetValue(cName, lNative, 'Display', nObjNumber, cDescript), ThisForm.GetMethodValue(lNonDefault, lHasCode))"
+		Column10.CurrentControl = "Text1"
+		Column10.Name = "ColValue"
+		Column10.ReadOnly = .T.
+		Column10.Width = 120
+		Column11.Alignment = 2
+		Column11.ColumnOrder = 7
+		Column11.ControlSource = "(Thisform.SpellYes(lHasCode and cType # 'P'))"
+		Column11.Name = "ColCode"
+		Column11.ReadOnly = .T.
+		Column11.Width = 50
+		Column12.ColumnOrder = 3
+		Column12.ControlSource = "csrMembers.cName"
+		Column12.Name = "ColMethodName"
+		Column12.ReadOnly = .T.
+		Column12.Width = 120
+		Column13.ColumnOrder = 5
+		Column13.ControlSource = "csrMembers.cValue"
+		Column13.Name = "ColMultValue"
+		Column13.ReadOnly = .T.
+		Column13.Width = 120
+	*</PropValue>
 
 	ADD OBJECT 'ColAccess.Header1' AS header WITH ;
 		Alignment = 2, ;
@@ -28396,34 +28476,36 @@ DEFINE CLASS gridobjects AS basegridmembers OF "editproperty.vcx"
 		*p: lavooidbufferoverrun
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	ColumnCount = 2
-	Height = 101
-	lavooidbufferoverrun = .F.
-	MemberClass = "ObjectColumn"
-	MemberClassLibrary = peme_basecontrols.prg
-	Name = "gridobjects"
-	Panel = 1
-	RecordSource = "crsr_Grid"
-	Width = 320
-	Objectcolumn1.ColumnOrder = 2
-	Objectcolumn1.ControlSource = ""
-	Objectcolumn1.LFIXEDCOLUMN = .T.
-	Objectcolumn1.Movable = .F.
-	Objectcolumn1.Name = "ColName"
-	Objectcolumn1.Width = 120
-	Objectcolumn2.ColumnOrder = 1
-	Objectcolumn2.ControlSource = ""
-	Objectcolumn2.CurrentControl = "imgHolder"
-	Objectcolumn2.DynamicFontShadow = "This.SetBMP()"
-	Objectcolumn2.FontSize = 8
-	Objectcolumn2.LFIXEDCOLUMN = .T.
-	Objectcolumn2.Movable = .F.
-	Objectcolumn2.Name = "ColTypeIcon"
-	Objectcolumn2.ReadOnly = .T.
-	Objectcolumn2.Resizable = .F.
-	Objectcolumn2.Sparse = .F.
-	Objectcolumn2.Width = 16
+	*<PropValue>
+		capplicationpath = 
+		ColumnCount = 2
+		Height = 101
+		lavooidbufferoverrun = .F.
+		MemberClass = "ObjectColumn"
+		MemberClassLibrary = peme_basecontrols.prg
+		Name = "gridobjects"
+		Panel = 1
+		RecordSource = "crsr_Grid"
+		Width = 320
+		Objectcolumn1.ColumnOrder = 2
+		Objectcolumn1.ControlSource = ""
+		Objectcolumn1.LFIXEDCOLUMN = .T.
+		Objectcolumn1.Movable = .F.
+		Objectcolumn1.Name = "ColName"
+		Objectcolumn1.Width = 120
+		Objectcolumn2.ColumnOrder = 1
+		Objectcolumn2.ControlSource = ""
+		Objectcolumn2.CurrentControl = "imgHolder"
+		Objectcolumn2.DynamicFontShadow = "This.SetBMP()"
+		Objectcolumn2.FontSize = 8
+		Objectcolumn2.LFIXEDCOLUMN = .T.
+		Objectcolumn2.Movable = .F.
+		Objectcolumn2.Name = "ColTypeIcon"
+		Objectcolumn2.ReadOnly = .T.
+		Objectcolumn2.Resizable = .F.
+		Objectcolumn2.Sparse = .F.
+		Objectcolumn2.Width = 16
+	*</PropValue>
 
 	ADD OBJECT 'ColName.Header1' AS header WITH ;
 		Caption = "Object Name", ;
@@ -28914,133 +28996,135 @@ DEFINE CLASS gridpastemembers AS grid
 		*p: ncurrentrecno
 	*</DefinedPropArrayMethod>
 
-	ColumnCount = 14
-	DeleteMark = .F.
-	FontSize = 8
-	GridLines = 0
-	Height = 276
-	HighlightRow = .F.
-	lfirsttime = .T.
-	Name = "gridpastemembers"
-	nanchor = 15
-	ncurrentrecno = 0
-	Panel = 1
-	RecordMark = .F.
-	RecordSource = "csrMembers"
-	RecordSourceType = 1
-	RowHeight = 17
-	SplitBar = .F.
-	TabIndex = 1
-	Width = 484
-	ZOrderSet = 0
-	Column1.ColumnOrder = 4
-	Column1.ControlSource = "csrMembers.cName"
-	Column1.DynamicFontBold = "csrMembers.lSelect"
-	Column1.FontSize = 8
-	Column1.Name = "ColName"
-	Column1.ReadOnly = .T.
-	Column1.Width = 120
-	Column2.Alignment = 2
-	Column2.ColumnOrder = 9
-	Column2.ControlSource = "(ThisForm.SpellType(csrMembers.cType))"
-	Column2.DynamicFontBold = "csrMembers.lSelect"
-	Column2.FontSize = 8
-	Column2.Name = "ColType"
-	Column2.ReadOnly = .T.
-	Column2.Width = 70
-	Column3.Alignment = 2
-	Column3.ColumnOrder = 10
-	Column3.ControlSource = "(ThisForm.SpellYes(csrMembers.lAccess))"
-	Column3.DynamicFontBold = "csrMembers.lSelect"
-	Column3.FontSize = 8
-	Column3.Name = "ColAccess"
-	Column3.ReadOnly = .T.
-	Column3.Width = 50
-	Column4.Alignment = 2
-	Column4.ColumnOrder = 11
-	Column4.ControlSource = "(ThisForm.SpellYes(csrMembers.lAssign))"
-	Column4.DynamicFontBold = "csrMembers.lSelect"
-	Column4.FontSize = 8
-	Column4.Name = "ColAssign"
-	Column4.ReadOnly = .T.
-	Column4.Width = 45
-	Column5.Alignment = 2
-	Column5.ColumnOrder = 12
-	Column5.ControlSource = "(Thisform.SpellVisibility (csrMembers.nVisibility))"
-	Column5.DynamicFontBold = "csrMembers.lSelect"
-	Column5.FontSize = 8
-	Column5.Name = "ColVisibility"
-	Column5.ReadOnly = .T.
-	Column5.Width = 60
-	Column6.Alignment = 2
-	Column6.ColumnOrder = 8
-	Column6.ControlSource = "(Thisform.SpellHierarchy(csrMembers.lNative, csrMembers.lInherited))"
-	Column6.DynamicFontBold = "csrMembers.lSelect"
-	Column6.FontSize = 8
-	Column6.Name = "ColHierarchy"
-	Column6.ReadOnly = .T.
-	Column6.Width = 60
-	Column7.Alignment = 2
-	Column7.ColumnOrder = 13
-	Column7.ControlSource = "(ThisForm.SpellFavorites(csrMembers.nFavorites))"
-	Column7.DynamicFontBold = "csrMembers.lSelect"
-	Column7.FontSize = 8
-	Column7.Name = "ColFavorite"
-	Column7.ReadOnly = .T.
-	Column7.Width = 55
-	Column8.Alignment = 2
-	Column8.ColumnOrder = 14
-	Column8.ControlSource = "(ThisForm.SpellYes(csrMembers.lNonDefault))"
-	Column8.DynamicFontBold = "csrMembers.lSelect"
-	Column8.FontSize = 8
-	Column8.Name = "ColNonDefault"
-	Column8.ReadOnly = .T.
-	Column8.Visible = .F.
-	Column8.Width = 59
-	Column9.ColumnOrder = 3
-	Column9.ControlSource = ""
-	Column9.CurrentControl = "imgHolder"
-	Column9.DynamicFontShadow = "This.SetBMP()"
-	Column9.FontSize = 8
-	Column9.Name = "ColTypeIcon"
-	Column9.ReadOnly = .T.
-	Column9.Sparse = .F.
-	Column9.Width = 16
-	Column10.ColumnOrder = 5
-	Column10.ControlSource = "csrMembers.cValue"
-	Column10.CurrentControl = "Text1"
-	Column10.DynamicFontBold = "csrMembers.lSelect"
-	Column10.FontSize = 8
-	Column10.Name = "ColValue"
-	Column10.ReadOnly = .T.
-	Column10.Width = 120
-	Column11.Alignment = 2
-	Column11.ColumnOrder = 7
-	Column11.ControlSource = "(Thisform.SpellYes(lHasCode and cType # 'P'))"
-	Column11.DynamicFontBold = "csrMembers.lSelect"
-	Column11.FontSize = 8
-	Column11.Name = "ColCode"
-	Column11.ReadOnly = .T.
-	Column11.Width = 50
-	Column12.ColumnOrder = 1
-	Column12.ControlSource = "csrMembers.lSelect"
-	Column12.FontSize = 8
-	Column12.Name = "ColSelect"
-	Column12.Sparse = .F.
-	Column12.Width = 30
-	Column13.Alignment = 2
-	Column13.ColumnOrder = 2
-	Column13.ControlSource = "(Thisform.SpellYes(lNew))"
-	Column13.FontSize = 8
-	Column13.Name = "ColNew"
-	Column13.ReadOnly = .T.
-	Column13.Width = 30
-	Column14.ColumnOrder = 6
-	Column14.ControlSource = "csrMembers.cCurValue"
-	Column14.FontSize = 8
-	Column14.Name = "ColCurValue"
-	Column14.ReadOnly = .T.
-	Column14.Width = 129
+	*<PropValue>
+		ColumnCount = 14
+		DeleteMark = .F.
+		FontSize = 8
+		GridLines = 0
+		Height = 276
+		HighlightRow = .F.
+		lfirsttime = .T.
+		Name = "gridpastemembers"
+		nanchor = 15
+		ncurrentrecno = 0
+		Panel = 1
+		RecordMark = .F.
+		RecordSource = "csrMembers"
+		RecordSourceType = 1
+		RowHeight = 17
+		SplitBar = .F.
+		TabIndex = 1
+		Width = 484
+		ZOrderSet = 0
+		Column1.ColumnOrder = 4
+		Column1.ControlSource = "csrMembers.cName"
+		Column1.DynamicFontBold = "csrMembers.lSelect"
+		Column1.FontSize = 8
+		Column1.Name = "ColName"
+		Column1.ReadOnly = .T.
+		Column1.Width = 120
+		Column2.Alignment = 2
+		Column2.ColumnOrder = 9
+		Column2.ControlSource = "(ThisForm.SpellType(csrMembers.cType))"
+		Column2.DynamicFontBold = "csrMembers.lSelect"
+		Column2.FontSize = 8
+		Column2.Name = "ColType"
+		Column2.ReadOnly = .T.
+		Column2.Width = 70
+		Column3.Alignment = 2
+		Column3.ColumnOrder = 10
+		Column3.ControlSource = "(ThisForm.SpellYes(csrMembers.lAccess))"
+		Column3.DynamicFontBold = "csrMembers.lSelect"
+		Column3.FontSize = 8
+		Column3.Name = "ColAccess"
+		Column3.ReadOnly = .T.
+		Column3.Width = 50
+		Column4.Alignment = 2
+		Column4.ColumnOrder = 11
+		Column4.ControlSource = "(ThisForm.SpellYes(csrMembers.lAssign))"
+		Column4.DynamicFontBold = "csrMembers.lSelect"
+		Column4.FontSize = 8
+		Column4.Name = "ColAssign"
+		Column4.ReadOnly = .T.
+		Column4.Width = 45
+		Column5.Alignment = 2
+		Column5.ColumnOrder = 12
+		Column5.ControlSource = "(Thisform.SpellVisibility (csrMembers.nVisibility))"
+		Column5.DynamicFontBold = "csrMembers.lSelect"
+		Column5.FontSize = 8
+		Column5.Name = "ColVisibility"
+		Column5.ReadOnly = .T.
+		Column5.Width = 60
+		Column6.Alignment = 2
+		Column6.ColumnOrder = 8
+		Column6.ControlSource = "(Thisform.SpellHierarchy(csrMembers.lNative, csrMembers.lInherited))"
+		Column6.DynamicFontBold = "csrMembers.lSelect"
+		Column6.FontSize = 8
+		Column6.Name = "ColHierarchy"
+		Column6.ReadOnly = .T.
+		Column6.Width = 60
+		Column7.Alignment = 2
+		Column7.ColumnOrder = 13
+		Column7.ControlSource = "(ThisForm.SpellFavorites(csrMembers.nFavorites))"
+		Column7.DynamicFontBold = "csrMembers.lSelect"
+		Column7.FontSize = 8
+		Column7.Name = "ColFavorite"
+		Column7.ReadOnly = .T.
+		Column7.Width = 55
+		Column8.Alignment = 2
+		Column8.ColumnOrder = 14
+		Column8.ControlSource = "(ThisForm.SpellYes(csrMembers.lNonDefault))"
+		Column8.DynamicFontBold = "csrMembers.lSelect"
+		Column8.FontSize = 8
+		Column8.Name = "ColNonDefault"
+		Column8.ReadOnly = .T.
+		Column8.Visible = .F.
+		Column8.Width = 59
+		Column9.ColumnOrder = 3
+		Column9.ControlSource = ""
+		Column9.CurrentControl = "imgHolder"
+		Column9.DynamicFontShadow = "This.SetBMP()"
+		Column9.FontSize = 8
+		Column9.Name = "ColTypeIcon"
+		Column9.ReadOnly = .T.
+		Column9.Sparse = .F.
+		Column9.Width = 16
+		Column10.ColumnOrder = 5
+		Column10.ControlSource = "csrMembers.cValue"
+		Column10.CurrentControl = "Text1"
+		Column10.DynamicFontBold = "csrMembers.lSelect"
+		Column10.FontSize = 8
+		Column10.Name = "ColValue"
+		Column10.ReadOnly = .T.
+		Column10.Width = 120
+		Column11.Alignment = 2
+		Column11.ColumnOrder = 7
+		Column11.ControlSource = "(Thisform.SpellYes(lHasCode and cType # 'P'))"
+		Column11.DynamicFontBold = "csrMembers.lSelect"
+		Column11.FontSize = 8
+		Column11.Name = "ColCode"
+		Column11.ReadOnly = .T.
+		Column11.Width = 50
+		Column12.ColumnOrder = 1
+		Column12.ControlSource = "csrMembers.lSelect"
+		Column12.FontSize = 8
+		Column12.Name = "ColSelect"
+		Column12.Sparse = .F.
+		Column12.Width = 30
+		Column13.Alignment = 2
+		Column13.ColumnOrder = 2
+		Column13.ControlSource = "(Thisform.SpellYes(lNew))"
+		Column13.FontSize = 8
+		Column13.Name = "ColNew"
+		Column13.ReadOnly = .T.
+		Column13.Width = 30
+		Column14.ColumnOrder = 6
+		Column14.ControlSource = "csrMembers.cCurValue"
+		Column14.FontSize = 8
+		Column14.Name = "ColCurValue"
+		Column14.ReadOnly = .T.
+		Column14.Width = 129
+	*</PropValue>
 
 	ADD OBJECT 'ColAccess.Header1' AS header WITH ;
 		Alignment = 2, ;
@@ -29546,12 +29630,14 @@ DEFINE CLASS highlightercombobox AS basecombobox OF "peme_basecontrols.vcx"
 		*p: nrow
 	*</DefinedPropArrayMethod>
 
-	BoundColumn = 2
-	ControlSource = "Thisform.oCallingForm.aGridHighlighting[This.nRow, 1]"
-	Name = "highlightercombobox"
-	nrow = 0
-	RowSource = "This.aItems"
-	RowSourceType = 5
+	*<PropValue>
+		BoundColumn = 2
+		ControlSource = "Thisform.oCallingForm.aGridHighlighting[This.nRow, 1]"
+		Name = "highlightercombobox"
+		nrow = 0
+		RowSource = "This.aItems"
+		RowSourceType = 5
+	*</PropValue>
 	
 	PROCEDURE Init
 		with This
@@ -29614,12 +29700,14 @@ DEFINE CLASS highlightercommandbutton AS basecommandbutton OF "peme_basecontrols
 		*p: nrow
 	*</DefinedPropArrayMethod>
 
-	Caption = ""
-	Height = 23
-	Name = "highlightercommandbutton"
-	nrow = 0
-	Picture = ..\images\color2_16x16.bmp
-	Width = 32
+	*<PropValue>
+		Caption = ""
+		Height = 23
+		Name = "highlightercommandbutton"
+		nrow = 0
+		Picture = ..\images\color2_16x16.bmp
+		Width = 32
+	*</PropValue>
 	
 	PROCEDURE Click
 		Local lnColor, lnNewColor
@@ -29671,29 +29759,31 @@ DEFINE CLASS listzoom AS baseformnew OF "peme_basecontrols.vcx"
 		*a: acombolist[1,0]
 	*</DefinedPropArrayMethod>
 
-	Caption = "Zoom"
-	cdescription = 
-	cfoxuserid = NEWLISTZOOM
-	cfoxusername = NewListZoom
-	cpem = 		&& a Property to save the PEM passed to the form in its init
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 166
-	KeyPreview = .T.
-	lonlyone = .F.		&& If .T., then only set the value for the object passed as the parameter; otherwise, use ASelObj to indicate which objects to change
-	lpersistsizeposition = .T.
-	lsavesettings = .T.
-	MinHeight = 90
-	MinWidth = 260
-	Name = "listzoom"
-	ncombovalue = 0
-	nreturnvalue = .F.
-	oobject = .NULL.		&& Object reference to the thing open in the designer
-	Width = 260
-	WindowType = 1
-	changefontsize.Left = 225
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 10
+	*<PropValue>
+		Caption = "Zoom"
+		cdescription = 
+		cfoxuserid = NEWLISTZOOM
+		cfoxusername = NewListZoom
+		cpem = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 166
+		KeyPreview = .T.
+		lonlyone = .F.
+		lpersistsizeposition = .T.
+		lsavesettings = .T.
+		MinHeight = 90
+		MinWidth = 260
+		Name = "listzoom"
+		ncombovalue = 0
+		nreturnvalue = .F.
+		oobject = .NULL.
+		Width = 260
+		WindowType = 1
+		changefontsize.Left = 225
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 10
+	*</PropValue>
 
 	ADD OBJECT 'Baseeditbox1' AS baseeditbox WITH ;
 		ControlSource = "Thisform.cDescription", ;
@@ -30050,11 +30140,13 @@ DEFINE CLASS refreshtimer AS timer
 		*p: itraceinterval
 	*</DefinedPropArrayMethod>
 
-	Height = 23
-	iregularinterval = 1000
-	itraceinterval = 15000
-	Name = "refreshtimer"
-	Width = 23
+	*<PropValue>
+		Height = 23
+		iregularinterval = 1000
+		itraceinterval = 15000
+		Name = "refreshtimer"
+		Width = 23
+	*</PropValue>
 	
 	PROCEDURE resetinterval
 		If Wvisible(ccLOC_WINDOW_TRACE) Or  ;
@@ -30116,32 +30208,34 @@ DEFINE CLASS spinnerzoom AS baseform OF "peme_basecontrols.vcx"
 		*a: acombolist[1,0]
 	*</DefinedPropArrayMethod>
 
-	Caption = "Spinner Zoom"
-	cdescription = 
-	cfoxuserid = NEWSPINNERZOOM
-	cfoxusername = NewSpinnerZoom
-	cpem = 		&& a Property to save the PEM passed to the form in its init
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 148
-	KeyPreview = .T.
-	lonlyone = .F.		&& If .T., then only set the value for the object passed as the parameter; otherwise, use ASelObj to indicate which objects to change
-	lpersistsizeposition = .T.
-	lsavesettings = .T.
-	MinHeight = 90
-	MinWidth = 260
-	Name = "spinnerzoom"
-	ncombovalue = 0
-	nmaxvalue = 0
-	nminvalue = 0
-	nreturnvalue = .F.
-	nspinnervalue = 0
-	oobject = .NULL.		&& Object reference to the thing open in the designer
-	Width = 260
-	WindowType = 1
-	changefontsize.Left = 225
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 10
+	*<PropValue>
+		Caption = "Spinner Zoom"
+		cdescription = 
+		cfoxuserid = NEWSPINNERZOOM
+		cfoxusername = NewSpinnerZoom
+		cpem = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 148
+		KeyPreview = .T.
+		lonlyone = .F.
+		lpersistsizeposition = .T.
+		lsavesettings = .T.
+		MinHeight = 90
+		MinWidth = 260
+		Name = "spinnerzoom"
+		ncombovalue = 0
+		nmaxvalue = 0
+		nminvalue = 0
+		nreturnvalue = .F.
+		nspinnervalue = 0
+		oobject = .NULL.
+		Width = 260
+		WindowType = 1
+		changefontsize.Left = 225
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 10
+	*</PropValue>
 
 	ADD OBJECT 'Baseeditbox1' AS baseeditbox WITH ;
 		ControlSource = "Thisform.cDescription", ;
@@ -30512,28 +30606,30 @@ DEFINE CLASS zoomdialog AS baseformnew OF "peme_basecontrols.vcx"
 		*p: otopofform
 	*</DefinedPropArrayMethod>
 
-	Caption = "Zoom"
-	cdescription = 
-	cfoxuserid = NEWZOOM
-	cfoxusername = NewZoom
-	cpem = 		&& a Property to save the PEM passed to the form in its init
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 166
-	KeyPreview = .T.
-	lonlyone = .F.		&& If .T., then only set the value for the object passed as the parameter; otherwise, use ASelObj to indicate which objects to change
-	lpersistsizeposition = .T.
-	lsavesettings = .T.
-	MinHeight = 90
-	MinWidth = 260
-	Name = "zoomdialog"
-	oobject = .NULL.		&& Object reference to the thing open in the designer
-	otopofform = .F.
-	Width = 260
-	WindowType = 1
-	changefontsize.Left = 225
-	changefontsize.Name = "changefontsize"
-	changefontsize.Top = 10
+	*<PropValue>
+		Caption = "Zoom"
+		cdescription = 
+		cfoxuserid = NEWZOOM
+		cfoxusername = NewZoom
+		cpem = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 166
+		KeyPreview = .T.
+		lonlyone = .F.
+		lpersistsizeposition = .T.
+		lsavesettings = .T.
+		MinHeight = 90
+		MinWidth = 260
+		Name = "zoomdialog"
+		oobject = .NULL.
+		otopofform = .F.
+		Width = 260
+		WindowType = 1
+		changefontsize.Left = 225
+		changefontsize.Name = "changefontsize"
+		changefontsize.Top = 10
+	*</PropValue>
 
 	ADD OBJECT 'Baseeditbox1' AS baseeditbox WITH ;
 		ControlSource = "Thisform.cDescription", ;
@@ -30944,16 +31040,18 @@ DEFINE CLASS zoomdialogsearch AS zoomdialog OF "editproperty.vcx"
  	*< CLASSDATA: Baseclass="form" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "editpropertydialog.h"
-	cfoxuserid = NEWZOOMSEARCH
-	cfoxusername = NewZoomSearch
-	DoCreate = .T.
-	Name = "zoomdialogsearch"
-	changefontsize.Name = "changefontsize"
-	edtZoom.Name = "edtZoom"
-	CMDOK.Name = "CMDOK"
-	CMDCANCEL.Name = "CMDCANCEL"
-	CMDFONT.Name = "CMDFONT"
-	Baseeditbox1.Name = "Baseeditbox1"
-	Baselabel1.Name = "Baselabel1"
+	*<PropValue>
+		cfoxuserid = NEWZOOMSEARCH
+		cfoxusername = NewZoomSearch
+		DoCreate = .T.
+		Name = "zoomdialogsearch"
+		changefontsize.Name = "changefontsize"
+		edtZoom.Name = "edtZoom"
+		CMDOK.Name = "CMDOK"
+		CMDCANCEL.Name = "CMDCANCEL"
+		CMDFONT.Name = "CMDFONT"
+		Baseeditbox1.Name = "Baseeditbox1"
+		Baselabel1.Name = "Baselabel1"
+	*</PropValue>
 
 ENDDEFINE

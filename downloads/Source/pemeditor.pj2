@@ -33,7 +33,7 @@ _AutoIncrement = "0"
 
 
 *<BuildProj>
-*<.HomeDir = 'c:\users\dhenn\desktop\pemeditor\downloads\source' />
+*<.HomeDir = 'e:\se\vfpx\pemeditor\downloads\source' />
 
 FOR EACH loProject IN _VFP.Projects FOXOBJECT
 	loProject.Close()
@@ -50,8 +50,6 @@ MODIFY PROJECT 'pemeditor.pjx' NOWAIT NOSHOW NOPROJECTHOOK
 loProject = _VFP.Projects('pemeditor.pjx')
 
 WITH loProject.FILES
-	.ADD('..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
-	.ADD('..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_bottom.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_horizontal_centers.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_left.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
@@ -110,6 +108,8 @@ WITH loProject.FILES
 	.ADD('askaddpemnewgotodef.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('askaddpemnewstayopen.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('beautify.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('c:\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('c:\program files (x86)\microsoft visual foxpro 9\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('changefontsize.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
@@ -193,8 +193,8 @@ WITH loProject.FILES
 	*</FileComments>
 
 	*<ExcludedFiles>
-	.ITEM(lcCurdir + '..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app').Exclude = .T.
-	.ITEM(lcCurdir + '..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll').Exclude = .T.
+	.ITEM("c:\program files (x86)\microsoft visual foxpro 9\beautify.app").Exclude = .T.
+	.ITEM("c:\program files (x86)\microsoft visual foxpro 9\foxtools.fll").Exclude = .T.
 	.ITEM(lcCurdir + 'peme_opentable.prg').Exclude = .T.
 	*</ExcludedFiles>
 
@@ -215,6 +215,7 @@ ENDWITH
 WITH loProject
 	*<ProjectProperties>
 	.SetMain(lcCurdir + 'editproperty.prg')
+
 	.Debug = .T.
 	.Encrypted = .T.
 	*<.CmntStyle = 1 />

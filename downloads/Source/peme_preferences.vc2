@@ -8,9 +8,11 @@
 DEFINE CLASS cboprefs AS combobox 
  	*< CLASSDATA: Baseclass="combobox" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Height = 24
-	Name = "cboprefs"
-	Width = 100
+	*<PropValue>
+		Height = 24
+		Name = "cboprefs"
+		Width = 100
+	*</PropValue>
 
 ENDDEFINE
 
@@ -18,11 +20,13 @@ DEFINE CLASS chkpreferences AS checkbox
  	*< CLASSDATA: Baseclass="checkbox" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "editpropertydialog.h"
-	Alignment = 0
-	AutoSize = .T.
-	BackStyle = 0
-	FontSize = 8
-	Name = "chkpreferences"
+	*<PropValue>
+		Alignment = 0
+		AutoSize = .T.
+		BackStyle = 0
+		FontSize = 8
+		Name = "chkpreferences"
+	*</PropValue>
 
 ENDDEFINE
 
@@ -34,11 +38,13 @@ DEFINE CLASS cmdonkeylabel AS basecommandbutton OF "peme_basecontrols.vcx"
 		*m: setnondefaults
 	*</DefinedPropArrayMethod>
 
-	AutoSize = .F.
-	Caption = "Use Suggested HotKeys"
-	Height = 25
-	Name = "cmdonkeylabel"
-	Width = 134
+	*<PropValue>
+		AutoSize = .F.
+		Caption = "Use Suggested HotKeys"
+		Height = 25
+		Name = "cmdonkeylabel"
+		Width = 134
+	*</PropValue>
 	
 	PROCEDURE Click
 		This.SetNonDefaults(This.Parent)
@@ -82,18 +88,20 @@ DEFINE CLASS cnthighlighting AS basecontainer OF "peme_basecontrols.vcx"
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	ccaption = 
-	Height = 24
-	Name = "cnthighlighting"
-	nrow = 0
-	Width = 290
-	_memberdata = <VFPData>
-		<memberdata name="ccaption" display="cCaption"/>
-		<memberdata name="nrow" display="nRow"/>
-		<memberdata name="setcombohighlights" display="SetComboHighlights"/>
-		<memberdata name="gethighlightvalue" display="GetHighlightValue"/>
-		<memberdata name="sethighlightvalue" display="SetHighlightValue"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		ccaption = 
+		Height = 24
+		Name = "cnthighlighting"
+		nrow = 0
+		Width = 290
+		_memberdata = <VFPData>
+			<memberdata name="ccaption" display="cCaption"/>
+			<memberdata name="nrow" display="nRow"/>
+			<memberdata name="setcombohighlights" display="SetComboHighlights"/>
+			<memberdata name="gethighlightvalue" display="GetHighlightValue"/>
+			<memberdata name="sethighlightvalue" display="SetHighlightValue"/>
+		</VFPData>
+	*</PropValue>
 
 	ADD OBJECT 'cboHighlightProperties' AS combobox WITH ;
 		BoundColumn = 2, ;
@@ -290,10 +298,12 @@ DEFINE CLASS cntonkeylabel AS basecontainer OF "peme_basecontrols.vcx"
 		*p: cpersistname
 	*</DefinedPropArrayMethod>
 
-	cpersistname = 
-	Height = 22
-	Name = "cntonkeylabel"
-	Width = 150
+	*<PropValue>
+		cpersistname = 
+		Height = 22
+		Name = "cntonkeylabel"
+		Width = 150
+	*</PropValue>
 
 	ADD OBJECT 'lblInactive' AS baselabel WITH ;
 		Caption = "(inactive)", ;
@@ -358,7 +368,9 @@ ENDDEFINE
 DEFINE CLASS peme_basepreferences AS peme_resource OF "peme_foxresource.vcx" 
  	*< CLASSDATA: Baseclass="custom" Timestamp="" Scale="Pixels" Uniqueid="" />
 
-	Name = "peme_basepreferences"
+	*<PropValue>
+		Name = "peme_basepreferences"
+	*</PropValue>
 	
 	PROCEDURE Init
 		Local lcLibrary, lcMyFile, lcResourceFile
@@ -385,8 +397,10 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
  	*< CLASSDATA: Baseclass="custom" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "peme_defaultvalues.h"
-	Comment = "lShowChildInheritedCode"
-	Name = "peme_preferences"
+	*<PropValue>
+		Comment = "lShowChildInheritedCode"
+		Name = "peme_preferences"
+	*</PropValue>
 	
 	PROCEDURE Init
 		Lparameters lcVersion
@@ -602,8 +616,10 @@ DEFINE CLASS txtonkeylabel AS textbox
 		*p: cpersistname
 	*</DefinedPropArrayMethod>
 
-	cpersistname = 
-	Name = "txtonkeylabel"
+	*<PropValue>
+		cpersistname = 
+		Name = "txtonkeylabel"
+	*</PropValue>
 	
 	PROCEDURE DblClick
 		Local lcDefaultValue
@@ -636,9 +652,11 @@ DEFINE CLASS txtpreferences AS textbox
 		*p: cpersistname
 	*</DefinedPropArrayMethod>
 
-	cpersistname = 
-	Height = 22
-	Name = "txtpreferences"
-	Width = 86
+	*<PropValue>
+		cpersistname = 
+		Height = 22
+		Name = "txtpreferences"
+		Width = 86
+	*</PropValue>
 
 ENDDEFINE

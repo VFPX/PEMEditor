@@ -47,28 +47,30 @@ DEFINE CLASS peme_sfcombotree AS basecontainer OF "peme_basecontrols.vcx"
 		*a: aparentheights[1,0]		&& An array containing heights of parent containers before opening the control
 	*</DefinedPropArrayMethod>
 
-	Height = 24
-	lchanged = .F.		&& .T. if the user selected a different value
-	lcloseonclick = .F.		&& .T. to close the control when an item in the TreeView is clicked
-	lcloseondblclick = .F.		&& .T. to close the control when an item in the TreeView is double-clicked
-	lcombotreeopen = .F.		&& .T. if the TreeView is displayed
-	ldisplaytagvalue = .F.		&& If .T., displays value of tag rather than the name of the node
-	lhidecombo = .F.		&& if .T., the Treeview displays over the combo
-	lloadoninit = .F.		&& .T. to load the TreeView from Init
-	lmovetoback = .T.		&& .T. to set the ZOrder of the control to the back when it's closed
-	lmustsetfocus = .T.
-	lnoclose = .F.		&& .T. to not have LostFocus close the control
-	lsaveanchor = .F.
-	Name = "peme_sfcombotree"
-	nanchor = 10
-	ncombowidthdifference = 0
-	nfired = 0		&& When cboCombo.DropDown last fired so we can handle multiple firing
-	ninitialformheight = 0
-	nmousebutton = 0
-	nmouseshift = .F.
-	noriginalheight = 227		&& The original height of the control
-	nsavedanchor = 0
-	Width = 170
+	*<PropValue>
+		Height = 24
+		lchanged = .F.
+		lcloseonclick = .F.
+		lcloseondblclick = .F.
+		lcombotreeopen = .F.
+		ldisplaytagvalue = .F.
+		lhidecombo = .F.
+		lloadoninit = .F.
+		lmovetoback = .T.
+		lmustsetfocus = .T.
+		lnoclose = .F.
+		lsaveanchor = .F.
+		Name = "peme_sfcombotree"
+		nanchor = 10
+		ncombowidthdifference = 0
+		nfired = 0
+		ninitialformheight = 0
+		nmousebutton = 0
+		nmouseshift = .F.
+		noriginalheight = 227
+		nsavedanchor = 0
+		Width = 170
+	*</PropValue>
 
 	ADD OBJECT 'cboCombo' AS basecombobox WITH ;
 		Height = 24, ;

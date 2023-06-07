@@ -40,50 +40,52 @@ DEFINE CLASS pemeditor_format AS basecustom OF "peme_basecontrols.vcx"
 		*a: aproclines[1,0]
 	*</DefinedPropArrayMethod>
 
-	Name = "pemeditor_format"
-	oundo = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="addmrufile" display="AddMRUFile"/>
-		<memberdata name="showhelp" display="ShowHelp"/>
-		<memberdata name="getmrulist" display="GetMRUList"/>
-		<memberdata name="diskfilename" display="DiskFileName"/>
-		<memberdata name="getrelativepath" display="GetRelativePath"/>
-		<memberdata name="showerrormsg" display="ShowErrorMsg"/>
-		<memberdata name="striptabs" display="StripTabs"/>
-		<memberdata name="aproclines" display="aProcLines"/>
-		<memberdata name="isnamechar" display="IsNameChar"/>
-		<memberdata name="getcontrolcount" display="GetControlCount"/>
-		<memberdata name="getpemstatus" display="GetPEMStatus"/>
-		<memberdata name="openurl" display="OpenURL"/>
-		<memberdata name="ahandlehistory" display="aHandleHistory"/>
-		<memberdata name="peme_findtopmostparent" display="PEME_FindTopmostParent"/>
-		<memberdata name="format_align_left_sides" display="Format_Align_Left_Sides"/>
-		<memberdata name="format_align_right_sides" display="Format_Align_Right_Sides"/>
-		<memberdata name="format_align_top_edges" display="Format_Align_Top_Edges"/>
-		<memberdata name="format_align_bottom_edges" display="Format_Align_Bottom_Edges"/>
-		<memberdata name="format_align_vertical_centers" display="Format_Align_Vertical_Centers"/>
-		<memberdata name="format_align_horizontal_centers" display="Format_Align_Horizontal_Centers"/>
-		<memberdata name="format_center_vertically" display="Format_Center_Vertically"/>
-		<memberdata name="format_center_horizontally" display="Format_Center_Horizontally"/>
-		<memberdata name="format_to_tallest" display="Format_To_Tallest"/>
-		<memberdata name="format_to_shortest" display="Format_To_Shortest"/>
-		<memberdata name="format_to_widest" display="Format_To_Widest"/>
-		<memberdata name="format_to_narrowest" display="Format_To_Narrowest"/>
-		<memberdata name="format_horizontal_make_equal" display="Format_Horizontal_Make_Equal"/>
-		<memberdata name="format_horizontal_increase" display="Format_Horizontal_Increase"/>
-		<memberdata name="format_horizontal_decrease" display="Format_Horizontal_Decrease"/>
-		<memberdata name="format_vertical_make_equal" display="Format_Vertical_Make_Equal"/>
-		<memberdata name="format_vertical_increase" display="Format_Vertical_Increase"/>
-		<memberdata name="format_vertical_decrease" display="Format_Vertical_Decrease"/>
-		<memberdata name="postformat" display="PostFormat"/>
-		<memberdata name="format_undo" display="Format_Undo"/>
-		<memberdata name="emptyundobuffer" display="EmptyUndoBuffer"/>
-		<memberdata name="oundo" display="oUndo"/>
-		<memberdata name="format_increase" display="Format_Increase"/>
-		<memberdata name="format_bringtofront" display="Format_BringToFront"/>
-		<memberdata name="format_sendtoback" display="Format_SendToBack"/>
-		<memberdata name="setupformat" display="SetupFormat"/>
+	*<PropValue>
+		Name = "pemeditor_format"
+		oundo = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="addmrufile" display="AddMRUFile"/>
+			<memberdata name="showhelp" display="ShowHelp"/>
+			<memberdata name="getmrulist" display="GetMRUList"/>
+			<memberdata name="diskfilename" display="DiskFileName"/>
+			<memberdata name="getrelativepath" display="GetRelativePath"/>
+			<memberdata name="showerrormsg" display="ShowErrorMsg"/>
+			<memberdata name="striptabs" display="StripTabs"/>
+			<memberdata name="aproclines" display="aProcLines"/>
+			<memberdata name="isnamechar" display="IsNameChar"/>
+			<memberdata name="getcontrolcount" display="GetControlCount"/>
+			<memberdata name="getpemstatus" display="GetPEMStatus"/>
+			<memberdata name="openurl" display="OpenURL"/>
+			<memberdata name="ahandlehistory" display="aHandleHistory"/>
+			<memberdata name="peme_findtopmostparent" display="PEME_FindTopmostParent"/>
+			<memberdata name="format_align_left_sides" display="Format_Align_Left_Sides"/>
+			<memberdata name="format_align_right_sides" display="Format_Align_Right_Sides"/>
+			<memberdata name="format_align_top_edges" display="Format_Align_Top_Edges"/>
+			<memberdata name="format_align_bottom_edges" display="Format_Align_Bottom_Edges"/>
+			<memberdata name="format_align_vertical_centers" display="Format_Align_Vertical_Centers"/>
+			<memberdata name="format_align_horizontal_centers" display="Format_Align_Horizontal_Centers"/>
+			<memberdata name="format_center_vertically" display="Format_Center_Vertically"/>
+			<memberdata name="format_center_horizontally" display="Format_Center_Horizontally"/>
+			<memberdata name="format_to_tallest" display="Format_To_Tallest"/>
+			<memberdata name="format_to_shortest" display="Format_To_Shortest"/>
+			<memberdata name="format_to_widest" display="Format_To_Widest"/>
+			<memberdata name="format_to_narrowest" display="Format_To_Narrowest"/>
+			<memberdata name="format_horizontal_make_equal" display="Format_Horizontal_Make_Equal"/>
+			<memberdata name="format_horizontal_increase" display="Format_Horizontal_Increase"/>
+			<memberdata name="format_horizontal_decrease" display="Format_Horizontal_Decrease"/>
+			<memberdata name="format_vertical_make_equal" display="Format_Vertical_Make_Equal"/>
+			<memberdata name="format_vertical_increase" display="Format_Vertical_Increase"/>
+			<memberdata name="format_vertical_decrease" display="Format_Vertical_Decrease"/>
+			<memberdata name="postformat" display="PostFormat"/>
+			<memberdata name="format_undo" display="Format_Undo"/>
+			<memberdata name="emptyundobuffer" display="EmptyUndoBuffer"/>
+			<memberdata name="oundo" display="oUndo"/>
+			<memberdata name="format_increase" display="Format_Increase"/>
+			<memberdata name="format_bringtofront" display="Format_BringToFront"/>
+			<memberdata name="format_sendtoback" display="Format_SendToBack"/>
+			<memberdata name="setupformat" display="SetupFormat"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE emptyundobuffer
 		If 'O' # Vartype (This.oUndo)

@@ -25,26 +25,28 @@ DEFINE CLASS cbeautify AS custom
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	datasession = 2		&& private
-	libname = 
-	Name = "cbeautify"
-	outfile = 
-	visible = .F.		&& Specifies if an object is visible or hidden.
-	_memberdata = <VFPData>
-		<memberdata name="c" display="C"/>
-		<memberdata name="correctmixedcase" display="CorrectMixedCase"/>
-		<memberdata name="correctmixedcasenew" display="CorrectMixedCaseNew"/>
-		<memberdata name="destroy" display="Destroy"/>
-		<memberdata name="execute" display="Execute"/>
-		<memberdata name="forcebeautifyalllines" display="ForceBeautifyAllLines"/>
-		<memberdata name="init" display="Init"/>
-		<memberdata name="datasession" display="DataSession"/>
-		<memberdata name="libname" display="LibName"/>
-		<memberdata name="name" display="Name"/>
-		<memberdata name="visible" display="Visible"/>
-		<memberdata name="sleep" display="Sleep"/>
-		<memberdata name="stripwhitespace" display="StripWhiteSpace"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		datasession = 2
+		libname = 
+		Name = "cbeautify"
+		outfile = 
+		visible = .F.
+		_memberdata = <VFPData>
+			<memberdata name="c" display="C"/>
+			<memberdata name="correctmixedcase" display="CorrectMixedCase"/>
+			<memberdata name="correctmixedcasenew" display="CorrectMixedCaseNew"/>
+			<memberdata name="destroy" display="Destroy"/>
+			<memberdata name="execute" display="Execute"/>
+			<memberdata name="forcebeautifyalllines" display="ForceBeautifyAllLines"/>
+			<memberdata name="init" display="Init"/>
+			<memberdata name="datasession" display="DataSession"/>
+			<memberdata name="libname" display="LibName"/>
+			<memberdata name="name" display="Name"/>
+			<memberdata name="visible" display="Visible"/>
+			<memberdata name="sleep" display="Sleep"/>
+			<memberdata name="stripwhitespace" display="StripWhiteSpace"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE correctmixedcase
 		*------------------------------------------------------------

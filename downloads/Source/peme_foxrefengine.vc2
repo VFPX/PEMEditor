@@ -118,194 +118,196 @@ DEFINE CLASS foxref AS custom
 	*</DefinedPropArrayMethod>
 
 	PROTECTED cprogressform,lcancel,lignoreerrors,lrefreshmode,ttimestamp
-	activitylog = 
-	addintable = 
-	autoprojecthomedir = .F.		&& True to search only files in Project's Home Directory or below when doing definitions automatically
-	backuponreplace = .T.		&& false to not backup when doing global replace
-	backupstyle = 1		&& 1 = "filename.ext.bak"   2 = "Backup of filename.ext"
-	ccompatible = 
-	cescapestate = 
-	cexclusive = 
-	classexactmatch = .F.
-	classsearch = 
-	codeonly = .F.		&& search only source code & expressions (not names and other none-code items)
-	comments = (COMMENTS_INCLUDE)
-	confirmreplace = .T.		&& confirm each replacement
-	cresourcefile = 
-	cresultstable = 
-	csavelib = 
-	csaveudfparms = 
-	csetid = 		&& properties used internally
-	csys3054 = 
-	ctalk = 
-	deftable = 
-	displayreplacelog = .T.		&& create activity log for replacements
-	errors = .NULL.
-	filedirectory = 
-	filenameexactmatch = .F.		&& exact match to file name
-	filetable = 
-	filetypes = |
-	findwindowclass = RefSearchWindow		&& default search engine for Open Window
-	findwindowclasslib = FoxRefSearch_Window.prg
-	fontstring = (FONT_DEFAULT)
-	formproperties = .T.		&& search form/class property names & values
-	foxrefdirectory = 
-	homedir = 
-	includedeftable = .T.		&& (except for BackupStyle & FontString) create Definition table when searching
-	lcancel = .F.
-	ldefinitionsonly = .F.
-	lignoreerrors = .F.
-	liniterror = .F.
-	lrefreshmode = .F.
-	matchcase = .F.
-	matchclass = MatchDefault		&& search match engines
-	matchclasslib = PEME_foxmatch.vcx
-	Name = "foxref"
-	nlangopt = 0
-	obackupcollection = .NULL.		&& collection of files we've backed up in this session
-	oenginecollection = .NULL.
-	ofilecollection = .NULL.
-	ofiletypecollection = .NULL.
-	ooptions = .NULL.
-	oprocessedcollection = .NULL.
-	oprogressform = .NULL.
-	oprojectfileref = .NULL.
-	oreportcollection = .NULL.
-	osearchcollection = .NULL.
-	osearchengine = .NULL.
-	overwriteprior = .T.
-	pattern = 
-	preservecase = .F.		&& preserve case during a Replace operation
-	projectfile = 
-	projecthomedir = .F.		&& True to search only files in Project's Home Directory or below
-	quiet = .F.		&& quiet mode -- don't display search progress
-	reftable = 
-	replacelogsetid = 		&& This is the SetID for the last Replacement Log after it's saved
-	reportfile = (REPORT_FILE)
-	searchbaseclass = 
-	searchtype = 
-	showdistinctmethodline = .F.		&& True to show columns for method/line apart from Class
-	showfiletypehistory = .F.		&& True to keep filetype history in addition to showing common filetypes in search dialog
-	showprogress = .F.		&& show a progress form
-	showrefsperline = .F.		&& display a column in search results that depicts number of references found on the line
-	sortmostrecentfirst = .F.
-	subfolders = .F.
-	templates = 
-	ttimestamp = .NULL.
-	wholewordsonly = .F.
-	wildcards = .F.
-	wildmatchclass = MatchClass
-	wildmatchclasslib = PEME_foxmatch.vcx
-	windowfilename = 
-	windowhandle = (-1)
-	windowlineno = 0
-	xmlformat = (XMLFORMAT_ELEMENTS)		&& XML Export Options
-	xmlschema = .T.
-	xsltemplate = foxref.xsl
-	_memberdata = <VFPData>
-		<memberdata name="createresultstable" display="CreateResultsTable"/>
-		<memberdata name="destroy" display="Destroy"/>
-		<memberdata name="filesearch" display="FileSearch"/>
-		<memberdata name="foldersearch" display="FolderSearch"/>
-		<memberdata name="init" display="Init"/>
-		<memberdata name="openresultstable" display="OpenResultsTable"/>
-		<memberdata name="processfolder" display="ProcessFolder"/>
-		<memberdata name="projectsearch" display="ProjectSearch"/>
-		<memberdata name="restoreprefs" display="RestorePrefs"/>
-		<memberdata name="saveprefs" display="SavePrefs"/>
-		<memberdata name="search" display="Search"/>
-		<memberdata name="searchinit" display="SearchInit"/>
-		<memberdata name="setproject" display="SetProject"/>
-		<memberdata name="updatefiletypesmru" display="UpdateFileTypesMRU"/>
-		<memberdata name="updatefoldermru" display="UpdateFolderMRU"/>
-		<memberdata name="updatelookformru" display="UpdateLookForMRU"/>
-		<memberdata name="activitylog" display="ActivityLog"/>
-		<memberdata name="addintable" display="AddInTable"/>
-		<memberdata name="autoprojecthomedir" display="AutoProjectHomeDir"/>
-		<memberdata name="backuponreplace" display="BackupOnReplace"/>
-		<memberdata name="backupstyle" display="BackupStyle"/>
-		<memberdata name="ccompatible" display="cCompatible"/>
-		<memberdata name="cescapestate" display="cEscapeState"/>
-		<memberdata name="cexclusive" display="cExclusive"/>
-		<memberdata name="classexactmatch" display="ClassExactMatch"/>
-		<memberdata name="classsearch" display="ClassSearch"/>
-		<memberdata name="codeonly" display="CodeOnly"/>
-		<memberdata name="comments" display="Comments"/>
-		<memberdata name="confirmreplace" display="ConfirmReplace"/>
-		<memberdata name="cprogressform" display="cProgressForm"/>
-		<memberdata name="cresourcefile" display="cResourceFile"/>
-		<memberdata name="cresultstable" display="cResultsTable"/>
-		<memberdata name="csavelib" display="cSaveLib"/>
-		<memberdata name="csaveudfparms" display="cSaveUDFParms"/>
-		<memberdata name="csetid" display="cSetID"/>
-		<memberdata name="csys3054" display="cSYS3054"/>
-		<memberdata name="ctalk" display="cTalk"/>
-		<memberdata name="deftable" display="DefTable"/>
-		<memberdata name="displayreplacelog" display="DisplayReplaceLog"/>
-		<memberdata name="errors" display="Errors"/>
-		<memberdata name="filedirectory" display="FileDirectory"/>
-		<memberdata name="filenameexactmatch" display="FileNameExactMatch"/>
-		<memberdata name="filetable" display="FileTable"/>
-		<memberdata name="filetypes" display="FileTypes"/>
-		<memberdata name="findwindowclass" display="FindWindowClass"/>
-		<memberdata name="findwindowclasslib" display="FindWindowClassLib"/>
-		<memberdata name="fontstring" display="FontString"/>
-		<memberdata name="formproperties" display="FormProperties"/>
-		<memberdata name="foxrefdirectory" display="FoxRefDirectory"/>
-		<memberdata name="homedir" display="HomeDir"/>
-		<memberdata name="includedeftable" display="IncludeDefTable"/>
-		<memberdata name="lcancel" display="lCancel"/>
-		<memberdata name="ldefinitionsonly" display="lDefinitionsOnly"/>
-		<memberdata name="lignoreerrors" display="lIgnoreErrors"/>
-		<memberdata name="lignoreerrors as boolean" display="lIgnoreErrors As Boolean"/>
-		<memberdata name="liniterror" display="lInitError"/>
-		<memberdata name="lrefreshmode" display="lRefreshMode"/>
-		<memberdata name="matchcase" display="MatchCase"/>
-		<memberdata name="matchclass" display="MatchClass"/>
-		<memberdata name="matchclasslib" display="MatchClassLib"/>
-		<memberdata name="name" display="Name"/>
-		<memberdata name="nlangopt" display="nLangOpt"/>
-		<memberdata name="obackupcollection" display="oBackupCollection"/>
-		<memberdata name="oenginecollection" display="oEngineCollection"/>
-		<memberdata name="ofilecollection" display="oFileCollection"/>
-		<memberdata name="ofiletypecollection" display="oFileTypeCollection"/>
-		<memberdata name="ooptions" display="oOptions"/>
-		<memberdata name="oprocessedcollection" display="oProcessedCollection"/>
-		<memberdata name="oprogressform" display="oProgressForm"/>
-		<memberdata name="oprojectfileref" display="oProjectFileRef"/>
-		<memberdata name="oreportcollection" display="oReportCollection"/>
-		<memberdata name="osearchcollection" display="oSearchCollection"/>
-		<memberdata name="osearchengine" display="oSearchEngine"/>
-		<memberdata name="overwriteprior" display="OverwritePrior"/>
-		<memberdata name="pattern" display="Pattern"/>
-		<memberdata name="preservecase" display="PreserveCase"/>
-		<memberdata name="projectfile" display="ProjectFile"/>
-		<memberdata name="projecthomedir" display="ProjectHomeDir"/>
-		<memberdata name="quiet" display="Quiet"/>
-		<memberdata name="reftable" display="RefTable"/>
-		<memberdata name="replacelogsetid" display="ReplaceLogSetID"/>
-		<memberdata name="reportfile" display="ReportFile"/>
-		<memberdata name="searchbaseclass" display="SearchBaseClass"/>
-		<memberdata name="searchtype" display="SearchType"/>
-		<memberdata name="showdistinctmethodline" display="ShowDistinctMethodLine"/>
-		<memberdata name="showfiletypehistory" display="ShowFileTypeHistory"/>
-		<memberdata name="showprogress" display="ShowProgress"/>
-		<memberdata name="showrefsperline" display="ShowRefsPerLine"/>
-		<memberdata name="sortmostrecentfirst" display="SortMostRecentFirst"/>
-		<memberdata name="subfolders" display="SubFolders"/>
-		<memberdata name="templates" display="Templates"/>
-		<memberdata name="ttimestamp" display="tTimeStamp"/>
-		<memberdata name="wholewordsonly" display="WholeWordsOnly"/>
-		<memberdata name="wildcards" display="Wildcards"/>
-		<memberdata name="wildmatchclass" display="WildMatchClass"/>
-		<memberdata name="wildmatchclasslib" display="WildMatchClassLib"/>
-		<memberdata name="windowfilename" display="WindowFilename"/>
-		<memberdata name="windowhandle" display="WindowHandle"/>
-		<memberdata name="windowlineno" display="WindowLineNo"/>
-		<memberdata name="xmlformat" display="XMLFormat"/>
-		<memberdata name="xmlschema" display="XMLSchema"/>
-		<memberdata name="xsltemplate" display="XSLTemplate"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		activitylog = 
+		addintable = 
+		autoprojecthomedir = .F.
+		backuponreplace = .T.
+		backupstyle = 1
+		ccompatible = 
+		cescapestate = 
+		cexclusive = 
+		classexactmatch = .F.
+		classsearch = 
+		codeonly = .F.
+		comments = (COMMENTS_INCLUDE)
+		confirmreplace = .T.
+		cresourcefile = 
+		cresultstable = 
+		csavelib = 
+		csaveudfparms = 
+		csetid = 
+		csys3054 = 
+		ctalk = 
+		deftable = 
+		displayreplacelog = .T.
+		errors = .NULL.
+		filedirectory = 
+		filenameexactmatch = .F.
+		filetable = 
+		filetypes = |
+		findwindowclass = RefSearchWindow
+		findwindowclasslib = FoxRefSearch_Window.prg
+		fontstring = (FONT_DEFAULT)
+		formproperties = .T.
+		foxrefdirectory = 
+		homedir = 
+		includedeftable = .T.
+		lcancel = .F.
+		ldefinitionsonly = .F.
+		lignoreerrors = .F.
+		liniterror = .F.
+		lrefreshmode = .F.
+		matchcase = .F.
+		matchclass = MatchDefault
+		matchclasslib = PEME_foxmatch.vcx
+		Name = "foxref"
+		nlangopt = 0
+		obackupcollection = .NULL.
+		oenginecollection = .NULL.
+		ofilecollection = .NULL.
+		ofiletypecollection = .NULL.
+		ooptions = .NULL.
+		oprocessedcollection = .NULL.
+		oprogressform = .NULL.
+		oprojectfileref = .NULL.
+		oreportcollection = .NULL.
+		osearchcollection = .NULL.
+		osearchengine = .NULL.
+		overwriteprior = .T.
+		pattern = 
+		preservecase = .F.
+		projectfile = 
+		projecthomedir = .F.
+		quiet = .F.
+		reftable = 
+		replacelogsetid = 
+		reportfile = (REPORT_FILE)
+		searchbaseclass = 
+		searchtype = 
+		showdistinctmethodline = .F.
+		showfiletypehistory = .F.
+		showprogress = .F.
+		showrefsperline = .F.
+		sortmostrecentfirst = .F.
+		subfolders = .F.
+		templates = 
+		ttimestamp = .NULL.
+		wholewordsonly = .F.
+		wildcards = .F.
+		wildmatchclass = MatchClass
+		wildmatchclasslib = PEME_foxmatch.vcx
+		windowfilename = 
+		windowhandle = (-1)
+		windowlineno = 0
+		xmlformat = (XMLFORMAT_ELEMENTS)
+		xmlschema = .T.
+		xsltemplate = foxref.xsl
+		_memberdata = <VFPData>
+			<memberdata name="createresultstable" display="CreateResultsTable"/>
+			<memberdata name="destroy" display="Destroy"/>
+			<memberdata name="filesearch" display="FileSearch"/>
+			<memberdata name="foldersearch" display="FolderSearch"/>
+			<memberdata name="init" display="Init"/>
+			<memberdata name="openresultstable" display="OpenResultsTable"/>
+			<memberdata name="processfolder" display="ProcessFolder"/>
+			<memberdata name="projectsearch" display="ProjectSearch"/>
+			<memberdata name="restoreprefs" display="RestorePrefs"/>
+			<memberdata name="saveprefs" display="SavePrefs"/>
+			<memberdata name="search" display="Search"/>
+			<memberdata name="searchinit" display="SearchInit"/>
+			<memberdata name="setproject" display="SetProject"/>
+			<memberdata name="updatefiletypesmru" display="UpdateFileTypesMRU"/>
+			<memberdata name="updatefoldermru" display="UpdateFolderMRU"/>
+			<memberdata name="updatelookformru" display="UpdateLookForMRU"/>
+			<memberdata name="activitylog" display="ActivityLog"/>
+			<memberdata name="addintable" display="AddInTable"/>
+			<memberdata name="autoprojecthomedir" display="AutoProjectHomeDir"/>
+			<memberdata name="backuponreplace" display="BackupOnReplace"/>
+			<memberdata name="backupstyle" display="BackupStyle"/>
+			<memberdata name="ccompatible" display="cCompatible"/>
+			<memberdata name="cescapestate" display="cEscapeState"/>
+			<memberdata name="cexclusive" display="cExclusive"/>
+			<memberdata name="classexactmatch" display="ClassExactMatch"/>
+			<memberdata name="classsearch" display="ClassSearch"/>
+			<memberdata name="codeonly" display="CodeOnly"/>
+			<memberdata name="comments" display="Comments"/>
+			<memberdata name="confirmreplace" display="ConfirmReplace"/>
+			<memberdata name="cprogressform" display="cProgressForm"/>
+			<memberdata name="cresourcefile" display="cResourceFile"/>
+			<memberdata name="cresultstable" display="cResultsTable"/>
+			<memberdata name="csavelib" display="cSaveLib"/>
+			<memberdata name="csaveudfparms" display="cSaveUDFParms"/>
+			<memberdata name="csetid" display="cSetID"/>
+			<memberdata name="csys3054" display="cSYS3054"/>
+			<memberdata name="ctalk" display="cTalk"/>
+			<memberdata name="deftable" display="DefTable"/>
+			<memberdata name="displayreplacelog" display="DisplayReplaceLog"/>
+			<memberdata name="errors" display="Errors"/>
+			<memberdata name="filedirectory" display="FileDirectory"/>
+			<memberdata name="filenameexactmatch" display="FileNameExactMatch"/>
+			<memberdata name="filetable" display="FileTable"/>
+			<memberdata name="filetypes" display="FileTypes"/>
+			<memberdata name="findwindowclass" display="FindWindowClass"/>
+			<memberdata name="findwindowclasslib" display="FindWindowClassLib"/>
+			<memberdata name="fontstring" display="FontString"/>
+			<memberdata name="formproperties" display="FormProperties"/>
+			<memberdata name="foxrefdirectory" display="FoxRefDirectory"/>
+			<memberdata name="homedir" display="HomeDir"/>
+			<memberdata name="includedeftable" display="IncludeDefTable"/>
+			<memberdata name="lcancel" display="lCancel"/>
+			<memberdata name="ldefinitionsonly" display="lDefinitionsOnly"/>
+			<memberdata name="lignoreerrors" display="lIgnoreErrors"/>
+			<memberdata name="lignoreerrors as boolean" display="lIgnoreErrors As Boolean"/>
+			<memberdata name="liniterror" display="lInitError"/>
+			<memberdata name="lrefreshmode" display="lRefreshMode"/>
+			<memberdata name="matchcase" display="MatchCase"/>
+			<memberdata name="matchclass" display="MatchClass"/>
+			<memberdata name="matchclasslib" display="MatchClassLib"/>
+			<memberdata name="name" display="Name"/>
+			<memberdata name="nlangopt" display="nLangOpt"/>
+			<memberdata name="obackupcollection" display="oBackupCollection"/>
+			<memberdata name="oenginecollection" display="oEngineCollection"/>
+			<memberdata name="ofilecollection" display="oFileCollection"/>
+			<memberdata name="ofiletypecollection" display="oFileTypeCollection"/>
+			<memberdata name="ooptions" display="oOptions"/>
+			<memberdata name="oprocessedcollection" display="oProcessedCollection"/>
+			<memberdata name="oprogressform" display="oProgressForm"/>
+			<memberdata name="oprojectfileref" display="oProjectFileRef"/>
+			<memberdata name="oreportcollection" display="oReportCollection"/>
+			<memberdata name="osearchcollection" display="oSearchCollection"/>
+			<memberdata name="osearchengine" display="oSearchEngine"/>
+			<memberdata name="overwriteprior" display="OverwritePrior"/>
+			<memberdata name="pattern" display="Pattern"/>
+			<memberdata name="preservecase" display="PreserveCase"/>
+			<memberdata name="projectfile" display="ProjectFile"/>
+			<memberdata name="projecthomedir" display="ProjectHomeDir"/>
+			<memberdata name="quiet" display="Quiet"/>
+			<memberdata name="reftable" display="RefTable"/>
+			<memberdata name="replacelogsetid" display="ReplaceLogSetID"/>
+			<memberdata name="reportfile" display="ReportFile"/>
+			<memberdata name="searchbaseclass" display="SearchBaseClass"/>
+			<memberdata name="searchtype" display="SearchType"/>
+			<memberdata name="showdistinctmethodline" display="ShowDistinctMethodLine"/>
+			<memberdata name="showfiletypehistory" display="ShowFileTypeHistory"/>
+			<memberdata name="showprogress" display="ShowProgress"/>
+			<memberdata name="showrefsperline" display="ShowRefsPerLine"/>
+			<memberdata name="sortmostrecentfirst" display="SortMostRecentFirst"/>
+			<memberdata name="subfolders" display="SubFolders"/>
+			<memberdata name="templates" display="Templates"/>
+			<memberdata name="ttimestamp" display="tTimeStamp"/>
+			<memberdata name="wholewordsonly" display="WholeWordsOnly"/>
+			<memberdata name="wildcards" display="Wildcards"/>
+			<memberdata name="wildmatchclass" display="WildMatchClass"/>
+			<memberdata name="wildmatchclasslib" display="WildMatchClassLib"/>
+			<memberdata name="windowfilename" display="WindowFilename"/>
+			<memberdata name="windowhandle" display="WindowHandle"/>
+			<memberdata name="windowlineno" display="WindowLineNo"/>
+			<memberdata name="xmlformat" display="XMLFormat"/>
+			<memberdata name="xmlschema" display="XMLSchema"/>
+			<memberdata name="xsltemplate" display="XSLTemplate"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE createresultstable
 		This.cResultsTable = Addbs(Sys(2023)) + Sys(2015) + ".DBF"

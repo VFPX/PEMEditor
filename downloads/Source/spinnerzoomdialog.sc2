@@ -10,26 +10,30 @@
 DEFINE CLASS dataenvironment AS dataenvironment 
  	*< CLASSDATA: Baseclass="dataenvironment" Timestamp="" Scale="" Uniqueid="" ClassIcon="2" />
 
-	DataSource = .NULL.
-	Height = 0
-	Left = 0
-	Name = "Dataenvironment"
-	Top = 0
-	Width = 0
+	*<PropValue>
+		DataSource = .NULL.
+		Height = 0
+		Left = 0
+		Name = "Dataenvironment"
+		Top = 0
+		Width = 0
+	*</PropValue>
 
 ENDDEFINE
 
 DEFINE CLASS spinnerzoom1 AS spinnerzoom OF "editproperty.vcx" 
  	*< CLASSDATA: Baseclass="form" Timestamp="" Scale="" Uniqueid="" />
 
-	DoCreate = .T.
-	Name = "Spinnerzoom1"
-	changefontsize.Name = "changefontsize"
-	cmdOK.Name = "cmdOK"
-	cmdCancel.Name = "cmdCancel"
-	Baseeditbox1.Name = "Baseeditbox1"
-	Baselabel1.Name = "Baselabel1"
-	spnValue.Name = "spnValue"
-	Baselabel2.Name = "Baselabel2"
+	*<PropValue>
+		DoCreate = .T.
+		Name = "Spinnerzoom1"
+		changefontsize.Name = "changefontsize"
+		cmdOK.Name = "cmdOK"
+		cmdCancel.Name = "cmdCancel"
+		Baseeditbox1.Name = "Baseeditbox1"
+		Baselabel1.Name = "Baselabel1"
+		spnValue.Name = "spnValue"
+		Baselabel2.Name = "Baselabel2"
+	*</PropValue>
 
 ENDDEFINE

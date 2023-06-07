@@ -13,7 +13,9 @@ DEFINE CLASS changefontsize AS custom
 		*m: update		&& Updates all objects on this form to a new font size -- changing their size and position as well
 	*</DefinedPropArrayMethod>
 
-	Name = "changefontsize"
+	*<PropValue>
+		Name = "changefontsize"
+	*</PropValue>
 	
 	PROCEDURE run		&& Occurs when an Active Document is ready to execute your application code.
 		* Added: 06/16/2009

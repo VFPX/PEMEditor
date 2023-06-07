@@ -20,35 +20,37 @@ DEFINE CLASS pemeditor_main AS basecustom OF "peme_basecontrols.vcx"
 		*p: outils
 	*</DefinedPropArrayMethod>
 
-	capplicationpath = 
-	lreleaseondestroy = .T.
-	Name = "pemeditor_main"
-	oeditorwin = .NULL.
-	oprefs = .NULL.
-	otools = .NULL.
-	outils = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="capplicationpath" display="cApplicationPath"/>
-		<memberdata name="oeditorwin" display="oEditorWin"/>
-		<memberdata name="addmrufile" display="AddMRUFile"/>
-		<memberdata name="extractparameters" display="ExtractParameters"/>
-		<memberdata name="extractsnippetparameters" display="ExtractSnippetParameters"/>
-		<memberdata name="showhelp" display="ShowHelp"/>
-		<memberdata name="transferoldpreferences" display="TransferOldPreferences"/>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="getmrulist" display="GetMRUList"/>
-		<memberdata name="diskfilename" display="DiskFileName"/>
-		<memberdata name="getrelativepath" display="GetRelativePath"/>
-		<memberdata name="showerrormsg" display="ShowErrorMsg"/>
-		<memberdata name="striptabs" display="StripTabs"/>
-		<memberdata name="isnamechar" display="IsNameChar"/>
-		<memberdata name="getcontrolcount" display="GetControlCount"/>
-		<memberdata name="getpemstatus" display="GetPEMStatus"/>
-		<memberdata name="editsourcex" display="EditSourceX"/>
-		<memberdata name="openurl" display="OpenURL"/>
-		<memberdata name="otools" display="oTools"/>
-		<memberdata name="outils" display="oUtils"/>
+	*<PropValue>
+		capplicationpath = 
+		lreleaseondestroy = .T.
+		Name = "pemeditor_main"
+		oeditorwin = .NULL.
+		oprefs = .NULL.
+		otools = .NULL.
+		outils = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="capplicationpath" display="cApplicationPath"/>
+			<memberdata name="oeditorwin" display="oEditorWin"/>
+			<memberdata name="addmrufile" display="AddMRUFile"/>
+			<memberdata name="extractparameters" display="ExtractParameters"/>
+			<memberdata name="extractsnippetparameters" display="ExtractSnippetParameters"/>
+			<memberdata name="showhelp" display="ShowHelp"/>
+			<memberdata name="transferoldpreferences" display="TransferOldPreferences"/>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="getmrulist" display="GetMRUList"/>
+			<memberdata name="diskfilename" display="DiskFileName"/>
+			<memberdata name="getrelativepath" display="GetRelativePath"/>
+			<memberdata name="showerrormsg" display="ShowErrorMsg"/>
+			<memberdata name="striptabs" display="StripTabs"/>
+			<memberdata name="isnamechar" display="IsNameChar"/>
+			<memberdata name="getcontrolcount" display="GetControlCount"/>
+			<memberdata name="getpemstatus" display="GetPEMStatus"/>
+			<memberdata name="editsourcex" display="EditSourceX"/>
+			<memberdata name="openurl" display="OpenURL"/>
+			<memberdata name="otools" display="oTools"/>
+			<memberdata name="outils" display="oUtils"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE extractparameters
 		Lparameters lcString, lcDelimiter

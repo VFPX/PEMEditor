@@ -26,23 +26,25 @@ DEFINE CLASS about AS editpropertyform OF "editproperty.vcx"
 		*p: cversion
 	*</DefinedPropArrayMethod>
 
-	BorderStyle = 2
-	Caption = "About PEM Editor"
-	cfoxuserid = EDITPMPREFS
-	cfoxusername = EditPMPreferences
-	cversion = 
-	Desktop = .T.
-	DoCreate = .T.
-	Height = 180
-	lpersistsizeposition = .F.
-	lsavesettings = .F.
-	MaxButton = .F.
-	MinButton = .F.
-	Name = "About"
-	Width = 520
-	CHANGEFONTSIZE.Left = 474
-	CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
-	CHANGEFONTSIZE.Top = 114
+	*<PropValue>
+		BorderStyle = 2
+		Caption = "About PEM Editor"
+		cfoxuserid = EDITPMPREFS
+		cfoxusername = EditPMPreferences
+		cversion = 
+		Desktop = .T.
+		DoCreate = .T.
+		Height = 180
+		lpersistsizeposition = .F.
+		lsavesettings = .F.
+		MaxButton = .F.
+		MinButton = .F.
+		Name = "About"
+		Width = 520
+		CHANGEFONTSIZE.Left = 474
+		CHANGEFONTSIZE.Name = "CHANGEFONTSIZE"
+		CHANGEFONTSIZE.Top = 114
+	*</PropValue>
 
 	ADD OBJECT 'Image2' AS image WITH ;
 		Height = 64, ;
@@ -242,11 +244,13 @@ ENDDEFINE
 DEFINE CLASS dataenvironment AS dataenvironment 
  	*< CLASSDATA: Baseclass="dataenvironment" Timestamp="" Scale="" Uniqueid="" ClassIcon="2" />
 
-	DataSource = .NULL.
-	Height = 0
-	Left = 0
-	Name = "Dataenvironment"
-	Top = 0
-	Width = 0
+	*<PropValue>
+		DataSource = .NULL.
+		Height = 0
+		Left = 0
+		Name = "Dataenvironment"
+		Top = 0
+		Width = 0
+	*</PropValue>
 
 ENDDEFINE
