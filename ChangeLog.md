@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.11, released 2023-06-11
+
+- BeautifyX, for SELECT Group By and Order By into new lines issue #40 a problem occurs with withespace between comma and number, fixed #40
+
 ### Version 7.41.10, released 2023-06-07
 
 - BeautifyX
@@ -135,4 +139,4 @@ Version 2.0 - Released 2008-11-10 By Jim Nelson and Doug Hennig.
 Version 1.0 by Marcia Akins
 
 ----
-Last changed: _2023/06/07_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _2023/06/11_ ![Picture](../docs/pictures/vfpxpoweredby_alternative.gif)
