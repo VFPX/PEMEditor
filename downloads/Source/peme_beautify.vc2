@@ -1399,23 +1399,23 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 								lcBeforeThisLine = Substr (lcBeforeThisLine, Rat (CR, lcBeforeThisLine) + 1)
 								If Not Empty (lcBeforeThisLine)
 									IF m.tlKeepIntegers THEN 
-										IF ISDIGIT(lcEndThisLine) THEN
+										IF ISDIGIT(LTRIM(lcEndThisLine)) THEN
 											IF !m.llIntegersLine THEN
 											* last Integer in Line
 												m.llIntegersLine = .T.
 											ENDIF &&!m.llIntegersLine 
 									    	lnNext_FirstIndex = m.lnFirstIndex
 								 
-										ELSE  &&ISDIGIT(lcEndThisLine) 
+										ELSE  &&ISDIGIT(LTRIM(lcEndThisLine))
 											IF m.llIntegersLine THEN
 												* first Integer in Line
 												lnNext_FirstIndex = AT(',', stuff(lcSnippet, 1, lnFirstIndex, '')) + lnFirstIndex
 												lcSnippet = Stuff (lcSnippet, lnNext_FirstIndex, 0, lcNewLine)
 												m.llIntegersLine = .F.
 								 
-											ENDIF &&m.tlKeepIntegers AND m.llIntegersLine AND !ISDIGIT(lcEndThisLine) 
+											ENDIF &&m.llIntegersLine
 											lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
-										ENDIF &&ISDIGIT(lcEndThisLine) 
+										ENDIF &&ISDIGIT(LTRIM(lcEndThisLine))
 									ELSE  &&m.tlKeepIntegers
 										lcSnippet = Stuff (lcSnippet, lnFirstIndex, 0, lcNewLine)
 									ENDIF &&m.tlKeepIntegers
@@ -1440,22 +1440,22 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 									* already at end of line
 								Else
 									IF m.tlKeepIntegers THEN 
-										IF ISDIGIT(lcEndThisLine) THEN
+										IF ISDIGIT(LTRIM(lcEndThisLine)) THEN
 											IF !m.llIntegersLine THEN
 											* last Integer in Line
 												m.llIntegersLine = .T.
 											ENDIF &&!m.llIntegersLine 
 									    	lnNext_FirstIndex = m.lnFirstIndex
 								 
-										ELSE  &&ISDIGIT(lcEndThisLine) 
+										ELSE  &&ISDIGIT(LTRIM(lcEndThisLine))
 											IF m.llIntegersLine THEN
 												* first Integer in Line
 												lcSnippet = Stuff (lcSnippet, m.lnNext_FirstIndex + 1, 0, lcNewLine)
 												m.llIntegersLine = .F.
 								 
-											ENDIF &&m.tlKeepIntegers AND m.llIntegersLine AND !ISDIGIT(lcEndThisLine) 
+											ENDIF &&m.llIntegersLine
 											lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
-										ENDIF &&ISDIGIT(lcEndThisLine) 
+										ENDIF &&ISDIGIT(LTRIM(lcEndThisLine))
 		
 									ELSE  &&m.tlKeepIntegers
 											lcSnippet = Stuff (lcSnippet, lnFirstIndex + 1, 0, lcNewLine)
