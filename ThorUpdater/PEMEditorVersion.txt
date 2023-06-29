@@ -6,7 +6,7 @@ with toUpdateObject
 	.VersionNumber    = '7.41.11 - 20230611'
 	.AvailableVersion = 'PEM Editor-7.41.11-update-20230611'
 	.Notes            = GetNotes()
-	.RegisterWithThor = GetRegisterWithThor()
+    .RegisterWithThor = 'Do "##InstallFolder##PEMEditor.APP" with "Thor"'
 endwith
 return toUpdateObject
 
@@ -163,39 +163,3 @@ return lcNotes
 * Register the tool with Thor. Note: Thor replaces ##InstallFolder## with the
 * installation path for the tool when this code is executed.
 
-procedure GetRegisterWithThor
-local lcCommand
-text to lcCommand noshow
-
-* Create the tool under Thor Tools.
-
-loThorInfo = Execscript (_Screen.cThorDispatcher, 'Thor Register=')
-with loThorInfo
-
-* Required properties.
-
-	.PRGName    = 'Thor_Tool_PEMEditor'
-	.FolderName = '##InstallFolder##'
-	.Prompt     = 'PEM Editor'
-
-* Optional properties.
-
-	.Description = 'PEM Editor'
-
-* These are used to group and sort tools when they are displayed in menus or
-* the Thor form.
-
-	.Category        = 'Applications'
-	.CanRunAtStartUp = .F.
-
-* This is the code to execute when the tool is selected.
-
-	.Code = "do ('##InstallFolder##PEMEditor.app')"
-
-* Register the tool with Thor.
-
-	llRegister = .Register()
-endwith
-
-endtext
-return lcCommand
