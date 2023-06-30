@@ -2967,7 +2967,7 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			*** JRN 2023-06-29 : value following = indicates which parameter contains the name of the variable
 			lcArrayFunctions = 'aclass,acopy=2,adatabases,adbobjects,adir,adlls,adockstate,aerror,aevents,afields,' ;
 				+ 'afont,agetclass,agetfileversion,ainstance,alanguage,alines,amembers,amouseobj,anetresources,aprinters,' ;
-				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses,sqlexec=4'
+				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses' && ,sqlexec=4'
 		
 		*!*	Changed by: SF 31.3.2022
 		*!*	<pdm>
