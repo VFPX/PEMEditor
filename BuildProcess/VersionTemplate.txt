@@ -20,7 +20,7 @@ with toUpdateObject
 	.VersionNumber    = '{VERSION} - {VERSIONDATE}'
 	.AvailableVersion = '{APPNAME}-{VERSION}-update-{VERSIONDATE}'
 	.Notes            = GetNotes()
-	.RegisterWithThor = GetRegisterWithThor()
+    .RegisterWithThor = 'Do "##InstallFolder##PEMEditor.APP" with "Thor"'
 endwith
 return toUpdateObject
 
@@ -43,39 +43,3 @@ return lcNotes
 \\\* Register the tool with Thor. Note: Thor replaces ##InstallFolder## with the
 * installation path for the tool when this code is executed.
 
-procedure GetRegisterWithThor
-local lcCommand
-text to lcCommand noshow
-<<iif('{COMPONENT}' = 'No', '', '@@@')>>
-* Create the tool under Thor Tools.
-
-loThorInfo = Execscript (_Screen.cThorDispatcher, 'Thor Register=')
-with loThorInfo
-
-* Required properties.
-
-	.PRGName    = 'Thor_Tool_{APPID}'
-	.FolderName = '##InstallFolder##'
-	.Prompt     = '{APPNAME}'
-
-* Optional properties.
-
-	.Description = '{APPNAME}'
-
-* These are used to group and sort tools when they are displayed in menus or
-* the Thor form.
-
-	.Category        = '{CATEGORY}'
-	.CanRunAtStartUp = .F.
-
-* This is the code to execute when the tool is selected.
-
-	.Code = "do ('##InstallFolder##{APPID}.app')"
-
-* Register the tool with Thor.
-
-	llRegister = .Register()
-endwith
-<<iif('{COMPONENT}' = 'No', '', '\\\')>>
-endtext
-return lcCommand

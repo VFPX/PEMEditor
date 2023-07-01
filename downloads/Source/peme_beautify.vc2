@@ -2964,9 +2964,10 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 			*-- THM 08/31/2006 - Support for inline array functions.
 			*Support for array functions - lines may contain more than one of these....
 			*-- RCE 01/23/2009 - respect Current Locals
-			lcArrayFunctions = 'aclass,acopy,adatabases,adbobjects,adir,adlls,adockstate,aerror,aevents,afields,' ;
+			*** JRN 2023-06-29 : value following = indicates which parameter contains the name of the variable
+			lcArrayFunctions = 'aclass,acopy=2,adatabases,adbobjects,adir,adlls,adockstate,aerror,aevents,afields,' ;
 				+ 'afont,agetclass,agetfileversion,ainstance,alanguage,alines,amembers,amouseobj,anetresources,aprinters,' ;
-				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses'
+				+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses' && ,sqlexec=4'
 		
 		*!*	Changed by: SF 31.3.2022
 		*!*	<pdm>
@@ -2980,17 +2981,17 @@ DEFINE CLASS beautify AS basebeautify OF "peme_beautify.vcx"
 		
 		*!*	/Changed by: SF 31.3.2022
 		
+			Local lcText, lnParamNo
 			For lnI = 1 To GetWordCount (lcArrayFunctions, ',')
-				lcArrayFunc = Getwordnum (lcArrayFunctions, lnI, ',')
+				lcText = Getwordnum (lcArrayFunctions, lnI, ',')
+				lcArrayFunc = Getwordnum (lcText, 1, '=')
+				lnParamNo = Evl(Val(Getwordnum (lcText, 2, '=')), 1)
 				*** JRN 2010-04-21 : check character before reference to make sure it is not part of a name ... laMouseObj, e.g.,
 				If lcArrayFunc + '(' $ Lower (lcArrayLine)
 					lnPos = At (lcArrayFunc + '(', Lower (lcArrayLine))
-					If Not This.IsNameChar (Substr (lcArrayLine, lnPos - 1, 1))
+					If lnPos = 1 or Not This.IsNameChar (Substr (lcArrayLine, lnPos - 1, 1))
 						lcParams = Strextract (Substr (lcArrayLine, lnPos), '(', ')')
-						This.AddNewLocal (Getwordnum (lcParams, 1, ','), , .T.)
-						If lcArrayFunc = 'acopy'
-							This.AddNewLocal (Getwordnum (lcParams, 2, ','), , .T.)
-						Endif
+						This.AddNewLocal (Getwordnum (lcParams, lnParamNo, ','), , .T.)
 					Endif
 				Endif
 			Endfor
