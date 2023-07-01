@@ -4,9 +4,13 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.12, released 2023-07-01
+
+- Fixed problem where installing PEMEditor using CFU did not register all the other (about 40) tools that PEMEditor delivers.
+
 ### Version 7.41.11, released 2023-06-11
 
-- BeautifyX, for SELECT Group By and Order By into new lines issue #40 a problem occurs with withespace between comma and number, fixed #40
+- BeautifyX, for SELECT Group By and Order By into new lines issue #40 a problem occurs with white space between comma and number, fixed #40
 
 ### Version 7.41.10, released 2023-06-07
 
