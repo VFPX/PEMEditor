@@ -54,6 +54,7 @@ Procedure DefinePRG (loTool, lcPath, lcVersion)
 	With loThorInfo
 		* Required
 		*	.Prompt		   = loTool.PrgPrompt
+		.AppID         = 'PEMEditor'
 		.Prompt		   = loTool.ToolPrmpt
 		.Description   = Evl(loTool.Descript, loTool.Summary)
 		.prgName       = 'Thor_Tool_PEME_' + loTool.prgName
