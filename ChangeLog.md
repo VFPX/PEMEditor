@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.13, released 2023-10-25
+
+- Corrected minor bugs related to BeautifyX and CREATE LOCALS
+
 ### Version 7.41.12, released 2023-07-01
 
 - Fixed problem where installing PEMEditor using CFU did not register all the other (about 40) tools that PEMEditor delivers.
