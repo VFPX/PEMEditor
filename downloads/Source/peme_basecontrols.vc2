@@ -602,7 +602,24 @@ DEFINE CLASS basecustom AS custom
 					This.CheckOutSCC (lcFileName)
 					Select (lnSelect)
 				Endif
+		*** DH 2024-03-03:	if Project Explorer is open, use it to edit the file. If it can't,
+		***					use the usual mechanism.
+				local llEdited, llUsePE, ;
+					loPE
+				llEdited = .F.
+				llUsePE  = icase( ;
+					type('This.oPrefs') = 'O' and type('This.oPrefs.lUseProjectExplorerEditFile') = 'L', ;
+						This.oPrefs.lUseProjectExplorerEditFile, ;
+					type('This.oUtils.oPrefs') = 'O' and type('This.oUtils.oPrefs.lUseProjectExplorerEditFile') = 'L', ;
+						This.oUtils.oPrefs.lUseProjectExplorerEditFile, ;
+					.F.)
+				if llUsePE and type('_screen.oProjectExplorers') = 'O' and _screen.oProjectExplorers.Count > 0
+				    loPE     = _screen.oProjectExplorers[1]
+				    llEdited = loPE.EditFile(lcFileName, lnStartRange, lcClass, lcMethod)
+				endif
 				Do Case
+					case llEdited
+		*** DH 2024-03-03:	end of change
 					Case lcExt = 'VCX' And Empty(lcClass)
 						lcCustomPRG =  This.GetPlugInPath ('OpenVCXFile')
 						If Not Empty (lcCustomPRG)

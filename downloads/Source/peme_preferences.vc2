@@ -555,6 +555,9 @@ DEFINE CLASS peme_preferences AS peme_basepreferences OF "peme_preferences.vcx"
 				.lUseTabs					  = .T.
 				.lUseAGetClass				  = .F.
 				.lUseMemberData				  = PEME_IsVersion9()
+		*** DH 2024-03-02:	add lUseProjectExplorerEditFile to specify whether Project Explorer
+		*					is used to edit a file or not
+				.lUseProjectExplorerEditFile  = .F.
 		
 				.nAfterAS				   = 1
 				.nAfterWith				   = 1

@@ -50,6 +50,8 @@ MODIFY PROJECT 'pemeditor.pjx' NOWAIT NOSHOW NOPROJECTHOOK
 loProject = _VFP.Projects('pemeditor.pjx')
 
 WITH loProject.FILES
+	.ADD('..\..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
+	.ADD('..\..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_bottom.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_horizontal_centers.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('..\images\align_left.png')		&& *< FileMetadata: Type="x" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
@@ -108,8 +110,6 @@ WITH loProject.FILES
 	.ADD('askaddpemnewgotodef.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('askaddpemnewstayopen.scx')		&& *< FileMetadata: Type="K" Cpid="0" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('beautify.h')		&& *< FileMetadata: Type="T" Cpid="1252" Timestamp="0" ID="0" ObjRev="0" User="" />
-	.ADD('c:\program files (x86)\microsoft visual foxpro 9\beautify.app')		&& *< FileMetadata: Type="Z" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
-	.ADD('c:\program files (x86)\microsoft visual foxpro 9\foxtools.fll')		&& *< FileMetadata: Type="L" Cpid="0" Timestamp="0" ID="0" ObjRev="0" User="" />
 	.ADD('changefontsize.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.prg')		&& *< FileMetadata: Type="P" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
 	.ADD('editproperty.vcx')		&& *< FileMetadata: Type="V" Cpid="1252" Timestamp="0" ID="0" ObjRev="544" User="" />
@@ -193,28 +193,28 @@ WITH loProject.FILES
 	*</FileComments>
 
 	*<ExcludedFiles>
-	.ITEM("c:\program files (x86)\microsoft visual foxpro 9\beautify.app").Exclude = .T.
-	.ITEM("c:\program files (x86)\microsoft visual foxpro 9\foxtools.fll").Exclude = .T.
-	.ITEM(lcCurdir + 'peme_opentable.prg').Exclude = .T.
+	.ITEM("..\..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\beautify.app").Exclude = .T.
+	.ITEM("..\..\..\..\..\..\..\program files (x86)\microsoft visual foxpro 9\foxtools.fll").Exclude = .T.
+	.ITEM("peme_opentable.prg").Exclude = .T.
 	*</ExcludedFiles>
 
 	*<TextFiles>
-	.ITEM(lcCurdir + 'beautify.h').Type = 'T'
-	.ITEM(lcCurdir + 'editpropertydialog.h').Type = 'T'
-	.ITEM(lcCurdir + 'editpropertydialogenglish.h').Type = 'T'
-	.ITEM(lcCurdir + 'memberdataeditor.h').Type = 'T'
-	.ITEM(lcCurdir + 'memberdataeditorenglish.h').Type = 'T'
-	.ITEM(lcCurdir + 'peme_defaultvalues.h').Type = 'T'
-	.ITEM(lcCurdir + 'peme_foxref.h').Type = 'T'
-	.ITEM(lcCurdir + 'peme_foxtabs.h').Type = 'T'
-	.ITEM(lcCurdir + 'peme_preferences.h').Type = 'T'
-	.ITEM(lcCurdir + 'pemeditorversion.h').Type = 'T'
+	.ITEM("beautify.h").Type = 'T'
+	.ITEM("editpropertydialog.h").Type = 'T'
+	.ITEM("editpropertydialogenglish.h").Type = 'T'
+	.ITEM("memberdataeditor.h").Type = 'T'
+	.ITEM("memberdataeditorenglish.h").Type = 'T'
+	.ITEM("peme_defaultvalues.h").Type = 'T'
+	.ITEM("peme_foxref.h").Type = 'T'
+	.ITEM("peme_foxtabs.h").Type = 'T'
+	.ITEM("peme_preferences.h").Type = 'T'
+	.ITEM("pemeditorversion.h").Type = 'T'
 	*</TextFiles>
 ENDWITH
 
 WITH loProject
 	*<ProjectProperties>
-	.SetMain(lcCurdir + 'editproperty.prg')
+	.SetMain("editproperty.prg")
 
 	.Debug = .T.
 	.Encrypted = .T.

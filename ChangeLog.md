@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.14, released 2024-03-10
+
+- Added support for using Project Explorer to edit a file if it's available.
+
 ### Version 7.41.13, released 2023-10-25
 
 - Corrected minor bugs related to BeautifyX and CREATE LOCALS

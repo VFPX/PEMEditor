@@ -45,7 +45,7 @@ The PEMEditor repository is not self contained. The code is scattered over a cou
 - If a change to the configuration setting is made, update https://github.com/VFPX/ThorRepository and _Thor_Update_Thor_Repository.prg_ of https://github.com/VFPX/Thor/blob/master/ThorUpdater/Updates.zip
    - see https://github.com/VFPX/ThorRepository for contribution.
    - see https://github.com/VFPX/Thor for contribution.
-   - see that PEMEDitor, ThorRepository and Thor are pushed as close as possible. The order how to publish is on the maintainers of Thor.
+   - see that PEMEditor, ThorRepository and Thor are pushed as close as possible. The order how to publish is on the maintainers of Thor.
 
 - If you haven't already done so, install VFPX Deployment: choose Check for Updates from the Thor menu, turn on the checkbox for VFPX Deployment, and click Install.
 
