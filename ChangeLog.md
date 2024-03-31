@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.15, released 2024-03-31
+
+- Made PEMEditor_Utils.SetCurrentSelectedObject accept tlWindowAlreadyActive parameter and pass it to FocusOnControl, which does not activate window if .T.
+
 ### Version 7.41.14, released 2024-03-10
 
 - Added support for using Project Explorer to edit a file if it's available.

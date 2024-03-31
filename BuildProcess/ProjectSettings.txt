@@ -1,6 +1,6 @@
 AppName   = PEM Editor
 AppID     = PEMEditor
-Version   = 7.41.14
+Version   = 7.41.15
 Component = No
 ChangeLog = ChangeLog.md
 PJXFile   = downloads\Source\PEMEditor.pjx

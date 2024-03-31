@@ -2296,7 +2296,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 
 	PROCEDURE focusoncontrol
 		* concept from ControlRenamer by Tamar
-		Lparameters loControl
+		Lparameters loControl, tlWindowAlreadyActive
 		
 		Local loTopOfForm As Object
 		Local laStartMouseObj[1], lcBaseClass, lcWindow, lcWindowName, llFound, llNoWindow
@@ -2309,13 +2309,15 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		
 		Amouseobj (laStartMouseObj, 1)
 		
-		Try
-			lcWindowName = This.GetMyWindowName()
-			Activate Window (lcWindowName)
-			llNoWindow = .F.
-		Catch
-			llNoWindow = .T.
-		Endtry
+		if not tlWindowAlreadyActive
+			Try
+				lcWindowName = This.GetMyWindowName()
+				Activate Window (lcWindowName)
+				llNoWindow = .F.
+			Catch
+				llNoWindow = .T.
+			Endtry
+		endif not tlWindowAlreadyActive
 		
 		If llNoWindow
 			Return
@@ -4413,13 +4415,13 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 	ENDPROC
 
 	PROCEDURE setcurrentselectedobject
-		Lparameters loObject
+		Lparameters loObject, tlWindowAlreadyActive
 		
 		With This
 			If 'O' = Vartype (.oPEMEditor)
 				.oPEMEditor.SetCurrentSelectedObject (loObject)
 			Else
-				.FocusOnControl(loObject)
+				.FocusOnControl(loObject, tlWindowAlreadyActive)
 				Declare Sleep In kernel32 Integer dwMilliseconds
 				Sleep (25)
 			Endif
