@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '7.41.15 - 20240331'
-	.AvailableVersion = 'PEM Editor-7.41.15-update-20240331'
+	.VersionNumber    = '7.41.16 - 20240402'
+	.AvailableVersion = 'PEM Editor-7.41.16-update-20240402'
 	.Notes            = GetNotes()
     .RegisterWithThor = 'Do "##InstallFolder##PEMEditor.APP" with "Thor"'
 endwith
