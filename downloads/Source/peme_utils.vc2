@@ -2309,15 +2309,13 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		
 		Amouseobj (laStartMouseObj, 1)
 		
-		if not tlWindowAlreadyActive
-			Try
-				lcWindowName = This.GetMyWindowName()
-				Activate Window (lcWindowName)
-				llNoWindow = .F.
-			Catch
-				llNoWindow = .T.
-			Endtry
-		endif not tlWindowAlreadyActive
+		Try
+			lcWindowName = This.GetMyWindowName(tlWindowAlreadyActive)
+			Activate Window (lcWindowName)
+			llNoWindow = .F.
+		Catch
+			llNoWindow = .T.
+		Endtry
 		
 		If llNoWindow
 			Return
@@ -3160,6 +3158,8 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 	ENDPROC
 
 	PROCEDURE getmywindowname
+		Lparameters tlWindowAlreadyActive
+		
 		Local loTopOfForm AS Object
 		Local lcWindowName
 		
@@ -3167,7 +3167,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 			loTopOfForm = This.FindTopMostParent()
 			If 'form' = Lower (loTopOfForm.BaseClass)
 				lcWindowName = loTopOfForm.Caption
-				If 'L' = VarType(.cOriginalCaption)
+				If 'L' = VarType(.cOriginalCaption) and ! tlWindowAlreadyActive
 					.cOriginalCaption = lcWindowName
 					lcWindowName = lcWindowName + Sys(2015)
 					loTopOfForm.Caption = lcWindowName
