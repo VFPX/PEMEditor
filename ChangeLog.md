@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.16, released 2024-04-08
+
+- Refactored PEMEditor_Utils.FocusOnControl  to avoid re-setting form properties except in the case where the form has an empty caption, avoiding the "Save Changes" dialog when no changes were conciously made.
+
 ### Version 7.41.15, released 2024-03-31
 
 - Made PEMEditor_Utils.SetCurrentSelectedObject accept tlWindowAlreadyActive parameter and pass it to FocusOnControl, which does not activate window if .T.
