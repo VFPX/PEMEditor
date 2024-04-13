@@ -149,7 +149,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		*a: aproclines[1,0]
 	*</DefinedPropArrayMethod>
 
-	HIDDEN Height,HelpContextID,Init
+	HIDDEN height,helpcontextid,init
 	*<PropValue>
 		capplication = .F.
 		capplicationpath = 
