@@ -1,1 +1,1 @@
-#define	ccPEMEVERSION [PEM Editor - 7.41.18 - April 13, 2024 - 20240413]
+#define	ccPEMEVERSION [PEM Editor - 7.41.19 - November 15, 2024 - 20241115]

@@ -5,8 +5,8 @@
 #### **IDE Tools**: A vastly expanded collection of IDE Tools (made accessible by Thor, another VFPx project) that form the backbone for the Thor Repository and the Thor Framework.
 
 _Requires VFP8 or VFP9_  
-Version <!--VERNO-->7.41.18<!--/VerNo-->
-Released <!--CVERSIONDATE-->2024-04-13<!--/CVERSIONDATE-->
+Version <!--VERNO-->7.41.19<!--/VerNo-->
+Released <!--CVERSIONDATE-->2024-11-15<!--/CVERSIONDATE-->
 
 ## Introduction
 
@@ -46,4 +46,4 @@ PEM Editor also publishes two objects that can be accessed by using Thor, to ass
 ## Helping with this project
 See [How to contribute to PEM Editor](./.github/CONTRIBUTING.md) for details on how to help with this project.
 
-Last changed: _<!--CVERSIONDATE-->2024-04-13<!--/CVERSIONDATE-->_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
+Last changed: _<!--CVERSIONDATE-->2024-11-15<!--/CVERSIONDATE-->_ ![Picture](./docs/pictures/vfpxpoweredby_alternative.gif)
