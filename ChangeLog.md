@@ -4,6 +4,10 @@ PEM Editor provides replacement for the native dialogs to add, edit, and maintai
 
 ## Release History
 
+### Version 7.41.19, released 2024-11-14
+
+Bug fix to tool GetThis, no longer returning incorrect results on the rare case where two objects have the same name.
+
 ### Version 7.41.18, released 2024-04-08
 
 - Refactored PEMEditor_Utils.FocusOnControl  to avoid re-setting form properties except in the case where the form has an empty caption, avoiding the "Save Changes" dialog when no changes were conciously made.

@@ -3,8 +3,8 @@ lparameters toUpdateObject
 * Set the properties of the passed updater object.
 
 with toUpdateObject
-	.VersionNumber    = '7.41.18 - 20240413'
-	.AvailableVersion = 'PEM Editor-7.41.18-update-20240413'
+	.VersionNumber    = '7.41.19 - 20241115'
+	.AvailableVersion = 'PEM Editor-7.41.19-update-20241115'
 	.Notes            = GetNotes()
     .RegisterWithThor = 'Do "##InstallFolder##PEMEditor.APP" with "Thor"'
 endwith
@@ -20,6 +20,10 @@ text to lcNotes noshow
 PEM Editor provides replacement for the native dialogs to add, edit, and maintain properties, events, and methods.
 
 ## Release History
+
+### Version 7.41.19, released 2024-11-14
+
+Bug fix to tool GetThis, no longer returning incorrect results on the rare case where two objects have the same name.
 
 ### Version 7.41.18, released 2024-04-08
 

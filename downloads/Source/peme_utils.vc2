@@ -149,7 +149,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 		*a: aproclines[1,0]
 	*</DefinedPropArrayMethod>
 
-	HIDDEN height,helpcontextid,init
+	HIDDEN Height,HelpContextID,Init
 	*<PropValue>
 		capplication = .F.
 		capplicationpath = 
@@ -3623,7 +3623,7 @@ DEFINE CLASS pemeditor_utils AS basecustom OF "peme_basecontrols.vcx"
 					Return Evaluate ('loTopOfForm' + lcWonTop)
 				Endif
 				lcMethodName = Left (lcWonTop, Rat ('.', lcWonTop) - 1)
-			Case lcWonTop = Upper (loTopOfForm.Name + '.') && matches current object?
+			Case Upper(lcWonTop) = Upper (loThis.Name + '.') && matches current object?
 				Return loThis
 			Otherwise
 				lcMethodName = Left (lcWonTop, At ('.', lcWonTop) - 1)
